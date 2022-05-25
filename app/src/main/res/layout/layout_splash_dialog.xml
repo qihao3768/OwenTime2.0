@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="400dp"
+    android:paddingEnd="47.5dp"
+    android:paddingStart="47.5dp">
+    <com.hjq.shape.layout.ShapeConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shape_radius="11dp"
+        app:shape_solidColor="@color/white"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp">
+
+
+
+    <TextView
+        android:id="@+id/tv_splash_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="欢迎您使用欧文时光！"
+        android:textColor="#1A1A1A"
+        android:textSize="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="28dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/btn_splash_no"
+        app:layout_constraintTop_toBottomOf="@+id/tv_splash_title"
+        android:layout_marginBottom="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/xieyi_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14dp"
+                android:textColor="#545454"
+                android:text="我们将依据《“欧文时光”用户使用协议》《“欧文时光”隐私保护政策》《“欧文时光”儿童隐私政策》来帮助您了解我们为您提供的服务，及处理您的个人信息的情况。" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14dp"
+                android:layout_marginTop="5dp"
+                android:textColor="#545454"
+                android:text="同时我们在此特别向您说明如下：" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14dp"
+                android:textColor="#545454"
+                android:layout_marginTop="5dp"
+                android:text="1、为向您提供信息浏览、发布等业务功能，我们会收集、使用必要的信息；" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14dp"
+                android:textColor="#545454"
+                android:text="2、基于您的明示授权，我们可能调用您的重要设备权限。我们将在首次调用时询问您是否允许使用该权限，您有权拒绝或取消授权。具体权限获取情况详见《隐私保护政策》《儿童隐私政策》；" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14dp"
+                android:textColor="#545454"
+                android:text="3、我们会采取业界先进的安全措施保护您的信息安全" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14dp"
+                android:textColor="#545454"
+                android:text="4、您可以访问、更正、删除您的个人信息，并改变或撤回相关授权，我们也提供账户注销渠道。" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="14dp"
+                android:textColor="#545454"
+                android:visibility="invisible"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14dp"
+                android:textColor="#545454"
+                android:text="您可通过点击《用户使用协议》《隐私保护政策》《儿童隐私政策》查阅完整的协议内容。点击“同意”即代表您已阅读并同意前述协议的全部内容。如您对前述条款内容存在异议的，有权点击“不同意”，代表您选择停止使用“欧文时光”的各项产品和服务。" />
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.hjq.shape.view.ShapeButton
+        android:id="@+id/btn_splash_no"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:gravity="center"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp"
+        android:text="不同意"
+        android:textColor="@color/FE9520"
+        android:textSize="17dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_splash_yes"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toEndOf="@+id/nestedScrollView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:shape_radius="22dp"
+        app:shape_solidColor="@color/white"
+        app:shape_strokeColor="@color/FE9520"
+        app:shape_strokeWidth="0.5dp" />
+
+    <com.hjq.shape.view.ShapeButton
+        android:id="@+id/btn_splash_yes"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:layout_marginStart="15dp"
+        android:gravity="center"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp"
+        android:text="同意"
+        android:textColor="@color/white"
+        android:textSize="17dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btn_splash_no"
+        app:shape_radius="22dp"
+        app:shape_solidColor="@color/FE9520"
+        app:shape_strokeColor="@color/FE9520"
+        app:shape_strokeWidth="0.5dp" />
+    </com.hjq.shape.layout.ShapeConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

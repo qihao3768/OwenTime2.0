@@ -1,0 +1,86 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlinx-serialization'
+    id 'kotlin-parcelize'
+}
+
+android {
+    compileSdk 31
+
+    defaultConfig {
+        applicationId "com.example.wanandroid"
+        minSdk 23
+        targetSdk 31
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'com.google.android.material:material:1.5.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0'
+    implementation 'androidx.activity:activity-ktx:1.4.0'
+    implementation 'androidx.fragment:fragment-ktx:1.4.1'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    implementation 'io.github.youth5201314:banner:2.2.2'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.6'
+    implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.6'
+//    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'io.coil-kt:coil:1.4.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2'
+    implementation 'com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0'
+    implementation 'com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.4.6'
+    implementation 'androidx.paging:paging-runtime:3.1.1'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
+
+    implementation 'com.github.getActivity:TitleBar:9.2'
+    implementation 'com.github.getActivity:ShapeView:6.2'
+
+    implementation 'com.github.li-xiaojun:FlycoTabLayout:2.0.6'
+    implementation 'com.tencent.tbs:tbssdk:44176'
+    implementation 'com.tencent:mmkv:1.2.13'
+
+//    implementation 'com.google.code.gson:gson:2.8.9'
+    implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
+    implementation 'io.github.jeremyliao:live-event-bus-x:1.8.0'
+//    implementation 'com.tencent:mmkv:1.0.19'
+
+//    implementation 'com.scwang.smart:refresh-layout-kernel:2.0.3'
+//    implementation  'com.scwang.smart:refresh-header-two-level:2.0.3'//二级刷新头
+//    implementation 'com.scwang.smart:refresh-footer-ball:2.0.3'
+
+    implementation('androidx.core:core-splashscreen:1.0.0-alpha02')
+    implementation('io.github.razerdp:BasePopup:3.1.8')
+
+}
