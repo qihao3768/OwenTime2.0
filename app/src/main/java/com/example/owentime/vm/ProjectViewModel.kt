@@ -22,11 +22,11 @@ class ProjectViewModel : BaseViewModel() {
     }
 
     private val _projectDRepo by lazy { SupProjectRepo() }
-    private var _projectDData= MutableLiveData<PagingData<ProjectDetail>>()
+    private var _projectDData= MutableLiveData<PagingData<GoodsBean>>()
 
 //    val article get() =_articleData
 
-    fun getProjectDetail(cid:Int):MutableLiveData<PagingData<ProjectDetail>> {
+    fun getProjectDetail(cid:Int):MutableLiveData<PagingData<GoodsBean>> {
         launchUI {
             _projectDRepo.subProject(cid).cachedIn(viewModelScope).collectLatest{
                 _projectDData.value=it

@@ -82,5 +82,7 @@ dependencies {
 
     implementation('androidx.core:core-splashscreen:1.0.0-alpha02')
     implementation('io.github.razerdp:BasePopup:3.1.8')
+    implementation('com.geyifeng.immersionbar:immersionbar:3.2.2')
+    implementation('com.geyifeng.immersionbar:immersionbar-ktx:3.2.2')
 
 }

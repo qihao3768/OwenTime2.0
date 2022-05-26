@@ -50,6 +50,9 @@ fun Fragment.start(activity: Activity, clazz: Class<Activity>, params:HashMap<St
 private fun start01(activity:Activity,clazz: Class<Activity>,finish:Boolean){
     val intent = Intent(activity,clazz)
     activity.startActivity(intent)
+    if (finish){
+        activity.finish()
+    }
 
 }
 
@@ -113,15 +116,16 @@ fun ViewGroup.checkLogin(msg: String):String{
     }
 }
 //检查登录
-fun ViewGroup.checkLogin(context:AppCompatActivity,msg: String):String{
+fun ViewGroup.checkLogin(context:AppCompatActivity,msg: String){
     val userInfo=MMKV.defaultMMKV().decodeParcelable("user",Register::class.java)
-    return if (userInfo==null){
-        toast(msg)
-        msg
-    }else{
-        start01(context,LoginActivity().javaClass,false)
-        ""
+    this.setOnClickListener {
+         if (userInfo==null){
+             start01(context,LoginActivity().javaClass,false)
+        }else{
+             toast(msg)
+        }
     }
+
 }
 
 fun View.checkLogin(context:AppCompatActivity,msg: String):String{

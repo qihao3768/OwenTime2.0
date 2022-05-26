@@ -5,6 +5,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.withStarted
+import androidx.recyclerview.widget.GridLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.owentime.R
 import com.example.owentime.adapter.ArticleAdapter
@@ -14,6 +16,8 @@ import com.example.owentime.load
 import com.example.owentime.start
 import com.example.owentime.vm.HomeViewModel
 import com.example.owentime.web.WebActivity
+import com.gyf.immersionbar.ImmersionBar
+import com.gyf.immersionbar.ktx.immersionBar
 import com.youth.banner.adapter.BannerImageAdapter
 import com.youth.banner.holder.BannerImageHolder
 import kotlinx.coroutines.launch
@@ -29,7 +33,13 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
     private lateinit var mArticleAdapter: ArticleAdapter
 
     override fun initData() {
+
+        immersionBar {
+            statusBarColor(R.color.FE9520)
+//            navigationBarColor(R.color.colorPrimary)
+        }
         mBinding.titleHome.leftView.visibility=View.GONE
+        mBinding.homeBanner.setBannerRound2(11F)
         initBanner()
         initArticle()
     }
@@ -70,7 +80,8 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
             }
         })
         mBinding.homeList.adapter = mArticleAdapter
-            viewModel.getArticle().observe(viewLifecycleOwner, Observer {
+        mBinding.homeList.layoutManager=GridLayoutManager( requireActivity(),2)
+        viewModel.getArticle().observe(viewLifecycleOwner, Observer {
                 lifecycleScope.launch {
                     mArticleAdapter.submitData(it)
                 }

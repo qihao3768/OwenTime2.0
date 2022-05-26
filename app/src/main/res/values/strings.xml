@@ -1,10 +1,11 @@
 <resources>
     <string name="app_name">欧文时光</string>
     <string name="page_home">首页</string>
-    <string name="page_project">项目</string>
-    <string name="page_public">公众号</string>
+    <string name="page_project">已购</string>
+    <string name="page_public">我的</string>
     <string name="page_mine">我的</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="string_splash01">您需要同意相关协议内容才能继续 使用欧文时光，若您不同意，很遗 憾我们将无法为您提供服务</string>
+    <string name="string_notice">拼团即将要在5月20日上线啦！~~~ 爆款来袭5折 起，抄底直降无套路！！！</string>
 </resources>

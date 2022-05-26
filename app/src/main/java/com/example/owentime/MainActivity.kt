@@ -10,6 +10,7 @@ import com.example.owentime.ui.HomeFragment
 import com.example.owentime.ui.MineFragment
 import com.example.owentime.ui.ProjectFragment
 import com.example.owentime.ui.PublicFragment
+import com.gyf.immersionbar.ktx.immersionBar
 import com.tencent.smtt.sdk.QbSdk
 
 class MainActivity: BaseActivity(R.layout.activity_main) {
@@ -31,15 +32,36 @@ class MainActivity: BaseActivity(R.layout.activity_main) {
         mBinding.bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.home -> {
+                    immersionBar {
+                        statusBarColor(R.color.FE9520)
+                        keyboardEnable(true)
+                        statusBarDarkFont(true)
+                        fitsSystemWindows(true)
+                    }
                     mBinding.homeVp.setCurrentItem(0,false)
                 }
                 R.id.project -> {
+                    immersionBar {
+                        statusBarColor(R.color.white)
+                        keyboardEnable(true)
+                        statusBarDarkFont(true)
+                        fitsSystemWindows(true)
+                    }
                     mBinding.homeVp.setCurrentItem(1,false)
                 }
                 R.id.pub -> {
+                    immersionBar {
+                        statusBarColor(R.color.white)
+                        keyboardEnable(true)
+                        statusBarDarkFont(true)
+                        fitsSystemWindows(true)
+                    }
                     mBinding.homeVp.setCurrentItem(2,false)
                 }
                 R.id.mine -> {
+                    immersionBar {
+                        statusBarColor(R.color.white)
+                    }
                     mBinding.homeVp.setCurrentItem(3,false)
                 }
             }

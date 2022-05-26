@@ -10,6 +10,7 @@ import com.example.owentime.checkLogin
 import com.example.owentime.databinding.MineFragmentBinding
 import com.example.owentime.start
 import com.example.owentime.vm.MineViewModel
+import com.gyf.immersionbar.ktx.immersionBar
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.tencent.mmkv.MMKV
 
@@ -25,38 +26,18 @@ class MineFragment : BaseFragment(R.layout.mine_fragment) {
     private var mUserInfo:Register?=null
 
     override fun initData() {
-        user()
-//        val user=MMKV.defaultMMKV().decodeParcelable("user",Register::class.java)
-//        user?.run { mBinding.tvUser.text=nickname }
-        mBinding.tvUser.setOnClickListener {
-            if (mUserInfo==null){
-                start(requireActivity(),LoginActivity().javaClass,false)
-            }
-
+        immersionBar {
+            statusBarColor(R.color.white)
+//            navigationBarColor(R.color.colorPrimary)
         }
-        mBinding.layoutJifen.setOnClickListener {
-            if (mBinding.layoutJifen.checkLogin("请先登录").isNotEmpty()){
-                start(requireActivity(),LoginActivity().javaClass,false)
-            }else{
-                start(requireActivity(),IntegralListActivity().javaClass,false)
-            }
-        }
-        mBinding.layoutTutorial.setOnClickListener {
-            start(requireActivity(),TutorialActivity().javaClass,false)
-        }
-        LiveEventBus.get<Register>("user").observe(requireActivity(), Observer {
-            it?.run {
-                mBinding.tvUser.text=nickname
-            }
-        })
     }
 
-    private fun user(){
-        mViewModel.user().observe(requireActivity(), Observer {
-            it?.run {
-                mBinding.tvUser.text=userInfo.nickname
-                mUserInfo=userInfo
-            }
-        })
-    }
+//    private fun user(){
+//        mViewModel.user().observe(requireActivity(), Observer {
+//            it?.run {
+//                mBinding.tvUser.text=userInfo.nickname
+//                mUserInfo=userInfo
+//            }
+//        })
+//    }
 }

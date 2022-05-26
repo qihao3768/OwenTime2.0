@@ -44,7 +44,7 @@ class ProjectSubFragment : BaseFragment(R.layout.project_sub_fragment) {
         mBinding.projectList.adapter=mAdapter
         mViewModel.getProjectDetail(param1).observe(this, Observer {
             lifecycleScope.launch {
-                mAdapter.submitData(it)
+//                mAdapter.submitData(it)
             }
 
         })

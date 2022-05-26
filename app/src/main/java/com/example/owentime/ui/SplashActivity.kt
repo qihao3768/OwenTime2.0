@@ -19,6 +19,7 @@ import com.example.owentime.*
 import com.example.owentime.base.BasePopWindow
 import com.example.owentime.databinding.ActivitySplashBinding
 import com.example.owentime.util.NoDoubleClickListener
+import com.gyf.immersionbar.ktx.immersionBar
 
 import com.hjq.shape.view.ShapeButton
 import com.tencent.mmkv.MMKV
@@ -38,6 +39,9 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         installSplashScreen()
         setContentView(R.layout.activity_splash)
+        immersionBar {
+            statusBarColor(R.color.white)
+        }
         timer= object : CountDownTimer(TIME,STEP) {
             override fun onTick(p0: Long) {
                 mBinding.skip.text=(p0/1000).toString().plus("s")

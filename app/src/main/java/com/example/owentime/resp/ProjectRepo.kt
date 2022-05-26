@@ -24,7 +24,7 @@ class SupProjectRepo():BaseRepository(){
     private val mService by lazy {
         RetrofitClient.service
     }
-    fun subProject(cid:Int): Flow<PagingData<ProjectDetail>> {
+    fun subProject(cid:Int): Flow<PagingData<GoodsBean>> {
 
         return Pager(config = PagingConfig(PAGE_SIZE), pagingSourceFactory = {
             ProjectPagingSource(mService,cid)

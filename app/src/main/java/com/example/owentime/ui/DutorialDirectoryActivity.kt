@@ -27,7 +27,7 @@ class DutorialDirectoryActivity : BaseActivity(R.layout.activity_dutorial_direct
         val cid=intent.getIntExtra("cid",0)
         mViewModel.getDirectory(cid,1).observe(this, Observer {
         lifecycleScope.launch {
-            mAdapter.submitData(it)
+//            mAdapter.submitData(it)
         }
         })
     }
