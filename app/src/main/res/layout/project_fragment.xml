@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.ProjectFragment">
+    tools:context=".ui.ProjectFragment"
+    android:background="@color/white">
    <com.hjq.bar.TitleBar
        android:id="@+id/title_tuijian"
        android:layout_width="match_parent"

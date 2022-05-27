@@ -4,13 +4,14 @@
     android:layout_height="wrap_content"
     android:padding="5dp"
     app:shape_radius="5dp"
-    app:shape_solidColor="@color/blue_400"
+    app:shape_solidColor="@color/F4500"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <TextView
         android:id="@+id/toast"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="toast"
+        android:padding="5dp"
+        android:textSize="14dp"
         android:textColor="@color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

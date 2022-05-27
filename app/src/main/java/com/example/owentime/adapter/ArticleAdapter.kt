@@ -1,11 +1,13 @@
 package com.example.owentime.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.owentime.R
+import com.example.owentime.TodoListener
 
 import com.example.owentime.bean.ArticleData
 import com.example.owentime.bean.GoodsBean
@@ -13,7 +15,7 @@ import com.example.owentime.checkLogin
 import com.example.owentime.databinding.ItemProductBinding
 import com.example.owentime.databinding.LayoutArticleBinding
 
-class ArticleAdapter(private val itemClickListener: ItemClickListener):PagingDataAdapter<GoodsBean,ArticleAdapter.ViewHolder>(COMPARATOR) {
+class ArticleAdapter(private val context: Context,private val itemClickListener: ItemClickListener):PagingDataAdapter<GoodsBean,ArticleAdapter.ViewHolder>(COMPARATOR) {
     companion object {
         private val COMPARATOR = object : DiffUtil.ItemCallback<GoodsBean>() {
             override fun areItemsTheSame(oldItem: GoodsBean, newItem: GoodsBean): Boolean {
@@ -38,13 +40,17 @@ class ArticleAdapter(private val itemClickListener: ItemClickListener):PagingDat
         val view=LayoutInflater.from(parent.context)
             .inflate(R.layout.item_product,parent,false)
         val binding= ItemProductBinding.bind(view)
-        return ViewHolder(itemClickListener,binding)
+        return ViewHolder(context,itemClickListener,binding)
     }
 
-    class ViewHolder(private val itemClickListener: ItemClickListener,private val binding:ItemProductBinding):RecyclerView.ViewHolder(binding.root){
+    class ViewHolder(private val context: Context,private val itemClickListener: ItemClickListener,private val binding:ItemProductBinding):RecyclerView.ViewHolder(binding.root){
         fun bind(item:GoodsBean?){
             item?.run {
-//                settext
+                binding.rootProduct.checkLogin(context,object : TodoListener {
+                    override fun todo() {
+                        // TODO: ......
+                    }
+                })
             }
 
         }

@@ -1,15 +1,23 @@
 package com.example.owentime.ui
 
+import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.widget.doAfterTextChanged
+import androidx.core.widget.doBeforeTextChanged
 import androidx.lifecycle.Observer
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.example.owentime.MainActivity
 import com.example.owentime.R
 import com.example.owentime.base.BaseActivity
 import com.example.owentime.bean.Register
 import com.example.owentime.databinding.ActivityLoginBinding
+import com.example.owentime.start
 import com.example.owentime.toast
 import com.example.owentime.vm.LoginViewModel
+import com.gyf.immersionbar.ktx.immersionBar
+import com.hjq.shape.view.ShapeButton
+import com.hjq.shape.view.ShapeCheckBox
 
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.tencent.mmkv.MMKV
@@ -21,29 +29,44 @@ class LoginActivity : BaseActivity(R.layout.activity_login) {
     private var mLoginOregis=0
 
     override fun initData() {
-      mBinding.loginRegis.setOnClickListener {
-          when(mLoginOregis){
-              0->{
-                  mBinding.btnLogin.text="注册"
-                  mBinding.loginRegis.text="返回登录"
-                  mLoginOregis=1
-              }
-              1->{
-                  mBinding.btnLogin.text="登录"
-                  mBinding.loginRegis.text="注册账号"
-                  mLoginOregis=0
-              }
-          }
-      }
-        mBinding.btnLogin.setOnClickListener {
-            when(mLoginOregis){
-                0->{
-                    login(mBinding.loginAccount.text.toString(),mBinding.loginPass.text.toString())
-                }
-                1->{
-
-                }
+        immersionBar {
+            statusBarColor(R.color.white)
+            keyboardEnable(false)
+            statusBarDarkFont(true)
+            fitsSystemWindows(true)
+        }
+        mBinding.tvGohome.setOnClickListener {
+            finish()
+//            start(this@LoginActivity,MainActivity().javaClass,true)
+        }
+        mBinding.btnLogin.isEnabled=false
+        var color:Int
+        mBinding.edtPhone.doAfterTextChanged {
+            mBinding.btnLogin.isEnabled=if (it.toString().isNotEmpty() && mBinding.edtSms.text.toString().isNotEmpty()){
+                color=getColor(R.color.FE9520)
+                true
+            }else{
+                color=getColor(R.color.FFC482)
+                false
             }
+            mBinding.btnLogin.shapeDrawableBuilder.setSolidColor(color).intoBackground()
+        }
+        mBinding.edtSms.doAfterTextChanged {
+            mBinding.btnLogin.isEnabled= if (it.toString().isNotEmpty() && mBinding.edtPhone.text.toString().isNotEmpty()){
+                color=getColor(R.color.FE9520)
+                true
+            }else{
+                color=getColor(R.color.FFC482)
+
+                false
+            }
+            mBinding.btnLogin.shapeDrawableBuilder.setSolidColor(color).intoBackground()
+        }
+
+        mBinding.btnLogin.setOnClickListener {
+            mBinding.loginCheck.checked("请先查看并勾选相关协议")?:return@setOnClickListener
+            // TODO: login
+            start(this@LoginActivity,PerfectActivity().javaClass,true)
         }
     }
 
@@ -64,4 +87,13 @@ class LoginActivity : BaseActivity(R.layout.activity_login) {
             }
         })
     }
+    private fun ShapeCheckBox.checked(msg:String):String?{
+        return if (this.isChecked){
+            ""
+        }else{
+            toast(msg)
+            null
+        }
+    }
+
 }

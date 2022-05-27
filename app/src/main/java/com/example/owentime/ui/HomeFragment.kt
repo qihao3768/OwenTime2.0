@@ -73,7 +73,7 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
         }
     }
     private fun initArticle(){
-        mArticleAdapter = ArticleAdapter(object : ArticleAdapter.ItemClickListener {
+        mArticleAdapter = ArticleAdapter(requireActivity(),object : ArticleAdapter.ItemClickListener {
             override fun click(url: String) {
 
                 start(requireActivity(),WebActivity().javaClass,"url",url)

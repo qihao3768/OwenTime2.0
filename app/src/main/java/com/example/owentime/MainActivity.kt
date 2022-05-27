@@ -9,7 +9,6 @@ import com.example.owentime.databinding.ActivityMainBinding
 import com.example.owentime.ui.HomeFragment
 import com.example.owentime.ui.MineFragment
 import com.example.owentime.ui.ProjectFragment
-import com.example.owentime.ui.PublicFragment
 import com.gyf.immersionbar.ktx.immersionBar
 import com.tencent.smtt.sdk.QbSdk
 
@@ -22,7 +21,7 @@ class MainActivity: BaseActivity(R.layout.activity_main) {
 
         fragments.add(HomeFragment.newInstance())
         fragments.add(ProjectFragment.newInstance())
-        fragments.add(PublicFragment.newInstance())
+//        fragments.add(PublicFragment.newInstance())
         fragments.add(MineFragment.newInstance())
         mBinding.homeVp.currentItem = 0
         mBinding.homeVp.adapter=HomePagerAdapter(fragments,supportFragmentManager,lifecycle)
@@ -49,20 +48,17 @@ class MainActivity: BaseActivity(R.layout.activity_main) {
                     }
                     mBinding.homeVp.setCurrentItem(1,false)
                 }
-                R.id.pub -> {
-                    immersionBar {
-                        statusBarColor(R.color.white)
-                        keyboardEnable(true)
-                        statusBarDarkFont(true)
-                        fitsSystemWindows(true)
-                    }
-                    mBinding.homeVp.setCurrentItem(2,false)
-                }
+
                 R.id.mine -> {
                     immersionBar {
-                        statusBarColor(R.color.white)
+                        immersionBar {
+                            statusBarColor(R.color.white)
+                            keyboardEnable(true)
+                            statusBarDarkFont(true)
+                            fitsSystemWindows(true)
+                        }
                     }
-                    mBinding.homeVp.setCurrentItem(3,false)
+                    mBinding.homeVp.setCurrentItem(2,false)
                 }
             }
             true

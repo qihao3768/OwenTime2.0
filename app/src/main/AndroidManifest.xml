@@ -3,7 +3,7 @@
     package="com.example.owentime">
 
     <application
-        android:name="com.example.owentime.App"
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -11,7 +11,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WanAndroid">
         <activity
-            android:name="com.example.owentime.ui.SplashActivity"
+            android:name=".ui.PerfectActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.TestSplashScreen.Starting">
             <intent-filter>
@@ -21,33 +24,31 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.owentime.ui.DutorialDirectoryActivity"
+            android:name=".ui.DutorialDirectoryActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.owentime.ui.TutorialActivity"
+            android:name=".ui.TutorialActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.owentime.ui.IntegralListActivity"
+            android:name=".ui.IntegralListActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.owentime.ui.LoginActivity"
+            android:name=".ui.LoginActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.owentime.web.WebActivity"
+            android:name=".web.WebActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.owentime.MainActivity"
-            android:exported="true">
-
-        </activity>
+            android:name=".MainActivity"
+            android:exported="true"></activity>
 
         <service
             android:name="com.tencent.smtt.export.external.DexClassLoaderProviderService"
             android:label="dexopt"
             android:process=":dexopt" />
     </application>
-    <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

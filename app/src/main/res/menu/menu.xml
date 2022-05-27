@@ -7,9 +7,9 @@
     <item android:id="@+id/project"
         android:title="@string/page_project"
         app:showAsAction="ifRoom"/>
-    <item android:id="@+id/pub"
-        android:title="@string/page_public"
-        app:showAsAction="ifRoom"/>
+<!--    <item android:id="@+id/pub"-->
+<!--        android:title="@string/page_public"-->
+<!--        app:showAsAction="ifRoom"/>-->
     <item android:id="@+id/mine"
         android:title="@string/page_mine"
         app:showAsAction="ifRoom"/>

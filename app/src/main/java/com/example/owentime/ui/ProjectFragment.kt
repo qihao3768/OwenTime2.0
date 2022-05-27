@@ -48,7 +48,7 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
     }
 
     private fun initArticle(){
-        mArticleAdapter = ArticleAdapter(object : ArticleAdapter.ItemClickListener {
+        mArticleAdapter = ArticleAdapter(requireActivity(),object : ArticleAdapter.ItemClickListener {
             override fun click(url: String) {
 
                 start(requireActivity(), WebActivity().javaClass,"url",url)
