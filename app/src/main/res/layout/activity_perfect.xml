@@ -25,16 +25,19 @@
         app:layout_constraintTop_toBottomOf="@+id/perfect_linet"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="15dp"/>
-    <androidx.constraintlayout.utils.widget.ImageFilterView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_head"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:src="@drawable/logo"
-        app:round="30dp"
+        android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_skip"
-        android:layout_marginTop="31.5dp"/>
+        android:layout_marginTop="31.5dp"
+        app:shapeAppearance="@style/circleImage"
+        app:strokeColor="@color/white" />
+
     <TextView
         android:id="@+id/tv_uphead"
         android:layout_width="wrap_content"
@@ -143,6 +146,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/label_his"/>
         </com.hjq.shape.layout.ShapeConstraintLayout>
         <com.hjq.shape.view.ShapeButton
+            android:id="@+id/btn_save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/string_wancheng"

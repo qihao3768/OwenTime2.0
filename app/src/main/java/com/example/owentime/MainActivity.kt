@@ -27,7 +27,7 @@ class MainActivity: BaseActivity(R.layout.activity_main) {
         mBinding.homeVp.adapter=HomePagerAdapter(fragments,supportFragmentManager,lifecycle)
         mBinding.homeVp.offscreenPageLimit= ViewPager2.OFFSCREEN_PAGE_LIMIT_DEFAULT
         mBinding.homeVp.isUserInputEnabled=false
-
+        mBinding.bottomNav.itemIconTintList=null
         mBinding.bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.home -> {
@@ -64,7 +64,7 @@ class MainActivity: BaseActivity(R.layout.activity_main) {
             true
         }
         mBinding.bottomNav.selectedItemId=0
-        initX5()
+//        initX5()
     }
 
     private fun initX5(){

@@ -23,6 +23,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -69,7 +73,7 @@ dependencies {
 
     implementation 'com.github.li-xiaojun:FlycoTabLayout:2.0.6'
     implementation 'com.tencent.tbs:tbssdk:44176'
-    implementation 'com.tencent:mmkv:1.2.13'
+    implementation 'com.tencent:mmkv:1.2.13'//替代sp
 
 //    implementation 'com.google.code.gson:gson:2.8.9'
     implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
@@ -81,8 +85,12 @@ dependencies {
 //    implementation 'com.scwang.smart:refresh-footer-ball:2.0.3'
 
     implementation('androidx.core:core-splashscreen:1.0.0-alpha02')
-    implementation('io.github.razerdp:BasePopup:3.1.8')
-    implementation('com.geyifeng.immersionbar:immersionbar:3.2.2')
+    implementation('io.github.razerdp:BasePopup:3.1.8')//一个popupwin
+    implementation('com.geyifeng.immersionbar:immersionbar:3.2.2')//状态栏处理
     implementation('com.geyifeng.immersionbar:immersionbar-ktx:3.2.2')
+    implementation('com.guolindev.permissionx:permissionx:1.6.4')//权限
+    implementation('io.github.lucksiege:pictureselector:v3.0.9')//图片选择库
+    implementation('com.github.li-xiaojun:XPopupExt:0.0.8')//三级联动
+    implementation('com.github.li-xiaojun:XPopup:2.6.3')//三级联动
 
 }
