@@ -4,6 +4,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.owentime.R
+import com.example.owentime.TodoListener
 import com.example.owentime.base.BaseFragment
 import com.example.owentime.bean.Register
 import com.example.owentime.checkLogin
@@ -30,6 +31,46 @@ class MineFragment : BaseFragment(R.layout.mine_fragment) {
             statusBarColor(R.color.white)
 //            navigationBarColor(R.color.colorPrimary)
         }
+        mBinding.layoutMyorder.checkLogin(requireActivity(), object : TodoListener {
+            override fun todo() {
+
+            }
+        })
+        mBinding.layoutTuihuo.checkLogin(requireActivity(), object : TodoListener {
+            override fun todo() {
+
+            }
+        })
+        mBinding.layoutYouhui.checkLogin(requireActivity(), object : TodoListener {
+            override fun todo() {
+
+            }
+        })
+        mBinding.layoutKefu.checkLogin(requireActivity(), object : TodoListener {
+            override fun todo() {
+
+            }
+        })
+        mBinding.layoutZhujiao.checkLogin(requireActivity(), object : TodoListener {
+            override fun todo() {
+
+            }
+        })
+        mBinding.layoutSetup.checkLogin(requireActivity(), object : TodoListener {
+            override fun todo() {
+
+            }
+        })
+        mBinding.layoutDub.checkLogin(requireActivity(), object : TodoListener {
+            override fun todo() {
+
+            }
+        })
+        mBinding.personalPhoto.checkLogin(requireActivity(), object : TodoListener {
+            override fun todo() {
+
+            }
+        })
     }
 
 //    private fun user(){

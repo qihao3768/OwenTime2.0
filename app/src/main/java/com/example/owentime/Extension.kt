@@ -128,16 +128,16 @@ fun ViewGroup.checkLogin(context:Context,todoListener: TodoListener){
 
 }
 
-//fun View.checkLogin(context:AppCompatActivity,msg: String):String{
-//    val userInfo=MMKV.defaultMMKV().decodeParcelable("user",Register::class.java)
-//    return if (userInfo==null){
-//        toast(msg)
-//        msg
-//    }else{
-//        start01(context,LoginActivity().javaClass,false)
-//        ""
-//    }
-//}
+fun View.checkLogin(context:Context,todoListener: TodoListener){
+    val userInfo=MMKV.defaultMMKV().decodeParcelable("user",Register::class.java)
+    this.setOnClickListener {
+        if (userInfo==null){
+            start01(context as Activity,LoginActivity().javaClass,false)
+        }else{
+            todoListener.todo()
+        }
+    }
+}
 fun toast(msg:String){
     val toast = Toast(App.getContext())
     val inflate =View.inflate(App.getContext(), R.layout.layout_toast,null )//自定义布局

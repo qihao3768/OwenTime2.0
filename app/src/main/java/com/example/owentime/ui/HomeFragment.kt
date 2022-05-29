@@ -40,6 +40,10 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
         }
         mBinding.titleHome.leftView.visibility=View.GONE
         mBinding.homeBanner.setBannerRound2(11F)
+        mBinding.ivHomeHead.setOnClickListener {
+            //判断是否已经登录，如果登录，跳转修改用户信息，否则跳转登录
+            start(requireActivity(),LoginActivity().javaClass,false)
+        }
         initBanner()
         initArticle()
     }
