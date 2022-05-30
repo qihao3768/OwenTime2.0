@@ -27,7 +27,7 @@ import razerdp.basepopup.BasePopupWindow
 
 class SplashActivity : AppCompatActivity() {
     private lateinit var timer:CountDownTimer
-    private val TIME=5000L
+    private val TIME=3000L
     private val STEP=1000L
     private val mBinding by viewBinding(ActivitySplashBinding::bind)
     private val mmkv=MMKV.defaultMMKV()
