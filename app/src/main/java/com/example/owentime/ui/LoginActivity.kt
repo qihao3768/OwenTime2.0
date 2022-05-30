@@ -1,5 +1,6 @@
 package com.example.owentime.ui
 
+import android.os.CountDownTimer
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -7,26 +8,28 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.core.widget.doBeforeTextChanged
 import androidx.lifecycle.Observer
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.example.owentime.MainActivity
-import com.example.owentime.R
+import com.example.owentime.*
 import com.example.owentime.base.BaseActivity
 import com.example.owentime.bean.Register
 import com.example.owentime.databinding.ActivityLoginBinding
-import com.example.owentime.start
-import com.example.owentime.toast
 import com.example.owentime.vm.LoginViewModel
+import com.example.owentime.web.WebActivity
 import com.gyf.immersionbar.ktx.immersionBar
 import com.hjq.shape.view.ShapeButton
 import com.hjq.shape.view.ShapeCheckBox
 
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.tencent.mmkv.MMKV
+import java.util.*
 
 class LoginActivity : BaseActivity(R.layout.activity_login) {
     private val mBinding by viewBinding(ActivityLoginBinding::bind)
     private val mViewModel by viewModels<LoginViewModel>()
-    private val mmkv= MMKV.defaultMMKV()
-    private var mLoginOregis=0
+    //短信倒计时
+    private lateinit var timer: CountDownTimer
+
+    private val TIME=60000L
+    private val STEP=1000L
 
     override fun initData() {
         immersionBar {
@@ -67,6 +70,33 @@ class LoginActivity : BaseActivity(R.layout.activity_login) {
             mBinding.loginCheck.checked("请先查看并勾选相关协议")?:return@setOnClickListener
             // TODO: login
             start(this@LoginActivity,PerfectActivity().javaClass,true)
+        }
+        //协议
+        mBinding.tvUserAgreement.setOnClickListener {
+            start(this@LoginActivity,WebActivity().javaClass,"url",AppConfig.SERVICE_AGREEMENT_URL)
+        }
+        mBinding.tvPrivacyAgreement.setOnClickListener {
+            start(this@LoginActivity,WebActivity().javaClass,"url",AppConfig.PRIVACY_AGREEMENT_URL)
+        }
+        mBinding.tvChildAgreement.setOnClickListener {
+            start(this@LoginActivity,WebActivity().javaClass,"url",AppConfig.CHILDREN_AGREEMENT_URL)
+        }
+
+        mBinding.tvSms.setOnClickListener {
+            timer = object : CountDownTimer(TIME,STEP) {
+                override fun onTick(p0: Long) {
+                    mBinding.tvSms.text=(p0/1000).toString().plus("s")
+                    mBinding.tvSms.isClickable=false
+                }
+
+                override fun onFinish() {
+                    mBinding.tvSms.text="重新发送"
+                    mBinding.tvSms.isClickable=true
+                }
+
+            }
+            timer.start()
+            toast("短信已发送,请注意查收")
         }
     }
 

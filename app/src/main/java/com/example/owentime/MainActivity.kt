@@ -64,7 +64,7 @@ class MainActivity: BaseActivity(R.layout.activity_main) {
             true
         }
         mBinding.bottomNav.selectedItemId=0
-//        initX5()
+        initX5()
     }
 
     private fun initX5(){

@@ -10,7 +10,7 @@
     app:shape_radius="11dp"
     app:shape_solidColor="@color/FAFAFA"
     android:paddingBottom="15dp">
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_product"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -18,7 +18,10 @@
         android:background="@drawable/test"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintDimensionRatio="h,1:1"/>
+        app:layout_constraintDimensionRatio="h,1:1"
+        app:shapeAppearance="@style/circle11Image"
+        app:strokeColor="@color/white"
+        />
     <TextView
         android:id="@+id/tv_product_title"
         android:layout_width="match_parent"
@@ -41,23 +44,23 @@
         app:layout_constraintStart_toStartOf="@+id/tv_product_desc"
         app:layout_constraintBottom_toBottomOf="parent"
         android:text="￥"
-        android:textSize="11dp"
-        android:gravity="bottom"
+        android:textSize="12dp"
+        android:gravity="center"
         android:textColor="@color/FE9520"
         android:layout_marginTop="10dp"
         app:layout_goneMarginTop="33dp"/>
     <TextView
         android:id="@+id/tv_product_price02"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/tv_product_desc"
         app:layout_constraintStart_toEndOf="@+id/tv_product_price"
         app:layout_constraintBottom_toBottomOf="@id/tv_product_price"
-        android:textSize="18dp"
+        android:textSize="16dp"
         android:textColor="@color/FE9520"
         android:layout_marginTop="10dp"
-        android:text="2,678"
-        android:gravity="bottom"/>
+        android:text="2678"
+        android:gravity="bottom" />
 
     <TextView
         android:id="@+id/tv_product_ptnum"
@@ -71,13 +74,14 @@
         android:layout_marginTop="10dp"
         android:layout_marginStart="5dp"
         android:text="1万+人购买"
-        android:gravity="bottom"/>
+        android:gravity="center"/>
 
     <TextView
         android:id="@+id/tv_product_desc"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="一车三用，低重心黄金三角一
+车多用一车三用，低重心黄金三角一
 车多用"
         android:textSize="13dp"
         android:textColor="@color/A8A8A8"

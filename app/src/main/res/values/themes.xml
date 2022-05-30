@@ -29,4 +29,9 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
     </style>
+    <style name="circle11Image">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">11dp</item>
+        <item name="cornerSizeTopRight">11dp</item>
+    </style>
 </resources>
