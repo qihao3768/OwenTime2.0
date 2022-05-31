@@ -34,4 +34,17 @@
         <item name="cornerSizeTopLeft">11dp</item>
         <item name="cornerSizeTopRight">11dp</item>
     </style>
+
+    <style name="exoPlay" parent="ExoMediaButton.Play">
+        <item name="android:src">@drawable/mexo_controls_play</item>
+        <item name="android:contentDescription">@string/exo_controls_play_description</item>
+    </style>
+
+    <style name="exoPause" parent="ExoMediaButton.Pause">
+        <item name="android:src">@drawable/mexo_controls_pause</item>
+        <item name="android:contentDescription">@string/exo_controls_pause_description</item>
+    </style>
+
+    <drawable name="mexo_controls_pause">@drawable/dub_stop</drawable>
+    <drawable name="mexo_controls_play">@drawable/dub_start</drawable>
 </resources>

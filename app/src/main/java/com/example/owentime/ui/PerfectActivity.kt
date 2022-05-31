@@ -5,11 +5,9 @@ import android.view.Gravity
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.example.owentime.R
+import com.example.owentime.*
 import com.example.owentime.base.BaseActivity
 import com.example.owentime.databinding.ActivityPerfectBinding
-import com.example.owentime.load
-import com.example.owentime.toast
 import com.example.owentime.util.CoilEngine
 import com.example.owentime.util.DateUtil
 import com.gyf.immersionbar.ktx.immersionBar
@@ -21,6 +19,7 @@ import com.lxj.xpopup.XPopup
 import com.lxj.xpopupext.listener.TimePickerListener
 import com.lxj.xpopupext.popup.TimePickerPopup
 import com.permissionx.guolindev.PermissionX
+import com.tencent.mmkv.MMKV
 import razerdp.basepopup.QuickPopupBuilder
 import razerdp.basepopup.QuickPopupConfig
 import razerdp.util.animation.AnimationHelper
@@ -34,7 +33,11 @@ class PerfectActivity : BaseActivity(R.layout.activity_perfect) {
 
     //    private val mViewModel by viewModels<LoginViewModel>()
     private val permissions = listOf(Manifest.permission.CAMERA)
+    private lateinit var mmkv: MMKV
+
     override fun initData() {
+        mmkv = MMKV.defaultMMKV()
+
         immersionBar {
             statusBarColor(R.color.FE9520)
             keyboardEnable(true)
@@ -49,6 +52,11 @@ class PerfectActivity : BaseActivity(R.layout.activity_perfect) {
         }
         mBinding.tvHis.setOnClickListener {
             showTimeDialog()
+        }
+        mBinding.btnSave.setOnClickListener {
+            // TODO:  调用更新用户信息接口
+            mmkv.encode("islogin",true)
+            start(this@PerfectActivity,MainActivity().javaClass,true)
         }
     }
 

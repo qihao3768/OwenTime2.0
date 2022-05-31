@@ -20,4 +20,7 @@
     <string name="label_his">宝宝出生日期</string>
     <string name="hint_nick">请输入宝贝昵称</string>
     <string name="string_boy">男</string>
+    <string name="string_playing">正在播放</string>
+    <string name="string_recommend">为你推荐</string>
+    <string name="string_buy">购买</string>
 </resources>

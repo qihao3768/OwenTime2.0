@@ -30,8 +30,11 @@ class LoginActivity : BaseActivity(R.layout.activity_login) {
 
     private val TIME=60000L
     private val STEP=1000L
+    private lateinit var mmkv: MMKV
 
     override fun initData() {
+        mmkv = MMKV.defaultMMKV()
+
         immersionBar {
             statusBarColor(R.color.white)
             keyboardEnable(false)
@@ -68,8 +71,13 @@ class LoginActivity : BaseActivity(R.layout.activity_login) {
 
         mBinding.btnLogin.setOnClickListener {
             mBinding.loginCheck.checked("请先查看并勾选相关协议")?:return@setOnClickListener
-            // TODO: login
-            start(this@LoginActivity,PerfectActivity().javaClass,true)
+            val target=if (mmkv.decodeBool("islogin",false)){
+                MainActivity()
+            }else{
+                PerfectActivity()
+            }
+            start(this@LoginActivity,target.javaClass,true)
+
         }
         //协议
         mBinding.tvUserAgreement.setOnClickListener {

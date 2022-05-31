@@ -49,9 +49,9 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
 
     private fun initArticle(){
         mArticleAdapter = ArticleAdapter(requireActivity(),object : ArticleAdapter.ItemClickListener {
-            override fun click(url: String) {
+            override fun click() {
 
-                start(requireActivity(), WebActivity().javaClass,"url",url)
+                start(requireActivity(), WebActivity().javaClass,false)
             }
         })
         mBinding.videoList.adapter = mArticleAdapter

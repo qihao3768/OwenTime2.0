@@ -19,8 +19,8 @@ class DutorialDirectoryActivity : BaseActivity(R.layout.activity_dutorial_direct
     private lateinit var mAdapter:ArticleAdapter
     override fun initData() {
         mAdapter = ArticleAdapter(this,object : ArticleAdapter.ItemClickListener{
-            override fun click(url: String) {
-                start(this@DutorialDirectoryActivity,WebActivity().javaClass,"url",url)
+            override fun click() {
+                start(this@DutorialDirectoryActivity,WebActivity().javaClass,false)
             }
         })
         mBinding.directoryList.adapter=mAdapter

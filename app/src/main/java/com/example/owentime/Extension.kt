@@ -117,24 +117,25 @@ fun ViewGroup.checkLogin(msg: String):String{
 }
 //检查登录
 fun ViewGroup.checkLogin(context:Context,todoListener: TodoListener){
-    val userInfo=MMKV.defaultMMKV().decodeParcelable("user",Register::class.java)
+//    val userInfo=MMKV.defaultMMKV().decodeParcelable("user",Register::class.java)
+    val islogin=MMKV.defaultMMKV().decodeBool("islogin",false)
     this.setOnClickListener {
-         if (userInfo==null){
-             start01(context as Activity,LoginActivity().javaClass,false)
-        }else{
+         if (islogin){
              todoListener.todo()
+        }else{
+             start01(context as Activity,LoginActivity().javaClass,false)
         }
     }
 
 }
 
 fun View.checkLogin(context:Context,todoListener: TodoListener){
-    val userInfo=MMKV.defaultMMKV().decodeParcelable("user",Register::class.java)
+    val islogin=MMKV.defaultMMKV().decodeBool("islogin",false)
     this.setOnClickListener {
-        if (userInfo==null){
-            start01(context as Activity,LoginActivity().javaClass,false)
-        }else{
+        if (islogin){
             todoListener.todo()
+        }else{
+            start01(context as Activity,LoginActivity().javaClass,false)
         }
     }
 }

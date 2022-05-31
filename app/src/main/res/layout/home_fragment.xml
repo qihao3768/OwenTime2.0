@@ -124,18 +124,165 @@
                     />
 
             </com.hjq.shape.layout.ShapeConstraintLayout>
+
+            <com.hjq.shape.layout.ShapeConstraintLayout
+                android:id="@+id/layout_playing"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@+id/layout_notice"
+                app:layout_constraintEnd_toEndOf="@+id/layout_notice"
+                app:layout_constraintTop_toBottomOf="@+id/layout_interval"
+                android:layout_marginTop="10dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                app:shape_radius="5dp"
+                app:shape_solidColor="@color/white"
+                android:visibility="gone">
+                <TextView
+                    android:id="@+id/label_playing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/string_playing"
+                    android:textColor="@color/black"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/iv_playing_course"
+                    android:layout_width="129dp"
+                    android:layout_height="90dp"
+                    android:layout_marginTop="14.5dp"
+                    android:scaleType="centerCrop"
+                    android:background="@drawable/aa"
+                    app:layout_constraintTop_toBottomOf="@+id/label_playing"
+                    app:shape_radius="11dp"
+                    app:shape_gradientType="radial"
+                    app:strokeColor="@color/white"
+                    app:shapeAppearance="@style/circle11Image"
+                    android:transitionName="playing"/>
+
+
+                <ImageView
+                    android:id="@+id/iv_timer"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:background="@drawable/time_icon"
+                    app:layout_constraintStart_toStartOf="@+id/tv_playing_title"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_playing_title"
+                    app:layout_goneMarginStart="129dp"
+                    android:layout_marginTop="13dp"/>
+                <TextView
+                    android:id="@+id/tv_playing_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@+id/iv_timer"
+                    app:layout_constraintTop_toTopOf="@+id/iv_timer"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_timer"
+                    android:layout_marginStart="4.5dp"
+                    android:text="02:26"
+                    android:textSize="12dp"
+                    android:textColor="#939393"/>
+                <com.hjq.shape.view.ShapeTextView
+                    android:id="@+id/playing_yueling"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#6BAFDA"
+                    android:textSize="12dp"
+                    android:gravity="center"
+                    app:shape_radius="3dp"
+                    app:shape_solidColor="#EBF7FF"
+                    android:paddingTop="3.5dp"
+                    android:paddingBottom="3.5dp"
+                    android:paddingStart="9dp"
+                    android:paddingEnd="9dp"
+                    app:layout_constraintStart_toStartOf="@+id/iv_timer"
+                    app:layout_constraintTop_toTopOf="@+id/iv_playing_course"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_playing_course"
+                    android:visibility="gone"/>
+                <TextView
+                    android:id="@+id/tv_playing_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15dp"
+                    android:textColor="#333333"
+                    app:layout_constraintStart_toEndOf="@+id/iv_playing_course"
+                    app:layout_constraintTop_toTopOf="@+id/iv_playing_course"
+                    android:layout_marginTop="7.5dp"
+                    android:layout_marginStart="16dp"
+                    android:text="第二集  阅读分享"/>
+
+                <com.hjq.shape.view.ShapeButton
+                    android:id="@+id/continue_play"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:paddingBottom="5dp"
+                    android:paddingEnd="18dp"
+                    android:paddingStart="18dp"
+                    android:paddingTop="5dp"
+                    android:text="播放"
+                    android:textSize="14dp"
+                    android:textColor="#FE9520"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_playing_course"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:shape_radius="20dp"
+                    app:shape_solidColor="@color/white"
+                    app:shape_strokeColor="@color/FE9520"
+                    app:shape_strokeWidth="0.5dp" />
+
+            </com.hjq.shape.layout.ShapeConstraintLayout>
+
+            <TextView
+                android:id="@+id/layout_interval"
+                android:layout_width="0dp"
+                android:layout_height="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layout_notice"
+                android:layout_marginTop="10dp"
+                android:background="@color/FAFAFA"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/layout_interval02"
+                android:layout_width="0dp"
+                android:layout_height="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layout_playing"
+                android:background="@color/FAFAFA" />
+
+            <TextView
+                android:id="@+id/label_recommend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/string_recommend"
+                android:textSize="18dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/home_banner"
+                app:layout_constraintTop_toBottomOf="@+id/layout_interval02"
+                android:layout_marginTop="15dp"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/home_list"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="@+id/home_banner"
                 app:layout_constraintEnd_toEndOf="@id/home_banner"
-                app:layout_constraintTop_toBottomOf="@+id/layout_notice"
+                app:layout_constraintTop_toBottomOf="@+id/label_recommend"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="2"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
                 tools:listitem="@layout/item_product"/>
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/group_playing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="layout_playing,layout_interval"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

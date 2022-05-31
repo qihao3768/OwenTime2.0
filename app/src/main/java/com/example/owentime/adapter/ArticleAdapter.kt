@@ -48,7 +48,7 @@ class ArticleAdapter(private val context: Context,private val itemClickListener:
             item?.run {
                 binding.rootProduct.checkLogin(context,object : TodoListener {
                     override fun todo() {
-                        // TODO: ......
+                       itemClickListener.click()
                     }
                 })
             }
@@ -56,6 +56,6 @@ class ArticleAdapter(private val context: Context,private val itemClickListener:
         }
     }
     interface ItemClickListener{
-        fun click(url:String)
+        fun click()
     }
 }

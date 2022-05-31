@@ -1,5 +1,8 @@
 package com.example.owentime
 
+import android.content.pm.ActivityInfo
+import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -17,8 +20,10 @@ class MainActivity: BaseActivity(R.layout.activity_main) {
 //    private val mAdapter by lazy {HomePagerAdapter(fragments,supportFragmentManager,lifecycle) }
     private var fragments:MutableList<Fragment> = mutableListOf()
 
-    override fun initData() {
 
+    override fun initData() {
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        Log.d("tag","main")
         fragments.add(HomeFragment.newInstance())
         fragments.add(ProjectFragment.newInstance())
 //        fragments.add(PublicFragment.newInstance())
