@@ -49,10 +49,9 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
 
     override fun initData() {
         mmkv = MMKV.defaultMMKV()
-        immersionBar {
-            statusBarColor(R.color.FE9520)
-//            navigationBarColor(R.color.colorPrimary)
-        }
+//        immersionBar {
+//            statusBarColor(R.color.FE9520)
+//        }
         mBinding.titleHome.leftView.visibility=View.GONE
         mBinding.homeBanner.setBannerRound2(11F)
         mBinding.ivHomeHead.setOnClickListener {

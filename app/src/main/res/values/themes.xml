@@ -34,6 +34,10 @@
         <item name="cornerSizeTopLeft">11dp</item>
         <item name="cornerSizeTopRight">11dp</item>
     </style>
+    <style name="circle11Image2">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">11dp</item>
+    </style>
 
     <style name="exoPlay" parent="ExoMediaButton.Play">
         <item name="android:src">@drawable/mexo_controls_play</item>

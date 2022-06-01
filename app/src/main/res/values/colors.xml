@@ -24,6 +24,10 @@
     <color name="F4500">#55000000</color>
     <color name="CCCCCC">#CCCCCC</color>
     <color name="FF2d2d2d">#2D2D2D</color>
+    <color name="F1A1A1A">#1A1A1A</color>
+    <color name="F545454">#545454</color>
+    <color name="F4D4D4D">#4D4D4D</color>
+    <color name="FFECD6">#FFECD6</color>
 
 
 </resources>

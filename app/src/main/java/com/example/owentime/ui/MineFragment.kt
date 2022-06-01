@@ -58,12 +58,12 @@ class MineFragment : BaseFragment(R.layout.mine_fragment) {
         })
         mBinding.layoutSetup.checkLogin(requireActivity(), object : TodoListener {
             override fun todo() {
-
+                start(requireActivity(),SettingActivity().javaClass,false)
             }
         })
         mBinding.layoutDub.checkLogin(requireActivity(), object : TodoListener {
             override fun todo() {
-
+                start(requireActivity(),WorksActivity().javaClass,false)
             }
         })
         mBinding.personalPhoto.checkLogin(requireActivity(), object : TodoListener {

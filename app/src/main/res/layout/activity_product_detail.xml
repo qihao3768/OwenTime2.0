@@ -113,7 +113,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 app:layout_constraintCircleRadius="5dp"
-                app:layout_constraintDimensionRatio="h,1:0.88"
+                app:layout_constraintDimensionRatio="h,1:0.56"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
