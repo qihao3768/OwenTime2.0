@@ -42,7 +42,37 @@
             android:layout_height="88dp"
             app:shape_solidColor="@color/white"
             app:layout_constraintTop_toBottomOf="@id/title_order"
-            app:shape_radius="11dp"/>
+            app:shape_radius="11dp">
+            <com.hjq.shape.layout.ShapeLinearLayout
+                android:id="@+id/layout_address01"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:shape_radius="11.5dp"
+                app:shape_solidColor="@color/FFECD6"
+                android:orientation="horizontal"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:gravity="center_vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="添加地址"
+                    android:textColor="@color/FE9520"
+                    android:textSize="12dp"/>
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:src="@drawable/address_jump_icon"
+                    android:layout_marginStart="5dp"/>
+            </com.hjq.shape.layout.ShapeLinearLayout>
+        </com.hjq.shape.layout.ShapeConstraintLayout>
+
     </com.hjq.shape.layout.ShapeConstraintLayout>
 
     <com.hjq.shape.layout.ShapeConstraintLayout
@@ -229,18 +259,20 @@
 
     <com.hjq.shape.view.ShapeButton
         android:id="@+id/btn_ordersubmit"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="提交订单"
         android:textColor="@color/white"
         android:textSize="17dp"
         app:shape_solidColor="@color/FFC482"
-        android:paddingStart="70dp"
-        android:paddingEnd="70dp"
+        app:layout_constraintStart_toEndOf="@id/layout_ordertotal"
+        app:layout_constraintEnd_toEndOf="parent"
         android:paddingTop="14dp"
         android:paddingBottom="14dp"
         app:shape_radius="22dp"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:layout_marginStart="15dp"
+        />
 
 </com.hjq.shape.layout.ShapeConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

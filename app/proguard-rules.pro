@@ -31,3 +31,5 @@
 -keep class com.tencent.tbs.** {
     *;
 }
+-dontwarn com.lxj.xpopup.widget.**
+-keep class com.lxj.xpopup.widget.**{*;}

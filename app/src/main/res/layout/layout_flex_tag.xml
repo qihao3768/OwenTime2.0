@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginTop="15dp">
-    <com.hjq.shape.view.ShapeRadioButton
+    <com.hjq.shape.view.ShapeTextView
         android:id="@+id/tv_specification"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

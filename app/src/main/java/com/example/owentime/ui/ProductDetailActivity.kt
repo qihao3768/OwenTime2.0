@@ -17,6 +17,7 @@ import com.example.owentime.databinding.HomeFragmentBinding
 import com.example.owentime.databinding.LayoutExitBinding
 import com.example.owentime.databinding.LayoutSpecificationsBinding
 import com.example.owentime.load
+import com.example.owentime.start
 import com.example.owentime.toast
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.gyf.immersionbar.ktx.immersionBar
@@ -127,6 +128,9 @@ class ProductDetailActivity : BaseActivity(R.layout.activity_product_detail) {
 
         spbinding.ivClose.setOnClickListener {
             buyDialog.dismiss()
+        }
+        spbinding.btnBuy.setOnClickListener {
+            start(this@ProductDetailActivity,UpOrderActivity().javaClass,false)
         }
 
         buyDialog.contentView=spbinding.root
