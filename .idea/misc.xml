@@ -37,6 +37,7 @@
         <entry key="..\:/workcode/kotlin/app/src/main/res/drawable/switch_custom_track_on.xml" value="0.2" />
         <entry key="..\:/workcode/kotlin/app/src/main/res/drawable/switch_custom_track_selector.xml" value="0.2" />
         <entry key="..\:/workcode/kotlin/app/src/main/res/layout/activity_address.xml" value="0.3640625" />
+        <entry key="..\:/workcode/kotlin/app/src/main/res/layout/activity_course_detail.xml" value="0.3640625" />
         <entry key="..\:/workcode/kotlin/app/src/main/res/layout/activity_detail.xml" value="0.3640625" />
         <entry key="..\:/workcode/kotlin/app/src/main/res/layout/activity_exoplayer.xml" value="0.1755399296835761" />
         <entry key="..\:/workcode/kotlin/app/src/main/res/layout/activity_login.xml" value="0.1" />
@@ -54,6 +55,7 @@
         <entry key="..\:/workcode/kotlin/app/src/main/res/layout/dialog_photo.xml" value="0.3640625" />
         <entry key="..\:/workcode/kotlin/app/src/main/res/layout/home_fragment.xml" value="0.264" />
         <entry key="..\:/workcode/kotlin/app/src/main/res/layout/include_exo3.xml" value="0.3640625" />
+        <entry key="..\:/workcode/kotlin/app/src/main/res/layout/item_course.xml" value="0.3640625" />
         <entry key="..\:/workcode/kotlin/app/src/main/res/layout/item_product.xml" value="0.3484375" />
         <entry key="..\:/workcode/kotlin/app/src/main/res/layout/item_video.xml" value="0.3484375" />
         <entry key="..\:/workcode/kotlin/app/src/main/res/layout/layout_article.xml" value="0.3484375" />
@@ -72,17 +74,6 @@
         <entry key="..\:/workcode/kotlin/app/src/main/res/layout/project_fragment.xml" value="0.3484375" />
         <entry key="..\:/workcode/kotlin/app/src/main/res/layout/selectbuyway_layout2.xml" value="0.3640625" />
         <entry key="..\:/workcode/kotlin/app/src/main/res/menu/menu.xml" value="0.36041666666666666" />
-        <entry key="app/src/main/res/layout/activity_exoplayer.xml" value="0.2359375" />
-        <entry key="app/src/main/res/layout/activity_more_project.xml" value="0.2359375" />
-        <entry key="app/src/main/res/layout/activity_perfect.xml" value="0.25885416666666666" />
-        <entry key="app/src/main/res/layout/activity_video_list.xml" value="0.2359375" />
-        <entry key="app/src/main/res/layout/home_fragment.xml" value="0.25885416666666666" />
-        <entry key="app/src/main/res/layout/item_product.xml" value="0.25885416666666666" />
-        <entry key="app/src/main/res/layout/item_video.xml" value="0.25885416666666666" />
-        <entry key="app/src/main/res/layout/layout_hover_header.xml" value="0.19494584837545126" />
-        <entry key="app/src/main/res/layout/layout_project.xml" value="0.25885416666666666" />
-        <entry key="app/src/main/res/layout/layout_works.xml" value="0.25885416666666666" />
-        <entry key="app/src/main/res/layout/project_fragment.xml" value="0.25885416666666666" />
       </map>
     </option>
   </component>

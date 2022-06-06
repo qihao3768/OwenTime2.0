@@ -124,12 +124,14 @@ class ProductDetailActivity : BaseActivity(R.layout.activity_product_detail) {
             val count=spbinding.tvCount.text.toString()
             spbinding.tvCount.text=count.toInt().minus(1).toString()
             spbinding.tvSub.isEnabled = "1" != count
+
         }
 
         spbinding.ivClose.setOnClickListener {
             buyDialog.dismiss()
         }
         spbinding.btnBuy.setOnClickListener {
+            buyDialog.dismiss()
             start(this@ProductDetailActivity,UpOrderActivity().javaClass,false)
         }
 
