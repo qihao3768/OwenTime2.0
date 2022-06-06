@@ -119,7 +119,7 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
             }
         })
         mBinding.homeList.adapter = mArticleAdapter
-        mBinding.homeList.layoutManager=GridLayoutManager( requireActivity(),2)
+//        mBinding.homeList.layoutManager=GridLayoutManager( requireActivity(),2)
         viewModel.getArticle().observe(viewLifecycleOwner, Observer {
                 lifecycleScope.launch {
                     mArticleAdapter.submitData(it)

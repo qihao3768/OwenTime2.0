@@ -48,7 +48,7 @@ class SplashActivity : AppCompatActivity() {
             }
 
             override fun onFinish() {
-                val show=mmkv.getBoolean("splashDialog",false)
+                val show=mmkv.decodeBool("splashDialog",false)
                 when(show){
                     true->{
                         gotoHome()
@@ -69,6 +69,7 @@ class SplashActivity : AppCompatActivity() {
             NoDoubleClickListener() {
             protected override fun onNoDoubleClick(v: View) {
                 popupWindow.dismiss()
+                System.exit(0)
 
             }
 
@@ -77,6 +78,7 @@ class SplashActivity : AppCompatActivity() {
             NoDoubleClickListener() {
             protected override fun onNoDoubleClick(v: View) {
                 popupWindow.dismiss()
+                mmkv.encode("splashDialog",true)
 //                SPUtil.put("splashDialog", true)
 //                //按照合规政策要求，确保App首次冷启动时，在用户阅读您的《隐私政策》并取得用户授权之后，才调用正式初始化函数UMConfigure.init()
 //                UMConfigure.submitPolicyGrantResult(applicationContext, true)
