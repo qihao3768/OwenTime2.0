@@ -7,13 +7,13 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import com.example.owentime.R
 
-abstract class BaseActivity(@LayoutRes private val layoutId:Int) : AppCompatActivity(layoutId) {
+abstract class BaseActivity(@LayoutRes private val layoutId:Int) : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         when(layoutId){
             R.layout.activity_exoplayer->{
-//                requestWindowFeature(Window.FEATURE_NO_TITLE)
+                requestWindowFeature(Window.FEATURE_NO_TITLE)
             }
         }
 

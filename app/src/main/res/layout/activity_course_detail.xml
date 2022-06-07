@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.CourseDetailActivity"
-    android:background="@color/F5F5F5">
+    android:background="@color/F5F5F5"
+    app:layoutDescription="@xml/activity_course_detail_scene">
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/course_left"
         android:layout_width="wrap_content"
@@ -36,17 +37,20 @@
         app:layout_constraintDimensionRatio="h,1:0.56"
         app:layout_constraintTop_toBottomOf="@id/detail_title"
         android:background="@drawable/test" />
+
     <TextView
         android:id="@+id/course_jianjie"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/iv_course_pic"
-        android:text="动物妈妈们在河边的草丛里发现了一颗蛋，动物妈妈们在河边的草丛里发现了一颗蛋"
-        app:layout_constraintStart_toEndOf="@id/course_left"
-        app:layout_constraintEnd_toStartOf="@id/layout_show"
         android:layout_marginTop="15dp"
+        android:ellipsize="end"
         android:maxLines="1"
-        android:ellipsize="end"/>
+        android:text="动物妈妈们在河边的草丛里发现了一颗蛋，动物妈妈们在河边的草丛里发现了一颗蛋"
+        android:textColor="@color/F1A1A1A"
+        android:textSize="14dp"
+        app:layout_constraintEnd_toStartOf="@id/layout_show"
+        app:layout_constraintStart_toEndOf="@id/course_left"
+        app:layout_constraintTop_toBottomOf="@id/iv_course_pic" />
     <LinearLayout
         android:id="@+id/layout_show"
         android:layout_width="wrap_content"
@@ -56,14 +60,16 @@
         android:orientation="horizontal"
         android:gravity="center_vertical">
         <TextView
+            android:id="@+id/tv_show"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="展开"
-            android:textSize="12dp"
+            android:textSize="14dp"
             android:textColor="@color/FE9520"/>
         <ImageView
-            android:layout_width="10dp"
-            android:layout_height="6dp"
+            android:id="@+id/iv_show"
+            android:layout_width="12dp"
+            android:layout_height="8dp"
             android:background="@drawable/video_down_icon"/>
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
@@ -79,4 +85,4 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>

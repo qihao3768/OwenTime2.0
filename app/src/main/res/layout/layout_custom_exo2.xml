@@ -35,7 +35,7 @@
         android:nestedScrollingEnabled="false"
         android:hapticFeedbackEnabled="false"
         app:scrubber_disabled_size="0dp"
-        android:visibility="gone"/>
+        android:visibility="visible"/>
 <!--    <androidx.core.widget.ContentLoadingProgressBar-->
 <!--        android:id="@+id/exo_progress2"-->
 <!--        style="?android:attr/progressBarStyleHorizontal"-->

@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.drake.brv.annotaion.AnimationType
 import com.drake.brv.listener.OnHoverAttachListener
 import com.drake.brv.utils.linear
 import com.drake.brv.utils.setup
@@ -88,11 +89,11 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
                     1->{
                         start(requireActivity(),ProductDetailActivity().javaClass,false)
                     }2->{
-                    start(requireActivity(),VideoListActivity().javaClass,false)
+                    start(requireActivity(),CourseDetailActivity().javaClass,false)
                     }
                 }
-
             }
+            setAnimation(AnimationType.SLIDE_BOTTOM)
         }
 
         // 可选项, 粘性监听器

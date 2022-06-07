@@ -16,14 +16,14 @@
 
     <Transition
         app:constraintSetEnd="@id/end"
-        app:constraintSetStart="@+id/start">
+        app:constraintSetStart="@id/start">
         <OnClick app:targetId="@+id/btn_splash_yes" app:clickAction="transitionToEnd"/>
 
     </Transition>
     <Transition
         app:constraintSetEnd="@id/end"
-        app:constraintSetStart="@+id/start">
+        app:constraintSetStart="@id/start">
 
-        <OnClick app:targetId="@+id/btn_splash_no" app:clickAction="transitionToEnd"/>
+        <OnClick app:targetId="@id/btn_splash_no" app:clickAction="transitionToEnd"/>
     </Transition>
 </MotionScene>

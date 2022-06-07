@@ -23,4 +23,5 @@
     <string name="string_playing">正在播放</string>
     <string name="string_recommend">为你推荐</string>
     <string name="string_buy">购买</string>
+    <string name="string_share">完成本视频内容，进行分享之后解锁下一视频。</string>
 </resources>

@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<com.hjq.shape.layout.ShapeConstraintLayout android:id="@+id/layout_playing"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
-    android:paddingTop="15dp"
-    android:paddingBottom="15dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <com.hjq.shape.layout.ShapeConstraintLayout
-        android:id="@+id/layout_playing"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:shape_radius="5dp"
-        app:shape_solidColor="@color/white">
+   android:padding="15dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:shape_radius="5dp"
+    app:shape_solidColor="@color/white"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/iv_playing_course"
@@ -25,15 +19,17 @@
             app:shape_radius="11dp"
             app:shape_gradientType="radial"
             app:strokeColor="@color/white"
-            app:shapeAppearance="@style/circle11Image"
+            app:shapeAppearance="@style/circle11Image2"
             android:transitionName="playing"/>
 
 
-        <ImageView
+        <TextView
             android:id="@+id/iv_timer"
             android:layout_width="15dp"
             android:layout_height="15dp"
-            android:background="@drawable/time_icon"
+            android:text="时长:"
+            android:textSize="12dp"
+            android:textColor="#939393"
             app:layout_constraintStart_toStartOf="@+id/tv_playing_title"
             app:layout_constraintTop_toBottomOf="@+id/tv_playing_title"
             app:layout_goneMarginStart="129dp"
@@ -82,21 +78,25 @@
             android:id="@+id/continue_play"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
             android:paddingBottom="5dp"
-            android:paddingEnd="18dp"
-            android:paddingStart="18dp"
+            android:paddingEnd="25dp"
+            android:paddingStart="25dp"
             android:paddingTop="5dp"
             android:text="播放"
             android:textSize="14dp"
-            android:textColor="#FE9520"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@id/iv_playing_course"
             app:layout_constraintEnd_toEndOf="parent"
             app:shape_radius="20dp"
-            app:shape_solidColor="@color/white"
-            app:shape_strokeColor="@color/FE9520"
-            app:shape_strokeWidth="0.5dp" />
+            app:shape_solidColor="@color/FE9520" />
+
+        <ImageView
+            android:layout_width="14dp"
+            android:layout_height="18dp"
+            android:src="@drawable/suo_icon"
+            app:layout_constraintStart_toStartOf="@id/iv_playing_course"
+            app:layout_constraintTop_toTopOf="@id/iv_playing_course"
+            app:layout_constraintEnd_toEndOf="@id/iv_playing_course"
+            app:layout_constraintBottom_toBottomOf="@id/iv_playing_course"/>
 
     </com.hjq.shape.layout.ShapeConstraintLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>

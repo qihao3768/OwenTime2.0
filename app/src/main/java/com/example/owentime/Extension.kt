@@ -31,7 +31,7 @@ fun Activity.start(activity: Activity, clazz: Class<Activity>, key: String, valu
     start03(activity, clazz, key, value)
 }
 
-fun Activity.start(activity: Activity, clazz: Class<Activity>, params:HashMap<String,Any>){
+fun Activity.start(activity: Activity, clazz: Class<Activity>, params:HashMap<String,String>){
     start02(activity, clazz, params)
 }
 
@@ -43,7 +43,7 @@ fun Fragment.start(activity: Activity, clazz: Class<Activity>, key: String, valu
    start03(activity, clazz, key, value)
 }
 
-fun Fragment.start(activity: Activity, clazz: Class<Activity>, params:HashMap<String,Any>){
+fun Fragment.start(activity: Activity, clazz: Class<Activity>, params:HashMap<String,String>){
     start02(activity, clazz, params)
 }
 
@@ -56,20 +56,10 @@ private fun start01(activity:Activity,clazz: Class<Activity>,finish:Boolean){
 
 }
 
-private fun start02(activity:Activity,clazz: Class<Activity>,params:HashMap<String,Any>){
+private fun start02(activity:Activity,clazz: Class<Activity>,params:HashMap<String,String>){
     val intent = Intent(activity,clazz)
     params.forEach {
-        when(it.value){
-            is String->{
-                intent.putExtra(it.key,it.value.toString())
-            }
-            is Int->{
-                intent.putExtra(it.key, (it.value as Int).toInt())
-            }
-            is Double->{
-                intent.putExtra(it.key, (it.value as Double).toDouble())
-            }
-        }
+        intent.putExtra(it.key,it.value.toString())
     }
     activity.startActivity(intent)
 }

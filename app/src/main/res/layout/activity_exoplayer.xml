@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.ExoplayerActivity">
+    tools:context=".ui.ExoplayerActivity"
+    android:background="@color/black">
 
     <com.hjq.bar.TitleBar
         android:id="@+id/exo_title"
@@ -19,24 +20,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/aa"
-        android:transitionName="playing"/>
+        android:transitionName="playing"
+        android:visibility="gone"/>
     <com.google.android.exoplayer2.ui.PlayerView
         android:id="@+id/exo_player"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
-        app:controller_layout_id="@layout/layout_custom_exo"
+        android:layout_height="0dp"
+        app:controller_layout_id="@layout/layout_custom_exo2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
-    <com.google.android.material.imageview.ShapeableImageView
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:background="@drawable/start_icon"
-        app:shapeAppearance="@style/circleImage"
-        app:layout_constraintStart_toStartOf="parent"
+    <ImageView
+        android:id="@+id/iv_unlock"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/icon_player_unlock"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:layout_marginEnd="10dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
