@@ -3,6 +3,7 @@ package com.example.owentime
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
+import com.drake.statelayout.StateConfig
 import com.tencent.mmkv.MMKV
 
 
@@ -31,6 +32,11 @@ class App : Application() {
         context = applicationContext
         val rootDir=MMKV.initialize(this)
         //初始化第三方SDK：1日志框架、2内存溢出检测  等等
+
+        //初始化缺省页
+        StateConfig.apply {
+            emptyLayout=R.layout.empty_order
+        }
 
     }
 }

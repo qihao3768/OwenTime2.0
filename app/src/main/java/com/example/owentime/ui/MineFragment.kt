@@ -33,7 +33,7 @@ class MineFragment : BaseFragment(R.layout.mine_fragment) {
         }
         mBinding.layoutMyorder.checkLogin(requireActivity(), object : TodoListener {
             override fun todo() {
-
+                start(requireActivity(),OrderListActivity().javaClass,false)
             }
         })
         mBinding.layoutTuihuo.checkLogin(requireActivity(), object : TodoListener {
