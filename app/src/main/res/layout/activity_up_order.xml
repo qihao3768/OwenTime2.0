@@ -36,7 +36,8 @@
             android:background="@color/transparent"
             app:titleColor="@color/white"
             app:leftTitleColor="@color/white"
-            app:leftIconTint="@color/white"/>
+            app:leftIconTint="@color/white"
+            app:lineVisible="false"/>
         <com.hjq.shape.layout.ShapeConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="88dp"

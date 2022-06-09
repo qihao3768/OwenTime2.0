@@ -10,6 +10,7 @@ import com.example.owentime.base.BaseActivity
 import com.example.owentime.bean.OrderModel
 import com.example.owentime.databinding.ActivityOrderListBinding
 import com.example.owentime.databinding.ActivityPerfectBinding
+import com.example.owentime.start
 import com.example.owentime.toast
 import com.gyf.immersionbar.ktx.immersionBar
 
@@ -32,8 +33,9 @@ class OrderListActivity : BaseActivity(R.layout.activity_order_list) {
         }else{
             mBinding.listOrder.linear().setup {
                 addType<OrderModel> { R.layout.item_order }
-                onFastClick(R.id.btn_cancel){
-                    toast(getModel<OrderModel>(modelPosition).price)
+                onFastClick(R.id.order_root){
+//                    toast(getModel<OrderModel>(modelPosition).price)
+                    start(this@OrderListActivity,OrderDetailActivity().javaClass,false)
                 }
             }.models=getData()
         }

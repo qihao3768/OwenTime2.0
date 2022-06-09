@@ -26,4 +26,9 @@
     <string name="string_share">完成本视频内容，进行分享之后解锁下一视频。</string>
     <string name="order_empty">您还没有购买相关的订单</string>
     <string name="string_ordernum">单号</string>
+    <string name="label_ordernum">下单编号</string>
+    <string name="copy">复制</string>
+    <string name="label_time">下单时间</string>
+    <string name="kefu">联系客服</string>
+    <string name="kftime">服务时间:</string>
 </resources>
