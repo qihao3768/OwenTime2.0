@@ -7,6 +7,18 @@
     android:background="#F5F5F5"
     android:orientation="vertical"
     tools:context=".ui.SettingActivity">
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/setting_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.04"/>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/setting_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.96"/>
 
    <com.hjq.bar.TitleBar
        android:id="@+id/setting_title"
@@ -16,7 +28,7 @@
        app:layout_constraintTop_toTopOf="parent"/>
     <com.hjq.shape.layout.ShapeConstraintLayout
         android:id="@+id/layout_setting_account"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:paddingTop="15dp"
@@ -24,6 +36,8 @@
         android:paddingEnd="15dp"
         android:paddingStart="15dp"
         app:layout_constraintTop_toBottomOf="@+id/setting_title"
+        app:layout_constraintStart_toEndOf="@id/setting_left"
+        app:layout_constraintEnd_toStartOf="@id/setting_right"
         app:shape_radius="10dp"
         app:shape_solidColor="@color/white">
 
@@ -120,7 +134,7 @@
 
     <com.hjq.shape.layout.ShapeConstraintLayout
         android:id="@+id/layout_setting_01"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:paddingTop="15dp"
@@ -128,9 +142,12 @@
         android:paddingEnd="15dp"
         android:paddingStart="15dp"
         app:layout_constraintTop_toBottomOf="@+id/layout_setting_safe"
-        app:shape_radius="10dp"
+        app:layout_constraintStart_toEndOf="@id/setting_left"
+        app:layout_constraintEnd_toStartOf="@id/setting_right"
+        app:shape_topLeftRadius="10dp"
+        app:shape_topRightRadius="10dp"
         app:shape_solidColor="@color/white"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <TextView
             android:layout_width="wrap_content"
@@ -154,14 +171,17 @@
 
     <com.hjq.shape.layout.ShapeConstraintLayout
         android:id="@+id/layout_setting_02"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
         android:paddingEnd="15dp"
         android:paddingStart="15dp"
         app:layout_constraintTop_toBottomOf="@+id/layout_setting_01"
-        app:shape_radius="10dp"
+        app:layout_constraintStart_toEndOf="@id/setting_left"
+        app:layout_constraintEnd_toStartOf="@id/setting_right"
+        app:shape_bottomLeftRadius="10dp"
+        app:shape_bottomRightRadius="10dp"
         app:shape_solidColor="@color/white">
 
         <ImageView
@@ -255,7 +275,7 @@
 
     <com.hjq.shape.layout.ShapeConstraintLayout
         android:id="@+id/layout_setting_05"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:paddingTop="15dp"
@@ -263,7 +283,10 @@
         android:paddingEnd="15dp"
         android:paddingStart="15dp"
         app:layout_constraintTop_toBottomOf="@+id/layout_setting_03"
-        app:shape_radius="10dp"
+        app:layout_constraintStart_toEndOf="@id/setting_left"
+        app:layout_constraintEnd_toStartOf="@id/setting_right"
+        app:shape_topLeftRadius="10dp"
+        app:shape_topRightRadius="10dp"
         app:shape_solidColor="@color/white">
 
         <ImageView
@@ -290,14 +313,16 @@
 
     <com.hjq.shape.layout.ShapeConstraintLayout
         android:id="@+id/layout_setting_06"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
         android:paddingEnd="15dp"
         android:paddingStart="15dp"
         app:layout_constraintTop_toBottomOf="@+id/layout_setting_05"
-        app:shape_radius="10dp"
+        app:layout_constraintStart_toEndOf="@id/setting_left"
+        app:layout_constraintEnd_toStartOf="@id/setting_right"
+        app:shape_radius="0dp"
         app:shape_solidColor="@color/white">
 
         <ImageView
@@ -324,14 +349,17 @@
 
     <com.hjq.shape.layout.ShapeConstraintLayout
         android:id="@+id/layout_setting_07"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
         android:paddingEnd="15dp"
         android:paddingStart="15dp"
         app:layout_constraintTop_toBottomOf="@+id/layout_setting_06"
-        app:shape_radius="10dp"
+        app:layout_constraintStart_toEndOf="@id/setting_left"
+        app:layout_constraintEnd_toStartOf="@id/setting_right"
+        app:shape_bottomLeftRadius="10dp"
+        app:shape_bottomRightRadius="10dp"
         app:shape_solidColor="@color/white">
 
         <ImageView
@@ -358,7 +386,7 @@
 
     <com.hjq.shape.layout.ShapeConstraintLayout
         android:id="@+id/layout_setting_04"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:paddingEnd="15dp"
@@ -366,6 +394,8 @@
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
         app:layout_constraintTop_toBottomOf="@+id/layout_setting_08"
+        app:layout_constraintStart_toEndOf="@id/setting_left"
+        app:layout_constraintEnd_toStartOf="@id/setting_right"
         app:shape_radius="10dp"
         app:shape_solidColor="@color/white">
 

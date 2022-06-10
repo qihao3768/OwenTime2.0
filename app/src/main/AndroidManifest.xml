@@ -9,7 +9,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.WanAndroid">
+        android:theme="@style/Theme.WanAndroid"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".ui.NoticeActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.OrderDetailActivity"
             android:exported="false" />
@@ -91,11 +95,11 @@
             android:label="dexopt"
             android:process=":dexopt" />
     </application>
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

@@ -5,8 +5,8 @@ import com.example.owentime.bean.*
 import retrofit2.http.*
 
 interface ApiService {
-    @GET("banner/json")
-    suspend fun banner():BaseResponse<List<Banner>>
+    @POST("api/main/index")
+    suspend fun banner():BaseResponse<HomeModel>
 
     @GET("article/list/{page}/json")
     suspend fun article(@Path("page") page : Int):BaseResponse<Page<ArticleData>>
@@ -45,6 +45,7 @@ interface ApiService {
 
 
     companion object {
-        const val BASE_URL = "https://wanandroid.com/"
+//        const val BASE_URL = "https://wanandroid.com/"
+        const val BASE_URL = "http://192.168.2.184:8080/"
     }
 }

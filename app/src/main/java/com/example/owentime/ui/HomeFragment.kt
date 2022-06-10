@@ -85,11 +85,13 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
     }
     private fun initBanner(){
 
-        viewModel.getBanner().observe(this) {
+        viewModel.getBanner().observe(this) { it ->
             it?.run {
                 val path = mutableListOf<String>()
-                it.forEach { banner ->
-                    path.add(banner.imagePath)
+                it.banner?.run {
+                    forEach { mBanner->
+                        path.add(mBanner.url?:"")
+                    }
                 }
                 mBinding.homeBanner.addBannerLifecycleObserver(this@HomeFragment).setAdapter(
                     object : BannerImageAdapter<String>(path) {

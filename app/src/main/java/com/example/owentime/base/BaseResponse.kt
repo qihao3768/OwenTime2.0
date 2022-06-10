@@ -5,10 +5,12 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class BaseResponse<T>(
-    @SerialName("errorCode")
-    val errorCode:Int=0,
-    @SerialName("errorMsg")
-    val errorMsg:String="",
+    @SerialName("code")
+    val code:Int=0,
+    @SerialName("message")
+    val message:String="",
     @SerialName("data")
-    val data:T
+    val data:T,
+    @SerialName("status_code")
+    val status_code:Int
     )

@@ -8,6 +8,7 @@ import com.example.owentime.base.BaseResponse
 import com.example.owentime.bean.ArticleData
 import com.example.owentime.bean.Banner
 import com.example.owentime.bean.GoodsBean
+import com.example.owentime.bean.HomeModel
 import com.example.owentime.net.RetrofitClient
 import com.example.owentime.source.ArticlePagingSource
 import kotlinx.coroutines.flow.Flow
@@ -18,7 +19,7 @@ class BannerRepo():BaseRepository(){
     private val mService by lazy {
         RetrofitClient.service
     }
-    suspend fun banner():BaseResponse<List<Banner>> = request {
+    suspend fun banner():BaseResponse<HomeModel> = request {
         mService.banner()
     }
 }

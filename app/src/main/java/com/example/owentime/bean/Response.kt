@@ -3,17 +3,17 @@ package com.example.owentime.bean
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-@Serializable
-data class Banner(
-    var id:Int,
-    var desc:String,
-    var imagePath:String,
-    var isVisible:Int,
-    var order:Int,
-    var title:String,
-    var type:Int,
-    var url:String
-)
+//@Serializable
+//data class Banner(
+//    var id:Int,
+//    var desc:String,
+//    var imagePath:String,
+//    var isVisible:Int,
+//    var order:Int,
+//    var title:String,
+//    var type:Int,
+//    var url:String
+//)
 
 @Serializable
 data class ArticleData(

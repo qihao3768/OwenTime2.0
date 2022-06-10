@@ -35,6 +35,11 @@ fun Activity.start(activity: Activity, clazz: Class<Activity>, params:HashMap<St
     start02(activity, clazz, params)
 }
 
+fun Activity.start(activity: Activity, clazz: Class<Activity>,intent: Intent){
+    intent.setClass(activity,clazz)
+    this.startActivity(intent)
+}
+
 fun Fragment.start(activity:Activity,clazz: Class<Activity>,finish: Boolean){
     start01(activity, clazz, finish)
 }

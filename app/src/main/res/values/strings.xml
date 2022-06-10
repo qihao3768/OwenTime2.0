@@ -31,4 +31,10 @@
     <string name="label_time">下单时间</string>
     <string name="kefu">联系客服</string>
     <string name="kftime">服务时间:</string>
+    <string name="share_wx">分享给好友</string>
+    <string name="share_wxquan">分享到朋友圈</string>
+    <string name="label_notice">系统通知</string>
+    <string name="open_notice">您可以在APP【我的-设置-系统通知】中，开启APP的系统通知 功能，以及前往系统APP详情开启系统通知。</string>
+    <string name="huodong_notice">促销福利、最新活动等通知</string>
+    <string name="service_notice">服务通知</string>
 </resources>

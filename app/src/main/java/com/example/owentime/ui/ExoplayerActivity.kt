@@ -14,6 +14,7 @@ import com.example.owentime.databinding.ActivityExoplayerBinding
 import com.example.owentime.databinding.LayoutExitBinding
 import com.example.owentime.databinding.LayoutShareBinding
 import com.example.owentime.toast
+import com.example.owentime.ui.WorksActivity.IntentOptions.url
 import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
@@ -25,7 +26,7 @@ import razerdp.util.animation.TranslationConfig
 
 class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
     private val mBinding by viewBinding(ActivityExoplayerBinding::bind)
-    private val mUrl="https://owen-time-test.oss-cn-beijing.aliyuncs.com/courses/cou/1643348728_216a94a44ba39a71.mp4"
+    private var mUrl="https://owen-time-test.oss-cn-beijing.aliyuncs.com/courses/cou/1643348728_216a94a44ba39a712.mp4"
     private lateinit var exoPlayer:ExoPlayer
     private var isLock = false //是否锁屏
 
@@ -41,6 +42,9 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
             hideBar(BarHide.FLAG_HIDE_BAR)
             init()
         }
+         with(WorksActivity.IntentOptions){
+             mUrl=intent.url.toString()
+         }
         //初始化播放器
         val uri = Uri.parse(mUrl)
         exoPlayer = ExoPlayer.Builder(this).build()

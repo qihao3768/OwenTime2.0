@@ -47,12 +47,12 @@ class OrderListActivity : BaseActivity(R.layout.activity_order_list) {
      */
     private fun getData():List<OrderModel>{
         return listOf(
-            OrderModel(image01,"宝贝高碳钢儿童平衡车...","10","已付款"),
-            OrderModel(image01,"宝贝高碳钢儿童平衡车...","10","已付款"),
-            OrderModel(image01,"宝贝高碳钢儿童平衡车...","100","待付款"),
-            OrderModel(image01,"宝贝高碳钢儿童平衡车...","10","待发货"),
-            OrderModel(image01,"某宝知名品牌1234xxx某宝知名品牌1234xxx","10.01","已付款"),
-            OrderModel(image01,"宝贝高碳钢儿童平衡车...","1000","已付款")
+//            OrderModel(image01,"宝贝高碳钢儿童平衡车...","10","已付款"),
+//            OrderModel(image01,"宝贝高碳钢儿童平衡车...","10","已付款"),
+//            OrderModel(image01,"宝贝高碳钢儿童平衡车...","100","待付款"),
+//            OrderModel(image01,"宝贝高碳钢儿童平衡车...","10","待发货"),
+//            OrderModel(image01,"某宝知名品牌1234xxx某宝知名品牌1234xxx","10.01","已付款"),
+//            OrderModel(image01,"宝贝高碳钢儿童平衡车...","1000","已付款")
         )
     }
 
