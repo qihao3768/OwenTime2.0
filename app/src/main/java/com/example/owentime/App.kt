@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import com.drake.statelayout.StateConfig
+import com.example.owentime.util.CrashHandler
 import com.tencent.mmkv.MMKV
 
 
@@ -37,6 +38,7 @@ class App : Application() {
         StateConfig.apply {
             emptyLayout=R.layout.empty_order
         }
+        CrashHandler.getInstance(this)
 
     }
 }

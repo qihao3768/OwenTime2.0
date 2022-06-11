@@ -23,6 +23,7 @@ import com.example.owentime.bean.NoticeBean
 import com.example.owentime.databinding.HomeFragmentBinding
 import com.example.owentime.load
 import com.example.owentime.start
+import com.example.owentime.toast
 import com.example.owentime.vm.HomeViewModel
 import com.example.owentime.web.WebActivity
 import com.google.android.material.snackbar.Snackbar
@@ -84,35 +85,39 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
         })
     }
     private fun initBanner(){
+            viewModel.getBanner().observe(this) { it ->
+                it?.run {
+                    val path = mutableListOf<String>()
+                    it.banner?.run {
+                        forEach { mBanner->
+                            path.add(mBanner.url?:"")
+                        }
+                    }
+                    mBinding.homeBanner.addBannerLifecycleObserver(this@HomeFragment).setAdapter(
+                        object : BannerImageAdapter<String>(path) {
+                            override fun onBindView(
+                                holder: BannerImageHolder,
+                                data: String,
+                                position: Int,
+                                size: Int
+                            ) {
+                                holder.imageView.load(data)
+                            }
 
-        viewModel.getBanner().observe(this) { it ->
-            it?.run {
-                val path = mutableListOf<String>()
-                it.banner?.run {
-                    forEach { mBanner->
-                        path.add(mBanner.url?:"")
+                            override fun onCreateHolder(
+                                parent: ViewGroup?,
+                                viewType: Int
+                            ): BannerImageHolder {
+                                return super.onCreateHolder(parent, viewType)
+                            }
+                        })
+                    it.product?.run {
+                        toast(size.toString())
                     }
                 }
-                mBinding.homeBanner.addBannerLifecycleObserver(this@HomeFragment).setAdapter(
-                    object : BannerImageAdapter<String>(path) {
-                        override fun onBindView(
-                            holder: BannerImageHolder,
-                            data: String,
-                            position: Int,
-                            size: Int
-                        ) {
-                            holder.imageView.load(data)
-                        }
-
-                        override fun onCreateHolder(
-                            parent: ViewGroup?,
-                            viewType: Int
-                        ): BannerImageHolder {
-                            return super.onCreateHolder(parent, viewType)
-                        }
-                    })
             }
-        }
+
+
     }
     private fun initArticle(){
         mArticleAdapter = ArticleAdapter(requireActivity(),object : ArticleAdapter.ItemClickListener {

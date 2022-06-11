@@ -1,4 +1,5 @@
 package com.example.owentime.bean
+import com.example.owentime.serializer.UserListSerializer
 import kotlinx.serialization.EncodeDefault
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
@@ -14,9 +15,10 @@ data class HomeModel(
     @SerialName("product")
     val product: List<Product>? = listOf(),
     @SerialName("studying")
-    val studying: List<String>? = listOf(),//记得改回来，先前没有数据，所以用了个string
+    val studying: List<Studying>? = listOf(Studying()),//记得改回来，先前没有数据，所以用了个string
     @SerialName("user")
-    val user: User? =User()
+    @Serializable(with = UserListSerializer::class)
+    val user: List<User>? = listOf(User())
 )
 
 @Serializable
@@ -54,21 +56,17 @@ data class Product(
 )
 
 @Serializable
-
-data class User @OptIn(ExperimentalSerializationApi::class) constructor(
-    @EncodeDefault
+data class User(
     @SerialName("code")
     val code: String? = "",
-    @EncodeDefault
     @SerialName("id")
     val id: Int? = 0,
-    @EncodeDefault
     @SerialName("phone")
     val phone: String? = "",
     @SerialName("photo")
-    @EncodeDefault
     val photo: String? = "",
     @SerialName("sex")
-    @EncodeDefault
     val sex: Int? = 0
 )
+@Serializable
+class Studying{}
