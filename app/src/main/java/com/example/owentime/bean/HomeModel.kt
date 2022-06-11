@@ -1,4 +1,10 @@
 package com.example.owentime.bean
+import coil.load
+import com.drake.brv.BindingAdapter
+import com.drake.brv.item.ItemBind
+import com.example.owentime.databinding.ItemOrderBinding
+import com.example.owentime.databinding.ItemProductBinding
+import com.example.owentime.load
 import com.example.owentime.serializer.UserListSerializer
 import kotlinx.serialization.EncodeDefault
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -53,7 +59,16 @@ data class Product(
     val priceShow: String? = "",
     @SerialName("user_count")
     val userCount: Int? = 0
-)
+):ItemBind{
+    override fun onBind(holder: BindingAdapter.BindingViewHolder) {
+        val binding= ItemProductBinding.bind(holder.itemView)
+        binding.ivProduct.load(imgHead)
+        binding.tvProductTitle.text=name
+        binding.tvProductDesc.text=introduction
+        binding.tvProductPrice02.text=priceShow
+        binding.tvProductPtnum.text=userCount.toString().plus("人购买")
+    }
+}
 
 @Serializable
 data class User(

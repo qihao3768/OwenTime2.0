@@ -14,12 +14,15 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.drake.brv.utils.linear
+import com.drake.brv.utils.setup
 import com.example.owentime.R
 import com.example.owentime.adapter.ArticleAdapter
 import com.example.owentime.adapter.NoticeAdapter
 import com.example.owentime.base.BaseFragment
 import com.example.owentime.bean.Banner
 import com.example.owentime.bean.NoticeBean
+import com.example.owentime.bean.Product
 import com.example.owentime.databinding.HomeFragmentBinding
 import com.example.owentime.load
 import com.example.owentime.start
@@ -65,7 +68,7 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
             start(requireActivity(),target.javaClass,false)
         }
         initBanner()
-        initArticle()
+
         initNotice()
         initPlaying()
 
@@ -112,27 +115,30 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
                             }
                         })
                     it.product?.run {
-                        toast(size.toString())
+                        initArticle(this)
                     }
                 }
             }
 
 
     }
-    private fun initArticle(){
-        mArticleAdapter = ArticleAdapter(requireActivity(),object : ArticleAdapter.ItemClickListener {
-            override fun click() {
-                start(requireActivity(),ProductDetailActivity().javaClass,false)
-            }
-        })
-        mBinding.homeList.adapter = mArticleAdapter
-//        mBinding.homeList.layoutManager=GridLayoutManager( requireActivity(),2)
-        viewModel.getArticle().observe(viewLifecycleOwner, Observer {
-                lifecycleScope.launch {
-                    mArticleAdapter.submitData(it)
-                }
-
-            })
+    private fun initArticle(list: List<Product>){
+//        mArticleAdapter = ArticleAdapter(requireActivity(),object : ArticleAdapter.ItemClickListener {
+//            override fun click() {
+//                start(requireActivity(),ProductDetailActivity().javaClass,false)
+//            }
+//        })
+//        mBinding.homeList.adapter = mArticleAdapter
+////        mBinding.homeList.layoutManager=GridLayoutManager( requireActivity(),2)
+//        viewModel.getArticle().observe(viewLifecycleOwner, Observer {
+//                lifecycleScope.launch {
+//                    mArticleAdapter.submitData(it)
+//                }
+//
+//            })
+        mBinding.homeList.linear().setup {
+            addType<Product> { R.layout.item_product }
+        }.models=list
     }
 
     /***

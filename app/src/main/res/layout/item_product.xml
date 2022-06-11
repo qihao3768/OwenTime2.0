@@ -14,12 +14,10 @@
         android:layout_width="110dp"
         android:layout_height="0dp"
         android:scaleType="centerCrop"
-        android:background="@drawable/test"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintDimensionRatio="h,1:1"
         app:shapeAppearance="@style/circle11Image2"
-        app:strokeColor="@color/white"
         />
     <TextView
         android:id="@+id/tv_product_title"
