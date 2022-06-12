@@ -6,6 +6,7 @@ import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RadioGroup
+import android.widget.TextView
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.owentime.R
 import com.example.owentime.base.BaseActivity
@@ -57,6 +58,12 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
          val share=include.findViewById<ImageView>(R.id.video_share)
          share.setOnClickListener {
              share()
+         }
+
+         //投屏
+         val forscreen=include.findViewById<TextView>(R.id.tv_forscreen)
+         forscreen.setOnClickListener {
+
          }
 
 

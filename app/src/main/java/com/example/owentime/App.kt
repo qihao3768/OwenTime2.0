@@ -38,7 +38,14 @@ class App : Application() {
         StateConfig.apply {
             emptyLayout=R.layout.empty_order
         }
-        CrashHandler.getInstance(this)
+//        CrashHandler.getInstance(this)
 
+
+    }
+
+    override fun attachBaseContext(base: Context) {
+        super.attachBaseContext(base)
+
+        xcrash.XCrash.init(this)
     }
 }

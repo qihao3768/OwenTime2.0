@@ -31,6 +31,7 @@ import com.example.owentime.vm.HomeViewModel
 import com.example.owentime.web.WebActivity
 import com.google.android.material.snackbar.Snackbar
 import com.gyf.immersionbar.ktx.immersionBar
+import com.jeremyliao.liveeventbus.LiveEventBus
 import com.tencent.mmkv.MMKV
 import com.youth.banner.adapter.BannerImageAdapter
 import com.youth.banner.holder.BannerImageHolder
@@ -70,7 +71,16 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
         initBanner()
 
         initNotice()
+
         initPlaying()
+
+        LiveEventBus.get<String>("login").observe(this, Observer {
+            when(it){
+                "login"->{
+                    initPlaying()
+                }
+            }
+        })
 
         setExitSharedElementCallback(object : SharedElementCallback() {
             override fun onCaptureSharedElementSnapshot(
@@ -138,6 +148,9 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
 //            })
         mBinding.homeList.linear().setup {
             addType<Product> { R.layout.item_product }
+            onFastClick(R.id.root_product){
+                toast("123")
+            }
         }.models=list
     }
 

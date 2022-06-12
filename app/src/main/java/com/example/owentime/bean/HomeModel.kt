@@ -1,4 +1,5 @@
 package com.example.owentime.bean
+import android.view.View
 import coil.load
 import com.drake.brv.BindingAdapter
 import com.drake.brv.item.ItemBind
@@ -6,6 +7,7 @@ import com.example.owentime.databinding.ItemOrderBinding
 import com.example.owentime.databinding.ItemProductBinding
 import com.example.owentime.load
 import com.example.owentime.serializer.UserListSerializer
+import com.tencent.mmkv.MMKV
 import kotlinx.serialization.EncodeDefault
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
@@ -60,6 +62,7 @@ data class Product(
     @SerialName("user_count")
     val userCount: Int? = 0
 ):ItemBind{
+    val islogin= MMKV.defaultMMKV().decodeBool("islogin",false)
     override fun onBind(holder: BindingAdapter.BindingViewHolder) {
         val binding= ItemProductBinding.bind(holder.itemView)
         binding.ivProduct.load(imgHead)
@@ -67,6 +70,13 @@ data class Product(
         binding.tvProductDesc.text=introduction
         binding.tvProductPrice02.text=priceShow
         binding.tvProductPtnum.text=userCount.toString().plus("人购买")
+        binding.btnGoto.visibility=if (islogin){
+            View.VISIBLE
+
+        }else{
+            View.INVISIBLE
+        }
+
     }
 }
 

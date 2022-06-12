@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Looper
 import android.widget.Toast
 import androidx.core.content.pm.PackageInfoCompat
+import com.example.owentime.toast
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.system.exitProcess
@@ -65,7 +66,8 @@ class CrashHandler private constructor(context: Context) : Thread.UncaughtExcept
     private fun handleException(e: Throwable) {
         Thread {
             Looper.prepare()
-            Toast.makeText(mContext, "A problem caused", Toast.LENGTH_SHORT).show()
+            toast("发生了错误")
+//            Toast.makeText(mContext, "发生了错误", Toast.LENGTH_SHORT).show()
             Looper.loop()
         }.start()
 

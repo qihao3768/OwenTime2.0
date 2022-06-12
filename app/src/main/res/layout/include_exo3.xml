@@ -51,5 +51,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/tv_forscreen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="投屏"
+        app:layout_constraintEnd_toStartOf="@id/video_share"
+        app:layout_constraintTop_toTopOf="@id/video_share"
+        android:layout_marginEnd="10dp"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

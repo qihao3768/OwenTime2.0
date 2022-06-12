@@ -9,8 +9,10 @@ import com.example.owentime.databinding.ActivitySettingBinding
 import com.example.owentime.databinding.LayoutExitBinding
 import com.example.owentime.web.WebActivity
 import com.gyf.immersionbar.ktx.immersionBar
+import com.tencent.mmkv.MMKV
 import razerdp.util.animation.AnimationHelper
 import razerdp.util.animation.TranslationConfig
+import kotlin.system.exitProcess
 
 class SettingActivity : BaseActivity(R.layout.activity_setting) {
     private val mBinding by viewBinding(ActivitySettingBinding::bind)
@@ -65,6 +67,8 @@ class SettingActivity : BaseActivity(R.layout.activity_setting) {
             when(flag) {
                 0->{
                     // TODO: 调用退出接口
+                    MMKV.defaultMMKV().remove("islogin")
+                    exitProcess(0)
                 }
                 1->{
                     // TODO: 调用注销接口
