@@ -20,6 +20,7 @@ import com.example.owentime.adapter.ArticleAdapter
 import com.example.owentime.adapter.ProjectPagerAdapter
 import com.example.owentime.base.BaseFragment
 import com.example.owentime.bean.GoodsModel
+import com.example.owentime.bean.Product
 import com.example.owentime.bean.WorksBean
 import com.example.owentime.databinding.ProjectFragmentBinding
 import com.example.owentime.imp.HoverHeaderModel
@@ -63,15 +64,15 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
     }
 
     private fun initArticle(){
-        mArticleAdapter = ArticleAdapter(requireActivity(),object : ArticleAdapter.ItemClickListener {
-            override fun click() {
-
-                start(requireActivity(), ProductDetailActivity().javaClass,false)
-            }
-        })
+//        mArticleAdapter = ArticleAdapter(requireActivity(),object : ArticleAdapter.ItemClickListener {
+//            override fun click() {
+//
+//                start(requireActivity(), ProductDetailActivity().javaClass,false)
+//            }
+//        })
 
         mBinding.videoList.linear().setup {
-            addType<GoodsModel>(R.layout.item_product)
+            addType<Product>(R.layout.item_product)
             addType<HoverHeaderModel>(R.layout.layout_hover_header)
             models=getData()
             onFastClick(R.id.tv_seemore){
@@ -140,9 +141,9 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
     private fun getTuiJian():MutableList<Any>{
         return  mutableListOf(
             HoverHeaderModel("推荐"),
-            GoodsModel("宝贝高碳钢儿童平衡车123","一车三用，低重心黄金三角一车多用一车三用，低重心黄金三角一","1,000","1w人已购买"),
-            GoodsModel("宝贝高碳钢儿童平衡车123","一车三用，低重心黄金三角一车多用一车三用，低重心黄金三角一","1,000","1w人已购买"),
-            GoodsModel("宝贝高碳钢儿童平衡车123","一车三用，低重心黄金三角一车多用一车三用，低重心黄金三角一","1,000","1w人已购买"),
+            Product("1",1,"","123456","宝贝高碳钢儿童平衡车123","123","1234",1000),
+            Product("1",1,"","123456","宝贝高碳钢儿童平衡车123","123","1234",1000),
+            Product("1",1,"","123456","宝贝高碳钢儿童平衡车123","123","1234",1000),
         )
 
     }
@@ -153,31 +154,28 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
     private fun getYiGouData():MutableList<Any>{
         return mutableListOf(
             HoverHeaderModel("游戏王国"),
-            GoodsModel("宝贝高碳钢儿童平衡车123","一车三用，低重心黄金三角一车多用一车三用，低重心黄金三角一","1,000","1w人已购买"),
-            GoodsModel("宝贝高碳钢儿童平衡车123","一车三用，低重心黄金三角一车多用一车三用，低重心黄金三角一","1,000","1w人已购买"),
-            GoodsModel("宝贝高碳钢儿童平衡车123","一车三用，低重心黄金三角一车多用一车三用，低重心黄金三角一","1,000","1w人已购买"),
+            Product("1",1,"","123456","宝贝高碳钢儿童平衡车123","123","1234",1000),
+            Product("1",1,"","123456","宝贝高碳钢儿童平衡车123","123","1234",1000),
+            Product("1",1,"","123456","宝贝高碳钢儿童平衡车123","123","1234",1000),
+            Product("1",1,"","123456","宝贝高碳钢儿童平衡车123","123","1234",1000),
 
             HoverHeaderModel("阅读动画"),
-            GoodsModel("宝贝高碳钢儿童平衡车123","一车三用，低重心黄金三角一车多用一车三用，低重心黄金三角一","1,000","1w人已购买"),
-            GoodsModel("宝贝高碳钢儿童平衡车123","一车三用，低重心黄金三角一车多用一车三用，低重心黄金三角一","1,000","1w人已购买"),
-            GoodsModel("宝贝高碳钢儿童平衡车123","一车三用，低重心黄金三角一车多用一车三用，低重心黄金三角一","1,000","1w人已购买"),
+            Product("1",1,"","一车三用，低重心黄金三角一车多用一车三用，低重心黄金三角一","宝贝高碳钢儿童平衡车123","123","1234",1000),
+            Product("1",1,"","一车三用，低重心黄金三角一车多用一车三用，低重心黄金三角一","宝贝高碳钢儿童平衡车123","123","1234",1000),
+            Product("1",1,"","一车三用，低重心黄金三角一车多用一车三用，低重心黄金三角一","宝贝高碳钢儿童平衡车123","123","1234",1000),
 
             HoverHeaderModel("创想世界"),
-            GoodsModel("宝贝高碳钢儿童平衡车123","一车三用，低重心黄金三角一车多用一车三用，低重心黄金三角一","1,000","1w人已购买"),
-            GoodsModel("宝贝高碳钢儿童平衡车123","一车三用，低重心黄金三角一车多用一车三用，低重心黄金三角一","1,000","1w人已购买"),
-            GoodsModel("宝贝高碳钢儿童平衡车123","一车三用，低重心黄金三角一车多用一车三用，低重心黄金三角一","1,000","1w人已购买"),
-            GoodsModel("宝贝高碳钢儿童平衡车123","一车三用，低重心黄金三角一车多用一车三用，低重心黄金三角一","1,000","1w人已购买"),
-            GoodsModel("宝贝高碳钢儿童平衡车123","一车三用，低重心黄金三角一车多用一车三用，低重心黄金三角一","1,000","1w人已购买"),
-            GoodsModel("宝贝高碳钢儿童平衡车123","一车三用，低重心黄金三角一车多用一车三用，低重心黄金三角一","1,000","1w人已购买"),
-            GoodsModel("宝贝高碳钢儿童平衡车123","一车三用，低重心黄金三角一车多用一车三用，低重心黄金三角一","1,000","1w人已购买"),
-            GoodsModel("宝贝高碳钢儿童平衡车123","一车三用，低重心黄金三角一车多用一车三用，低重心黄金三角一","1,000","1w人已购买"),
-            GoodsModel("宝贝高碳钢儿童平衡车123","一车三用，低重心黄金三角一车多用一车三用，低重心黄金三角一","1,000","1w人已购买"),
-            GoodsModel("宝贝高碳钢儿童平衡车123","一车三用，低重心黄金三角一车多用一车三用，低重心黄金三角一","1,000","1w人已购买"),
-            GoodsModel("宝贝高碳钢儿童平衡车123","一车三用，低重心黄金三角一车多用一车三用，低重心黄金三角一","1,000","1w人已购买"),
-            GoodsModel("宝贝高碳钢儿童平衡车123","一车三用，低重心黄金三角一车多用一车三用，低重心黄金三角一","1,000","1w人已购买"),
-            GoodsModel("宝贝高碳钢儿童平衡车123","一车三用，低重心黄金三角一车多用一车三用，低重心黄金三角一","1,000","1w人已购买"),
-            GoodsModel("宝贝高碳钢儿童平衡车123","一车三用，低重心黄金三角一车多用一车三用，低重心黄金三角一","1,000","1w人已购买"),
-            GoodsModel("宝贝高碳钢儿童平衡车123","一车三用，低重心黄金三角一车多用一车三用，低重心黄金三角一","1,000","1w人已购买"),
+            Product("1",1,"","一车三用，低","宝贝高碳钢儿童平衡车123","123","1234",1000),
+            Product("1",1,"","一车三用，低重","宝贝高碳钢儿童平衡车123","123","1234",1000),
+            Product("1",1,"","一车三用，低重心","宝贝高碳钢儿童平衡车123","123","1234",1000),
+            Product("1",1,"","一车三用，低重心黄","宝贝高碳钢儿童平衡车123","123","1234",1000),
+            Product("1",1,"","一车三用，低重心黄金","宝贝高碳钢儿童平衡车123","123","1234",1000),
+            Product("1",1,"","一车三用，低重心黄金三","宝贝高碳钢儿童平衡车123","123","1234",1000),
+            Product("1",1,"","一车三用，低重心黄金三角","宝贝高碳钢儿童平衡车123","123","1234",1000),
+            Product("1",1,"","一车三用，低重心黄金三角一","宝贝高碳钢儿童平衡车123","123","1234",1000),
+            Product("1",1,"","一车三用，低重心黄金三角一车","宝贝高碳钢儿童平衡车123","123","1234",1000),
+            Product("1",1,"","一车三用，低重心黄金三角一车多","宝贝高碳钢儿童平衡车123","123","1234",1000),
+
         )
 //        return mutableListOf<Any>().apply {
 //            for (i in 0..9) add(GoodsModel("宝贝高碳钢儿童平衡车123","一车三用，低重心黄金三角一车多用一车三用，低重心黄金三角一","1,000","1w人已购买"))

@@ -138,6 +138,9 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
 //            })
         mBinding.homeList.linear().setup {
             addType<Product> { R.layout.item_product }
+            onFastClick(R.id.root_product){
+                toast("123")
+            }
         }.models=list
     }
 
