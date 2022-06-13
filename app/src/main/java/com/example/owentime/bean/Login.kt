@@ -36,3 +36,11 @@ data class Register(
     @SerialName("username")
     var username: String = ""
 ):Parcelable
+
+@Serializable
+data class SmsModel(
+    @SerialName("expired_at")
+    val expiredAt: String? = "",
+    @SerialName("key_code")
+    val keyCode: String? = ""
+)

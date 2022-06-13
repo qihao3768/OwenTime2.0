@@ -119,7 +119,6 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
      */
     private fun getData():MutableList<Any>{
         val login=mmkv.decodeBool("islogin")
-        throw NullPointerException()
         return if (login){
             return if (getYiGouData().isEmpty()){
                 viewType=1

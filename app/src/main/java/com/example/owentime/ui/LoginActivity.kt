@@ -91,10 +91,12 @@ class LoginActivity : BaseActivity(R.layout.activity_login) {
         }
 
         mBinding.tvSms.setOnClickListener {
+            mBinding.edtPhone.checked("请输入手机号")?:return@setOnClickListener
             timer = object : CountDownTimer(TIME,STEP) {
                 override fun onTick(p0: Long) {
                     mBinding.tvSms.text=(p0/1000).toString().plus("s")
                     mBinding.tvSms.isClickable=false
+                    getSms(mBinding.edtPhone.text.toString())
                 }
 
                 override fun onFinish() {
@@ -106,6 +108,13 @@ class LoginActivity : BaseActivity(R.layout.activity_login) {
             timer.start()
             toast("短信已发送,请注意查收")
         }
+    }
+
+    private fun getSms(phone:String){
+        mViewModel.sendSms(phone).observe(this, Observer {
+            // TODO:
+
+        })
     }
 
     private fun login(username:String,password:String){

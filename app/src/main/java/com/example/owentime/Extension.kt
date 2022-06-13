@@ -7,6 +7,7 @@ import android.net.Uri
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -15,6 +16,7 @@ import androidx.fragment.app.Fragment
 import coil.load
 import com.example.owentime.bean.Register
 import com.example.owentime.ui.LoginActivity
+import com.hjq.shape.view.ShapeCheckBox
 import com.tencent.mmkv.MMKV
 import java.util.*
 
@@ -144,6 +146,14 @@ fun toast(msg:String){
 
 }
 
+ fun EditText.checked(msg:String):String?{
+    return if (this.text.isNullOrEmpty()){
+        toast(msg)
+        null
+    }else{
+        ""
+    }
+}
 interface TodoListener{
     fun todo()
 }

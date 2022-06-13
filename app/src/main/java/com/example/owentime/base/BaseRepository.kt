@@ -1,6 +1,8 @@
 package com.example.owentime.base
 
 import android.util.Log
+import com.jeremyliao.liveeventbus.LiveEventBus
+import com.jeremyliao.liveeventbus.core.LiveEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -12,12 +14,12 @@ open class BaseRepository {
         }.apply {
             Log.d("RESP","接口返回数据---------->,${this}")
             when (code) {
-                0, 200 -> this
-                -1001, 401 -> "请先登录"
-                403 -> ""
-                404 -> ""
-                500 -> ""
-                else -> ""
+                1000 -> this
+//                401 -> "请先登录"
+//                403 -> ""
+//                404 -> ""
+//                500 -> message
+                else -> LiveEventBus.get("message",String::class.java).post(message)
 
             }
         }

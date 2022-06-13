@@ -3,6 +3,7 @@ package com.example.owentime.vm
 import androidx.lifecycle.MutableLiveData
 import com.example.owentime.base.BaseViewModel
 import com.example.owentime.bean.Register
+import com.example.owentime.bean.SmsModel
 import com.example.owentime.resp.LoginRepo
 
 class LoginViewModel:BaseViewModel() {
@@ -19,5 +20,15 @@ class LoginViewModel:BaseViewModel() {
         }
         return _loginData
 
+    }
+//发送短信
+    private val _smsData=MutableLiveData<SmsModel>()
+    fun sendSms(phone:String):MutableLiveData<SmsModel>{
+        launchUI {
+            val result=_loginReps.sms(phone).data
+            _smsData.value= result
+
+        }
+        return _smsData
     }
 }

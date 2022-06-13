@@ -43,9 +43,15 @@ interface ApiService {
     @GET("article/list/{page}/json")
     suspend fun directory(@Path("page") page : Int,@Query("cid") cid:Int,@Query("order_type") orderType:Int):BaseResponse<Page<ArticleData>>
 
+//短信验证码
+    @POST("/api/sms/sendVer")
+    @FormUrlEncoded
+    suspend fun sendSms(@Field("phone") phone:String):BaseResponse<SmsModel>
+
+
 
     companion object {
 //        const val BASE_URL = "https://wanandroid.com/"
-        const val BASE_URL = "http://192.168.2.184:8080/"
+        const val BASE_URL = "http://192.168.2.184:8080"
     }
 }

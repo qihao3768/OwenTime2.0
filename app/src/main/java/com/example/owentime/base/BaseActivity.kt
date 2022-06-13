@@ -5,7 +5,10 @@ import android.os.Bundle
 import android.view.Window
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.example.owentime.R
+import com.example.owentime.toast
+import com.jeremyliao.liveeventbus.LiveEventBus
 
 abstract class BaseActivity(@LayoutRes private val layoutId:Int) : AppCompatActivity() {
 
@@ -19,6 +22,10 @@ abstract class BaseActivity(@LayoutRes private val layoutId:Int) : AppCompatActi
 
         setContentView(layoutId)
         initData()
+
+        LiveEventBus.get<String>("message").observe(this, Observer {
+            toast(it)
+        })
     }
 
     abstract fun initData()
