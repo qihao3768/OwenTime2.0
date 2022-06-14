@@ -1,22 +1,21 @@
 package com.example.owentime.bean
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import com.google.gson.annotations.SerializedName
 
-@Serializable
+
 data class Page<T>(
-    @SerialName("curPage")
+    @SerializedName("curPage")
     var curPage:Int = 1,
-    @SerialName("datas")
+    @SerializedName("datas")
     var datas:List<T> = listOf(),
-    @SerialName("offset")
+    @SerializedName("offset")
     var offset:Int = 0,
-    @SerialName("over")
+    @SerializedName("over")
     var over:Boolean = false,
-    @SerialName("pageCount")
+    @SerializedName("pageCount")
     var pageCount:Int = 1,
-    @SerialName("size")
+    @SerializedName("size")
     var size:Int = 0,
-    @SerialName("total")
+    @SerializedName("total")
     var total:Int = 0
 )

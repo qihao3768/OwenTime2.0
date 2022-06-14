@@ -13,8 +13,8 @@ class MineViewModel : BaseViewModel() {
 
     fun user(): MutableLiveData<User> {
         launchUI {
-            val result=_loginReps.user().data
-            _loginData.value= result!!
+//            val result=_loginReps.user().data
+//            _loginData.value= result!!
 
         }
         return _loginData

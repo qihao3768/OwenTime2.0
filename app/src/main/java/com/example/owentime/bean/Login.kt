@@ -1,46 +1,42 @@
 package com.example.owentime.bean
 import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
-import kotlinx.serialization.Serializable
 
-import kotlinx.serialization.SerialName
-
-
-@Serializable
 @Parcelize
 data class Register(
-    @SerialName("admin")
+    @SerializedName("admin")
     var admin: Boolean = false,
-    @SerialName("chapterTops")
+    @SerializedName("chapterTops")
     var chapterTops: List<String> = listOf(),
-    @SerialName("coinCount")
+    @SerializedName("coinCount")
     var coinCount: Int = 0,
-    @SerialName("collectIds")
+    @SerializedName("collectIds")
     var collectIds: List<String> = listOf(),
-    @SerialName("email")
+    @SerializedName("email")
     var email: String = "",
-    @SerialName("icon")
+    @SerializedName("icon")
     var icon: String = "",
-    @SerialName("id")
+    @SerializedName("id")
     var id: Int = 0,
-    @SerialName("nickname")
+    @SerializedName("nickname")
     var nickname: String = "",
-    @SerialName("password")
+    @SerializedName("password")
     var password: String = "",
-    @SerialName("publicName")
+    @SerializedName("publicName")
     var publicName: String = "",
-    @SerialName("token")
+    @SerializedName("token")
     var token: String = "",
-    @SerialName("type")
+    @SerializedName("type")
     var type: Int = 0,
-    @SerialName("username")
+    @SerializedName("username")
     var username: String = ""
 ):Parcelable
 
-@Serializable
+
 data class SmsModel(
-    @SerialName("expired_at")
+    @SerializedName("expired_at")
     val expiredAt: String? = "",
-    @SerialName("key_code")
+    @SerializedName("key_code")
     val keyCode: String? = ""
 )

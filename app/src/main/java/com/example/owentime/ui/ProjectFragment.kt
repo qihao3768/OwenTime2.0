@@ -1,35 +1,21 @@
 package com.example.owentime.ui
 
 import android.content.Intent
-import android.view.View
 import androidx.core.app.ActivityOptionsCompat
-import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.viewpager2.widget.ViewPager2
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.drake.brv.annotaion.AnimationType
-import com.drake.brv.listener.OnHoverAttachListener
 import com.drake.brv.utils.linear
 import com.drake.brv.utils.setup
 import com.example.owentime.R
-import com.example.owentime.adapter.ArticleAdapter
-import com.example.owentime.adapter.ProjectPagerAdapter
 import com.example.owentime.base.BaseFragment
-import com.example.owentime.bean.GoodsModel
 import com.example.owentime.bean.Product
-import com.example.owentime.bean.WorksBean
 import com.example.owentime.databinding.ProjectFragmentBinding
 import com.example.owentime.imp.HoverHeaderModel
 import com.example.owentime.start
 import com.example.owentime.vm.ProjectViewModel
-import com.example.owentime.web.WebActivity
 import com.tencent.mmkv.MMKV
-import kotlinx.coroutines.launch
-import java.lang.NullPointerException
 
 class ProjectFragment : BaseFragment(R.layout.project_fragment) {
 
@@ -40,10 +26,12 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
     private val viewModel by viewModels<ProjectViewModel>()
     private val mBinding by viewBinding(ProjectFragmentBinding::bind)
     private val mFragmens= mutableListOf<Fragment>()
-    private lateinit var mArticleAdapter:ArticleAdapter
+
     private val mmkv=MMKV.defaultMMKV()
 
     private var viewType:Int=0//0 推荐 1 已购
+
+    private var pic="https://owen-time.oss-cn-beijing.aliyuncs.com/products/pic/1653710525_9858478fbce7e544.png"
 
     override fun initData()  {
         initArticle()
@@ -135,9 +123,9 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
     private fun getTuiJian():MutableList<Any>{
         return  mutableListOf(
             HoverHeaderModel("推荐"),
-            Product("1",1,"","123456","宝贝高碳钢儿童平衡车123","123","1234",1000),
-            Product("1",1,"","123456","宝贝高碳钢儿童平衡车123","123","1234",1000),
-            Product("1",1,"","123456","宝贝高碳钢儿童平衡车123","123","1234",1000),
+            Product("1",1,pic,"123456","宝贝高碳钢儿童平衡车123","123","1234",1000),
+            Product("1",1,pic,"123456","宝贝高碳钢儿童平衡车123","123","1234",1000),
+            Product("1",1,pic,"123456","宝贝高碳钢儿童平衡车123","123","1234",1000),
         )
 
     }
@@ -148,27 +136,27 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
     private fun getYiGouData():MutableList<Any>{
         return mutableListOf(
             HoverHeaderModel("游戏王国"),
-            Product("1",1,"","123456","宝贝高碳钢儿童平衡车123","123","1234",1000),
-            Product("1",1,"","123456","宝贝高碳钢儿童平衡车123","123","1234",1000),
-            Product("1",1,"","123456","宝贝高碳钢儿童平衡车123","123","1234",1000),
-            Product("1",1,"","123456","宝贝高碳钢儿童平衡车123","123","1234",1000),
+            Product("1",1,pic,"123456","宝贝高碳钢儿童平衡车123","123","1234",1000),
+            Product("1",1,pic,"123456","宝贝高碳钢儿童平衡车123","123","1234",1000),
+            Product("1",1,pic,"123456","宝贝高碳钢儿童平衡车123","123","1234",1000),
+            Product("1",1,pic,"123456","宝贝高碳钢儿童平衡车123","123","1234",1000),
 
             HoverHeaderModel("阅读动画"),
-            Product("1",1,"","一车三用，低重心黄金三角一车多用一车三用，低重心黄金三角一","宝贝高碳钢儿童平衡车123","123","1234",1000),
-            Product("1",1,"","一车三用，低重心黄金三角一车多用一车三用，低重心黄金三角一","宝贝高碳钢儿童平衡车123","123","1234",1000),
-            Product("1",1,"","一车三用，低重心黄金三角一车多用一车三用，低重心黄金三角一","宝贝高碳钢儿童平衡车123","123","1234",1000),
+            Product("1",1,pic,"一车三用，低重心黄金三角一车多用一车三用，低重心黄金三角一","宝贝高碳钢儿童平衡车123","123","1234",1000),
+            Product("1",1,pic,"一车三用，低重心黄金三角一车多用一车三用，低重心黄金三角一","宝贝高碳钢儿童平衡车123","123","1234",1000),
+            Product("1",1,pic,"一车三用，低重心黄金三角一车多用一车三用，低重心黄金三角一","宝贝高碳钢儿童平衡车123","123","1234",1000),
 
             HoverHeaderModel("创想世界"),
-            Product("1",1,"","一车三用，低","宝贝高碳钢儿童平衡车123","123","1234",1000),
-            Product("1",1,"","一车三用，低重","宝贝高碳钢儿童平衡车123","123","1234",1000),
-            Product("1",1,"","一车三用，低重心","宝贝高碳钢儿童平衡车123","123","1234",1000),
-            Product("1",1,"","一车三用，低重心黄","宝贝高碳钢儿童平衡车123","123","1234",1000),
-            Product("1",1,"","一车三用，低重心黄金","宝贝高碳钢儿童平衡车123","123","1234",1000),
-            Product("1",1,"","一车三用，低重心黄金三","宝贝高碳钢儿童平衡车123","123","1234",1000),
-            Product("1",1,"","一车三用，低重心黄金三角","宝贝高碳钢儿童平衡车123","123","1234",1000),
-            Product("1",1,"","一车三用，低重心黄金三角一","宝贝高碳钢儿童平衡车123","123","1234",1000),
-            Product("1",1,"","一车三用，低重心黄金三角一车","宝贝高碳钢儿童平衡车123","123","1234",1000),
-            Product("1",1,"","一车三用，低重心黄金三角一车多","宝贝高碳钢儿童平衡车123","123","1234",1000),
+            Product("1",1,pic,"一车三用，低","宝贝高碳钢儿童平衡车123","123","1234",1000),
+            Product("1",1,pic,"一车三用，低重","宝贝高碳钢儿童平衡车123","123","1234",1000),
+            Product("1",1,pic,"一车三用，低重心","宝贝高碳钢儿童平衡车123","123","1234",1000),
+            Product("1",1,pic,"一车三用，低重心黄","宝贝高碳钢儿童平衡车123","123","1234",1000),
+            Product("1",1,pic,"一车三用，低重心黄金","宝贝高碳钢儿童平衡车123","123","1234",1000),
+            Product("1",1,pic,"一车三用，低重心黄金三","宝贝高碳钢儿童平衡车123","123","1234",1000),
+            Product("1",1,pic,"一车三用，低重心黄金三角","宝贝高碳钢儿童平衡车123","123","1234",1000),
+            Product("1",1,pic,"一车三用，低重心黄金三角一","宝贝高碳钢儿童平衡车123","123","1234",1000),
+            Product("1",1,pic,"一车三用，低重心黄金三角一车","宝贝高碳钢儿童平衡车123","123","1234",1000),
+            Product("1",1,pic,"一车三用，低重心黄金三角一车多","宝贝高碳钢儿童平衡车123","123","1234",1000),
 
         )
 //        return mutableListOf<Any>().apply {

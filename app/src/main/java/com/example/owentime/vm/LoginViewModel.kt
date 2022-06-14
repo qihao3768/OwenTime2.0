@@ -13,11 +13,11 @@ class LoginViewModel:BaseViewModel() {
 //    val article get() =_articleData
 
     fun login(username:String,password:String): MutableLiveData<Register> {
-        launchUI {
-            val result=_loginReps.login(username, password).data
-            _loginData.value= result
-
-        }
+//        launchUI {
+//            val result=_loginReps.login(username, password).data
+//            _loginData.value= result
+//
+//        }
         return _loginData
 
     }

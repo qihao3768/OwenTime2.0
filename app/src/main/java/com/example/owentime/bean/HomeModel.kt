@@ -3,63 +3,54 @@ import android.view.View
 import coil.load
 import com.drake.brv.BindingAdapter
 import com.drake.brv.item.ItemBind
-import com.example.owentime.databinding.ItemOrderBinding
 import com.example.owentime.databinding.ItemProductBinding
-import com.example.owentime.load
-import com.example.owentime.serializer.UserListSerializer
+
+import com.google.gson.annotations.SerializedName
 import com.tencent.mmkv.MMKV
-import kotlinx.serialization.EncodeDefault
-import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.Serializable
-
-import kotlinx.serialization.SerialName
 
 
 
-@Serializable
 data class HomeModel(
-    @SerialName("banner")
+    @SerializedName("banner")
     val banner: List<Banner>? = listOf(),
-    @SerialName("product")
+    @SerializedName("product")
     val product: List<Product>? = listOf(),
-    @SerialName("studying")
+    @SerializedName("studying")
     val studying: List<Studying>? = listOf(Studying()),//记得改回来，先前没有数据，所以用了个string
-    @SerialName("user")
-    @Serializable(with = UserListSerializer::class)
+    @SerializedName("user")
+//    @Serializable(with = UserListSerializer::class)
     val user: List<User>? = listOf(User())
 )
 
-@Serializable
 data class Banner(
-    @SerialName("activity_links")
+    @SerializedName("activity_links")
     val activityLinks: String? = "",
-    @SerialName("id")
+    @SerializedName("id")
     val id: Int? = 0,
-    @SerialName("jump_type")
+    @SerializedName("jump_type")
     val jumpType: Int? = 0,
-    @SerialName("title")
+    @SerializedName("title")
     val title: String? = "",
-    @SerialName("url")
+    @SerializedName("url")
     val url: String? = ""
 )
 
-@Serializable
 data class Product(
-    @SerialName("code")
+    @SerializedName("code")
     val code: String? = "",
-    @SerialName("id")
+    @SerializedName("id")
     val id: Int? = 0,
-    @SerialName("img_head")
+    @SerializedName("img_head")
     val imgHead: String? = "",
-    @SerialName("introduction")
+    @SerializedName("introduction")
     val introduction: String? = "",
-    @SerialName("name")
+    @SerializedName("name")
     val name: String? = "",
-    @SerialName("price_actual")
+    @SerializedName("price_actual")
     val priceActual: String? = "",
-    @SerialName("price_show")
+    @SerializedName("price_show")
     val priceShow: String? = "",
-    @SerialName("user_count")
+    @SerializedName("user_count")
     val userCount: Int? = 0
 ):ItemBind{
     val islogin= MMKV.defaultMMKV().decodeBool("islogin",false)
@@ -80,18 +71,17 @@ data class Product(
     }
 }
 
-@Serializable
 data class User(
-    @SerialName("code")
+    @SerializedName("code")
     val code: String? = "",
-    @SerialName("id")
+    @SerializedName("id")
     val id: Int? = 0,
-    @SerialName("phone")
+    @SerializedName("phone")
     val phone: String? = "",
-    @SerialName("photo")
+    @SerializedName("photo")
     val photo: String? = "",
-    @SerialName("sex")
+    @SerializedName("sex")
     val sex: Int? = 0
 )
-@Serializable
+
 class Studying{}

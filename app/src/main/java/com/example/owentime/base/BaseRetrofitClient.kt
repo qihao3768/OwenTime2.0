@@ -6,13 +6,14 @@ import com.franmontiel.persistentcookiejar.ClearableCookieJar
 import com.franmontiel.persistentcookiejar.PersistentCookieJar
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
-import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.json.Json
+//import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+//import kotlinx.serialization.ExperimentalSerializationApi
+//import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 
@@ -45,18 +46,19 @@ abstract class BaseRetrofitClient {
 
     abstract fun handleBuilder(builder: OkHttpClient.Builder)
 
-    private val json = Json {
-        encodeDefaults = true
-        coerceInputValues = true
-        ignoreUnknownKeys = true
-    }
+//    private val json = Json {
+//        encodeDefaults = true
+//        coerceInputValues = true
+//        ignoreUnknownKeys = true
+//    }
 
-    @OptIn(ExperimentalSerializationApi::class)
+//    @OptIn(ExperimentalSerializationApi::class)
     open fun <Service> getService(serviceClass: Class<Service>, baseUrl: String): Service {
         val contentType = "application/json".toMediaType()
         return Retrofit.Builder()
                 .client(client)
-                .addConverterFactory(json.asConverterFactory(contentType))
+//                .addConverterFactory(json.asConverterFactory(contentType))
+            .addConverterFactory(GsonConverterFactory.create())
                 .baseUrl(baseUrl)
                 .build()
                 .create(serviceClass)

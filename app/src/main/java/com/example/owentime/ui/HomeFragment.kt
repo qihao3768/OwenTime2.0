@@ -1,6 +1,5 @@
 package com.example.owentime.ui
 
-import android.app.ActivityOptions
 import android.content.Intent
 import android.graphics.Matrix
 import android.graphics.RectF
@@ -11,16 +10,12 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.app.SharedElementCallback
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.GridLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.drake.brv.utils.linear
 import com.drake.brv.utils.setup
 import com.example.owentime.R
-import com.example.owentime.adapter.ArticleAdapter
 import com.example.owentime.adapter.NoticeAdapter
 import com.example.owentime.base.BaseFragment
-import com.example.owentime.bean.Banner
 import com.example.owentime.bean.NoticeBean
 import com.example.owentime.bean.Product
 import com.example.owentime.databinding.HomeFragmentBinding
@@ -28,17 +23,10 @@ import com.example.owentime.load
 import com.example.owentime.start
 import com.example.owentime.toast
 import com.example.owentime.vm.HomeViewModel
-import com.example.owentime.web.WebActivity
-import com.google.android.material.snackbar.Snackbar
-import com.gyf.immersionbar.ktx.immersionBar
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.tencent.mmkv.MMKV
 import com.youth.banner.adapter.BannerImageAdapter
 import com.youth.banner.holder.BannerImageHolder
-import com.youth.banner.listener.OnBannerListener
-import com.youth.banner.transformer.ZoomOutPageTransformer
-import com.youth.banner.util.LogUtils
-import kotlinx.coroutines.launch
 
 class HomeFragment : BaseFragment(R.layout.home_fragment){
 
@@ -48,7 +36,7 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
 
     private val viewModel by viewModels<HomeViewModel>()
     private val mBinding by viewBinding (HomeFragmentBinding::bind)
-    private lateinit var mArticleAdapter: ArticleAdapter
+
     private lateinit var mmkv: MMKV
 
 
@@ -148,8 +136,12 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
 //            })
         mBinding.homeList.linear().setup {
             addType<Product> { R.layout.item_product }
-            onFastClick(R.id.root_product){
-                toast("123")
+            onClick(R.id.root_product){
+                if (mmkv.decodeBool("islogin")){
+                    start(requireActivity(),ProductDetailActivity().javaClass,false)
+                }else{
+                    start(requireActivity(),LoginActivity().javaClass,false)
+                }
             }
         }.models=list
     }

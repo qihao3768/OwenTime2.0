@@ -1,16 +1,15 @@
 package com.example.owentime.base
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import com.google.gson.annotations.SerializedName
 
-@Serializable
+
 data class BaseResponse<T>(
-    @SerialName("code")
+    @SerializedName("code")
     val code:Int=0,
-    @SerialName("message")
+    @SerializedName("message")
     val message:String="",
-    @SerialName("data")
+    @SerializedName("data")
     val data:T,
-    @SerialName("status_code")
+    @SerializedName("status_code")
     val status_code:Int
     )

@@ -10,20 +10,12 @@ class LoginRepo:BaseRepository(){
     private val mService by lazy {
         RetrofitClient.service
     }
-    suspend fun login(username:String,password:String): BaseResponse<Register> = request {
-        mService.login(username,password)
-    }
+//    suspend fun login(username:String,password:String): BaseResponse<Register> = request {
+//        mService.login(username,password)
+//    }
 
     suspend fun sms(phone:String): BaseResponse<SmsModel> = request {
         mService.sendSms(phone)
     }
 }
 
-class RegisRepo:BaseRepository(){
-    private val mService by lazy {
-        RetrofitClient.service
-    }
-    suspend fun register(username:String,password:String,repassword:String): BaseResponse<Register> = request {
-        mService.register(username,password,repassword)
-    }
-}
