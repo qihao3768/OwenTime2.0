@@ -1,19 +1,17 @@
 package com.example.owentime.base
 
-import com.example.owentime.App
 import com.example.owentime.BuildConfig
-import com.franmontiel.persistentcookiejar.ClearableCookieJar
-import com.franmontiel.persistentcookiejar.PersistentCookieJar
-import com.franmontiel.persistentcookiejar.cache.SetCookieCache
-import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
-//import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-//import kotlinx.serialization.ExperimentalSerializationApi
-//import kotlinx.serialization.json.Json
-import okhttp3.MediaType.Companion.toMediaType
+
+import com.example.owentime.jsonadapter.StringToObjAdapter
+import com.example.owentime.net.Interceptor
+
+import com.squareup.moshi.Moshi
+
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+
+import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 
 
@@ -24,12 +22,12 @@ abstract class BaseRetrofitClient {
     }
 
     private val client: OkHttpClient by lazy {
-        val cookieJar: ClearableCookieJar =
-            PersistentCookieJar(SetCookieCache(), SharedPrefsCookiePersistor(App.getContext()))
+//        val cookieJar: ClearableCookieJar =
+//            PersistentCookieJar(SetCookieCache(), SharedPrefsCookiePersistor(App.getContext()))
         val builder = OkHttpClient.Builder()
                 .addNetworkInterceptor(getHttpLoggingInterceptor())
+            .addInterceptor(Interceptor())
                 .connectTimeout(TIME_OUT.toLong(), TimeUnit.SECONDS)
-            .cookieJar(cookieJar)
         handleBuilder(builder)
         builder.build()
     }
@@ -54,11 +52,12 @@ abstract class BaseRetrofitClient {
 
 //    @OptIn(ExperimentalSerializationApi::class)
     open fun <Service> getService(serviceClass: Class<Service>, baseUrl: String): Service {
-        val contentType = "application/json".toMediaType()
-        return Retrofit.Builder()
+    val moshi = Moshi.Builder().add(StringToObjAdapter()).build()
+    return Retrofit.Builder()
                 .client(client)
 //                .addConverterFactory(json.asConverterFactory(contentType))
-            .addConverterFactory(GsonConverterFactory.create())
+//            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
                 .baseUrl(baseUrl)
                 .build()
                 .create(serviceClass)

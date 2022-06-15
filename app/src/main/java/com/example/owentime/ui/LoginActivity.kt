@@ -1,5 +1,6 @@
 package com.example.owentime.ui
 
+import android.content.Intent
 import android.os.CountDownTimer
 import android.widget.EditText
 import android.widget.Toast
@@ -10,8 +11,9 @@ import androidx.lifecycle.Observer
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.owentime.*
 import com.example.owentime.base.BaseActivity
-import com.example.owentime.bean.Register
+
 import com.example.owentime.databinding.ActivityLoginBinding
+import com.example.owentime.util.IntentExtraString
 import com.example.owentime.vm.LoginViewModel
 import com.example.owentime.web.WebActivity
 import com.gyf.immersionbar.ktx.immersionBar
@@ -32,6 +34,13 @@ class LoginActivity : BaseActivity(R.layout.activity_login) {
     private val STEP=1000L
     private lateinit var mmkv: MMKV
 
+    private var mKeyCode:String=""
+
+    private lateinit var mToken:String
+
+    companion object IntentOptions{
+        var Intent.token by IntentExtraString("token")
+    }
     override fun initData() {
         mmkv = MMKV.defaultMMKV()
 
@@ -71,13 +80,16 @@ class LoginActivity : BaseActivity(R.layout.activity_login) {
 
         mBinding.btnLogin.setOnClickListener {
             mBinding.loginCheck.checked("请先查看并勾选相关协议")?:return@setOnClickListener
-            val target=if (mmkv.decodeBool("islogin",false)){
-                MainActivity()
-            }else{
-                PerfectActivity()
+            if (mKeyCode.isNullOrBlank()){
+                toast("请先获取短信验证码")
+                return@setOnClickListener
             }
-            start(this@LoginActivity,target.javaClass,true)
-
+            val phone=mBinding.edtPhone.text.toString()
+            val sms=mBinding.edtSms.text.toString()
+            login(phone,sms)
+        }
+        mBinding.ivPhoneclear.setOnClickListener {
+            mBinding.edtPhone.clearComposingText()
         }
         //协议
         mBinding.tvUserAgreement.setOnClickListener {
@@ -92,11 +104,12 @@ class LoginActivity : BaseActivity(R.layout.activity_login) {
 
         mBinding.tvSms.setOnClickListener {
             mBinding.edtPhone.checked("请输入手机号")?:return@setOnClickListener
+            mBinding.edtPhone.checkLength(11,"请输入11位手机号")?:return@setOnClickListener
             timer = object : CountDownTimer(TIME,STEP) {
                 override fun onTick(p0: Long) {
                     mBinding.tvSms.text=(p0/1000).toString().plus("s")
                     mBinding.tvSms.isClickable=false
-                    getSms(mBinding.edtPhone.text.toString())
+
                 }
 
                 override fun onFinish() {
@@ -106,34 +119,46 @@ class LoginActivity : BaseActivity(R.layout.activity_login) {
 
             }
             timer.start()
+            getSms(mBinding.edtPhone.text.toString())
             toast("短信已发送,请注意查收")
         }
     }
 
+    /***
+     * 获取验证码
+     */
     private fun getSms(phone:String){
         mViewModel.sendSms(phone).observe(this, Observer {
             // TODO:
-
-        })
-    }
-
-    private fun login(username:String,password:String){
-        mViewModel.login(username, password).observe(this, Observer {
-            if (it != null) {
-                toast("登录成功")
-                MMKV.defaultMMKV().encode("user",it)
-                LiveEventBus.get<Register>("user").post(it)
-                finish()
+            it?.run {
+                mKeyCode= keyCode?:""
             }
         })
     }
-    private fun register(username:String,password:String){
-        mViewModel.login(username, password).observe(this, Observer {
-            if (it != null) {
-                Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show()
+
+    /***
+     * 登录
+     */
+    private fun login(phone: String,sms:String){
+
+        mViewModel.login(phone, sms, mKeyCode).observe(this, Observer {
+            it?.run {
+//                mToken=accessToken?:""
+                intent.token=accessToken?:""
+                when(infoFlag){
+                    0->{
+
+                        start(this@LoginActivity,PerfectActivity().javaClass,intent)
+                    }
+                    1->{
+                        start(this@LoginActivity,MainActivity().javaClass,intent)
+                    }
+                }
+
             }
         })
     }
+
     private fun ShapeCheckBox.checked(msg:String):String?{
         return if (this.isChecked){
             ""

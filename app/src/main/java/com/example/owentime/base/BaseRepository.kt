@@ -19,7 +19,9 @@ open class BaseRepository {
 //                403 -> ""
 //                404 -> ""
 //                500 -> message
-                else -> LiveEventBus.get("message",String::class.java).post(message)
+
+//                LiveEventBus.get("message",String::class.java).post(message)
+                else -> {}
 
             }
         }

@@ -11,12 +11,12 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+
 import androidx.fragment.app.Fragment
 import coil.load
-import com.example.owentime.bean.Register
+//import com.example.owentime.bean.Register
 import com.example.owentime.ui.LoginActivity
-import com.hjq.shape.view.ShapeCheckBox
+
 import com.tencent.mmkv.MMKV
 import java.util.*
 
@@ -103,15 +103,15 @@ fun View.click(listener: (view: View) -> Unit) {
     }
 }
 
-fun ViewGroup.checkLogin(msg: String):String{
-    val userInfo=MMKV.defaultMMKV().decodeParcelable("user",Register::class.java)
-    return if (userInfo==null){
-        toast(msg)
-        msg
-    }else{
-        ""
-    }
-}
+//fun ViewGroup.checkLogin(msg: String):String{
+//    val userInfo=MMKV.defaultMMKV().decodeParcelable("user",Register::class.java)
+//    return if (userInfo==null){
+//        toast(msg)
+//        msg
+//    }else{
+//        ""
+//    }
+//}
 //检查登录
 fun ViewGroup.checkLogin(context:Context,todoListener: TodoListener){
 //    val userInfo=MMKV.defaultMMKV().decodeParcelable("user",Register::class.java)
@@ -148,6 +148,14 @@ fun toast(msg:String){
 
  fun EditText.checked(msg:String):String?{
     return if (this.text.isNullOrEmpty()){
+        toast(msg)
+        null
+    }else{
+        ""
+    }
+}
+fun EditText.checkLength(length:Int,msg:String):String?{
+    return if (this.text.isNullOrEmpty() || this.text.length!=length){
         toast(msg)
         null
     }else{

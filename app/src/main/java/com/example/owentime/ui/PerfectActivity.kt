@@ -4,12 +4,16 @@ import android.Manifest
 import android.view.Gravity
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.activity.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
+import coil.load
 import com.example.owentime.*
 import com.example.owentime.base.BaseActivity
 import com.example.owentime.databinding.ActivityPerfectBinding
+import com.example.owentime.ui.LoginActivity.IntentOptions.token
 import com.example.owentime.util.CoilEngine
 import com.example.owentime.util.DateUtil
+import com.example.owentime.vm.UserViewModel
 import com.gyf.immersionbar.ktx.immersionBar
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.luck.picture.lib.basic.PictureSelector
@@ -32,7 +36,7 @@ import java.util.*
 class PerfectActivity : BaseActivity(R.layout.activity_perfect) {
     private val mBinding by viewBinding(ActivityPerfectBinding::bind)
 
-    //    private val mViewModel by viewModels<LoginViewModel>()
+    private val mViewModel by viewModels<UserViewModel>()
     private val permissions = listOf(Manifest.permission.CAMERA)
     private lateinit var mmkv: MMKV
 
@@ -57,7 +61,7 @@ class PerfectActivity : BaseActivity(R.layout.activity_perfect) {
         mBinding.btnSave.setOnClickListener {
             // TODO:  调用更新用户信息接口
             mmkv.encode("islogin",true)
-            LiveEventBus.get("login",String::class.java).post("login")
+//            LiveEventBus.get("login",String::class.java).post("login")
             start(this@PerfectActivity,MainActivity().javaClass,true)
         }
     }
@@ -106,6 +110,13 @@ class PerfectActivity : BaseActivity(R.layout.activity_perfect) {
                     result?.run {
                         val path=result[0].path
                         mBinding.ivHead.load(path)
+                        mViewModel.upload(intent.token?:"",path).observe(this@PerfectActivity
+                        ) {
+                            it?.run {
+                                mBinding.ivHead.load(photo)
+                            }
+                        }
+
                     }
 
                 }

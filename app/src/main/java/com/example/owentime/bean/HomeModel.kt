@@ -6,51 +6,53 @@ import com.drake.brv.item.ItemBind
 import com.example.owentime.databinding.ItemProductBinding
 
 import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import com.tencent.mmkv.MMKV
 
 
-
+@JsonClass(generateAdapter = true)
 data class HomeModel(
-    @SerializedName("banner")
+    @Json(name="banner")
     val banner: List<Banner>? = listOf(),
-    @SerializedName("product")
+    @Json(name="product")
     val product: List<Product>? = listOf(),
-    @SerializedName("studying")
+    @Json(name="studying")
     val studying: List<Studying>? = listOf(Studying()),//记得改回来，先前没有数据，所以用了个string
-    @SerializedName("user")
+    @Json(name="user")
 //    @Serializable(with = UserListSerializer::class)
     val user: List<User>? = listOf(User())
 )
-
+@JsonClass(generateAdapter = true)
 data class Banner(
-    @SerializedName("activity_links")
+    @Json(name="activity_links")
     val activityLinks: String? = "",
-    @SerializedName("id")
+    @Json(name = "id")
     val id: Int? = 0,
-    @SerializedName("jump_type")
+    @Json(name="jump_type")
     val jumpType: Int? = 0,
-    @SerializedName("title")
+    @Json(name="title")
     val title: String? = "",
-    @SerializedName("url")
+    @Json(name="url")
     val url: String? = ""
 )
-
+@JsonClass(generateAdapter = true)
 data class Product(
-    @SerializedName("code")
+    @Json(name="code")
     val code: String? = "",
-    @SerializedName("id")
+    @Json(name="id")
     val id: Int? = 0,
-    @SerializedName("img_head")
+    @Json(name="img_head")
     val imgHead: String? = "",
-    @SerializedName("introduction")
+    @Json(name="introduction")
     val introduction: String? = "",
-    @SerializedName("name")
+    @Json(name="name")
     val name: String? = "",
-    @SerializedName("price_actual")
+    @Json(name="price_actual")
     val priceActual: String? = "",
-    @SerializedName("price_show")
+    @Json(name="price_show")
     val priceShow: String? = "",
-    @SerializedName("user_count")
+    @Json(name="user_count")
     val userCount: Int? = 0
 ):ItemBind{
     val islogin= MMKV.defaultMMKV().decodeBool("islogin",false)
@@ -70,18 +72,18 @@ data class Product(
 
     }
 }
-
+@JsonClass(generateAdapter = true)
 data class User(
-    @SerializedName("code")
+    @Json(name="code")
     val code: String? = "",
-    @SerializedName("id")
+    @Json(name="id")
     val id: Int? = 0,
-    @SerializedName("phone")
+    @Json(name="phone")
     val phone: String? = "",
-    @SerializedName("photo")
+    @Json(name="photo")
     val photo: String? = "",
-    @SerializedName("sex")
+    @Json(name="sex")
     val sex: Int? = 0
 )
-
+@JsonClass(generateAdapter = true)
 class Studying{}

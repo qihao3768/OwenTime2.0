@@ -6,7 +6,6 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.owentime.R
 import com.example.owentime.TodoListener
 import com.example.owentime.base.BaseFragment
-import com.example.owentime.bean.Register
 import com.example.owentime.checkLogin
 import com.example.owentime.databinding.MineFragmentBinding
 import com.example.owentime.start
@@ -24,7 +23,7 @@ class MineFragment : BaseFragment(R.layout.mine_fragment) {
     private val mViewModel by viewModels<MineViewModel>()
     private val mBinding by viewBinding(MineFragmentBinding::bind)
     private val mmkv=MMKV.defaultMMKV()
-    private var mUserInfo:Register?=null
+
 
     override fun initData() {
         immersionBar {
