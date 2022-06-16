@@ -4,6 +4,7 @@ import android.Manifest
 import android.view.Gravity
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.activity.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.load
@@ -12,16 +13,15 @@ import com.example.owentime.base.BaseActivity
 import com.example.owentime.databinding.ActivityPerfectBinding
 import com.example.owentime.ui.LoginActivity.IntentOptions.token
 import com.example.owentime.util.CoilEngine
-import com.example.owentime.util.DateUtil
 import com.example.owentime.vm.UserViewModel
 import com.gyf.immersionbar.ktx.immersionBar
-import com.jeremyliao.liveeventbus.LiveEventBus
 import com.luck.picture.lib.basic.PictureSelector
 import com.luck.picture.lib.config.SelectMimeType
 import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.interfaces.OnResultCallbackListener
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopupext.listener.TimePickerListener
+import com.lxj.xpopupext.popup.CommonPickerPopup
 import com.lxj.xpopupext.popup.TimePickerPopup
 import com.permissionx.guolindev.PermissionX
 import com.tencent.mmkv.MMKV
@@ -37,14 +37,15 @@ class PerfectActivity : BaseActivity(R.layout.activity_perfect) {
     private val mBinding by viewBinding(ActivityPerfectBinding::bind)
 
     private val mViewModel by viewModels<UserViewModel>()
-    private val permissions = listOf(Manifest.permission.CAMERA)
+    private val permissions = listOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
     private lateinit var mmkv: MMKV
+    private var sex:Int=1  //1男宝宝 2 女宝宝
 
     override fun initData() {
         mmkv = MMKV.defaultMMKV()
-
+        mBinding.titlePerfect.leftView.visibility=View.GONE
         immersionBar {
-            statusBarColor(R.color.FE9520)
+            statusBarView(mBinding.titlePerfect)
             keyboardEnable(true)
             statusBarDarkFont(true)
             fitsSystemWindows(true)
@@ -58,11 +59,15 @@ class PerfectActivity : BaseActivity(R.layout.activity_perfect) {
         mBinding.tvHis.setOnClickListener {
             showTimeDialog()
         }
+
+        mBinding.tvSex.setOnClickListener {
+            selectSex()
+        }
         mBinding.btnSave.setOnClickListener {
             // TODO:  调用更新用户信息接口
-            mmkv.encode("islogin",true)
 //            LiveEventBus.get("login",String::class.java).post("login")
-            start(this@PerfectActivity,MainActivity().javaClass,true)
+            uploadInfo()
+//
         }
     }
 
@@ -108,11 +113,11 @@ class PerfectActivity : BaseActivity(R.layout.activity_perfect) {
             object : OnResultCallbackListener<LocalMedia> {
                 override fun onResult(result: ArrayList<LocalMedia>?) {
                     result?.run {
-                        val path=result[0].path
-                        mBinding.ivHead.load(path)
+                        val path=result[0].realPath
                         mViewModel.upload(intent.token?:"",path).observe(this@PerfectActivity
                         ) {
                             it?.run {
+                                toast("上传成功")
                                 mBinding.ivHead.load(photo)
                             }
                         }
@@ -156,4 +161,43 @@ class PerfectActivity : BaseActivity(R.layout.activity_perfect) {
             .asCustom(popup)
             .show()
     }
+
+    //性别选择
+    private fun selectSex(){
+        val popup = CommonPickerPopup(this)
+        val list = ArrayList<String>()
+        list.add("男宝宝")
+        list.add("女宝宝")
+        popup.setPickerData(list)
+            .setCurrentItem(1)
+        popup.setCommonPickerListener { index, data ->
+            mBinding.tvSex.text=list[index]
+            sex=data.sexToInt()
+        }
+        XPopup.Builder(this)
+            .asCustom(popup)
+            .show()
+    }
+    private fun uploadInfo(){
+        val name=mBinding.edtName.text.toString()
+        val bir=mBinding.tvHis.text.toString()
+        mViewModel.uploadInfo(intent.token?:"",name,sex,bir).observe(this, androidx.lifecycle.Observer {
+            it?.run {
+                toast("上传成功")
+                mmkv.encode("token",intent.token)
+                start(this@PerfectActivity,MainActivity().javaClass,true)
+            }
+        })
+    }
+
+    private fun String.sexToInt():Int{
+        return when(this){
+            "男宝宝"->{
+                1
+            }else->{
+                0
+            }
+        }
+    }
+
 }

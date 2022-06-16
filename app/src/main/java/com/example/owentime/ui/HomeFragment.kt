@@ -49,10 +49,11 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
         mBinding.homeBanner.setBannerRound2(11F)
         mBinding.ivHomeHead.setOnClickListener {
             //判断是否已经登录，如果登录，跳转修改用户信息，否则跳转登录
-            val target=if (mmkv.decodeBool("islogin",false)){
-                PerfectActivity()
-            }else{
+            val target=if (mmkv.decodeString("token").isNullOrBlank()){
                 LoginActivity()
+
+            }else{
+                PerfectActivity()
             }
             start(requireActivity(),target.javaClass,false)
         }
@@ -137,10 +138,10 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
         mBinding.homeList.linear().setup {
             addType<Product> { R.layout.item_product }
             onClick(R.id.root_product){
-                if (mmkv.decodeBool("islogin")){
-                    start(requireActivity(),ProductDetailActivity().javaClass,false)
-                }else{
+                if (mmkv.decodeString("token").isNullOrBlank()){
                     start(requireActivity(),LoginActivity().javaClass,false)
+                }else{
+                    start(requireActivity(),ProductDetailActivity().javaClass,false)
                 }
             }
         }.models=list
@@ -166,10 +167,10 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
      * 已经登录且有正在观看的视频，显示
      */
     private fun initPlaying(){
-    val visibility=if (mmkv.decodeBool("islogin",false)){
-        View.VISIBLE
-    }else{
+    val visibility=if (mmkv.decodeString("token").isNullOrBlank()){
         View.GONE
+    }else{
+        View.VISIBLE
     }
     mBinding.groupPlaying.visibility=visibility
         mBinding.layoutPlaying.setOnClickListener {

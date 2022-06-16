@@ -37,4 +37,5 @@
     <string name="open_notice">您可以在APP【我的-设置-系统通知】中，开启APP的系统通知 功能，以及前往系统APP详情开启系统通知。</string>
     <string name="huodong_notice">促销福利、最新活动等通知</string>
     <string name="service_notice">服务通知</string>
+    <string name="select_sex">请选择宝宝性别</string>
 </resources>

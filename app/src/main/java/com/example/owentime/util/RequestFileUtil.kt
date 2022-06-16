@@ -1,9 +1,12 @@
 package com.example.owentime.util
 
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 
 /**
@@ -27,7 +30,7 @@ object RequestFileUtil {
     private fun getRequestBody(file: File): RequestBody {
 //        MediaType mediaType=MediaType.parse("text/x-markdown; charset=utf-8");
         val mediaType: MediaType ?= "multipart/form-data; charset=utf-8".toMediaTypeOrNull()
-        return RequestBody.create(mediaType, file)
+        return file.asRequestBody(mediaType)
     }
 
     /**
@@ -51,9 +54,9 @@ object RequestFileUtil {
      * @param value
      * @return
      */
-    fun toRequestBody(value: String?): RequestBody {
+    fun toRequestBody(value: String): RequestBody {
 //        RequestBody requestBody = RequestBody.create(MediaType.parse("text/plain"), value);
-        val mediaType: MediaType ?= "application/json;charset=utf-8".toMediaTypeOrNull()
-        return RequestBody.create(mediaType, value!!)
+        val mediaType: MediaType = "application/json;charset=utf-8".toMediaType()
+        return value.toRequestBody(mediaType)
     }
 }

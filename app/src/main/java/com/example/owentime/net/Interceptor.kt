@@ -7,9 +7,10 @@ import okhttp3.Response
 
 class Interceptor :Interceptor{
     override fun intercept(chain: Interceptor.Chain): Response {
+        val token :String?=MMKV.defaultMMKV().decodeString("token","")
         val original:Request = chain.request()
         val request:Request=original.newBuilder()
-//            .header("Authorization","Bearer "+MMKV.defaultMMKV().decodeString("token")?:"")
+            .header("Authorization", "Bearer $token"?:"")
             .build()
         return chain.proceed(request)
     }

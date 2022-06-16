@@ -21,4 +21,8 @@ class UserInfoRepo :BaseRepository(){
         val requestBody: MultipartBody.Part = RequestFileUtil.uploadFile("photo", file)
         mService.upload(mtoken,requestBody)
     }
+
+    suspend fun uploadInfo(token:String,name:String,sex:Int,birth:String): BaseResponse<PhotoModel> = request {
+        mService.uploadInfo(token,name,sex,birth)
+    }
 }

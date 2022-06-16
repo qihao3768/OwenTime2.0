@@ -19,4 +19,13 @@ class UserViewModel:BaseViewModel() {
         }
         return _user
     }
+
+    fun uploadInfo(token:String,name:String,sex:Int,birthday:String): MutableLiveData<PhotoModel> {
+        launchUI {
+            val result=_userRepo.uploadInfo(token,name,sex,birthday)
+            _user.value = result.data
+
+        }
+        return _user
+    }
 }

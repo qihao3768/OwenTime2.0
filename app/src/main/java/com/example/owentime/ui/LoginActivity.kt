@@ -89,7 +89,7 @@ class LoginActivity : BaseActivity(R.layout.activity_login) {
             login(phone,sms)
         }
         mBinding.ivPhoneclear.setOnClickListener {
-            mBinding.edtPhone.clearComposingText()
+            mBinding.edtPhone.text.clear()
         }
         //协议
         mBinding.tvUserAgreement.setOnClickListener {
@@ -143,11 +143,9 @@ class LoginActivity : BaseActivity(R.layout.activity_login) {
 
         mViewModel.login(phone, sms, mKeyCode).observe(this, Observer {
             it?.run {
-//                mToken=accessToken?:""
                 intent.token=accessToken?:""
                 when(infoFlag){
                     0->{
-
                         start(this@LoginActivity,PerfectActivity().javaClass,intent)
                     }
                     1->{

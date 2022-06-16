@@ -16,9 +16,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WanAndroid"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        android:requestLegacyExternalStorage="true">
         <activity
-            android:name=".ForScreenActivity"
+            android:name=".ui.ForScreenActivity"
             android:exported="false" />
         <activity
             android:name=".ui.NoticeActivity"
@@ -77,15 +78,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.DutorialDirectoryActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.TutorialActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.IntegralListActivity"
-            android:exported="false" />
+
         <activity
             android:name=".ui.LoginActivity"
             android:exported="false" />

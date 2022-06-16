@@ -22,7 +22,12 @@ interface ApiService {
 //上传头像
     @POST("/api/user/editUser")
     @Multipart
-    suspend fun upload(@Part("token") token:RequestBody, @Part file: MultipartBody.Part):BaseResponse<PhotoModel>
+    suspend fun upload(@Part("token") token:RequestBody, @Part photo: MultipartBody.Part):BaseResponse<PhotoModel>
+
+
+    @POST("/api/user/editUser")
+    @FormUrlEncoded
+    suspend fun uploadInfo(@Field("token") token:String, @Field("name") name:String, @Field("sex") sex:Int, @Field("birthday") birthday:String):BaseResponse<PhotoModel>
 
     companion object {
 //        const val BASE_URL = "https://wanandroid.com/"

@@ -2,7 +2,7 @@ package com.example.owentime.base
 
 import com.example.owentime.BuildConfig
 
-import com.example.owentime.jsonadapter.StringToObjAdapter
+
 import com.example.owentime.net.Interceptor
 
 import com.squareup.moshi.Moshi
@@ -52,7 +52,7 @@ abstract class BaseRetrofitClient {
 
 //    @OptIn(ExperimentalSerializationApi::class)
     open fun <Service> getService(serviceClass: Class<Service>, baseUrl: String): Service {
-    val moshi = Moshi.Builder().add(StringToObjAdapter()).build()
+    val moshi = Moshi.Builder().build()
     return Retrofit.Builder()
                 .client(client)
 //                .addConverterFactory(json.asConverterFactory(contentType))

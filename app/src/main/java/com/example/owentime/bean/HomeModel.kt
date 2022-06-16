@@ -21,7 +21,7 @@ data class HomeModel(
     val studying: List<Studying>? = listOf(Studying()),//记得改回来，先前没有数据，所以用了个string
     @Json(name="user")
 //    @Serializable(with = UserListSerializer::class)
-    val user: List<User>? = listOf(User())
+    val user: User? = User()
 )
 @JsonClass(generateAdapter = true)
 data class Banner(
@@ -55,7 +55,7 @@ data class Product(
     @Json(name="user_count")
     val userCount: Int? = 0
 ):ItemBind{
-    val islogin= MMKV.defaultMMKV().decodeBool("islogin",false)
+    val token= MMKV.defaultMMKV().decodeString("token")
     override fun onBind(holder: BindingAdapter.BindingViewHolder) {
         val binding= ItemProductBinding.bind(holder.itemView)
         binding.ivProduct.load(imgHead)
@@ -63,11 +63,11 @@ data class Product(
         binding.tvProductDesc.text=introduction
         binding.tvProductPrice02.text=priceShow
         binding.tvProductPtnum.text=userCount.toString().plus("人购买")
-        binding.btnGoto.visibility=if (islogin){
-            View.VISIBLE
+        binding.btnGoto.visibility=if (token.isNullOrBlank()){
 
-        }else{
             View.INVISIBLE
+        }else{
+            View.VISIBLE
         }
 
     }
