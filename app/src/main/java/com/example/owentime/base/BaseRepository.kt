@@ -13,9 +13,12 @@ open class BaseRepository {
             call.invoke()
         }.apply {
             Log.d("RESP","接口返回数据---------->,${this}")
+            if (data==null){
+
+            }
             when (code) {
                 1000 -> this
-//                401 -> "请先登录"
+                401 -> "登录状态失效"
 //                403 -> ""
 //                404 -> ""
 //                500 -> message

@@ -48,6 +48,7 @@
             android:id="@+id/iv_home_head"
             android:layout_width="33dp"
             android:layout_height="33dp"
+            android:scaleType="centerCrop"
             android:src="@drawable/logo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -280,6 +281,7 @@
                 android:id="@+id/group_playing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 app:constraint_referenced_ids="layout_playing,layout_interval"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

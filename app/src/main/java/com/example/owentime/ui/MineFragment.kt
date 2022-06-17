@@ -3,12 +3,9 @@ package com.example.owentime.ui
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.example.owentime.R
-import com.example.owentime.TodoListener
+import com.example.owentime.*
 import com.example.owentime.base.BaseFragment
-import com.example.owentime.checkLogin
 import com.example.owentime.databinding.MineFragmentBinding
-import com.example.owentime.start
 import com.example.owentime.vm.MineViewModel
 import com.gyf.immersionbar.ktx.immersionBar
 import com.jeremyliao.liveeventbus.LiveEventBus
@@ -23,6 +20,7 @@ class MineFragment : BaseFragment(R.layout.mine_fragment) {
     private val mViewModel by viewModels<MineViewModel>()
     private val mBinding by viewBinding(MineFragmentBinding::bind)
     private val mmkv=MMKV.defaultMMKV()
+    private var mToken=""//token
 
 
     override fun initData() {
@@ -65,19 +63,29 @@ class MineFragment : BaseFragment(R.layout.mine_fragment) {
                 start(requireActivity(),WorksActivity().javaClass,false)
             }
         })
+
         mBinding.personalPhoto.checkLogin(requireActivity(), object : TodoListener {
             override fun todo() {
-
+                start(requireActivity(),PerfectActivity().javaClass,false)
             }
         })
+
+        getUser()
+
     }
 
-//    private fun user(){
-//        mViewModel.user().observe(requireActivity(), Observer {
-//            it?.run {
-//                mBinding.tvUser.text=userInfo.nickname
-//                mUserInfo=userInfo
-//            }
-//        })
-//    }
+    /***
+     * 获取用户信息
+     */
+    private fun getUser(){
+        mToken=mmkv.decodeString("token")?:""
+        if (mToken.isNotEmpty()){
+            mViewModel.getUser(mToken).observe(requireActivity(), Observer {
+                it?.run {
+                    mBinding.personalPhoto.load(photo?:"")
+                }
+            })
+        }
+
+    }
 }

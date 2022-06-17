@@ -19,7 +19,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         ndk {
-            abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
+            abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86_64'
         }
     }
 
@@ -100,11 +100,13 @@ dependencies {
 
 //    implementation ('com.iqiyi.xcrash:xcrash-android-lib:3.0.0')//爱奇艺crash异常捕获
 
-    implementation('com.squareup.moshi:moshi-kotlin:1.13.0')
-    kapt("com.squareup.moshi:moshi-kotlin-codegen:1.13.0")
+//    implementation('com.squareup.moshi:moshi-kotlin:1.13.0')
+//    kapt("com.squareup.moshi:moshi-kotlin-codegen:1.13.0")
 
 
+    implementation('com.github.getActivity:GsonFactory:6.0')
 
+    implementation 'com.google.code.gson:gson:2.9.0'
 
 //    api('com.github.devin1014.DLNA-Cast:dlna-dmc:V1.0.0')
 

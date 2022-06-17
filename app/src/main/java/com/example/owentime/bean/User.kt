@@ -1,51 +1,48 @@
 package com.example.owentime.bean
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.parcelize.Parcelize
-import com.squareup.moshi.JsonClass
 
-import com.squareup.moshi.Json
 
 //获取短信
-@JsonClass(generateAdapter = true)
+//@SerializedNameClass(generateAdapter = true)
 data class SmsModel(
-    @Json(name = "expired_at")
+    @SerializedName("expired_at")
     val expiredAt: String? = "",
-    @Json(name = "key_code")
+    @SerializedName("key_code")
     var keyCode: String? = ""
 )
 //短信登录
-@JsonClass(generateAdapter = true)
+//@SerializedNameClass(generateAdapter = true)
 data class LoginModel(
-    @Json(name = "access_token")
+    @SerializedName("access_token")
     val accessToken: String? = "",
-    @Json(name = "expires_in")
+    @SerializedName("expires_in")
     val expiresIn: Int? = 0,
-    @Json(name = "token_type")
+    @SerializedName("token_type")
     val tokenType: String? = "",
-    @Json(name = "info_flag")
+    @SerializedName("info_flag")
     val infoFlag:Int?=0
 )
 
 //头像
-@JsonClass(generateAdapter = true)
+//@SerializedNameClass(generateAdapter = true)
 data class PhotoModel(
-    @Json(name = "photo")
+    @SerializedName("photo")
     val photo: String? = ""
 )
 
 //用户信息
-@JsonClass(generateAdapter = true)
+//@SerializedNameClass(generateAdapter = true)
 data class UserModel(
-    @Json(name = "code")
+    @SerializedName("code")
     val code: String? = "",
-    @Json(name = "id")
+    @SerializedName("id")
     val id: Int? = 0,
-    @Json(name = "phone")
+    @SerializedName("phone")
     val phone: String? = "",
-    @Json(name = "photo")
+    @SerializedName("photo")
     val photo: String? = "",
-    @Json(name = "sex")
+    @SerializedName("sex")
     val sex: String? = ""
 )
 

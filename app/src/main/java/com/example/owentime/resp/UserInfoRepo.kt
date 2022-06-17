@@ -15,6 +15,10 @@ class UserInfoRepo :BaseRepository(){
     private val mService by lazy {
         RetrofitClient.service
     }
+
+    /***
+     * 上传头像
+     */
     suspend fun upload(token:String,path:String): BaseResponse<PhotoModel> = request {
         val mtoken = RequestBody.create(null, token)
         val file = File(path)
@@ -22,7 +26,24 @@ class UserInfoRepo :BaseRepository(){
         mService.upload(mtoken,requestBody)
     }
 
+    /***
+     * 上传用户信息
+     */
     suspend fun uploadInfo(token:String,name:String,sex:Int,birth:String): BaseResponse<PhotoModel> = request {
         mService.uploadInfo(token,name,sex,birth)
+    }
+
+    /***
+     * 获取用户信息
+     */
+    suspend fun getUser(token:String): BaseResponse<User> = request {
+        mService.getUser(token)
+    }
+
+    /***
+     * 退出登录
+     */
+    suspend fun logOut(): BaseResponse<String> = request {
+        mService.logOut()
     }
 }

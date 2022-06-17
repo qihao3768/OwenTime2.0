@@ -149,6 +149,7 @@ class LoginActivity : BaseActivity(R.layout.activity_login) {
                         start(this@LoginActivity,PerfectActivity().javaClass,intent)
                     }
                     1->{
+                        mmkv.encode("token",intent.token)//每次登录更新一下token
                         start(this@LoginActivity,MainActivity().javaClass,intent)
                     }
                 }

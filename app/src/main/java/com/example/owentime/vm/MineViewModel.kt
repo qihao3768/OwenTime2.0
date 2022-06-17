@@ -6,18 +6,18 @@ import com.example.owentime.bean.User
 import com.example.owentime.resp.UserInfoRepo
 
 class MineViewModel : BaseViewModel() {
-    private val _loginReps by lazy { UserInfoRepo() }
-    private var _loginData= MutableLiveData<User>()
+    private val _userReps by lazy { UserInfoRepo() }
+    private var _userData= MutableLiveData<User>()
 
 //    val article get() =_articleData
 
-    fun user(): MutableLiveData<User> {
+    fun getUser(token:String): MutableLiveData<User> {
         launchUI {
-//            val result=_loginReps.user().data
-//            _loginData.value= result!!
+            val result=_userReps.getUser(token).data
+            _userData.value= result!!
 
         }
-        return _loginData
-
+        return _userData
     }
+
 }

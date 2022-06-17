@@ -29,6 +29,16 @@ interface ApiService {
     @FormUrlEncoded
     suspend fun uploadInfo(@Field("token") token:String, @Field("name") name:String, @Field("sex") sex:Int, @Field("birthday") birthday:String):BaseResponse<PhotoModel>
 
+    @POST("/api/user/userInfo")
+    @FormUrlEncoded
+    suspend fun getUser(@Field("token") token: String):BaseResponse<User>
+
+//注销
+    @POST("/api/user/logout")
+    @FormUrlEncoded
+    suspend fun logOut():BaseResponse<String>
+
+
     companion object {
 //        const val BASE_URL = "https://wanandroid.com/"
         const val BASE_URL = "http://192.168.2.184:8080"

@@ -1,12 +1,17 @@
 package com.example.owentime.ui
 
 import android.view.Gravity
+import androidx.activity.viewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.owentime.*
 import com.example.owentime.base.BaseActivity
 import com.example.owentime.base.BasePopWindow
 import com.example.owentime.databinding.ActivitySettingBinding
 import com.example.owentime.databinding.LayoutExitBinding
+import com.example.owentime.vm.MineViewModel
+import com.example.owentime.vm.UserViewModel
 import com.example.owentime.web.WebActivity
 import com.gyf.immersionbar.ktx.immersionBar
 import com.tencent.mmkv.MMKV
@@ -19,6 +24,8 @@ class SettingActivity : BaseActivity(R.layout.activity_setting) {
 
     private lateinit var exitBinding:LayoutExitBinding
     private lateinit var exitDialog:BasePopWindow
+
+    private val mViewModel by viewModels<UserViewModel>()
 
     override fun initData() {
         immersionBar {
@@ -67,7 +74,10 @@ class SettingActivity : BaseActivity(R.layout.activity_setting) {
             when(flag) {
                 0->{
                     // TODO: 调用退出接口
-                    MMKV.defaultMMKV().remove("islogin")
+                    MMKV.defaultMMKV().remove("token")
+                    mViewModel.logOut().observe(this, Observer {
+
+                    })
                     exitProcess(0)
                 }
                 1->{

@@ -18,6 +18,7 @@ import com.example.owentime.adapter.NoticeAdapter
 import com.example.owentime.base.BaseFragment
 import com.example.owentime.bean.NoticeBean
 import com.example.owentime.bean.Product
+import com.example.owentime.bean.Studying
 import com.example.owentime.databinding.HomeFragmentBinding
 import com.example.owentime.load
 import com.example.owentime.start
@@ -39,6 +40,8 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
 
     private lateinit var mmkv: MMKV
 
+    private var studying:Studying?=null
+
 
     override fun initData() {
         mmkv = MMKV.defaultMMKV()
@@ -58,18 +61,7 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
             start(requireActivity(),target.javaClass,false)
         }
         initBanner()
-
         initNotice()
-
-        initPlaying()
-
-        LiveEventBus.get<String>("login").observe(this, Observer {
-            when(it){
-                "login"->{
-                    initPlaying()
-                }
-            }
-        })
 
         setExitSharedElementCallback(object : SharedElementCallback() {
             override fun onCaptureSharedElementSnapshot(
@@ -116,25 +108,20 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
                     it.product?.run {
                         initArticle(this)
                     }
+                    it.studying?.run {
+                        mBinding.groupPlaying.visibility=View.VISIBLE
+                        initPlaying()
+                    }
+                    it.user?.run {
+                        mBinding.ivHomeHead.load(photo?:"")
+                    }
                 }
             }
 
 
     }
     private fun initArticle(list: List<Product>){
-//        mArticleAdapter = ArticleAdapter(requireActivity(),object : ArticleAdapter.ItemClickListener {
-//            override fun click() {
-//                start(requireActivity(),ProductDetailActivity().javaClass,false)
-//            }
-//        })
-//        mBinding.homeList.adapter = mArticleAdapter
-////        mBinding.homeList.layoutManager=GridLayoutManager( requireActivity(),2)
-//        viewModel.getArticle().observe(viewLifecycleOwner, Observer {
-//                lifecycleScope.launch {
-//                    mArticleAdapter.submitData(it)
-//                }
-//
-//            })
+
         mBinding.homeList.linear().setup {
             addType<Product> { R.layout.item_product }
             onClick(R.id.root_product){
@@ -163,16 +150,11 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
     /***
      * 是否显示正在进行中的视频
      * 如果是游客模式，不显示
-     * 如果已经登录，但是正在观看的视频，也不显示
+     * 如果已经登录，但是没有正在观看的视频，也不显示
      * 已经登录且有正在观看的视频，显示
      */
     private fun initPlaying(){
-    val visibility=if (mmkv.decodeString("token").isNullOrBlank()){
-        View.GONE
-    }else{
-        View.VISIBLE
-    }
-    mBinding.groupPlaying.visibility=visibility
+
         mBinding.layoutPlaying.setOnClickListener {
 
             val bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(),mBinding.ivPlayingCourse,"palying").toBundle()
