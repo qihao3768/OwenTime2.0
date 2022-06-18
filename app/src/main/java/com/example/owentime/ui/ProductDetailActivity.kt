@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -127,6 +128,10 @@ class ProductDetailActivity : BaseActivity(R.layout.activity_product_detail) {
             buyDialog.dismiss()
         }
         spbinding.btnBuy.setOnClickListener {
+            val count=spbinding.tvCount.text.toString().toInt()
+            if (count==0){
+                toast("")
+            }
             buyDialog.dismiss()
             start(this@ProductDetailActivity,UpOrderActivity().javaClass,false)
         }
@@ -168,5 +173,8 @@ class ProductDetailActivity : BaseActivity(R.layout.activity_product_detail) {
                 mSku= sku
             }
         })
+    }
+    private fun TextView.check(){
+
     }
 }
