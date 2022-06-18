@@ -10,6 +10,7 @@ import com.example.owentime.vm.MineViewModel
 import com.gyf.immersionbar.ktx.immersionBar
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.tencent.mmkv.MMKV
+import kotlin.random.Random
 
 class MineFragment : BaseFragment(R.layout.mine_fragment) {
 
@@ -72,6 +73,11 @@ class MineFragment : BaseFragment(R.layout.mine_fragment) {
 
         getUser()
 
+        LiveEventBus.get<String>("logout").observe(this, Observer {
+            it?.run {
+                getUser()
+            }
+        })
     }
 
     /***
@@ -83,8 +89,12 @@ class MineFragment : BaseFragment(R.layout.mine_fragment) {
             mViewModel.getUser(mToken).observe(requireActivity(), Observer {
                 it?.run {
                     mBinding.personalPhoto.load(photo?:"")
+                    mBinding.personalName.text="Owen".plus(Random.nextInt(1,5))
                 }
             })
+        }else{
+            mBinding.personalPhoto.setImageResource(R.drawable.logo)
+            mBinding.personalName.text="登录/注册"
         }
 
     }

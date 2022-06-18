@@ -8,35 +8,34 @@ import retrofit2.http.*
 
 interface ApiService {
     @POST("/api/main/index")
-    suspend fun banner():BaseResponse<HomeModel>
+    suspend fun banner():BaseResponse<HomeModel?>
 
 //短信验证码
     @POST("/api/sms/sendVer")
     @FormUrlEncoded
-    suspend fun sendSms(@Field("phone") phone:String):BaseResponse<SmsModel>
+    suspend fun sendSms(@Field("phone") phone:String):BaseResponse<SmsModel?>
 
     @POST("/api/user/smsLogin")
     @FormUrlEncoded
-    suspend fun login(@Field("phone") phone:String,@Field("sms") sms:String,@Field("key_code") key_code:String):BaseResponse<LoginModel>
+    suspend fun login(@Field("phone") phone:String,@Field("sms") sms:String,@Field("key_code") key_code:String):BaseResponse<LoginModel?>
 
 //上传头像
     @POST("/api/user/editUser")
     @Multipart
-    suspend fun upload(@Part("token") token:RequestBody, @Part photo: MultipartBody.Part):BaseResponse<PhotoModel>
+    suspend fun upload(@Part("token") token:RequestBody, @Part photo: MultipartBody.Part):BaseResponse<PhotoModel?>
 
 
     @POST("/api/user/editUser")
     @FormUrlEncoded
-    suspend fun uploadInfo(@Field("token") token:String, @Field("name") name:String, @Field("sex") sex:Int, @Field("birthday") birthday:String):BaseResponse<PhotoModel>
+    suspend fun uploadInfo(@Field("token") token:String, @Field("name") name:String, @Field("sex") sex:Int, @Field("birthday") birthday:String):BaseResponse<PhotoModel?>
 
     @POST("/api/user/userInfo")
     @FormUrlEncoded
-    suspend fun getUser(@Field("token") token: String):BaseResponse<User>
+    suspend fun getUser(@Field("token") token: String):BaseResponse<User?>
 
 //注销
     @POST("/api/user/logout")
-    @FormUrlEncoded
-    suspend fun logOut():BaseResponse<String>
+    suspend fun logOut():BaseResponse<String?>
 
 
     companion object {

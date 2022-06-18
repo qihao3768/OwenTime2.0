@@ -61,6 +61,13 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
             start(requireActivity(),target.javaClass,false)
         }
         initBanner()
+        LiveEventBus.get<String>("logout").observe(this, Observer {
+            it?.run {
+//                initBanner()
+                mBinding.ivHomeHead.setImageResource(R.drawable.logo)
+                mBinding.groupPlaying.visibility=View.GONE
+            }
+        })
         initNotice()
 
         setExitSharedElementCallback(object : SharedElementCallback() {

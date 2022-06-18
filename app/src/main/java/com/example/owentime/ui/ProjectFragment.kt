@@ -106,18 +106,19 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
      * case 3 已经登录，并且有购买商品，显示已购列表
      */
     private fun getData():MutableList<Any>{
-        val login=mmkv.decodeBool("islogin")
-        return if (login){
+        val login=mmkv.decodeString("token")
+        return if (login.isNullOrBlank()){
+            viewType=0
+            getTuiJian()
+        }else{
             return if (getYiGouData().isEmpty()){
                 viewType=1
-                 getTuiJian()
+                getTuiJian()
             }else{
                 viewType=2
                 getYiGouData()
             }
-        }else{
-            viewType=0
-            getTuiJian()
+
         }
     }
     private fun getTuiJian():MutableList<Any>{

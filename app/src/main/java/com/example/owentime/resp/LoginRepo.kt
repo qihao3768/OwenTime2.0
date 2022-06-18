@@ -15,11 +15,11 @@ class LoginRepo:BaseRepository(){
 //        mService.login(username,password)
 //    }
 
-    suspend fun sms(phone:String): BaseResponse<SmsModel> = request {
+    suspend fun sms(phone:String): BaseResponse<SmsModel?> = request {
         mService.sendSms(phone)
     }
 
-    suspend fun login(phone:String,sms:String,key:String): BaseResponse<LoginModel> = request {
+    suspend fun login(phone:String,sms:String,key:String): BaseResponse<LoginModel?> = request {
         mService.login(phone,sms,key)
     }
 }

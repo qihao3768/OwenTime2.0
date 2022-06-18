@@ -1,6 +1,7 @@
 package com.example.owentime.ui
 
 import android.view.Gravity
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -14,6 +15,7 @@ import com.example.owentime.vm.MineViewModel
 import com.example.owentime.vm.UserViewModel
 import com.example.owentime.web.WebActivity
 import com.gyf.immersionbar.ktx.immersionBar
+import com.jeremyliao.liveeventbus.LiveEventBus
 import com.tencent.mmkv.MMKV
 import razerdp.util.animation.AnimationHelper
 import razerdp.util.animation.TranslationConfig
@@ -74,11 +76,15 @@ class SettingActivity : BaseActivity(R.layout.activity_setting) {
             when(flag) {
                 0->{
                     // TODO: 调用退出接口
-                    MMKV.defaultMMKV().remove("token")
-                    mViewModel.logOut().observe(this, Observer {
 
+                    mViewModel.logOut().observe(this, Observer {
+                        toast("退出成功")
+                        MMKV.defaultMMKV().remove("token")
+                        LiveEventBus.get<String>("logout").post("logout")
+                        exitDialog.dismiss()
+                        finish()
                     })
-                    exitProcess(0)
+
                 }
                 1->{
                     // TODO: 调用注销接口

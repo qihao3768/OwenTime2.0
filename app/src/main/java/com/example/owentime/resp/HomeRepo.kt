@@ -11,7 +11,7 @@ class BannerRepo():BaseRepository(){
     private val mService by lazy {
         RetrofitClient.service
     }
-    suspend fun banner():BaseResponse<HomeModel> = request {
+    suspend fun banner():BaseResponse<HomeModel?> = request {
         mService.banner()
     }
 }
