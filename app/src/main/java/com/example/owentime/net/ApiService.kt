@@ -36,6 +36,10 @@ interface ApiService {
 //注销
     @POST("/api/user/logout")
     suspend fun logOut():BaseResponse<String?>
+//商品详情
+    @POST("api/product/detail")
+    @FormUrlEncoded
+    suspend fun getDetail(@Field("code") code:String):BaseResponse<GoodsDetail?>
 
 
     companion object {

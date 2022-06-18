@@ -184,7 +184,7 @@ class PerfectActivity : BaseActivity(R.layout.activity_perfect) {
         mViewModel.uploadInfo(intent.token?:"",name,sex,bir).observe(this, androidx.lifecycle.Observer {
             it?.run {
                 toast("上传成功")
-                mmkv.encode("token",intent.token)
+
                 start(this@PerfectActivity,MainActivity().javaClass,true)
             }
         })

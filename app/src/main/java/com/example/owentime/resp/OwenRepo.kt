@@ -2,18 +2,36 @@ package com.example.owentime.resp
 
 import com.example.owentime.base.BaseRepository
 import com.example.owentime.base.BaseResponse
-import com.example.owentime.bean.PhotoModel
-import com.example.owentime.bean.User
-import com.example.owentime.bean.UserModel
+import com.example.owentime.bean.*
 import com.example.owentime.net.RetrofitClient
 import com.example.owentime.util.RequestFileUtil
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
 
-class UserInfoRepo :BaseRepository(){
+
+class OwenRepo():BaseRepository(){
+
     private val mService by lazy {
         RetrofitClient.service
+    }
+    suspend fun banner():BaseResponse<HomeModel?> = request {
+        mService.banner()
+    }
+
+    /***
+     * 订单详情
+     */
+    suspend fun detail(code:String):BaseResponse<GoodsDetail?> = request {
+        mService.getDetail(code)
+    }
+
+    suspend fun sms(phone:String): BaseResponse<SmsModel?> = request {
+        mService.sendSms(phone)
+    }
+
+    suspend fun login(phone:String,sms:String,key:String): BaseResponse<LoginModel?> = request {
+        mService.login(phone,sms,key)
     }
 
     /***

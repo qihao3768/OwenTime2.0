@@ -2,14 +2,11 @@ package com.example.owentime.vm
 
 import androidx.lifecycle.MutableLiveData
 import com.example.owentime.base.BaseViewModel
-import com.example.owentime.bean.LoginModel
 import com.example.owentime.bean.PhotoModel
-import com.example.owentime.bean.User
-
-import com.example.owentime.resp.UserInfoRepo
+import com.example.owentime.resp.OwenRepo
 
 class UserViewModel:BaseViewModel() {
-    private val _userRepo by lazy { UserInfoRepo() }
+    private val _userRepo by lazy { OwenRepo() }
     private val _user= MutableLiveData<PhotoModel?>()
     private val _logout = MutableLiveData<String?>()
 

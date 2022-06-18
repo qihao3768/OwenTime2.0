@@ -22,8 +22,9 @@ import com.example.owentime.bean.Studying
 import com.example.owentime.databinding.HomeFragmentBinding
 import com.example.owentime.load
 import com.example.owentime.start
-import com.example.owentime.toast
-import com.example.owentime.vm.HomeViewModel
+import com.example.owentime.util.IntentExtraString
+import com.example.owentime.vm.OwenViewModel
+import com.gyf.immersionbar.ktx.immersionBar
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.tencent.mmkv.MMKV
 import com.youth.banner.adapter.BannerImageAdapter
@@ -33,9 +34,11 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
 
     companion object {
         fun newInstance() = HomeFragment()
+
+        var Intent.code by IntentExtraString("code")
     }
 
-    private val viewModel by viewModels<HomeViewModel>()
+    private val viewModel by viewModels<OwenViewModel>()
     private val mBinding by viewBinding (HomeFragmentBinding::bind)
 
     private lateinit var mmkv: MMKV
@@ -45,9 +48,9 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
 
     override fun initData() {
         mmkv = MMKV.defaultMMKV()
-//        immersionBar {
-//            statusBarColor(R.color.FE9520)
-//        }
+        immersionBar {
+            statusBarColor(R.color.FE9520)
+        }
         mBinding.titleHome.leftView.visibility=View.GONE
         mBinding.homeBanner.setBannerRound2(11F)
         mBinding.ivHomeHead.setOnClickListener {
@@ -85,6 +88,10 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
             }
         })
     }
+
+    /***
+     * 初始化banner
+     */
     private fun initBanner(){
             viewModel.getBanner().observe(this) { it ->
                 it?.run {
@@ -127,6 +134,10 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
 
 
     }
+
+    /***
+     * 首页推荐
+     */
     private fun initArticle(list: List<Product>){
 
         mBinding.homeList.linear().setup {
@@ -135,7 +146,9 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
                 if (mmkv.decodeString("token").isNullOrBlank()){
                     start(requireActivity(),LoginActivity().javaClass,false)
                 }else{
-                    start(requireActivity(),ProductDetailActivity().javaClass,false)
+                    //跳到详情页，携带一个商品code
+                    requireActivity().intent.code=getModel<Product>(modelPosition).code
+                    start(requireActivity(),ProductDetailActivity().javaClass,requireActivity().intent)
                 }
             }
         }.models=list

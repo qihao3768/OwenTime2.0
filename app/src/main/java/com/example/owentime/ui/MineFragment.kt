@@ -27,7 +27,6 @@ class MineFragment : BaseFragment(R.layout.mine_fragment) {
     override fun initData() {
         immersionBar {
             statusBarColor(R.color.white)
-//            navigationBarColor(R.color.colorPrimary)
         }
         mBinding.layoutMyorder.checkLogin(requireActivity(), object : TodoListener {
             override fun todo() {
@@ -89,7 +88,11 @@ class MineFragment : BaseFragment(R.layout.mine_fragment) {
             mViewModel.getUser(mToken).observe(requireActivity(), Observer {
                 it?.run {
                     mBinding.personalPhoto.load(photo?:"")
-                    mBinding.personalName.text="Owen".plus(Random.nextInt(1,5))
+                    mBinding.personalName.text= if (name.isNullOrBlank()){
+                        "Owen".plus(Random.nextInt(1,5))
+                    }else{
+                        name
+                    }
                 }
             })
         }else{

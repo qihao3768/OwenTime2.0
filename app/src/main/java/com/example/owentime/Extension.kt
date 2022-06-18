@@ -54,6 +54,11 @@ fun Fragment.start(activity: Activity, clazz: Class<Activity>, params:HashMap<St
     start02(activity, clazz, params)
 }
 
+fun Fragment.start(activity: Activity, clazz: Class<Activity>,intent: Intent){
+    intent.setClass(activity,clazz)
+    this.startActivity(intent)
+}
+
 private fun start01(activity:Activity,clazz: Class<Activity>,finish:Boolean){
     val intent = Intent(activity,clazz)
     activity.startActivity(intent)

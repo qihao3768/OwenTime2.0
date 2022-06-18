@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
 import android.view.ViewGroup
+import androidx.activity.viewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.drake.brv.utils.setup
 import com.example.owentime.R
@@ -11,6 +14,7 @@ import com.example.owentime.adapter.ImageTitleHolder
 import com.example.owentime.base.BaseActivity
 import com.example.owentime.base.BasePopWindow
 import com.example.owentime.bean.FlexTagModel
+import com.example.owentime.bean.Sku
 import com.example.owentime.bean.WorksBean
 import com.example.owentime.databinding.ActivityProductDetailBinding
 import com.example.owentime.databinding.HomeFragmentBinding
@@ -19,6 +23,8 @@ import com.example.owentime.databinding.LayoutSpecificationsBinding
 import com.example.owentime.load
 import com.example.owentime.start
 import com.example.owentime.toast
+import com.example.owentime.ui.HomeFragment.Companion.code
+import com.example.owentime.vm.OwenViewModel
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.gyf.immersionbar.ktx.immersionBar
 import com.youth.banner.adapter.BannerAdapter
@@ -35,6 +41,10 @@ class ProductDetailActivity : BaseActivity(R.layout.activity_product_detail) {
 
     private lateinit var spbinding: LayoutSpecificationsBinding
 
+    private val viewModel by viewModels<OwenViewModel>()
+
+    private var mSku :List<Sku>?= listOf<Sku>()//规格列表
+
     override fun initData() {
         immersionBar {
             statusBarColor(R.color.transparent)
@@ -45,13 +55,12 @@ class ProductDetailActivity : BaseActivity(R.layout.activity_product_detail) {
         val view=layoutInflater.inflate(R.layout.layout_specifications,null)
         spbinding= LayoutSpecificationsBinding.bind(view)
         // TODO: 请求详情页数据,这里是模拟
-        val image01="https://owen-time-test.oss-cn-beijing.aliyuncs.com/banner/1653729726_c61eaad874317a85.jpg"
-        val image02="https://owen-time-test.oss-cn-beijing.aliyuncs.com/banner/1653645442_f0abe23e97e1da8e.jpg"
-        val images:MutableList<String> = mutableListOf(image01,image02)
-        initTopBanner(images,"title")
+
         mBinding.layoutKtBuy.setOnClickListener {
             showBuy()
         }
+        //详情
+        getDetail(intent.code.toString())
     }
 
     //初始化顶部banner
@@ -78,28 +87,10 @@ class ProductDetailActivity : BaseActivity(R.layout.activity_product_detail) {
                     size: Int
                 ) {
                     holder.imageView.load(data)
-                    holder.title.text = title
+//                    holder.title.text = title
                 }
 
             }).start().indicator = CircleIndicator(this)
-
-        mBinding.groupBanner.addOnPageChangeListener(object : OnPageChangeListener {
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
-                mBinding.groupPicCount.text = position.plus(1).toString().plus("/").plus(headImage.size)
-            }
-
-            override fun onPageSelected(position: Int) {
-
-            }
-
-            override fun onPageScrollStateChanged(state: Int) {
-
-            }
-        })
     }
 
     /***
@@ -109,11 +100,16 @@ class ProductDetailActivity : BaseActivity(R.layout.activity_product_detail) {
         spbinding.tvSub.isEnabled=false
         spbinding.listSpecification.layoutManager=FlexboxLayoutManager(this)
         spbinding.listSpecification.setup {
-            addType<FlexTagModel> { R.layout.layout_flex_tag }
+            addType<Sku> { R.layout.layout_flex_tag }
             onClick(R.id.tv_specification){
-                toast("123")
+                val model=getModel<Sku>(modelPosition)
+                spbinding.tvSkuPrice.text=model.priceActual?:""
+                model.selected=model.selected?.not()
+                notifyDataSetChanged()
+
             }
-        }.models=getData()
+            models=mSku
+        }
         spbinding.tvPlus.setOnClickListener {
             val count=spbinding.tvCount.text.toString()
             spbinding.tvCount.text=count.toInt().plus(1).toString()
@@ -152,7 +148,25 @@ class ProductDetailActivity : BaseActivity(R.layout.activity_product_detail) {
     /***
      * 商品规格
      */
-    private fun getData():MutableList<Any> {
+    private fun getSpecification():MutableList<Any> {
         return mutableListOf<Any>(FlexTagModel("绘声绘色"),FlexTagModel("1234"),FlexTagModel("XXXL"),FlexTagModel("XL"),FlexTagModel("绘声绘色"))
+    }
+
+    /***
+     * 获取详情数据
+     */
+    private fun getDetail(code:String){
+        viewModel.getDetail(code).observe(this, Observer {
+            it?.run {
+                val images:MutableList<String> = mutableListOf(imgHead?:"")
+                initTopBanner(images,name?:"")
+                mBinding.groupDetailPic.loadUrl(detail?:"")
+                //价格默认取规格列表的第一条
+                mBinding.tvGoodsPrice.text=sku?.get(0)?.priceActual ?: ""
+                mBinding.tvGoodsTitle.text=name?:""
+                mBinding.tvGoodsDesc.text=introduction?:""
+                mSku= sku
+            }
+        })
     }
 }

@@ -20,7 +20,6 @@ data class HomeModel(
     @SerializedName("studying")
     val studying: Studying? = Studying(),//记得改回来，先前没有数据，所以用了个string
     @SerializedName("user")
-//    @Serializable(with = UserListSerializer::class)
     val user: User? = User()
 )
 
@@ -83,6 +82,8 @@ data class User(
     @SerializedName("photo")
     val photo: String? = "",
     @SerializedName("sex")
-    val sex: Int? = 0
+    val sex: Int? = 0,
+    @SerializedName("name")
+    val name: String? = ""
 )
 class Studying{}

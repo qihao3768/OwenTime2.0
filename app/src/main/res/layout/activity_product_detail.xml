@@ -19,95 +19,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/group_pic_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginEnd="10dp"
-                android:textColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="@+id/group_banner"
-                app:layout_constraintEnd_toEndOf="@+id/group_banner" />
-
-            <TextView
-                android:id="@+id/tv_product_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:minLines="2"
-                android:padding="15dp"
-                android:textColor="#1A1A1A"
-                android:textSize="17dp"
-                app:layout_constraintTop_toBottomOf="@+id/layout_product_price" />
-
-
-            <WebView
-                android:id="@+id/group_detail_pic"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:scaleType="centerCrop"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_product_title" />
-
-
-            <com.hjq.shape.layout.ShapeConstraintLayout
-                android:id="@+id/layout_product_price"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="10dp"
-                android:paddingEnd="15dp"
-                android:paddingStart="15dp"
-                android:paddingTop="10dp"
-                app:layout_constraintTop_toBottomOf="@+id/group_banner"
-                app:shape_endColor="#FEA820"
-                app:shape_startColor="#FE9520">
-
-                <TextView
-                    android:id="@+id/tv_tg_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:textSize="18dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/tv_yj_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:textColor="@color/white"
-                    android:textSize="15dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_tg_price"
-                    app:layout_constraintStart_toEndOf="@+id/tv_tg_price"
-                    app:layout_constraintTop_toTopOf="@+id/tv_tg_price" />
-
-                <TextView
-                    android:id="@+id/tv_tg_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:textColor="@color/white"
-                    android:textSize="15dp"
-                    app:layout_constraintBottom_toTopOf="@+id/tv_tg_time"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_chainStyle="packed" />
-
-                <TextView
-                    android:id="@+id/tv_tg_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:textSize="15dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_tg_count" />
-            </com.hjq.shape.layout.ShapeConstraintLayout>
-
             <com.youth.banner.Banner
                 android:id="@+id/group_banner"
                 android:layout_width="match_parent"
@@ -115,6 +26,62 @@
                 app:layout_constraintCircleRadius="5dp"
                 app:layout_constraintDimensionRatio="h,1:0.56"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <com.hjq.shape.layout.ShapeConstraintLayout
+                android:id="@+id/layout_goods_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                app:layout_constraintTop_toBottomOf="@id/group_banner"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="15dp"
+                app:shape_radius="11dp"
+                app:shape_solidColor="@color/white">
+                <TextView
+                    android:id="@+id/tv_goods_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="123.00"
+                    android:textSize="17dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/FE9520"/>
+                <TextView
+                    android:id="@+id/tv_goods_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="宝贝高碳钢儿童平衡车电动车宝贝高碳钢
+儿童平衡车电动车"
+                    android:textSize="17dp"
+                    android:textColor="@color/F1A1A1A"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    app:layout_constraintTop_toBottomOf="@id/tv_goods_price"
+                    android:layout_marginTop="15dp"/>
+
+                <TextView
+                    android:id="@+id/tv_goods_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="一车三用，低重心黄金三角一车多用"
+                    android:textSize="12dp"
+                    android:textColor="#5E5E5E"
+                    app:layout_constraintTop_toBottomOf="@id/tv_goods_title"
+                    android:layout_marginTop="13dp"
+                    android:maxLines="1"
+                    android:ellipsize="end"/>
+
+
+            </com.hjq.shape.layout.ShapeConstraintLayout>
+            <com.tencent.smtt.sdk.WebView
+                android:id="@+id/group_detail_pic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout_goods_price" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
     <com.hjq.bar.TitleBar

@@ -5,10 +5,10 @@ import com.example.owentime.base.BaseViewModel
 import com.example.owentime.bean.LoginModel
 
 import com.example.owentime.bean.SmsModel
-import com.example.owentime.resp.LoginRepo
+import com.example.owentime.resp.OwenRepo
 
 class LoginViewModel:BaseViewModel() {
-    private val _loginReps by lazy { LoginRepo() }
+    private val _loginReps by lazy { OwenRepo() }
 
 //发送短信
     private val _smsData=MutableLiveData<SmsModel?>()
