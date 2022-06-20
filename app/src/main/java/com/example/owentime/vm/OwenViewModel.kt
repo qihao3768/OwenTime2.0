@@ -30,6 +30,18 @@ class OwenViewModel() : BaseViewModel() {
         return detailData
     }
 
+
+
+    //确认订单
+    private val confirmPageData by lazy { MutableLiveData<ConfirmOrderModel?>() }
+    fun confirmPage(map:HashMap<String,Any>):MutableLiveData<ConfirmOrderModel?>{
+        launchUI {
+            val result = owenReps.confirmPage(map)
+            confirmPageData.value = result.data
+        }
+        return confirmPageData
+    }
+
     //添加地址
     private val addressData by lazy { MutableLiveData<String?>() }
     fun saveAddress(map:HashMap<String,Any>):MutableLiveData<String?>{
@@ -40,14 +52,13 @@ class OwenViewModel() : BaseViewModel() {
         return addressData
     }
 
-    //确认订单
-    private val confirmPageData by lazy { MutableLiveData<ConfirmOrderModel?>() }
-    fun confirmPage(map:HashMap<String,Any>):MutableLiveData<ConfirmOrderModel?>{
+    //修改地址
+    fun changeAddress(map:HashMap<String,Any>):MutableLiveData<String?>{
         launchUI {
-            val result = owenReps.confirmPage(map)
-            confirmPageData.value = result.data
+            val result = owenReps.changeAddress(map)
+            addressData.value = result.data
         }
-        return confirmPageData
+        return addressData
     }
 
 }

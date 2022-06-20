@@ -10,6 +10,7 @@ import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import by.kirich1409.viewbindingdelegate.viewBinding
+import coil.load
 import com.drake.brv.utils.setup
 import com.example.owentime.R
 import com.example.owentime.adapter.ImageTitleHolder
@@ -117,10 +118,14 @@ class ProductDetailActivity : BaseActivity(R.layout.activity_product_detail) {
             addType<Sku> { R.layout.layout_flex_tag }
             onClick(R.id.tv_specification){
                 val model=getModel<Sku>(modelPosition)
+                model.run {
+                    spbinding.tvSkuPrice.text=model.priceActual?:""
+                    model.selected=model.selected?.not()
+                    notifyDataSetChanged()
+                    spbinding.ivSpecification.load(imgShow)
+                }
                 selectSku=model
-                spbinding.tvSkuPrice.text=model.priceActual?:""
-                model.selected=model.selected?.not()
-                notifyDataSetChanged()
+
             }
             models=mSku
         }

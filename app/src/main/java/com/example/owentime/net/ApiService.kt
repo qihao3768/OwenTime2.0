@@ -53,6 +53,11 @@ interface ApiService {
     @FormUrlEncoded
     suspend fun confirmPage(@FieldMap map:HashMap<String,Any>):BaseResponse<ConfirmOrderModel?>
 
+    //确认订单
+    @POST("/api/address/change")
+    @FormUrlEncoded
+    suspend fun changeAddress(@FieldMap map:HashMap<String,Any>):BaseResponse<String?>
+
     companion object {
 //        const val BASE_URL = "https://wanandroid.com/"
         const val BASE_URL = "http://192.168.2.184:8080"

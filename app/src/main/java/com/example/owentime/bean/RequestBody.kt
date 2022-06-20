@@ -10,15 +10,16 @@ data class AddressRequestBody(
     val is_default: String
 
 
-){
-    fun toMap(): HashMap<String,Any> {
-        return hashMapOf(Pair<String,String>("name",name),
-            Pair<String,String>("phone",phone),
-            Pair<String,String>("province",province),
-            Pair<String,String>("city",city),
-            Pair<String,String>("area",area),
-            Pair<String,String>("address",address),
-            Pair<String,String>("is_default",is_default)
+) {
+    fun toMap(): HashMap<String, Any> {
+        return hashMapOf(
+            Pair<String, String>("name", name),
+            Pair<String, String>("phone", phone),
+            Pair<String, String>("province", province),
+            Pair<String, String>("city", city),
+            Pair<String, String>("area", area),
+            Pair<String, String>("address", address),
+            Pair<String, String>("is_default", is_default)
         )
     }
 }
@@ -35,12 +36,37 @@ data class ConfirmOrderRequestBody(
     val sku: String,
     val num: String,
     val coupon: String,
-){
-    fun toMap(): HashMap<String,Any> {
-        return hashMapOf(Pair<String,String>("code",code),
-            Pair<String,String>("sku",sku),
-            Pair<String,String>("num",num),
-            Pair<String,String>("coupon",coupon),
+) {
+    fun toMap(): HashMap<String, Any> {
+        return hashMapOf(
+            Pair<String, String>("code", code),
+            Pair<String, String>("sku", sku),
+            Pair<String, String>("num", num),
+            Pair<String, String>("coupon", coupon),
+        )
+    }
+}
+
+data class ChangeAddressRequestBody(
+    val name: String,
+    val phone: String,
+    val province: String,
+    val city: String,
+    val area: String,
+    val address: String,
+    val is_default: String,
+    val id:String
+) {
+    fun toMap(): HashMap<String, Any> {
+        return hashMapOf(
+            Pair<String, String>("name", name),
+            Pair<String, String>("phone", phone),
+            Pair<String, String>("province", province),
+            Pair<String, String>("city", city),
+            Pair<String, String>("area", area),
+            Pair<String, String>("address", address),
+            Pair<String, String>("is_default", is_default),
+            Pair<String, String>("id", id),
         )
     }
 }

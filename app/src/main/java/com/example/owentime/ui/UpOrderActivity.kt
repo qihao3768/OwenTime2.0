@@ -8,6 +8,7 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import by.kirich1409.viewbindingdelegate.viewBinding
+import coil.load
 import com.example.owentime.R
 import com.example.owentime.base.BaseActivity
 import com.example.owentime.base.BasePopWindow
@@ -16,6 +17,8 @@ import com.example.owentime.databinding.ActivityProductDetailBinding
 import com.example.owentime.databinding.ActivityUpOrderBinding
 import com.example.owentime.databinding.LayoutSpecificationsBinding
 import com.example.owentime.databinding.SelectbuywayLayout2Binding
+import com.example.owentime.fastClick
+import com.example.owentime.load
 import com.example.owentime.start
 import com.example.owentime.ui.ProductDetailActivity.IntentOptions.icode
 import com.example.owentime.ui.ProductDetailActivity.IntentOptions.icoupon
@@ -35,7 +38,16 @@ class UpOrderActivity : BaseActivity(R.layout.activity_up_order) {
 
     private val viewModel by viewModels<OwenViewModel>()
 
-
+    companion object IntentOptions{
+        var Intent.iprovince by IntentExtraString("province")//商品代码
+        var Intent.icity by IntentExtraString("city")//skuid
+        var Intent.iarea by IntentExtraString("area")//购买数量
+        var Intent.iname by IntentExtraString("name")//优惠券id
+        var Intent.iphone by IntentExtraString("phone")//优惠券id
+        var Intent.iaddress by IntentExtraString("address")//优惠券id
+        var Intent.iid by IntentExtraString("id")//优惠券id
+        var Intent.iflag by IntentExtraString("change")//优惠券id
+    }
 
     override fun initData() {
         immersionBar {
@@ -55,10 +67,8 @@ class UpOrderActivity : BaseActivity(R.layout.activity_up_order) {
 //订单确认
         viewModel.confirmPage(initParams()).observe(this, Observer {
             it?.run {
-                mBinding.tvOrdertitle.text=product?.name?:""
+
                 mBinding.orderPrice.text="￥".plus(priceShow)
-                mBinding.tvPrice.text="￥".plus(priceShow)
-                mBinding.tvPrice.text="￥".plus(priceShow)
                 mBinding.tvOrdernum.text="x".plus(intent.inum)
                 address?.run {
                     mBinding.layoutAddress01.visibility= View.GONE
@@ -67,14 +77,33 @@ class UpOrderActivity : BaseActivity(R.layout.activity_up_order) {
                     mBinding.addressPhone.text=phone?:""
                     val maddress=(province?:"").plus(city?:"").plus(area?:"").plus(address?:"")
                     mBinding.tvAddressDetail.text=maddress
+
+                    intent.iprovince=province
+                    intent.icity=city
+                    intent.iarea=area
+                    intent.iaddress=address
+                    intent.iname=name
+                    intent.iphone=phone
+                }
+                product?.run {
+                    mBinding.tvOrdertitle.text=name?:""
+                    mBinding.ivOrderpic.load(imgShow?:"")
+                    mBinding.ivOrderpic.load(imgShow?:"")
+                    mBinding.tvPrice.text="￥".plus(priceActual?:"")
                 }
                 mBinding.tvTotalPrice.text=(priceActual?:0.00).toString()
+
             }
 
         })
         //返回上一页
-        mBinding.titleOrder.leftView.setOnClickListener {
+        mBinding.titleOrder.leftView.fastClick {
             finish()
+        }
+        //去修改地址
+        mBinding.layoutAddress02.fastClick {
+            intent.iflag="change"
+            start(this@UpOrderActivity,AddressActivity().javaClass,intent)
         }
     }
 

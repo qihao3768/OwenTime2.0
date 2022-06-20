@@ -78,4 +78,11 @@ class OwenRepo():BaseRepository(){
     suspend fun confirmPage(map:HashMap<String,Any>): BaseResponse<ConfirmOrderModel?> = request {
         mService.confirmPage(map)
     }
+
+    /***
+     * 修改地址
+     */
+    suspend fun changeAddress(map:HashMap<String,Any>): BaseResponse<String?> = request {
+        mService.changeAddress(map)
+    }
 }

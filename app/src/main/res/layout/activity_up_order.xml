@@ -154,9 +154,9 @@
             android:id="@+id/iv_orderpic"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:background="@drawable/aa"
             android:scaleType="centerCrop"
-            app:shapeAppearance="@style/circle11Image2"/>
+            app:shapeAppearance="@style/circle11Image2"
+            app:strokeColor="@color/white"/>
         <TextView
             android:id="@+id/tv_ordertitle"
             android:layout_width="0dp"
