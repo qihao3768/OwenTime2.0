@@ -1,5 +1,6 @@
 package com.example.owentime.ui
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
@@ -25,6 +26,7 @@ import com.example.owentime.load
 import com.example.owentime.start
 import com.example.owentime.toast
 import com.example.owentime.ui.HomeFragment.Companion.code
+import com.example.owentime.util.IntentExtraString
 import com.example.owentime.vm.OwenViewModel
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.gyf.immersionbar.ktx.immersionBar
@@ -46,6 +48,17 @@ class ProductDetailActivity : BaseActivity(R.layout.activity_product_detail) {
 
     private var mSku :List<Sku>?= listOf<Sku>()//规格列表
 
+    private var selectSku:Sku?=null
+
+    private var mStock:Int=0//库存
+
+
+    companion object IntentOptions{
+        var Intent.icode by IntentExtraString("code")//商品代码
+        var Intent.isku by IntentExtraString("sku")//skuid
+        var Intent.inum by IntentExtraString("num")//购买数量
+        var Intent.icoupon by IntentExtraString("coupon")//优惠券id
+    }
     override fun initData() {
         immersionBar {
             statusBarColor(R.color.transparent)
@@ -104,10 +117,10 @@ class ProductDetailActivity : BaseActivity(R.layout.activity_product_detail) {
             addType<Sku> { R.layout.layout_flex_tag }
             onClick(R.id.tv_specification){
                 val model=getModel<Sku>(modelPosition)
+                selectSku=model
                 spbinding.tvSkuPrice.text=model.priceActual?:""
                 model.selected=model.selected?.not()
                 notifyDataSetChanged()
-
             }
             models=mSku
         }
@@ -129,11 +142,29 @@ class ProductDetailActivity : BaseActivity(R.layout.activity_product_detail) {
         }
         spbinding.btnBuy.setOnClickListener {
             val count=spbinding.tvCount.text.toString().toInt()
-            if (count==0){
-                toast("")
+            val mStock:Int=selectSku?.stock?:0
+            if (selectSku==null){
+                toast("请选择规格")
+                return@setOnClickListener
             }
-            buyDialog.dismiss()
-            start(this@ProductDetailActivity,UpOrderActivity().javaClass,false)
+            when(count){
+                0->{
+                    toast("没有库存")
+                }
+                in 1..mStock ->{
+                    buyDialog.dismiss()
+                    intent.icode=intent.code
+                    intent.isku=selectSku?.id.toString()
+                    intent.inum=count.toString()
+                    intent.icoupon=""//优惠券暂时没有
+                    start(this@ProductDetailActivity,UpOrderActivity().javaClass,intent)
+                }
+                else->{
+                    toast("请选择购买数量")
+                }
+
+            }
+
         }
 
         buyDialog.contentView=spbinding.root
@@ -174,7 +205,12 @@ class ProductDetailActivity : BaseActivity(R.layout.activity_product_detail) {
             }
         })
     }
-    private fun TextView.check(){
-
-    }
+//    private fun TextView.check(msg:String):String?{
+//        return if (this.text.isNullOrEmpty()){
+//            toast(msg)
+//            null
+//        }else{
+//            ""
+//        }
+//    }
 }

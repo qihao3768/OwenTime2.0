@@ -42,7 +42,6 @@
                     android:id="@+id/tv_goods_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="123.00"
                     android:textSize="17dp"
                     android:textStyle="bold"
                     android:textColor="@color/FE9520"/>
@@ -50,8 +49,6 @@
                     android:id="@+id/tv_goods_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="宝贝高碳钢儿童平衡车电动车宝贝高碳钢
-儿童平衡车电动车"
                     android:textSize="17dp"
                     android:textColor="@color/F1A1A1A"
                     android:maxLines="2"
@@ -63,7 +60,6 @@
                     android:id="@+id/tv_goods_desc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="一车三用，低重心黄金三角一车多用"
                     android:textSize="12dp"
                     android:textColor="#5E5E5E"
                     app:layout_constraintTop_toBottomOf="@id/tv_goods_title"

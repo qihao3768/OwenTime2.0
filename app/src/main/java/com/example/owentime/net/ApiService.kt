@@ -42,6 +42,17 @@ interface ApiService {
     suspend fun getDetail(@Field("code") code:String):BaseResponse<GoodsDetail?>
 
 
+    //添加地址
+    @POST("api/address/save")
+    @FormUrlEncoded
+    suspend fun saveAddress(@FieldMap map:HashMap<String,Any>):BaseResponse<String?>
+
+
+    //确认订单
+    @POST("api/order/confirmPage")
+    @FormUrlEncoded
+    suspend fun confirmPage(@FieldMap map:HashMap<String,Any>):BaseResponse<ConfirmOrderModel?>
+
     companion object {
 //        const val BASE_URL = "https://wanandroid.com/"
         const val BASE_URL = "http://192.168.2.184:8080"

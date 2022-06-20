@@ -64,4 +64,18 @@ class OwenRepo():BaseRepository(){
     suspend fun logOut(): BaseResponse<String?> = request {
         mService.logOut()
     }
+
+    /***
+     * 添加地址
+     */
+    suspend fun saveAddress(map:HashMap<String,Any>): BaseResponse<String?> = request {
+        mService.saveAddress(map)
+    }
+
+    /***
+     * 确认订单
+     */
+    suspend fun confirmPage(map:HashMap<String,Any>): BaseResponse<ConfirmOrderModel?> = request {
+        mService.confirmPage(map)
+    }
 }

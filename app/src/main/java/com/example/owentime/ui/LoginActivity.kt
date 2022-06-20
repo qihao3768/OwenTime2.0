@@ -103,7 +103,7 @@ class LoginActivity : BaseActivity(R.layout.activity_login) {
         }
 
         mBinding.tvSms.setOnClickListener {
-            mBinding.edtPhone.checked("请输入手机号")?:return@setOnClickListener
+            val phone=mBinding.edtPhone.checked("请输入手机号")?:return@setOnClickListener
             mBinding.edtPhone.checkLength(11,"请输入11位手机号")?:return@setOnClickListener
             timer = object : CountDownTimer(TIME,STEP) {
                 override fun onTick(p0: Long) {

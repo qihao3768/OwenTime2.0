@@ -50,7 +50,7 @@
             android:id="@+id/edt_address_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="收货人"
+            android:hint="请填写收货人名字"
             android:inputType="text"
             android:textSize="17dp"
             android:textColor="@color/F1A1A1A"
@@ -72,7 +72,7 @@
             android:id="@+id/edt_address_phone"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="1234546768"
+            android:hint="请填写11位手机号"
             android:inputType="phone"
             android:textSize="17dp"
             android:maxEms="11"
@@ -95,7 +95,7 @@
             android:id="@+id/edt_address_city"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="河北省 石家庄市 桥西区"
+            android:hint="请选择收货地址"
             android:inputType="text"
             android:textSize="17dp"
             android:maxLines="2"
@@ -118,8 +118,7 @@
             android:id="@+id/edt_address_detail"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="新石中路与友谊大街交口西
-行500米路北菜鸟驿站"
+            android:hint="请填写详细地址"
             android:inputType="text"
             android:textSize="17dp"
             android:maxLines="2"
@@ -141,7 +140,8 @@
         android:layout_marginTop="10dp"
         android:padding="15dp"
         app:shape_radius="11dp"
-        app:shape_solidColor="@color/white">
+        app:shape_solidColor="@color/white"
+        android:visibility="invisible">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -163,6 +163,7 @@
 
     </com.hjq.shape.layout.ShapeConstraintLayout>
     <com.hjq.shape.view.ShapeButton
+        android:id="@+id/btn_save_address"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingTop="14dp"

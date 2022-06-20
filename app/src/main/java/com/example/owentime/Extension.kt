@@ -96,7 +96,7 @@ private fun start03(activity:Activity,clazz: Class<Activity>,key:String,value: A
 /***
  * 防止快速点击
  */
-fun View.click(listener: (view: View) -> Unit) {
+fun View.fastClick(listener: (view: View) -> Unit) {
     val minTime = 1000L
     var lastTime = 0L
     this.setOnClickListener {
@@ -156,7 +156,7 @@ fun toast(msg:String){
         toast(msg)
         null
     }else{
-        ""
+        this.text.toString()
     }
 }
 fun EditText.checkLength(length:Int,msg:String):String?{
@@ -165,6 +165,15 @@ fun EditText.checkLength(length:Int,msg:String):String?{
         null
     }else{
         ""
+    }
+}
+
+fun TextView.checked(msg:String):String?{
+    return if (this.text.isNullOrEmpty()){
+        toast(msg)
+        null
+    }else{
+        this.text.toString()
     }
 }
 interface TodoListener{
