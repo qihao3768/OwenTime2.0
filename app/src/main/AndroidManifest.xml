@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.owentime">
+    package="com.example.time_project">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -10,7 +10,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".App"
+        android:name="com.example.time_project.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -20,12 +20,12 @@
         android:theme="@style/Theme.WanAndroid"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".wxapi.WXEntryActivity"
+            android:name="com.example.time_project.wxapi.WXEntryActivity"
             android:exported="true"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
         <activity
-            android:name=".wxapi.WXPayEntryActivity"
+            android:name="com.example.time_project.wxapi.WXPayEntryActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|fontScale"
             android:exported="true"
             android:launchMode="singleInstance"
@@ -39,58 +39,58 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.ForScreenActivity"
+            android:name="com.example.time_project.ui.ForScreenActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.NoticeActivity"
+            android:name="com.example.time_project.ui.NoticeActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.OrderDetailActivity"
+            android:name="com.example.time_project.ui.OrderDetailActivity"
             android:exported="false"
             android:launchMode="singleTop"/>
         <activity
-            android:name=".ui.OrderListActivity"
+            android:name="com.example.time_project.ui.OrderListActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.CourseDetailActivity"
+            android:name="com.example.time_project.ui.CourseDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.VideoListActivity"
+            android:name="com.example.time_project.ui.VideoListActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.MoreProjectActivity"
+            android:name="com.example.time_project.ui.MoreProjectActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.AddressActivity"
+            android:name="com.example.time_project.ui.AddressActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.UpOrderActivity"
+            android:name="com.example.time_project.ui.UpOrderActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.DetailActivity"
+            android:name="com.example.time_project.ui.DetailActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.LogoutActivity"
+            android:name="com.example.time_project.ui.LogoutActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.WorksActivity"
+            android:name="com.example.time_project.ui.WorksActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.SettingActivity"
+            android:name="com.example.time_project.ui.SettingActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.ExoplayerActivity"
+            android:name="com.example.time_project.ui.ExoplayerActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|fontScale"
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".ui.ProductDetailActivity"
+            android:name="com.example.time_project.ui.ProductDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.PerfectActivity"
+            android:name="com.example.time_project.ui.PerfectActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.SplashActivity"
+            android:name="com.example.time_project.ui.SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.TestSplashScreen.Starting">
             <intent-filter>
@@ -100,13 +100,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.LoginActivity"
+            android:name="com.example.time_project.ui.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".web.WebActivity"
+            android:name="com.example.time_project.web.WebActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name="com.example.time_project.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|fontScale"
             android:exported="true"
             android:launchMode="singleTask"
