@@ -85,4 +85,11 @@ class OwenRepo():BaseRepository(){
     suspend fun changeAddress(map:HashMap<String,Any>): BaseResponse<String?> = request {
         mService.changeAddress(map)
     }
+
+    /***
+     * 下单
+     */
+    suspend fun upOrder(body:UpOrderRequestBody): BaseResponse<OrderSn?> = request {
+        mService.upOrder(body)
+    }
 }

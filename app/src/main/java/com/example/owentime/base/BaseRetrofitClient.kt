@@ -6,14 +6,11 @@ import com.example.owentime.BuildConfig
 import com.example.owentime.net.Interceptor
 import com.hjq.gson.factory.GsonFactory
 
-import com.squareup.moshi.Moshi
-
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 
 
@@ -54,7 +51,6 @@ abstract class BaseRetrofitClient {
 
 //    @OptIn(ExperimentalSerializationApi::class)
     open fun <Service> getService(serviceClass: Class<Service>, baseUrl: String): Service {
-    val moshi = Moshi.Builder().build()
     return Retrofit.Builder()
                 .client(client)
             .addConverterFactory(GsonConverterFactory.create(GsonFactory.getSingletonGson()))

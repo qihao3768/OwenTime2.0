@@ -27,10 +27,16 @@ import com.example.owentime.load
 import com.example.owentime.start
 import com.example.owentime.toast
 import com.example.owentime.ui.HomeFragment.Companion.code
+import com.example.owentime.util.IntentExtraInt
 import com.example.owentime.util.IntentExtraString
 import com.example.owentime.vm.OwenViewModel
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.gyf.immersionbar.ktx.immersionBar
+import com.umeng.socialize.ShareAction
+import com.umeng.socialize.ShareContent
+import com.umeng.socialize.UMShareListener
+import com.umeng.socialize.bean.SHARE_MEDIA
+import com.umeng.socialize.media.UMImage
 import com.youth.banner.adapter.BannerAdapter
 import com.youth.banner.indicator.CircleIndicator
 import com.youth.banner.listener.OnPageChangeListener
@@ -53,12 +59,15 @@ class ProductDetailActivity : BaseActivity(R.layout.activity_product_detail) {
 
     private var mStock:Int=0//库存
 
+    private lateinit var mShareAction:ShareAction//分享
+
 
     companion object IntentOptions{
         var Intent.icode by IntentExtraString("code")//商品代码
         var Intent.isku by IntentExtraString("sku")//skuid
         var Intent.inum by IntentExtraString("num")//购买数量
         var Intent.icoupon by IntentExtraString("coupon")//优惠券id
+        var Intent.iproductId by IntentExtraInt("productId")//商品ID
     }
     override fun initData() {
         immersionBar {
@@ -74,8 +83,14 @@ class ProductDetailActivity : BaseActivity(R.layout.activity_product_detail) {
         mBinding.layoutKtBuy.setOnClickListener {
             showBuy()
         }
+
+        mBinding.productTitle.rightView.setOnClickListener {
+            mShareAction.open()
+        }
         //详情
         getDetail(intent.code.toString())
+        //分享
+        share()
     }
 
     //初始化顶部banner
@@ -162,6 +177,7 @@ class ProductDetailActivity : BaseActivity(R.layout.activity_product_detail) {
                     intent.isku=selectSku?.id.toString()
                     intent.inum=count.toString()
                     intent.icoupon=""//优惠券暂时没有
+                    intent.iproductId=selectSku?.productId?:0
                     start(this@ProductDetailActivity,UpOrderActivity().javaClass,intent)
                 }
                 else->{
@@ -210,12 +226,67 @@ class ProductDetailActivity : BaseActivity(R.layout.activity_product_detail) {
             }
         })
     }
-//    private fun TextView.check(msg:String):String?{
-//        return if (this.text.isNullOrEmpty()){
-//            toast(msg)
-//            null
-//        }else{
-//            ""
-//        }
-//    }
+
+    /***
+     * 分享
+     */
+    private fun share() {
+        mShareAction = ShareAction(this).setDisplayList(SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE).addButton(
+            "复制链接","复制链接","umeng_socialize_copyurl","umeng_socialize_copyurl"
+        ).setShareboardclickCallback { p0, p1 ->
+            when (p0.mShowWord) {
+                "复制文本" -> {
+                    toast("复制文本")
+                }
+                "复制链接" -> {
+//                    copyLink("https://www.owentime.cn/api/exp/expHtml")
+                }
+                else -> {
+                    val umImage = UMImage(this, R.drawable.share_tiyan)
+                    val shareContent = ShareContent()
+                    shareContent.mText = "我正在给宝宝报名在家早教训练营，快来帮我点一下！"
+                    ShareAction(this).withMedia(umImage)
+                        .setPlatform(p1)
+                        .setCallback(object : UMShareListener {
+                            override fun onStart(p0: SHARE_MEDIA) {
+
+                            }
+
+                            override fun onResult(p0: SHARE_MEDIA) {
+                                if (p0.name == "WEIXIN_FAVORITE") {
+                                    toast("收藏成功")
+
+                                } else {
+                                    if (p0 != SHARE_MEDIA.MORE && p0 != SHARE_MEDIA.SMS
+                                        && p0 != SHARE_MEDIA.EMAIL
+                                        && p0 != SHARE_MEDIA.FLICKR
+                                        && p0 != SHARE_MEDIA.FOURSQUARE
+                                        && p0 != SHARE_MEDIA.TUMBLR
+                                        && p0 != SHARE_MEDIA.POCKET
+                                        && p0 != SHARE_MEDIA.PINTEREST
+                                        && p0 != SHARE_MEDIA.INSTAGRAM
+                                        && p0 != SHARE_MEDIA.GOOGLEPLUS
+                                        && p0 != SHARE_MEDIA.YNOTE &&
+                                        p0 != SHARE_MEDIA.EVERNOTE
+                                    ) {
+                                        toast("分享成功")
+                                    }
+                                }
+                            }
+
+                            override fun onError(p0: SHARE_MEDIA?, p1: Throwable?) {
+                                if (p0 != SHARE_MEDIA.MORE && p0 != SHARE_MEDIA.SMS && p0 != SHARE_MEDIA.EMAIL && p0 != SHARE_MEDIA.FLICKR && p0 != SHARE_MEDIA.FOURSQUARE && p0 != SHARE_MEDIA.TUMBLR && p0 != SHARE_MEDIA.POCKET && p0 != SHARE_MEDIA.PINTEREST && p0 != SHARE_MEDIA.INSTAGRAM && p0 != SHARE_MEDIA.GOOGLEPLUS && p0 != SHARE_MEDIA.YNOTE && p0 != SHARE_MEDIA.EVERNOTE) {
+                                    toast("分享失败")
+                                }
+
+                            }
+
+                            override fun onCancel(p0: SHARE_MEDIA?) {
+                                toast("取消分享")
+                            }
+                        }).share()
+                }
+            }
+        }
+    }
 }

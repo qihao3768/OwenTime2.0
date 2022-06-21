@@ -67,11 +67,14 @@ class AddressActivity : BaseActivity(R.layout.activity_address) {
                             mArea,
                             detail,
                             1.toString(),
-                            intent.iid ?: ""
+                            intent.iid.toString(),
+                            ""
                         )
                     viewModel.changeAddress(body.toMap()).observe(this, Observer {
-                        toast("修改成功")
-                        finish()
+                      it?.run {
+                          toast(message.toString())
+                          finish()
+                      }
                     })
                 }
                 else -> {
@@ -85,8 +88,10 @@ class AddressActivity : BaseActivity(R.layout.activity_address) {
                         1.toString()
                     )
                     viewModel.saveAddress(body.toMap()).observe(this, Observer {
-                        toast("添加成功")
-                        finish()
+                       it?.run {
+                           toast(message.toString())
+                           finish()
+                       }
                     })
                 }
             }
@@ -118,6 +123,9 @@ class AddressActivity : BaseActivity(R.layout.activity_address) {
     }
 
     private fun getAddress() {
+        mProvince=intent.iprovince?:""
+        mCity=intent.icity?:""
+        mArea=intent.iarea?:""
         mBinding.edtAddressCity.text = intent.iprovince.plus(intent.icity).plus(intent.iarea)
         mBinding.edtAddressDetail.setText(intent.iaddress)
         mBinding.edtAddressPhone.setText(intent.iphone)

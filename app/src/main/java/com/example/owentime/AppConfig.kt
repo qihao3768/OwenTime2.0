@@ -2,6 +2,7 @@ package com.example.owentime
 
 
 object AppConfig {
+    val APP_ID:String="wx58dff157a444095f"
      var IS_DEBUG: Boolean = false //debug模式，上线时关闭
 
      var SERVICE_AGREEMENT: String = "" //用户服务协议

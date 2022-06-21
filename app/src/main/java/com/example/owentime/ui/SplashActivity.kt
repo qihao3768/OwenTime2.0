@@ -23,6 +23,7 @@ import com.gyf.immersionbar.ktx.immersionBar
 
 import com.hjq.shape.view.ShapeButton
 import com.tencent.mmkv.MMKV
+import com.umeng.commonsdk.UMConfigure
 import razerdp.basepopup.BasePopupWindow
 
 class SplashActivity : AppCompatActivity() {
@@ -81,9 +82,9 @@ class SplashActivity : AppCompatActivity() {
                 mmkv.encode("splashDialog",true)
 //                SPUtil.put("splashDialog", true)
 //                //按照合规政策要求，确保App首次冷启动时，在用户阅读您的《隐私政策》并取得用户授权之后，才调用正式初始化函数UMConfigure.init()
-//                UMConfigure.submitPolicyGrantResult(applicationContext, true)
-//                val umInitConfig = UmInitConfig()
-//                umInitConfig.UMinit(applicationContext)
+                UMConfigure.submitPolicyGrantResult(applicationContext, true)
+                val umInitConfig = UmInitConfig()
+                umInitConfig.UMinit(applicationContext)
                 gotoHome()
             }
         })

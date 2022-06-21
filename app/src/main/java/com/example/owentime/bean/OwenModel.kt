@@ -84,3 +84,9 @@ data class Gift(
     val skuId: Int? = 0
 )
 //end————————————————————————————————————————————————————————
+
+//下单start----------------------------------------------------------
+data class OrderSn(
+    @SerializedName("order_sn")
+    val orderSn: String? = ""
+)

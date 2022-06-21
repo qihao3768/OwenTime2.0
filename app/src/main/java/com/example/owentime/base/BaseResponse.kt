@@ -1,17 +1,14 @@
 package com.example.owentime.base
 
-import com.example.owentime.EmptyStringToOjb
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import com.google.gson.annotations.SerializedName
 
-@JsonClass(generateAdapter = true)
 data class BaseResponse<T>(
-    @Json(name = "code")
+    @SerializedName("code")
     val code: Int? = 0,
-    @Json(name = "data")
+    @SerializedName("data")
     val data: T?=null,
-    @Json(name = "message")
+    @SerializedName("message")
     val message: String? = "",
-    @Json(name = "status_code")
+    @SerializedName("status_code")
     val statusCode: Int? = 0
     )

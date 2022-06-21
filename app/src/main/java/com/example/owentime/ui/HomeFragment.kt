@@ -24,11 +24,13 @@ import com.example.owentime.load
 import com.example.owentime.start
 import com.example.owentime.util.IntentExtraString
 import com.example.owentime.vm.OwenViewModel
+import com.example.owentime.web.WebActivity
 import com.gyf.immersionbar.ktx.immersionBar
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.tencent.mmkv.MMKV
 import com.youth.banner.adapter.BannerImageAdapter
 import com.youth.banner.holder.BannerImageHolder
+import com.youth.banner.listener.OnBannerListener
 
 class HomeFragment : BaseFragment(R.layout.home_fragment){
 
@@ -36,6 +38,8 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
         fun newInstance() = HomeFragment()
 
         var Intent.code by IntentExtraString("code")
+
+        var Intent.iurl by IntentExtraString("url")
     }
 
     private val viewModel by viewModels<OwenViewModel>()
@@ -119,6 +123,10 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
                                 return super.onCreateHolder(parent, viewType)
                             }
                         })
+                    mBinding.homeBanner.setOnBannerListener(OnBannerListener<String> { data, _ ->
+                        requireActivity().intent.iurl=data
+                        start(requireActivity(),WebActivity().javaClass,requireActivity().intent)
+                    })
                     it.product?.run {
                         initArticle(this)
                     }
