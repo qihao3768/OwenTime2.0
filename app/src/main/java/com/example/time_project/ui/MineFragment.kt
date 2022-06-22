@@ -1,11 +1,14 @@
 package com.example.time_project.ui
 
+import android.content.Intent
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.time_project.*
 import com.example.time_project.base.BaseFragment
 import com.example.time_project.databinding.MineFragmentBinding
+import com.example.time_project.util.IntentExtraBoolean
+import com.example.time_project.util.IntentExtraString
 import com.example.time_project.vm.MineViewModel
 import com.gyf.immersionbar.ktx.immersionBar
 import com.jeremyliao.liveeventbus.LiveEventBus
@@ -16,12 +19,14 @@ class MineFragment : BaseFragment(R.layout.mine_fragment) {
 
     companion object {
         fun newInstance() = MineFragment()
+        var Intent.iSkip by IntentExtraBoolean("skip")
     }
 
     private val mViewModel by viewModels<MineViewModel>()
     private val mBinding by viewBinding(MineFragmentBinding::bind)
     private val mmkv=MMKV.defaultMMKV()
     private var mToken=""//token
+
 
 
     override fun initData() {
@@ -66,7 +71,8 @@ class MineFragment : BaseFragment(R.layout.mine_fragment) {
 
         mBinding.personalPhoto.checkLogin(requireActivity(), object : TodoListener {
             override fun todo() {
-                start(requireActivity(),PerfectActivity().javaClass,false)
+                requireActivity().intent.iSkip=false
+                start(requireActivity(),PerfectActivity().javaClass,requireActivity().intent)
             }
         })
 

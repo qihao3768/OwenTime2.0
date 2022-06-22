@@ -7,6 +7,8 @@ import com.example.time_project.toast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeout
+import retrofit2.HttpException
+import java.net.SocketTimeoutException
 
 open class BaseViewModel : ViewModel(), LifecycleObserver {
 
@@ -20,7 +22,17 @@ open class BaseViewModel : ViewModel(), LifecycleObserver {
         } catch (e: Exception) {
             //此处接收到BaseRepository里的request抛出的异常
             //根据业务逻辑自行处理代码...
+
+            when(e){
+                is SocketTimeoutException ->{
+                    toast("连接超时")
+                }
+                is HttpException ->{
+                    toast("服务器错误")
+                }else->{
                 toast("出错了")
+                }
+            }
             println(e.printStackTrace())
 
         }

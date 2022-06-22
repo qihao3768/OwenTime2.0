@@ -124,6 +124,7 @@
                 android:textColor="@color/CCCCCC"
                 android:textSize="17dp"
                 android:background="@null"
+                android:inputType="text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/label_name"
                 app:layout_constraintBottom_toBottomOf="@+id/label_name"/>

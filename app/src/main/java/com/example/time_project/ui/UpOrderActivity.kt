@@ -14,11 +14,12 @@ import com.example.time_project.bean.UpOrderDetailRequestBody
 import com.example.time_project.bean.UpOrderRequestBody
 import com.example.time_project.databinding.ActivityUpOrderBinding
 import com.example.time_project.databinding.SelectbuywayLayout2Binding
-import com.example.time_project.ui.ProductDetailActivity.IntentOptions.icode
-import com.example.time_project.ui.ProductDetailActivity.IntentOptions.icoupon
-import com.example.time_project.ui.ProductDetailActivity.IntentOptions.inum
-import com.example.time_project.ui.ProductDetailActivity.IntentOptions.iproductId
-import com.example.time_project.ui.ProductDetailActivity.IntentOptions.isku
+import com.example.time_project.util.IntentExtra.Companion.icode
+import com.example.time_project.util.IntentExtra.Companion.icoupon
+import com.example.time_project.util.IntentExtra.Companion.inum
+import com.example.time_project.util.IntentExtra.Companion.iproductId
+import com.example.time_project.util.IntentExtra.Companion.isku
+
 import com.example.time_project.util.IntentExtraInt
 import com.example.time_project.util.IntentExtraString
 import com.example.time_project.vm.OwenViewModel
@@ -30,10 +31,10 @@ class UpOrderActivity : BaseActivity(R.layout.activity_up_order) {
     private val mBinding by viewBinding (ActivityUpOrderBinding::bind)
     private var payDialog = BasePopWindow(this)
     private lateinit var payBinding: SelectbuywayLayout2Binding
-
     private val viewModel by viewModels<OwenViewModel>()
-
-    private var body:UpOrderRequestBody= UpOrderRequestBody()
+    private var body:UpOrderRequestBody?=null
+    private var mOrderSn:String=""//订单号
+    private var mPayWay:Int=1//支付方式，1 微信 2 支付宝
 
     companion object IntentOptions{
         var Intent.iprovince by IntentExtraString("province")//商品代码
@@ -59,39 +60,32 @@ class UpOrderActivity : BaseActivity(R.layout.activity_up_order) {
             start(this@UpOrderActivity,AddressActivity().javaClass,false)
         }
         mBinding.btnOrdersubmit.setOnClickListener {
-            //下单成功之后弹出支付方式
-            body.run {
-                viewModel.upOrder(this).observe(this@UpOrderActivity, Observer {
-                    it?.run {
-                        when(code){
-                            1000->{
-                                data?.run {
-                                    toast(orderSn.toString())
-                                }
-                            }else->{
+            //如果订单号不为空，说明在当前页面已经执行了一次下单操作，并且已经生成了订单，就不能再当前页面重复下单了
+            if (mOrderSn.isEmpty()){
+                //下单成功之后弹出支付方式
+                body?.run {
+                    viewModel.upOrder(this).observe(this@UpOrderActivity, Observer {
+                        it?.run {
+                            when(code){
+                                1000->{
+                                    data?.run {
+                                        mOrderSn=orderSn.toString()
+                                        showPay()
+                                    }
+                                }else->{
                                 toast(message.toString())
                             }
+                            }
                         }
-                    }
-                })
+                    })
+                }
+            }else{
+                showPay()
             }
-
-//            showPay()
         }
 //订单确认
         viewModel.confirmPage(initParams()).observe(this, Observer {
             it?.run {
-                body.order_type="0"
-                body.total_amount=priceShow.toString()
-                body.pay_amount=priceActual.toString()
-                body.freight_amount=freight.toString()
-                body.note=""
-                body.coupon_code=intent.icoupon?:""
-                val detailRequestBody=UpOrderDetailRequestBody()
-                detailRequestBody.product_id=intent.iproductId.toString()
-                detailRequestBody.sku_id=intent.isku?:""
-                detailRequestBody.product_quantity=intent.inum?:""
-                body.detail=detailRequestBody
 
                 mBinding.orderPrice.text="￥".plus(priceShow)
                 mBinding.tvOrdernum.text="x".plus(intent.inum)
@@ -111,8 +105,6 @@ class UpOrderActivity : BaseActivity(R.layout.activity_up_order) {
                     intent.iname=name
                     intent.iphone=phone
                     intent.iid=addressId?:-1
-
-                    body.address_id=addressId.toString()
                 }
                 product?.run {
                     mBinding.tvOrdertitle.text=name?:""
@@ -121,6 +113,12 @@ class UpOrderActivity : BaseActivity(R.layout.activity_up_order) {
                     mBinding.tvPrice.text="￥".plus(priceActual?:"")
                 }
                 mBinding.tvTotalPrice.text=(priceActual?:0.00).toString()
+
+                val detailRequestBody=UpOrderDetailRequestBody(product_id=intent.iproductId.toString(), sku_id = intent.isku?:"",product_quantity=intent.inum?:"")
+
+                body= UpOrderRequestBody(order_type = "0",total_amount=priceShow.toString(),
+                    pay_amount=priceActual.toString(),freight_amount=freight.toString(), note = "",
+                    coupon_code = intent.icoupon?:"", coupon_amount = "0", detail = listOf(detailRequestBody), address_id = intent.iid.toString())//下单时携带的body
 
             }
 
@@ -144,6 +142,29 @@ class UpOrderActivity : BaseActivity(R.layout.activity_up_order) {
         payBinding.payClose.setOnClickListener {
             payDialog.dismiss()
         }
+        //微信支付
+        payBinding.wxBuys.fastClick {
+            mPayWay=1
+            payBinding.wxCheck.isSelected=true
+            payBinding.zfbCheck.isSelected=false
+        }
+        payBinding.wxCheck.fastClick {
+            mPayWay=1
+            payBinding.wxCheck.isSelected=true
+            payBinding.zfbCheck.isSelected=false
+        }
+        //支付宝支付
+        payBinding.zfbBuy.fastClick {
+            mPayWay=2
+            payBinding.wxCheck.isSelected=false
+            payBinding.zfbCheck.isSelected=true
+        }
+        payBinding.zfbCheck.fastClick {
+            mPayWay=2
+            payBinding.wxCheck.isSelected=false
+            payBinding.zfbCheck.isSelected=true
+        }
+        payBinding.orderPopnumber.text=mBinding.tvTotalPrice.text
         payDialog.setOutSideDismiss(true).setOutSideTouchable(true)
             .setPopupGravity(Gravity.BOTTOM)
             .setShowAnimation(

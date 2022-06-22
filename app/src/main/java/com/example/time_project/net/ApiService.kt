@@ -59,8 +59,12 @@ interface ApiService {
     suspend fun changeAddress(@FieldMap map:HashMap<String,Any>):BaseResponse<String?>
 
     //下单
-    @POST("/api/order/storage")
+    @POST("api/order/storage")
     suspend fun upOrder(@Body body:UpOrderRequestBody):BaseResponse<OrderSn?>
+
+    //已购
+    @POST("api/product/getUserProduct")
+    suspend fun alreadyBuy():BaseResponse<AlreadyBuyModel?>
 
 
 

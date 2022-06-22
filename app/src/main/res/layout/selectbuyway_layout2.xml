@@ -45,7 +45,6 @@
         android:layout_gravity="center"
         android:textColor="@color/FF4E4E"
         android:textStyle="bold"
-        android:text="XXXXXX"
         android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toTopOf="@+id/layout_pay_way"
         app:layout_constraintStart_toStartOf="parent"
@@ -86,7 +85,7 @@
                 android:textColor="#333333"
                 android:textSize="15dp" />
 
-            <com.hjq.shape.view.ShapeCheckBox
+            <CheckBox
                 android:id="@+id/wx_check"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -112,6 +112,7 @@ dependencies {
 
     implementation 'com.google.code.gson:gson:2.9.0'
 
+//友盟分享相关
     api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:6.8.0'//微信
     implementation ('com.umeng.umsdk:common:9.4.4')//必选
     implementation ('com.umeng.umsdk:asms:1.4.1')//必选
@@ -120,5 +121,8 @@ dependencies {
 
     implementation 'com.umeng.umsdk:share-wx:7.1.7' //微信完整版
 //    api('com.github.devin1014.DLNA-Cast:dlna-dmc:V1.0.0')
+
+//    支付相关
+    api('com.alipay.sdk:alipaysdk-android:+@aar')//支付宝
 
 }

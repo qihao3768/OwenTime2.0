@@ -72,35 +72,23 @@ data class ChangeAddressRequestBody(
         )
     }
 }
- class UpOrderRequestBody{
+ data class UpOrderRequestBody(
 
-     var order_type: String=""
-     var total_amount:String=""
-     var pay_amount:String=""
-     var freight_amount:String=""
-     var address_id:String=""
-     var coupon_code:String=""
-     var coupon_amount:String=""
-     var note:String=""
-     var detail:UpOrderDetailRequestBody=UpOrderDetailRequestBody()
-//    fun toMap(): HashMap<String, Any> {
-//        return hashMapOf(
-//            Pair<String, String>("order_type", order_type),
-//            Pair<String, String>("total_amount", total_amount),
-//            Pair<String, String>("pay_amount", pay_amount),
-//            Pair<String, String>("freight_amount", freight_amount),
-//            Pair<String, String>("address_id", address_id),
-//            Pair<String, String>("coupon_code", coupon_code),
-//            Pair<String, String>("coupon_amount", coupon_amount),
-//            Pair<String, String>("note", note),
-//            Pair<String, UpOrderDetailRequestBody>("detail", detail),
-//        )
-//    }
-}
+     var order_type: String,
+     var total_amount:String,
+     var pay_amount:String,
+     var freight_amount:String,
+     var address_id:String,
+     var coupon_code:String,
+     var coupon_amount:String,
+     var note:String,
+     var detail:List<UpOrderDetailRequestBody>
+ )
 
-class UpOrderDetailRequestBody{
-    var product_id:String=""
-    var sku_id:String=""
-    var product_quantity:String=""
-}
+
+data class UpOrderDetailRequestBody(
+    var product_id:String,
+    var sku_id:String,
+    var product_quantity:String
+    )
 

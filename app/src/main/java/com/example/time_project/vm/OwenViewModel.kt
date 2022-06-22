@@ -69,4 +69,14 @@ class OwenViewModel() : BaseViewModel() {
         return upOrderData
     }
 
+    //已购
+    private val alreadyBuyData=MutableLiveData<BaseResponse<AlreadyBuyModel?>>()
+    fun alreadyBuy():MutableLiveData<BaseResponse<AlreadyBuyModel?>>{
+        launchUI {
+            val result = owenReps.alreadyBuy()
+            alreadyBuyData.value = result
+        }
+        return alreadyBuyData
+    }
+
 }

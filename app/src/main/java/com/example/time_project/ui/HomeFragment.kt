@@ -22,6 +22,8 @@ import com.example.time_project.bean.Studying
 import com.example.time_project.databinding.HomeFragmentBinding
 import com.example.time_project.load
 import com.example.time_project.start
+import com.example.time_project.util.IntentExtra.Companion.code
+import com.example.time_project.util.IntentExtra.Companion.iurl
 import com.example.time_project.util.IntentExtraString
 import com.example.time_project.vm.OwenViewModel
 import com.example.time_project.web.WebActivity
@@ -37,9 +39,9 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
     companion object {
         fun newInstance() = HomeFragment()
 
-        var Intent.code by IntentExtraString("code")
-
-        var Intent.iurl by IntentExtraString("url")
+//        var Intent.code by IntentExtraString("code")
+//
+//        var Intent.iurl by IntentExtraString("url")
     }
 
     private val viewModel by viewModels<OwenViewModel>()

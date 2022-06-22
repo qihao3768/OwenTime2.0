@@ -212,7 +212,6 @@
             android:id="@+id/order_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="￥xxx"
             android:textSize="15dp"
             android:textColor="@color/F1A1A1A"
             app:layout_constraintTop_toTopOf="parent"

@@ -39,7 +39,7 @@ class WorksActivity : BaseActivity(R.layout.activity_works) {
                     intent.url="https://owen-time-test.oss-cn-beijing.aliyuncs.com/courses/cou/1643348728_216a94a44ba39a71.mp4"
                     start(this@WorksActivity,ExoplayerActivity().javaClass,intent)
                 }
-            }.models=getData()
+            }.models=data
         }
 
 

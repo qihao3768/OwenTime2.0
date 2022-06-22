@@ -92,4 +92,11 @@ class OwenRepo():BaseRepository(){
     suspend fun upOrder(body:UpOrderRequestBody): BaseResponse<OrderSn?> = request {
         mService.upOrder(body)
     }
+
+    /***
+     * 已购
+     */
+    suspend fun alreadyBuy(): BaseResponse<AlreadyBuyModel?> = request {
+        mService.alreadyBuy()
+    }
 }

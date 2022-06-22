@@ -19,7 +19,12 @@ import com.example.time_project.databinding.LayoutSpecificationsBinding
 import com.example.time_project.load
 import com.example.time_project.start
 import com.example.time_project.toast
-import com.example.time_project.ui.HomeFragment.Companion.code
+import com.example.time_project.util.IntentExtra.Companion.code
+import com.example.time_project.util.IntentExtra.Companion.icode
+import com.example.time_project.util.IntentExtra.Companion.icoupon
+import com.example.time_project.util.IntentExtra.Companion.inum
+import com.example.time_project.util.IntentExtra.Companion.iproductId
+import com.example.time_project.util.IntentExtra.Companion.isku
 import com.example.time_project.util.IntentExtraInt
 import com.example.time_project.util.IntentExtraString
 import com.example.time_project.vm.OwenViewModel
@@ -54,13 +59,13 @@ class ProductDetailActivity : BaseActivity(R.layout.activity_product_detail) {
     private lateinit var mShareAction:ShareAction//分享
 
 
-    companion object IntentOptions{
-        var Intent.icode by IntentExtraString("code")//商品代码
-        var Intent.isku by IntentExtraString("sku")//skuid
-        var Intent.inum by IntentExtraString("num")//购买数量
-        var Intent.icoupon by IntentExtraString("coupon")//优惠券id
-        var Intent.iproductId by IntentExtraInt("productId")//商品ID
-    }
+//    companion object IntentOptions{
+//        var Intent.icode by IntentExtraString("code")//商品代码
+//        var Intent.isku by IntentExtraString("sku")//skuid
+//        var Intent.inum by IntentExtraString("num")//购买数量
+//        var Intent.icoupon by IntentExtraString("coupon")//优惠券id
+//        var Intent.iproductId by IntentExtraInt("productId")//商品ID
+//    }
     override fun initData() {
         immersionBar {
             statusBarColor(R.color.transparent)

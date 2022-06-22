@@ -11,6 +11,7 @@ import com.example.time_project.*
 import com.example.time_project.base.BaseActivity
 import com.example.time_project.databinding.ActivityPerfectBinding
 import com.example.time_project.ui.LoginActivity.IntentOptions.token
+import com.example.time_project.ui.MineFragment.Companion.iSkip
 import com.example.time_project.util.CoilEngine
 import com.example.time_project.vm.UserViewModel
 import com.gyf.immersionbar.ktx.immersionBar
@@ -49,6 +50,9 @@ class PerfectActivity : BaseActivity(R.layout.activity_perfect) {
             statusBarDarkFont(true)
             fitsSystemWindows(true)
         }
+        //隐藏skip按钮
+        if (intent.iSkip) mBinding.tvSkip.visibility=View.GONE
+
         mBinding.tvSkip.setOnClickListener {
             finish()
         }
