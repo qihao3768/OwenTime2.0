@@ -18,11 +18,18 @@ import com.example.time_project.adapter.NoticeAdapter
 import com.example.time_project.base.BaseFragment
 import com.example.time_project.bean.NoticeBean
 import com.example.time_project.bean.Product
+import com.example.time_project.bean.Sex
 import com.example.time_project.bean.Studying
 import com.example.time_project.databinding.HomeFragmentBinding
 import com.example.time_project.load
 import com.example.time_project.start
+import com.example.time_project.ui.UpOrderActivity.IntentOptions.iname
 import com.example.time_project.util.IntentExtra.Companion.code
+import com.example.time_project.util.IntentExtra.Companion.iBirthday
+import com.example.time_project.util.IntentExtra.Companion.iHead
+import com.example.time_project.util.IntentExtra.Companion.iSex
+import com.example.time_project.util.IntentExtra.Companion.iSkip
+import com.example.time_project.util.IntentExtra.Companion.iUserName
 import com.example.time_project.util.IntentExtra.Companion.iurl
 import com.example.time_project.util.IntentExtraString
 import com.example.time_project.vm.OwenViewModel
@@ -49,7 +56,11 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
 
     private lateinit var mmkv: MMKV
 
-    private var studying:Studying?=null
+    private var studying:Studying?=null//正在观看的视频
+    private var mUserName:String?=""//用户名
+    private var mSex:Int=0//性别
+    private var mBirth:String?=""//生日
+    private var mHead:String?=""//头像
 
 
     override fun initData() {
@@ -65,9 +76,14 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
                 LoginActivity()
 
             }else{
+                requireActivity().intent.iSkip=true
+                requireActivity().intent.iUserName=mUserName
+                requireActivity().intent.iSex=mSex
+                requireActivity().intent.iBirthday=mBirth
+                requireActivity().intent.iHead=mHead
                 PerfectActivity()
             }
-            start(requireActivity(),target.javaClass,false)
+            start(requireActivity(),target.javaClass,requireActivity().intent)
         }
         initBanner()
         LiveEventBus.get<String>("logout").observe(this, Observer {
@@ -138,6 +154,10 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
                     }
                     it.user?.run {
                         mBinding.ivHomeHead.load(photo?:"")
+                        mUserName=name?:""
+                        mSex=sex?:0
+                        mBirth=birthday?:""
+                        mHead=photo?:""
                     }
                 }
             }

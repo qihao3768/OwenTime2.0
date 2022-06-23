@@ -8,7 +8,7 @@ import androidx.lifecycle.Observer
 import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.load
 import com.drake.brv.utils.setup
-import com.example.time_project.R
+import com.example.time_project.*
 import com.example.time_project.adapter.ImageTitleHolder
 import com.example.time_project.base.BaseActivity
 import com.example.time_project.base.BasePopWindow
@@ -17,8 +17,6 @@ import com.example.time_project.bean.Sku
 import com.example.time_project.databinding.ActivityProductDetailBinding
 import com.example.time_project.databinding.LayoutSpecificationsBinding
 import com.example.time_project.load
-import com.example.time_project.start
-import com.example.time_project.toast
 import com.example.time_project.util.IntentExtra.Companion.code
 import com.example.time_project.util.IntentExtra.Companion.icode
 import com.example.time_project.util.IntentExtra.Companion.icoupon
@@ -77,13 +75,17 @@ class ProductDetailActivity : BaseActivity(R.layout.activity_product_detail) {
         spbinding= LayoutSpecificationsBinding.bind(view)
         // TODO: 请求详情页数据,这里是模拟
 
-        mBinding.layoutKtBuy.setOnClickListener {
+        mBinding.layoutKtBuy.fastClick {
             showBuy()
         }
 
-        mBinding.productTitle.rightView.setOnClickListener {
+        mBinding.productTitle.rightView.fastClick {
             mShareAction.open()
         }
+
+    mBinding.productTitle.leftView.fastClick {
+        finish()
+    }
         //详情
         getDetail(intent.code.toString())
         //分享

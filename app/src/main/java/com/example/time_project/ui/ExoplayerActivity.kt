@@ -2,7 +2,9 @@ package com.example.time_project.ui
 
 import android.content.pm.ActivityInfo
 import android.net.Uri
+import android.provider.Settings
 import android.view.Gravity
+import android.view.KeyEvent
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -12,6 +14,8 @@ import com.example.time_project.base.BaseActivity
 import com.example.time_project.base.BasePopWindow
 import com.example.time_project.databinding.ActivityExoplayerBinding
 import com.example.time_project.databinding.LayoutShareBinding
+import com.example.time_project.exit
+import com.example.time_project.fastClick
 import com.example.time_project.toast
 import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.ExoPlayer
@@ -88,6 +92,10 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
          //初始化分享面板
          val panel=layoutInflater.inflate(R.layout.layout_share,null)
          shareBinding = LayoutShareBinding.bind(panel)
+
+         mBinding.exoTitle.leftView.fastClick {
+
+         }
     }
 
     /***
@@ -159,4 +167,12 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
             .showPopupWindow()
 
     }
+
+
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+
+        return exit(keyCode, event,"再按一次退出播放",false)
+    }
+
 }

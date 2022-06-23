@@ -9,10 +9,15 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.load
 import com.example.time_project.*
 import com.example.time_project.base.BaseActivity
+import com.example.time_project.bean.Sex
 import com.example.time_project.databinding.ActivityPerfectBinding
 import com.example.time_project.ui.LoginActivity.IntentOptions.token
-import com.example.time_project.ui.MineFragment.Companion.iSkip
 import com.example.time_project.util.CoilEngine
+import com.example.time_project.util.IntentExtra.Companion.iBirthday
+import com.example.time_project.util.IntentExtra.Companion.iHead
+import com.example.time_project.util.IntentExtra.Companion.iSex
+import com.example.time_project.util.IntentExtra.Companion.iSkip
+import com.example.time_project.util.IntentExtra.Companion.iUserName
 import com.example.time_project.vm.UserViewModel
 import com.gyf.immersionbar.ktx.immersionBar
 import com.luck.picture.lib.basic.PictureSelector
@@ -31,6 +36,7 @@ import razerdp.util.animation.AnimationHelper
 import razerdp.util.animation.TranslationConfig
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.jvm.internal.Intrinsics
 
 
 class PerfectActivity : BaseActivity(R.layout.activity_perfect) {
@@ -70,8 +76,15 @@ class PerfectActivity : BaseActivity(R.layout.activity_perfect) {
             // TODO:  调用更新用户信息接口
 //            LiveEventBus.get("login",String::class.java).post("login")
             uploadInfo()
-//
         }
+
+        mBinding.titlePerfect.leftView.fastClick {
+            finish()
+        }
+        mBinding.edtName.setText(intent.iUserName)
+        mBinding.tvSex.text=intent.iSex.intToSex()
+        mBinding.tvHis.text=intent.iBirthday
+        mBinding.ivHead.load(intent.iHead)
     }
 
     private fun getPermission() {
@@ -198,7 +211,17 @@ class PerfectActivity : BaseActivity(R.layout.activity_perfect) {
             "男宝宝"->{
                 1
             }else->{
-                0
+                2
+            }
+        }
+    }
+
+    private fun Int.intToSex():String{
+        return when(this){
+            1->{
+                "男宝宝"
+            }else->{
+                "女宝宝"
             }
         }
     }

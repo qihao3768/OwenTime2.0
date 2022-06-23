@@ -4,6 +4,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.time_project.R
 import com.example.time_project.base.BaseActivity
 import com.example.time_project.databinding.ActivityOrderDetailBinding
+import com.example.time_project.fastClick
 import com.gyf.immersionbar.ktx.immersionBar
 
 class OrderDetailActivity : BaseActivity(R.layout.activity_order_detail) {
@@ -15,6 +16,10 @@ class OrderDetailActivity : BaseActivity(R.layout.activity_order_detail) {
             keyboardEnable(true)
             statusBarDarkFont(true)
             fitsSystemWindows(true)
+        }
+
+        mBinding.titleOrder.leftView.fastClick {
+            finish()
         }
     }
 }

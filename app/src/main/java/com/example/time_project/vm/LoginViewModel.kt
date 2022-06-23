@@ -1,6 +1,7 @@
 package com.example.time_project.vm
 
 import androidx.lifecycle.MutableLiveData
+import com.example.time_project.base.BaseResponse
 import com.example.time_project.base.BaseViewModel
 import com.example.time_project.bean.LoginModel
 
@@ -11,12 +12,12 @@ class LoginViewModel:BaseViewModel() {
     private val _loginReps by lazy { OwenRepo() }
 
 //发送短信
-    private val _smsData=MutableLiveData<SmsModel?>()
+    private val _smsData=MutableLiveData<BaseResponse<SmsModel?>>()
 
-    fun sendSms(phone:String):MutableLiveData<SmsModel?>{
+    fun sendSms(phone:String):MutableLiveData<BaseResponse<SmsModel?>>{
         launchUI {
             val result=_loginReps.sms(phone)
-            _smsData.value = result.data
+            _smsData.value = result
 
         }
         return _smsData

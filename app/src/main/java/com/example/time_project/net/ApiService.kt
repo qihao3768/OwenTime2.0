@@ -66,6 +66,11 @@ interface ApiService {
     @POST("api/product/getUserProduct")
     suspend fun alreadyBuy():BaseResponse<AlreadyBuyModel?>
 
+    //以后商品下的课程列表
+    @POST("api/course/productCourse")
+    @FormUrlEncoded
+    suspend fun getCourse(@Field("product_id") product_id:String):BaseResponse<Course?>
+
 
 
     companion object {

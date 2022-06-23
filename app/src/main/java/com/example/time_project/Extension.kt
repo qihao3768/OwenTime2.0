@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.view.Gravity
+import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
@@ -19,6 +20,7 @@ import com.example.time_project.ui.LoginActivity
 
 import com.tencent.mmkv.MMKV
 import java.util.*
+import kotlin.system.exitProcess
 
 fun ImageView.load(url:String){
     val uri=Uri.parse(url)
@@ -178,4 +180,21 @@ fun TextView.checked(msg:String):String?{
 }
 interface TodoListener{
     fun todo()
+}
+private var exitTime=0L
+fun Activity.exit(keyCode:Int,event:KeyEvent,msg: String,exit:Boolean):Boolean{
+    if (keyCode == KeyEvent.KEYCODE_BACK && event.action==KeyEvent.ACTION_DOWN){
+        if (System.currentTimeMillis()-exitTime>2000){
+            toast(msg)
+            exitTime = System.currentTimeMillis()
+        }else{
+            finish()
+            if (exit){
+                exitProcess(0)
+            }
+
+        }
+        return true
+    }
+    return onKeyDown(keyCode, event)
 }

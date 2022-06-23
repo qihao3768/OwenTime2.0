@@ -7,6 +7,7 @@ import com.example.time_project.R
 import com.example.time_project.base.BaseActivity
 import com.example.time_project.bean.GoodsModel
 import com.example.time_project.databinding.ActivityMoreProjectBinding
+import com.example.time_project.fastClick
 import com.gyf.immersionbar.ktx.immersionBar
 
 class MoreProjectActivity : BaseActivity(R.layout.activity_more_project) {
@@ -22,6 +23,10 @@ class MoreProjectActivity : BaseActivity(R.layout.activity_more_project) {
             addType<GoodsModel>(R.layout.item_product)
 
         }.models=getData()
+
+        mBinding.moreTitle.leftView.fastClick {
+            finish()
+        }
     }
     private fun getData():MutableList<Any>{
         return mutableListOf(

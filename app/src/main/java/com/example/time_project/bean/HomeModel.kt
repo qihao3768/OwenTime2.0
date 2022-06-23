@@ -80,6 +80,23 @@ data class User(
     @SerializedName("sex")
     val sex: Int? = 0,
     @SerializedName("name")
-    val name: String? = ""
+    val name: String? = "",
+    @SerializedName("birthday")
+    val birthday:String?=""
 )
-class Studying{}
+data class Studying(
+    @SerializedName("courses_id")
+    val coursesId: Int? = 0,
+    @SerializedName("dub_course")
+    val dubCourse: Any? = Any(),
+    @SerializedName("image")
+    val image: String? = "",
+    @SerializedName("name")
+    val name: String? = "",
+    @SerializedName("product_id")
+    val productId: Int? = 0,
+    @SerializedName("time")
+    val time: Int? = 0,
+    @SerializedName("url")
+    val url: String? = ""
+)

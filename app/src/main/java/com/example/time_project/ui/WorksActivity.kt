@@ -8,6 +8,7 @@ import com.example.time_project.R
 import com.example.time_project.base.BaseActivity
 import com.example.time_project.bean.WorksBean
 import com.example.time_project.databinding.ActivityWorksBinding
+import com.example.time_project.fastClick
 import com.example.time_project.start
 import com.example.time_project.util.IntentExtraString
 import com.gyf.immersionbar.ktx.immersionBar
@@ -43,7 +44,7 @@ class WorksActivity : BaseActivity(R.layout.activity_works) {
         }
 
 
-        mBinding.titleWorks.leftView.setOnClickListener {
+        mBinding.titleWorks.leftView.fastClick {
             finish()
         }
     }

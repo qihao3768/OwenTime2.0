@@ -138,7 +138,7 @@ data class Recommend(
         binding.tvProductTitle.text = name
         binding.tvProductDesc.text = introduction
         binding.tvProductPrice02.text = priceShow
-        binding.tvProductPtnum.text = userCount.toString()
+        binding.tvProductPtnum.text = userCount.toString().plus("人购买")
         binding.btnGoto.visibility = View.GONE
 
     }

@@ -99,4 +99,11 @@ class OwenRepo():BaseRepository(){
     suspend fun alreadyBuy(): BaseResponse<AlreadyBuyModel?> = request {
         mService.alreadyBuy()
     }
+
+    /***
+     * 已购-课程列表
+     */
+    suspend fun getCourse(id:String): BaseResponse<Course?> = request {
+        mService.getCourse(id)
+    }
 }

@@ -8,6 +8,7 @@ import com.example.time_project.R
 import com.example.time_project.base.BaseActivity
 import com.example.time_project.bean.CourseItemModel
 import com.example.time_project.databinding.ActivityCourseDetailBinding
+import com.example.time_project.fastClick
 import com.example.time_project.start
 import com.gyf.immersionbar.ktx.immersionBar
 
@@ -39,6 +40,10 @@ class CourseDetailActivity : BaseActivity(R.layout.activity_course_detail) {
 //            mBinding.courseJianjie.maxLines=4
 //            mBinding.courseJianjie.text=testString
 //        }
+
+        mBinding.detailTitle.leftView.fastClick {
+            finish()
+        }
     }
     private fun getData():List<CourseItemModel>{
         return  listOf(

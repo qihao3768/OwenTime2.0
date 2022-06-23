@@ -102,6 +102,9 @@ class AddressActivity : BaseActivity(R.layout.activity_address) {
                 getAddress()
             }
         }
+        mBinding.addressTitle.leftView.fastClick {
+            finish()
+        }
 
     }
 

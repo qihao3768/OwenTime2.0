@@ -14,6 +14,13 @@ class IntentExtra {
         var Intent.inum by IntentExtraString("num")//购买数量
         var Intent.icoupon by IntentExtraString("coupon")//优惠券id
         var Intent.iproductId by IntentExtraInt("productId")//商品ID
+
+        var Intent.iSkip by IntentExtraBoolean("skip")//个人信息页是否显示跳过
+
+        var Intent.iUserName by IntentExtraString("username")//用户名
+        var Intent.iSex by IntentExtraInt("sex")//性别
+        var Intent.iBirthday by IntentExtraString("birth")//生日
+        var Intent.iHead by IntentExtraString("head")//头像
     }
 }
 class IntentExtraString(private val key: String? = null) {

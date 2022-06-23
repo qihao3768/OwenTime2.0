@@ -7,6 +7,7 @@ import com.example.time_project.R
 import com.example.time_project.base.BaseActivity
 import com.example.time_project.bean.OrderModel
 import com.example.time_project.databinding.ActivityOrderListBinding
+import com.example.time_project.fastClick
 import com.example.time_project.start
 import com.gyf.immersionbar.ktx.immersionBar
 
@@ -36,6 +37,9 @@ class OrderListActivity : BaseActivity(R.layout.activity_order_list) {
             }.models=getData()
         }
 
+        mBinding.titleOrder.leftView.fastClick {
+            finish()
+        }
     }
 
     /***

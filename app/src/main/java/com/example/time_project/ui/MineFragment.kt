@@ -7,6 +7,11 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.time_project.*
 import com.example.time_project.base.BaseFragment
 import com.example.time_project.databinding.MineFragmentBinding
+import com.example.time_project.util.IntentExtra.Companion.iBirthday
+import com.example.time_project.util.IntentExtra.Companion.iHead
+import com.example.time_project.util.IntentExtra.Companion.iSex
+import com.example.time_project.util.IntentExtra.Companion.iSkip
+import com.example.time_project.util.IntentExtra.Companion.iUserName
 import com.example.time_project.util.IntentExtraBoolean
 import com.example.time_project.util.IntentExtraString
 import com.example.time_project.vm.MineViewModel
@@ -19,7 +24,7 @@ class MineFragment : BaseFragment(R.layout.mine_fragment) {
 
     companion object {
         fun newInstance() = MineFragment()
-        var Intent.iSkip by IntentExtraBoolean("skip")
+
     }
 
     private val mViewModel by viewModels<MineViewModel>()
@@ -27,6 +32,11 @@ class MineFragment : BaseFragment(R.layout.mine_fragment) {
     private val mmkv=MMKV.defaultMMKV()
     private var mToken=""//token
 
+
+    private var mUserName:String?=""//用户名
+    private var mSex:Int=0//性别
+    private var mBirth:String?=""//生日
+    private var mHead:String?=""//头像
 
 
     override fun initData() {
@@ -71,7 +81,11 @@ class MineFragment : BaseFragment(R.layout.mine_fragment) {
 
         mBinding.personalPhoto.checkLogin(requireActivity(), object : TodoListener {
             override fun todo() {
-                requireActivity().intent.iSkip=false
+                requireActivity().intent.iSkip=true
+                requireActivity().intent.iUserName=mUserName
+                requireActivity().intent.iSex=mSex
+                requireActivity().intent.iBirthday=mBirth
+                requireActivity().intent.iHead=mHead
                 start(requireActivity(),PerfectActivity().javaClass,requireActivity().intent)
             }
         })
@@ -97,6 +111,10 @@ class MineFragment : BaseFragment(R.layout.mine_fragment) {
                     mBinding.personalName.text= if (name.isNullOrBlank()){
                         "Owen".plus(Random.nextInt(1,5))
                     }else{
+                        mUserName=name
+                        mSex=sex?:0
+                        mBirth=birthday?:""
+                        mHead=photo?:""
                         name
                     }
                 }

@@ -72,14 +72,13 @@
         <com.hjq.shape.layout.ShapeConstraintLayout
             android:id="@+id/layout_info"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             app:layout_constraintHeight_percent="0.34"
             android:padding="15.5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:shape_radius="11dp"
-            app:shape_solidColor="@color/white"
-            tools:layout_editor_absoluteY="14dp">
+            app:shape_solidColor="@color/white">
 
             <TextView
                 android:id="@+id/label_name"
@@ -91,7 +90,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/label_sex"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_chainStyle="spread_inside"
-                tools:layout_editor_absoluteX="15dp" />
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/label_sex"
@@ -102,7 +101,7 @@
                 android:textSize="17dp"
                 app:layout_constraintBottom_toTopOf="@+id/label_his"
                 app:layout_constraintTop_toBottomOf="@+id/label_name"
-                tools:layout_editor_absoluteX="15dp" />
+                android:layout_marginTop="40dp"/>
 
             <TextView
                 android:id="@+id/label_his"
@@ -113,7 +112,7 @@
                 android:textSize="17dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/label_sex"
-                tools:layout_editor_absoluteX="15dp" />
+                android:layout_marginTop="40dp" />
 
             <EditText
                 android:id="@+id/edt_name"

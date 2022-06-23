@@ -2,6 +2,7 @@ package com.example.time_project
 
 import android.content.pm.ActivityInfo
 import android.util.Log
+import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -80,5 +81,10 @@ class MainActivity: BaseActivity(R.layout.activity_main) {
 
             }
         })
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+
+        return exit(keyCode,event,"再按一次退出程序",true)
     }
 }

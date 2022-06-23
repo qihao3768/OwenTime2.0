@@ -4,6 +4,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.time_project.R
 import com.example.time_project.base.BaseActivity
 import com.example.time_project.databinding.ActivityLogoutBinding
+import com.example.time_project.fastClick
 import com.gyf.immersionbar.ktx.immersionBar
 
 class LogoutActivity : BaseActivity(R.layout.activity_logout) {
@@ -17,6 +18,10 @@ class LogoutActivity : BaseActivity(R.layout.activity_logout) {
         }
         mBinding.btnLogout.setOnClickListener {
             // TODO: 调用注销接口 
+        }
+
+        mBinding.logoutTitle.leftView.fastClick {
+            finish()
         }
     }
     

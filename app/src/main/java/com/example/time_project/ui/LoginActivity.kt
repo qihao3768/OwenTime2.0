@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.time_project.*
 import com.example.time_project.base.BaseActivity
+import com.example.time_project.bean.SmsModel
 
 import com.example.time_project.databinding.ActivityLoginBinding
 import com.example.time_project.util.IntentExtraString
@@ -126,7 +127,19 @@ class LoginActivity : BaseActivity(R.layout.activity_login) {
         mViewModel.sendSms(phone).observe(this, Observer {
             // TODO:
             it?.run {
-                mKeyCode= keyCode?:""
+                val body:SmsModel?=data
+                when(code){
+                    1000->{
+                        body?.run {
+                            mKeyCode= body.keyCode?:""
+                        }
+                    }
+                    else->{
+                        toast(message.toString())
+                    }
+
+                }
+
             }
         })
     }

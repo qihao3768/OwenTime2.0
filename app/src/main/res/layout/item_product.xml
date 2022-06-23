@@ -34,7 +34,7 @@
         android:layout_marginEnd="10dp"
         android:maxLines="2"
         android:ellipsize="end"
-        android:text="宝贝高碳钢儿童平衡车..."/>
+        />
     <TextView
         android:id="@+id/tv_product_price"
         android:layout_width="wrap_content"
@@ -58,7 +58,6 @@
         android:textSize="16dp"
         android:textColor="@color/FE9520"
         android:layout_marginTop="10dp"
-        android:text="2678"
         android:gravity="bottom" />
 
     <TextView
@@ -72,16 +71,12 @@
         android:textColor="@color/FE9520"
         android:layout_marginTop="10dp"
         android:layout_marginStart="10dp"
-        android:text="1万+人购买"
         android:gravity="center"/>
 
     <TextView
         android:id="@+id/tv_product_desc"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="一车三用，低重心黄金三角一
-车多用一车三用，低重心黄金三角一
-车多用"
         android:textSize="13dp"
         android:textColor="@color/A8A8A8"
         android:minLines="2"
