@@ -12,16 +12,22 @@ import com.tencent.mmkv.MMKV
  * @author yangjie
  * @date 2022-06-03
  */
-class HoverHeaderModel(val header:String):ItemHover,ItemBind {
+class HoverHeaderModel(val header:String,val count:Int):ItemHover,ItemBind {
     override var itemHover: Boolean=true
-    val islogin= MMKV.defaultMMKV().decodeString("token")
+    val token= MMKV.defaultMMKV().decodeString("token")
     override fun onBind(holder: BindingAdapter.BindingViewHolder) {
         val binding= LayoutHoverHeaderBinding.bind(holder.itemView)
         binding.tvHeader.text=header
-        binding.tvSeemore.visibility=if (islogin.isNullOrEmpty()){
+        binding.tvSeemore.visibility=if (token.isNullOrEmpty()){
             View.GONE
         }else{
-            View.VISIBLE
+            when(count){
+                in 1..4 ->{
+                    View.GONE
+                }else->{
+                View.VISIBLE
+                }
+            }
 
         }
     }

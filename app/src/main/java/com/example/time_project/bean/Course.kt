@@ -1,4 +1,10 @@
 package com.example.time_project.bean
+import android.view.View
+import com.drake.brv.BindingAdapter
+import com.drake.brv.item.ItemBind
+import com.example.time_project.databinding.ItemCourseBinding
+import com.example.time_project.databinding.LayoutWorksBinding
+import com.example.time_project.load
 import com.google.gson.annotations.SerializedName
 
 
@@ -34,4 +40,18 @@ data class CourseX(
     val sort: Int? = 0,
     @SerializedName("url")
     val url: String? = ""
-)
+):ItemBind{
+    override fun onBind(holder: BindingAdapter.BindingViewHolder) {
+        val binding= ItemCourseBinding.bind(holder.itemView)
+        binding.ivPlayingCourse.load(image?:"")
+        binding.tvPlayingTitle.text=name?:""
+        binding.ivSuo.visibility=when(isLocked){
+            0->{
+                View.GONE
+            }
+            else->{
+                View.VISIBLE
+            }
+        }
+    }
+}

@@ -18,7 +18,6 @@ import com.example.time_project.adapter.NoticeAdapter
 import com.example.time_project.base.BaseFragment
 import com.example.time_project.bean.NoticeBean
 import com.example.time_project.bean.Product
-import com.example.time_project.bean.Sex
 import com.example.time_project.bean.Studying
 import com.example.time_project.databinding.HomeFragmentBinding
 import com.example.time_project.load

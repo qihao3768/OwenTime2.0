@@ -17,6 +17,8 @@ import com.example.time_project.databinding.LayoutShareBinding
 import com.example.time_project.exit
 import com.example.time_project.fastClick
 import com.example.time_project.toast
+import com.example.time_project.util.IntentExtra.Companion.courseTitle
+import com.example.time_project.util.IntentExtra.Companion.courseUrl
 import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
@@ -44,11 +46,11 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
             hideBar(BarHide.FLAG_HIDE_BAR)
             init()
         }
-         with(WorksActivity.IntentOptions){
-             mUrl=intent.url.toString()
-         }
+//         with(WorksActivity.IntentOptions){
+//             mUrl=intent.url.toString()
+//         }
         //初始化播放器
-        val uri = Uri.parse(mUrl)
+        val uri = Uri.parse(intent.courseUrl)
         exoPlayer = ExoPlayer.Builder(this).build()
         exoPlayer.videoScalingMode = C.VIDEO_SCALING_MODE_SCALE_TO_FIT
 
@@ -73,7 +75,7 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
         mBinding.exoPlayer.controllerAutoShow=true
         mBinding.exoPlayer.resizeMode=AspectRatioFrameLayout.RESIZE_MODE_FIT
 //        mBinding.exoPlayer.setShutterBackgroundColor(R.color.transparent)
-        mBinding.exoTitle.title=intent.getStringExtra("title")
+        mBinding.exoTitle.title=intent.courseTitle
         mBinding.exoPlayer.player=exoPlayer
          mBinding.ivUnlock.setOnClickListener {
              mBinding.ivUnlock.setBackgroundResource(if (isLock) R.drawable.icon_player_unlock else R.drawable.icon_player_lock)

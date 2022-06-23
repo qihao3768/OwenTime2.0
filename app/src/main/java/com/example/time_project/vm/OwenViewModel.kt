@@ -79,4 +79,14 @@ class OwenViewModel() : BaseViewModel() {
         return alreadyBuyData
     }
 
+    //已购-课程列表
+    private val courseData=MutableLiveData<BaseResponse<Course?>>()
+    fun getCourse(id:String):MutableLiveData<BaseResponse<Course?>>{
+        launchUI {
+            val result = owenReps.getCourse(id)
+            courseData.value = result
+        }
+        return courseData
+    }
+
 }

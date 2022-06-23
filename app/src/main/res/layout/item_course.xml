@@ -15,7 +15,6 @@
             android:layout_width="129dp"
             android:layout_height="90dp"
             android:scaleType="centerCrop"
-            android:background="@drawable/aa"
             app:shape_radius="11dp"
             app:shape_gradientType="radial"
             app:strokeColor="@color/white"
@@ -25,8 +24,8 @@
 
         <TextView
             android:id="@+id/iv_timer"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="时长:"
             android:textSize="12dp"
             android:textColor="#939393"
@@ -42,7 +41,6 @@
             app:layout_constraintTop_toTopOf="@+id/iv_timer"
             app:layout_constraintBottom_toBottomOf="@+id/iv_timer"
             android:layout_marginStart="4.5dp"
-            android:text="02:26"
             android:textSize="12dp"
             android:textColor="#939393"/>
         <com.hjq.shape.view.ShapeTextView
@@ -71,8 +69,7 @@
             app:layout_constraintStart_toEndOf="@+id/iv_playing_course"
             app:layout_constraintTop_toTopOf="@+id/iv_playing_course"
             android:layout_marginTop="7.5dp"
-            android:layout_marginStart="16dp"
-            android:text="第二集  阅读分享"/>
+            android:layout_marginStart="16dp" />
 
         <com.hjq.shape.view.ShapeButton
             android:id="@+id/continue_play"
@@ -91,6 +88,7 @@
             app:shape_solidColor="@color/FE9520" />
 
         <ImageView
+            android:id="@+id/iv_suo"
             android:layout_width="14dp"
             android:layout_height="18dp"
             android:src="@drawable/suo_icon"

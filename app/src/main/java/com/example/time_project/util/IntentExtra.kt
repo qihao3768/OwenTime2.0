@@ -21,6 +21,9 @@ class IntentExtra {
         var Intent.iSex by IntentExtraInt("sex")//性别
         var Intent.iBirthday by IntentExtraString("birth")//生日
         var Intent.iHead by IntentExtraString("head")//头像
+
+        var Intent.courseTitle by IntentExtraString("courseTitle")//课程标题
+        var Intent.courseUrl by IntentExtraString("courseUrl")//课程URL
     }
 }
 class IntentExtraString(private val key: String? = null) {

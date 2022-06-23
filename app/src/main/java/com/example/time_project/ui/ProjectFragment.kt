@@ -18,6 +18,7 @@ import com.example.time_project.imp.HoverHeaderModel
 import com.example.time_project.start
 import com.example.time_project.toast
 import com.example.time_project.util.IntentExtra.Companion.code
+import com.example.time_project.util.IntentExtra.Companion.iproductId
 import com.example.time_project.vm.OwenViewModel
 import com.example.time_project.vm.ProjectViewModel
 import com.tencent.mmkv.MMKV
@@ -63,7 +64,7 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
                                 mBinding.productList02.linear().setup {
                                     addType<Recommend> { R.layout.item_product }
                                     addType<HoverHeaderModel> { R.layout.layout_hover_header }
-                                    models=recommend
+                                    models= listOf(recommend,HoverHeaderModel("推荐",0))
                                     onClick(R.id.root_product){
                                         val target=if (token.isNullOrEmpty()){
                                             LoginActivity()
@@ -79,9 +80,11 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
                                 mBinding.productList01.visibility=View.VISIBLE
                                 mBinding.productList01.linear().setup {
                                     addType<Product02> { R.layout.item_product }
+                                    addType<HoverHeaderModel> { R.layout.layout_hover_header }
                                     models=data01
                                     onClick(R.id.root_product){
-                                        start(requireActivity(),CourseDetailActivity().javaClass,false)
+                                        requireActivity().intent.iproductId=getModel<Product02>(modelPosition).id?:-1
+                                        start(requireActivity(),CourseDetailActivity().javaClass,requireActivity().intent)
                                     }
                                 }
                             }
@@ -101,10 +104,14 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
     /***
      * 如果没有数据，显示推荐
      */
-    private fun getYiGouData(mPurchased:List<Purchased>?):List<Product02>?{
+    private fun getYiGouData(mPurchased:List<Purchased>?):List<Any>{
         if (!mPurchased.isNullOrEmpty()){
+            val list= mutableListOf<Any>()
             mPurchased.forEach { index ->
-                return index.product
+                val product=index.product?: emptyList()
+                list.add(HoverHeaderModel(index.name?:"",product.size))
+                list.addAll(index.product?: product)
+                return list
             }
         }
         return emptyList()

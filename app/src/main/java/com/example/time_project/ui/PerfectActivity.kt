@@ -9,7 +9,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.load
 import com.example.time_project.*
 import com.example.time_project.base.BaseActivity
-import com.example.time_project.bean.Sex
+
 import com.example.time_project.databinding.ActivityPerfectBinding
 import com.example.time_project.ui.LoginActivity.IntentOptions.token
 import com.example.time_project.util.CoilEngine
