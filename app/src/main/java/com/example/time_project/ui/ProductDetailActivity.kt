@@ -57,13 +57,6 @@ class ProductDetailActivity : BaseActivity(R.layout.activity_product_detail) {
     private lateinit var mShareAction:ShareAction//分享
 
 
-//    companion object IntentOptions{
-//        var Intent.icode by IntentExtraString("code")//商品代码
-//        var Intent.isku by IntentExtraString("sku")//skuid
-//        var Intent.inum by IntentExtraString("num")//购买数量
-//        var Intent.icoupon by IntentExtraString("coupon")//优惠券id
-//        var Intent.iproductId by IntentExtraInt("productId")//商品ID
-//    }
     override fun initData() {
         immersionBar {
             statusBarColor(R.color.transparent)
@@ -174,7 +167,7 @@ class ProductDetailActivity : BaseActivity(R.layout.activity_product_detail) {
                     buyDialog.dismiss()
                     intent.icode=intent.code
                     intent.isku=selectSku?.id.toString()
-                    intent.inum=count.toString()
+                    intent.inum=count
                     intent.icoupon=""//优惠券暂时没有
                     intent.iproductId=selectSku?.productId?:0
                     start(this@ProductDetailActivity,UpOrderActivity().javaClass,intent)

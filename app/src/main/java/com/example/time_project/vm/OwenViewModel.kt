@@ -89,4 +89,14 @@ class OwenViewModel() : BaseViewModel() {
         return courseData
     }
 
+    //已购-保存播放记录 id 商品id，courseId课程id，time 时长
+    private val storageRecordData=MutableLiveData<BaseResponse<String?>>()
+    fun storageRecord(id:String,courseId:String,time:String):MutableLiveData<BaseResponse<String?>>{
+        launchUI {
+            val result = owenReps.storageRecord(id,courseId,time)
+            storageRecordData.value = result
+        }
+        return storageRecordData
+    }
+
 }

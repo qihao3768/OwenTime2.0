@@ -14,6 +14,7 @@ import com.example.time_project.ui.MineFragment
 import com.example.time_project.ui.ProjectFragment
 import com.gyf.immersionbar.ktx.immersionBar
 import com.tencent.smtt.sdk.QbSdk
+import kotlin.system.exitProcess
 
 class MainActivity: BaseActivity(R.layout.activity_main) {
     private val mBinding by viewBinding(ActivityMainBinding::bind)
@@ -83,8 +84,20 @@ class MainActivity: BaseActivity(R.layout.activity_main) {
         })
     }
 
-    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
 
-        return exit(keyCode,event,"再按一次退出程序",true)
+    private var exitTime=0L
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.action==KeyEvent.ACTION_DOWN){
+            if (System.currentTimeMillis()-exitTime>2000){
+                toast("再按一次退出应用")
+                exitTime = System.currentTimeMillis()
+            }else{
+                finish()
+                exitProcess(0)
+
+            }
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
     }
 }

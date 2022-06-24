@@ -12,6 +12,7 @@ import com.example.time_project.bean.Course
 import com.example.time_project.bean.CourseItemModel
 import com.example.time_project.bean.CourseX
 import com.example.time_project.databinding.ActivityCourseDetailBinding
+import com.example.time_project.util.IntentExtra.Companion.courseId
 import com.example.time_project.util.IntentExtra.Companion.courseTitle
 import com.example.time_project.util.IntentExtra.Companion.courseUrl
 import com.example.time_project.util.IntentExtra.Companion.iproductId
@@ -92,7 +93,15 @@ class CourseDetailActivity : BaseActivity(R.layout.activity_course_detail) {
                     }else{
                         intent.courseTitle=model.name?:""
                         intent.courseUrl=model.url?:""
-                        start(this@CourseDetailActivity,ExoplayerActivity().javaClass,intent)
+                        intent.courseId=(model.id?:0).toString()
+                        intent.iproductId=model.productId?:0
+
+                        if (model.dubCourse.isNullOrEmpty()){
+                            start(this@CourseDetailActivity,ExoplayerActivity().javaClass,intent)
+                        }else{
+                            start(this@CourseDetailActivity,ExoplayerActivity().javaClass,intent)
+                        }
+
                     }
 
                 }

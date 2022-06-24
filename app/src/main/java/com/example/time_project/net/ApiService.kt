@@ -71,6 +71,13 @@ interface ApiService {
     @FormUrlEncoded
     suspend fun getCourse(@Field("product_id") product_id:String):BaseResponse<Course?>
 
+    //保存课程播放记录
+    @POST("api/course/storageRecord")
+    @FormUrlEncoded
+    suspend fun storageRecord(@Field("product_id") product_id:String,
+                              @Field("courses_id") courses_id:String,
+                              @Field("time") time:String):BaseResponse<String?>
+
 
 
     companion object {

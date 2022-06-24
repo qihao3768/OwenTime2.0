@@ -106,4 +106,11 @@ class OwenRepo():BaseRepository(){
     suspend fun getCourse(id:String): BaseResponse<Course?> = request {
         mService.getCourse(id)
     }
+
+    /***
+     * 已购-保存课程播放记录
+     */
+    suspend fun storageRecord(id:String,courses_id:String,time:String): BaseResponse<String?> = request {
+        mService.storageRecord(id,courses_id,time)
+    }
 }

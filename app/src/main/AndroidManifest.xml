@@ -2,15 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.time_project">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA" />
-
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <application
-        android:name="com.example.time_project.App"
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -20,12 +13,15 @@
         android:theme="@style/Theme.WanAndroid"
         android:usesCleartextTraffic="true">
         <activity
-            android:name="com.example.time_project.wxapi.WXEntryActivity"
-            android:exported="true"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+            android:name=".ui.RecordActivity"
+            android:exported="false" />
         <activity
-            android:name="com.example.time_project.wxapi.WXPayEntryActivity"
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|fontScale"
             android:exported="true"
             android:launchMode="singleInstance"
@@ -39,60 +35,60 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.time_project.ui.ForScreenActivity"
+            android:name=".ui.ForScreenActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.time_project.ui.NoticeActivity"
+            android:name=".ui.NoticeActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.time_project.ui.OrderDetailActivity"
+            android:name=".ui.OrderDetailActivity"
             android:exported="false"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop" />
         <activity
-            android:name="com.example.time_project.ui.OrderListActivity"
+            android:name=".ui.OrderListActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.time_project.ui.CourseDetailActivity"
+            android:name=".ui.CourseDetailActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.time_project.ui.VideoListActivity"
+            android:name=".ui.VideoListActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.time_project.ui.MoreProjectActivity"
+            android:name=".ui.MoreProjectActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.time_project.ui.AddressActivity"
+            android:name=".ui.AddressActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|fontScale"
             android:exported="false" />
         <activity
-            android:name="com.example.time_project.ui.UpOrderActivity"
+            android:name=".ui.UpOrderActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.time_project.ui.DetailActivity"
+            android:name=".ui.DetailActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.time_project.ui.LogoutActivity"
+            android:name=".ui.LogoutActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.time_project.ui.WorksActivity"
+            android:name=".ui.WorksActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.time_project.ui.SettingActivity"
+            android:name=".ui.SettingActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.time_project.ui.ExoplayerActivity"
+            android:name=".ui.ExoplayerActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|fontScale"
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
-            android:name="com.example.time_project.ui.ProductDetailActivity"
+            android:name=".ui.ProductDetailActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.time_project.ui.PerfectActivity"
+            android:name=".ui.PerfectActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|fontScale"
             android:exported="false" />
         <activity
-            android:name="com.example.time_project.ui.SplashActivity"
+            android:name=".ui.SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.TestSplashScreen.Starting">
             <intent-filter>
@@ -102,23 +98,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.time_project.ui.LoginActivity"
+            android:name=".ui.LoginActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|fontScale"
             android:exported="false" />
         <activity
-            android:name="com.example.time_project.web.WebActivity"
+            android:name=".web.WebActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.time_project.MainActivity"
+            android:name=".MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|fontScale"
             android:exported="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-
-        <service
-            android:name="com.tencent.smtt.export.external.DexClassLoaderProviderService"
-            android:label="dexopt"
-            android:process=":dexopt" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -130,27 +121,36 @@
                 android:resource="@xml/filepaths" />
         </provider>
 
+        <service
+            android:name="com.tencent.smtt.export.external.DexClassLoaderProviderService"
+            android:label="dexopt"
+            android:process=":dexopt" />
     </application>
-<!--    从Android 11开始，需要在AndroidManifest.xml清单文件中加入query权限申请，才能检测到手机上安装的三方应用包安装状态-->
-<!--    <queries>-->
-<!--        <package android:name="com.tencent.mm" />            // 指定微信包名-->
-<!--        <package android:name="com.tencent.mobileqq" />    //指定qq包名-->
-<!--        <package android:name="com.sina.weibo" />             //指定微博包名-->
-<!--        <package android:name="com.tencent.wework" />      //指定企业微信包名-->
-<!--        <package android:name="com.qzone" />                   //指定QQ空间包名-->
-<!--        <package android:name="com.alibaba.android.rimet" /> // 指定钉钉包名-->
-<!--        <package android:name="com.eg.android.AlipayGphone" /> // 指定支付宝包名-->
-<!--        <package android:name="com.instagram.android" />         // 指定instagram包名-->
-<!--    </queries>-->
     <queries>
         <package android:name="com.tencent.mm" />
-<!--        <package android:name="com.qzone" />-->
+        <!-- <package android:name="com.qzone" /> -->
         <package android:name="com.eg.android.AlipayGphone" />
 
-<!--        <package android:name="com.eg.android.AlipayGphoneRC" />-->
+        <!-- <package android:name="com.eg.android.AlipayGphoneRC" /> -->
+
 
         <!-- <package android:name="hk.alipay.wallet" /> -->
     </queries>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 从Android 11开始，需要在AndroidManifest.xml清单文件中加入query权限申请，才能检测到手机上安装的三方应用包安装状态 -->
+    <!-- <queries> -->
+    <!-- <package android:name="com.tencent.mm" />            // 指定微信包名 -->
+    <!-- <package android:name="com.tencent.mobileqq" />    //指定qq包名 -->
+    <!-- <package android:name="com.sina.weibo" />             //指定微博包名 -->
+    <!-- <package android:name="com.tencent.wework" />      //指定企业微信包名 -->
+    <!-- <package android:name="com.qzone" />                   //指定QQ空间包名 -->
+    <!-- <package android:name="com.alibaba.android.rimet" /> // 指定钉钉包名 -->
+    <!-- <package android:name="com.eg.android.AlipayGphone" /> // 指定支付宝包名 -->
+    <!-- <package android:name="com.instagram.android" />         // 指定instagram包名 -->
+    <!-- </queries> -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 </manifest>

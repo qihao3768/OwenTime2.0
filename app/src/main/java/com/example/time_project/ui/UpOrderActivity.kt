@@ -26,6 +26,7 @@ import com.example.time_project.vm.OwenViewModel
 import com.gyf.immersionbar.ktx.immersionBar
 import razerdp.util.animation.AnimationHelper
 import razerdp.util.animation.TranslationConfig
+import kotlin.text.Typography.times
 
 class UpOrderActivity : BaseActivity(R.layout.activity_up_order) {
     private val mBinding by viewBinding (ActivityUpOrderBinding::bind)
@@ -112,12 +113,16 @@ class UpOrderActivity : BaseActivity(R.layout.activity_up_order) {
                     mBinding.ivOrderpic.load(imgShow?:"")
                     mBinding.tvPrice.text="￥".plus(priceActual?:"")
                 }
+//                mBinding.tvTotalPrice.text=(priceActual?:0.00).toString()
+
+                val num=intent.inum
                 mBinding.tvTotalPrice.text=(priceActual?:0.00).toString()
 
-                val detailRequestBody=UpOrderDetailRequestBody(product_id=intent.iproductId.toString(), sku_id = intent.isku?:"",product_quantity=intent.inum?:"")
-
-                body= UpOrderRequestBody(order_type = "0",total_amount=priceShow.toString(),
-                    pay_amount=priceActual.toString(),freight_amount=freight.toString(), note = "",
+                val detailRequestBody=UpOrderDetailRequestBody(product_id=intent.iproductId.toString(), sku_id = intent.isku?:"",product_quantity=num.toString())
+                val payAmount=mBinding.tvTotalPrice.text.toString()//实付金额
+                val totalAmount=(priceShow?:0.00).times(num).toString()//总金额
+                body= UpOrderRequestBody(order_type = "0",total_amount=totalAmount,
+                    pay_amount=payAmount,freight_amount=freight.toString(), note = "",
                     coupon_code = intent.icoupon?:"", coupon_amount = "0", detail = listOf(detailRequestBody), address_id = intent.iid.toString())//下单时携带的body
 
             }
@@ -182,7 +187,7 @@ class UpOrderActivity : BaseActivity(R.layout.activity_up_order) {
 
     private fun initParams():HashMap<String,Any>{
         return ConfirmOrderRequestBody(intent.icode?:"",intent.isku?:"",
-            intent.inum?:"",intent.icoupon?:""
+            intent.inum.toString(),intent.icoupon?:""
         ).toMap()
     }
 }
