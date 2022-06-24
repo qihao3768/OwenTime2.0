@@ -22,7 +22,6 @@ import com.gyf.immersionbar.ktx.immersionBar
 
 class CourseDetailActivity : BaseActivity(R.layout.activity_course_detail) {
     private val mBinding by viewBinding (ActivityCourseDetailBinding::bind)
-    private val testString="动物妈妈们在河边的草丛里发现了一颗蛋，动物妈妈们在河边的草丛里发现了一颗蛋xxxxxxxxxxxxxxxxxxxxxxxxx"
 
     private val mViewModel by viewModels<OwenViewModel>()
 
@@ -95,12 +94,12 @@ class CourseDetailActivity : BaseActivity(R.layout.activity_course_detail) {
                         intent.courseUrl=model.url?:""
                         intent.courseId=(model.id?:0).toString()
                         intent.iproductId=model.productId?:0
-
-                        if (model.dubCourse.isNullOrEmpty()){
-                            start(this@CourseDetailActivity,ExoplayerActivity().javaClass,intent)
-                        }else{
-                            start(this@CourseDetailActivity,ExoplayerActivity().javaClass,intent)
-                        }
+                        start(this@CourseDetailActivity,ExoplayerActivity().javaClass,intent)
+//                        if (model.dubCourse.isNullOrEmpty()){
+//                            start(this@CourseDetailActivity,ExoplayerActivity().javaClass,intent)
+//                        }else{
+//                            start(this@CourseDetailActivity,ExoplayerActivity().javaClass,intent)
+//                        }
 
                     }
 

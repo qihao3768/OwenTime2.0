@@ -21,6 +21,7 @@ import com.example.time_project.util.IntentExtra.Companion.code
 import com.example.time_project.util.IntentExtra.Companion.iproductId
 import com.example.time_project.vm.OwenViewModel
 import com.example.time_project.vm.ProjectViewModel
+import com.jeremyliao.liveeventbus.LiveEventBus
 import com.tencent.mmkv.MMKV
 
 class ProjectFragment : BaseFragment(R.layout.project_fragment) {
@@ -35,12 +36,17 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
 
     private val mmkv=MMKV.defaultMMKV()
 
-    private var viewType:Int=0//0 推荐 1 已购
-
-    private var pic="https://owen-time.oss-cn-beijing.aliyuncs.com/products/pic/1653710525_9858478fbce7e544.png"
+    private val refreshOb:Observer<String> = Observer {
+        getData()
+    }
+    private val logoutOb:Observer<String> = Observer {
+        getData()
+    }
 
     override fun initData()  {
         getData()
+        LiveEventBus.get<String>("refresh").observe(this, refreshOb)
+        LiveEventBus.get<String>("logout").observe(this, logoutOb)
     }
 
 
@@ -61,20 +67,31 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
                             if (data01.isNullOrEmpty()){
                                 //展示推荐列表
                                 mBinding.productList02.visibility=View.VISIBLE
-                                mBinding.productList02.linear().setup {
-                                    addType<Recommend> { R.layout.item_product }
-                                    addType<HoverHeaderModel> { R.layout.layout_hover_header }
-                                    models= listOf(recommend,HoverHeaderModel("推荐",0))
-                                    onClick(R.id.root_product){
-                                        val target=if (token.isNullOrEmpty()){
-                                            LoginActivity()
-                                        }else{
-                                            requireActivity().intent.code=getModel<Recommend>(modelPosition).code
-                                            ProductDetailActivity()
+                                if (recommend.isNullOrEmpty()){
+                                    mBinding.stateWorks.apply {
+                                        emptyLayout=R.layout.empty_order
+                                    }.showEmpty()
+                                }else{
+                                    mBinding.productList02.linear().setup {
+                                        addType<Recommend> { R.layout.item_product }
+                                        addType<HoverHeaderModel> { R.layout.layout_hover_header }
+                                        val list= mutableListOf<Any>()
+                                        list.add(HoverHeaderModel("推荐",0))
+                                        list.addAll(recommend)
+
+                                        models= list
+                                        onClick(R.id.root_product){
+                                            val target=if (token.isNullOrEmpty()){
+                                                LoginActivity()
+                                            }else{
+                                                requireActivity().intent.code=getModel<Recommend>(modelPosition).code
+                                                ProductDetailActivity()
+                                            }
+                                            start(requireActivity(),target.javaClass,requireActivity().intent)
                                         }
-                                        start(requireActivity(),target.javaClass,requireActivity().intent)
                                     }
                                 }
+
                             }else{
                                 //展示已经购买的课程列表
                                 mBinding.productList01.visibility=View.VISIBLE
@@ -126,14 +143,9 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
         return emptyList()
     }
 
-//    when(viewType){
-//        0->{
-//            start(requireActivity(),LoginActivity().javaClass,false)
-//        }
-//        1->{
-//            start(requireActivity(),ProductDetailActivity().javaClass,false)
-//        }2->{
-//            start(requireActivity(),CourseDetailActivity().javaClass,false)
-//        }
-//    }
+    override fun onDestroy() {
+        super.onDestroy()
+        LiveEventBus.get<String>("refresh").removeObserver(refreshOb)
+        LiveEventBus.get<String>("logout").removeObserver(logoutOb)
+    }
 }

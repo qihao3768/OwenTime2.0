@@ -11,6 +11,7 @@ import androidx.core.app.SharedElementCallback
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import by.kirich1409.viewbindingdelegate.viewBinding
+import coil.load
 import com.drake.brv.utils.linear
 import com.drake.brv.utils.setup
 import com.example.time_project.R
@@ -24,6 +25,8 @@ import com.example.time_project.load
 import com.example.time_project.start
 import com.example.time_project.ui.UpOrderActivity.IntentOptions.iname
 import com.example.time_project.util.IntentExtra.Companion.code
+import com.example.time_project.util.IntentExtra.Companion.courseTime
+import com.example.time_project.util.IntentExtra.Companion.courseUrl
 import com.example.time_project.util.IntentExtra.Companion.iBirthday
 import com.example.time_project.util.IntentExtra.Companion.iHead
 import com.example.time_project.util.IntentExtra.Companion.iSex
@@ -61,6 +64,16 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
     private var mBirth:String?=""//生日
     private var mHead:String?=""//头像
 
+    private val refreshOb:Observer<String> = Observer {
+        initBanner()
+    }
+    private val logoutOb:Observer<String> = Observer {
+        it?.run {
+            mBinding.ivHomeHead.setImageResource(R.drawable.logo)
+            mBinding.groupPlaying.visibility=View.GONE
+        }
+    }
+
 
     override fun initData() {
         mmkv = MMKV.defaultMMKV()
@@ -85,13 +98,8 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
             start(requireActivity(),target.javaClass,requireActivity().intent)
         }
         initBanner()
-        LiveEventBus.get<String>("logout").observe(this, Observer {
-            it?.run {
-//                initBanner()
-                mBinding.ivHomeHead.setImageResource(R.drawable.logo)
-                mBinding.groupPlaying.visibility=View.GONE
-            }
-        })
+        LiveEventBus.get<String>("refresh").observe(this,refreshOb)
+        LiveEventBus.get<String>("logout").observe(this, logoutOb)
         initNotice()
 
         setExitSharedElementCallback(object : SharedElementCallback() {
@@ -149,7 +157,7 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
                     }
                     it.studying?.run {
                         mBinding.groupPlaying.visibility=View.VISIBLE
-                        initPlaying()
+                        initPlaying(this)
                     }
                     it.user?.run {
                         mBinding.ivHomeHead.load(photo?:"")
@@ -202,15 +210,19 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
      * 如果已经登录，但是没有正在观看的视频，也不显示
      * 已经登录且有正在观看的视频，显示
      */
-    private fun initPlaying(){
+    private fun initPlaying(playing:Studying){
+        playing.run {
+            mBinding.ivPlayingCourse.load(image?:"")
+            mBinding.tvPlayingTitle.text=name?:""
+            mBinding.tvPlayingTime.text=(time?:0).toString()
 
+        }
         mBinding.layoutPlaying.setOnClickListener {
 
-            val bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(),mBinding.ivPlayingCourse,"palying").toBundle()
-            val intent =  Intent(requireActivity(), ExoplayerActivity().javaClass)
-            startActivity(intent,bundle)
-
-//            start(requireActivity(),ExoplayerActivity().javaClass,false)
+//            val bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(),mBinding.ivPlayingCourse,"palying").toBundle()
+            requireActivity().intent.courseUrl=playing.url?:""
+            requireActivity().intent.courseTime=playing.time?:0
+           start(requireActivity(),ExoplayerActivity().javaClass,requireActivity().intent)
         }
 
 }
@@ -225,5 +237,11 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
       list.add(NoticeBean("拼团即将要在5月20日上线啦！~~~ 爆款来袭5折 起，抄底直降无套路！！！"))
       return list
   }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        LiveEventBus.get<String>("refresh").removeObserver(refreshOb)
+        LiveEventBus.get<String>("logout").removeObserver(logoutOb)
+    }
 
 }

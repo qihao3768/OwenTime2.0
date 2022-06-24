@@ -134,8 +134,9 @@ fun ViewGroup.checkLogin(context:Context,todoListener: TodoListener){
 }
 
 fun View.checkLogin(context:Context,todoListener: TodoListener){
-    val islogin=MMKV.defaultMMKV().decodeString("token","")
+
     this.setOnClickListener {
+        val islogin=MMKV.defaultMMKV().decodeString("token","")
         if (islogin.isNullOrEmpty()){
             start01(context as Activity,LoginActivity().javaClass,false)
         }else{

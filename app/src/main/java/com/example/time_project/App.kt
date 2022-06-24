@@ -3,7 +3,11 @@ package com.example.time_project
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
+import com.drake.brv.PageRefreshLayout
 import com.drake.statelayout.StateConfig
+import com.scwang.smart.refresh.footer.ClassicsFooter
+import com.scwang.smart.refresh.header.MaterialHeader
+import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.tencent.mmkv.MMKV
 import com.umeng.commonsdk.UMConfigure
 
@@ -53,9 +57,11 @@ class App : Application() {
         StateConfig.apply {
             emptyLayout=R.layout.empty_order
         }
-//        CrashHandler.getInstance(this)
+        //初始化下拉刷新框架
+        SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, layout -> MaterialHeader(this) }
+        SmartRefreshLayout.setDefaultRefreshFooterCreator { context, layout -> ClassicsFooter(this) }
 
-
+        PageRefreshLayout.startIndex = 1//分页第一页
     }
 
 }

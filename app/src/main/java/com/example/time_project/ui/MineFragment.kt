@@ -38,7 +38,12 @@ class MineFragment : BaseFragment(R.layout.mine_fragment) {
     private var mBirth:String?=""//生日
     private var mHead:String?=""//头像
 
-
+    private val logoutOb:Observer<String> = Observer {
+        getUser()
+    }
+    private val refreshOb:Observer<String> = Observer {
+        getUser()
+    }
     override fun initData() {
         immersionBar {
             statusBarColor(R.color.white)
@@ -92,11 +97,8 @@ class MineFragment : BaseFragment(R.layout.mine_fragment) {
 
         getUser()
 
-        LiveEventBus.get<String>("logout").observe(this, Observer {
-            it?.run {
-                getUser()
-            }
-        })
+        LiveEventBus.get<String>("logout").observe(this, logoutOb)
+        LiveEventBus.get<String>("refresh").observe(this, refreshOb)
     }
 
     /***
@@ -124,5 +126,11 @@ class MineFragment : BaseFragment(R.layout.mine_fragment) {
             mBinding.personalName.text="登录/注册"
         }
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        LiveEventBus.get<String>("logout").removeObserver(logoutOb)
+        LiveEventBus.get<String>("refresh").removeObserver(refreshOb)
     }
 }

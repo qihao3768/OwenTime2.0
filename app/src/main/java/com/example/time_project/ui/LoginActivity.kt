@@ -16,6 +16,7 @@ import com.example.time_project.vm.LoginViewModel
 import com.example.time_project.web.WebActivity
 import com.gyf.immersionbar.ktx.immersionBar
 import com.hjq.shape.view.ShapeCheckBox
+import com.jeremyliao.liveeventbus.LiveEventBus
 
 import com.tencent.mmkv.MMKV
 import java.util.*
@@ -158,6 +159,7 @@ class LoginActivity : BaseActivity(R.layout.activity_login) {
                         start(this@LoginActivity,PerfectActivity().javaClass,intent)
                     }
                     1->{
+                        LiveEventBus.get<String>("refresh").post("refresh")
                         start(this@LoginActivity,MainActivity().javaClass,intent)
                     }
                 }

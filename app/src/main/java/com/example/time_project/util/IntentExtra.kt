@@ -25,6 +25,7 @@ class IntentExtra {
         var Intent.courseTitle by IntentExtraString("courseTitle")//课程标题
         var Intent.courseUrl by IntentExtraString("courseUrl")//课程URL
         var Intent.courseId by IntentExtraString("courseId")//课程ID
+        var Intent.courseTime by IntentExtraInt("courseTime")//课程进度
     }
 }
 class IntentExtraString(private val key: String? = null) {

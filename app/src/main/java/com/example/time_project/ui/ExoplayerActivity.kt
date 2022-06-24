@@ -14,13 +14,16 @@ import com.example.time_project.R
 import com.example.time_project.base.BaseActivity
 import com.example.time_project.base.BasePopWindow
 import com.example.time_project.databinding.ActivityExoplayerBinding
+import com.example.time_project.databinding.LayoutCustomExo2Binding
 import com.example.time_project.databinding.LayoutShareBinding
 import com.example.time_project.util.IntentExtra.Companion.courseId
+import com.example.time_project.util.IntentExtra.Companion.courseTime
 import com.example.time_project.util.IntentExtra.Companion.courseTitle
 import com.example.time_project.util.IntentExtra.Companion.courseUrl
 import com.example.time_project.util.IntentExtra.Companion.iproductId
 import com.example.time_project.vm.OwenViewModel
 import com.google.android.exoplayer2.*
+import com.google.android.exoplayer2.ExoPlaybackException.TYPE_SOURCE
 import com.google.android.exoplayer2.Player.PositionInfo
 import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 import com.gyf.immersionbar.BarHide
@@ -31,14 +34,14 @@ import com.umeng.socialize.bean.SHARE_MEDIA
 import com.umeng.socialize.media.UMImage
 import razerdp.util.animation.AnimationHelper
 import razerdp.util.animation.TranslationConfig
-import kotlin.system.exitProcess
+
 
 /***
  * 视频播放
  */
 class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
     private val mBinding by viewBinding(ActivityExoplayerBinding::bind)
-    private var mUrl="https://owen-time-test.oss-cn-beijing.aliyuncs.com/courses/cou/1643348728_216a94a44ba39a712.mp4"
+//    private var mUrl="https://owen-time-test.oss-cn-beijing.aliyuncs.com/courses/cou/1643348728_216a94a44ba39a712.mp4"
     private lateinit var exoPlayer:ExoPlayer
     private var isLock = false //是否锁屏
 
@@ -49,6 +52,7 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
 
     private val viewModel by viewModels<OwenViewModel>()
 
+    private var postion:Long=0L//视频播放进度
 
      override fun initData() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
@@ -65,7 +69,14 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
         exoPlayer.videoScalingMode = C.VIDEO_SCALING_MODE_SCALE_TO_FIT
 
         //初始化播放器控件
-//        val view = layoutInflater.inflate(R.layout.layout_custom_exo2, null, false)
+        val view = layoutInflater.inflate(R.layout.layout_custom_exo2, null, false)
+
+         val binding:LayoutCustomExo2Binding = LayoutCustomExo2Binding.bind(view)
+         binding.exoPause.setOnClickListener {
+             // TODO: 报错播放记录
+             val postion = exoPlayer.contentPosition / 1000
+             storageRecord(postion.toString())
+         }
         val include=layoutInflater.inflate(R.layout.include_exo3,null,true)
          //分享
          val share=include.findViewById<ImageView>(R.id.video_share)
@@ -85,7 +96,10 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
 //        mBinding.exoPlayer.setShutterBackgroundColor(R.color.transparent)
          mBinding.exoTitle.title=intent.courseTitle
          val item = MediaItem.fromUri(uri)
+//         val item2=MediaItem.fromUri(mUrl)
          exoPlayer.setMediaItem(item)
+//         exoPlayer.setMediaItem(item2)
+         exoPlayer.seekTo(intent.courseTime.toLong())
          exoPlayer.prepare()
          registerVideoListener(playerListener)
 
@@ -251,8 +265,24 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
             }
         }
 
-        override fun onTimelineChanged(timeline: Timeline, reason: Int) {}
+        override fun onTimelineChanged(timeline: Timeline, reason: Int) {
 
+        }
+
+        override fun onPlayerError(error: PlaybackException) {
+            when(error.errorCode){
+                    PlaybackException.ERROR_CODE_IO_BAD_HTTP_STATUS->{toast("播放失败")}
+                PlaybackException.ERROR_CODE_IO_FILE_NOT_FOUND->{
+                    toast("找不到视频文件")}
+                PlaybackException.ERROR_CODE_IO_NO_PERMISSION->{
+                    toast("缺少权限")}
+                else->{
+                    toast("播放失败")
+                }
+
+            }
+            super.onPlayerError(error)
+        }
         override fun onPositionDiscontinuity(
             oldPosition: PositionInfo,
             newPosition: PositionInfo,
@@ -300,6 +330,12 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
             return true
         }
         return super.onKeyDown(keyCode, event)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        exoPlayer.removeListener(playerListener)
+        exoPlayer.release()
     }
 
 }
