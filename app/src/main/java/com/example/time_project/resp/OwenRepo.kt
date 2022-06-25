@@ -113,4 +113,11 @@ class OwenRepo():BaseRepository(){
     suspend fun storageRecord(id:String,courses_id:String,time:String): BaseResponse<String?> = request {
         mService.storageRecord(id,courses_id,time)
     }
+
+    /***
+     * 已购-二级页分页
+     */
+    suspend fun pageYiGou(type:String,page:String): BaseResponse<YiGouPage?> = request {
+        mService.pageYiGou(type, page)
+    }
 }

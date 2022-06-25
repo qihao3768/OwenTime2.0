@@ -78,10 +78,16 @@ interface ApiService {
                               @Field("courses_id") courses_id:String,
                               @Field("time") time:String):BaseResponse<String?>
 
+    @POST("api/product/getUserProductlist")
+    @FormUrlEncoded
+    suspend fun pageYiGou(@Field("type") type:String,
+                              @Field("page") page:String
+    ):BaseResponse<YiGouPage?>
+
 
 
     companion object {
-//        const val BASE_URL = "https://wanandroid.com/"
-        const val BASE_URL = "http://192.168.2.184:8080/"
+//        const val BASE_URL = "http://192.168.2.184:8080/"
+        const val BASE_URL = "https://new.owentime.cn/"
     }
 }

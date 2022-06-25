@@ -17,7 +17,9 @@ import com.example.time_project.databinding.ProjectFragmentBinding
 import com.example.time_project.imp.HoverHeaderModel
 import com.example.time_project.start
 import com.example.time_project.toast
+import com.example.time_project.ui.UpOrderActivity.IntentOptions.iid
 import com.example.time_project.util.IntentExtra.Companion.code
+import com.example.time_project.util.IntentExtra.Companion.courseTitle
 import com.example.time_project.util.IntentExtra.Companion.iproductId
 import com.example.time_project.vm.OwenViewModel
 import com.example.time_project.vm.ProjectViewModel
@@ -76,7 +78,7 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
                                         addType<Recommend> { R.layout.item_product }
                                         addType<HoverHeaderModel> { R.layout.layout_hover_header }
                                         val list= mutableListOf<Any>()
-                                        list.add(HoverHeaderModel("推荐",0))
+                                        list.add(HoverHeaderModel("推荐",0,0))
                                         list.addAll(recommend)
 
                                         models= list
@@ -89,6 +91,8 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
                                             }
                                             start(requireActivity(),target.javaClass,requireActivity().intent)
                                         }
+
+
                                     }
                                 }
 
@@ -102,6 +106,11 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
                                     onClick(R.id.root_product){
                                         requireActivity().intent.iproductId=getModel<Product02>(modelPosition).id?:-1
                                         start(requireActivity(),CourseDetailActivity().javaClass,requireActivity().intent)
+                                    }
+                                    onClick(R.id.tv_seemore){
+                                        requireActivity().intent.iproductId=getModel<HoverHeaderModel>(modelPosition).id?:-1
+                                        requireActivity().intent.courseTitle=getModel<HoverHeaderModel>(modelPosition).header
+                                        start(requireActivity(),MoreProjectActivity().javaClass,requireActivity().intent)
                                     }
                                 }
                             }
@@ -126,10 +135,10 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
             val list= mutableListOf<Any>()
             mPurchased.forEach { index ->
                 val product=index.product?: emptyList()
-                list.add(HoverHeaderModel(index.name?:"",product.size))
+                list.add(HoverHeaderModel(index.name?:"",product.size,index.id?:0))
                 list.addAll(index.product?: product)
-                return list
             }
+            return list
         }
         return emptyList()
     }

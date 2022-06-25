@@ -99,4 +99,14 @@ class OwenViewModel() : BaseViewModel() {
         return storageRecordData
     }
 
+    //已购-二级页分页
+    private val yiGouPageData=MutableLiveData<BaseResponse<YiGouPage?>>()
+    fun pageYiGou(type:String,page:String):MutableLiveData<BaseResponse<YiGouPage?>>{
+        launchUI {
+            val result = owenReps.pageYiGou(type,page)
+            yiGouPageData.value = result
+        }
+        return yiGouPageData
+    }
+
 }
