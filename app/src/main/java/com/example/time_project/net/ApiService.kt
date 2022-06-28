@@ -99,6 +99,22 @@ interface ApiService {
                           @Field("courses_id") courses_id:String
     ):BaseResponse<String?>
 
+    //微信支付
+    @POST("api/pay/wechatApp")
+    @FormUrlEncoded
+    suspend fun weiChatPay(@Field("amount") amount:String,
+                           @Field("subject") subject:String,
+                           @Field("order") order:String
+    ):BaseResponse<WeiXinPay?>
+
+    //支付宝支付
+    @POST("api/pay/wechatApp")
+    @FormUrlEncoded
+    suspend fun aliPay(@Field("amount") amount:String,
+                           @Field("subject") subject:String,
+                           @Field("order") order:String
+    ):BaseResponse<WeiXinPay?>
+
     companion object {
 //        const val BASE_URL = "http://192.168.2.184:8080/"
         const val BASE_URL = "https://new.owentime.cn/"

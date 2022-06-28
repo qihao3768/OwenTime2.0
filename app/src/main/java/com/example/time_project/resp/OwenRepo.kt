@@ -127,4 +127,11 @@ class OwenRepo():BaseRepository(){
     suspend fun doPunch(product:String,course:String): BaseResponse<String?> = request {
         mService.doPunch(product, course)
     }
+
+    /***
+     * 微信支付
+     */
+    suspend fun weiChatPay(amount:String,subject:String,order:String): BaseResponse<WeiXinPay?> = request {
+        mService.weiChatPay(amount, subject, order)
+    }
 }

@@ -13,6 +13,9 @@
         android:theme="@style/Theme.WanAndroid"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.PaySuccessActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.RecordActivity"
             android:exported="false" />
         <activity
@@ -126,6 +129,7 @@
             android:label="dexopt"
             android:process=":dexopt" />
     </application>
+
     <queries>
         <package android:name="com.tencent.mm" />
         <!-- <package android:name="com.qzone" /> -->
@@ -136,7 +140,6 @@
 
         <!-- <package android:name="hk.alipay.wallet" /> -->
     </queries>
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 从Android 11开始，需要在AndroidManifest.xml清单文件中加入query权限申请，才能检测到手机上安装的三方应用包安装状态 -->
     <!-- <queries> -->
@@ -150,7 +153,8 @@
     <!-- <package android:name="com.instagram.android" />         // 指定instagram包名 -->
     <!-- </queries> -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

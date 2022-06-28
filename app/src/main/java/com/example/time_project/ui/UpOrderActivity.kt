@@ -1,6 +1,7 @@
 package com.example.time_project.ui
 
 import android.content.Intent
+import android.os.Handler
 import android.view.Gravity
 import android.view.View
 import androidx.activity.viewModels
@@ -12,6 +13,7 @@ import com.example.time_project.base.BasePopWindow
 import com.example.time_project.bean.ConfirmOrderRequestBody
 import com.example.time_project.bean.UpOrderDetailRequestBody
 import com.example.time_project.bean.UpOrderRequestBody
+import com.example.time_project.bean.WeiXinPay
 import com.example.time_project.databinding.ActivityUpOrderBinding
 import com.example.time_project.databinding.SelectbuywayLayout2Binding
 import com.example.time_project.util.IntentExtra.Companion.icode
@@ -24,6 +26,8 @@ import com.example.time_project.util.IntentExtraInt
 import com.example.time_project.util.IntentExtraString
 import com.example.time_project.vm.OwenViewModel
 import com.gyf.immersionbar.ktx.immersionBar
+import com.tencent.mm.opensdk.modelpay.PayReq
+import com.tencent.mm.opensdk.openapi.WXAPIFactory
 import razerdp.util.animation.AnimationHelper
 import razerdp.util.animation.TranslationConfig
 import kotlin.text.Typography.times
@@ -36,6 +40,7 @@ class UpOrderActivity : BaseActivity(R.layout.activity_up_order) {
     private var body:UpOrderRequestBody?=null
     private var mOrderSn:String=""//订单号
     private var mPayWay:Int=1//支付方式，1 微信 2 支付宝
+    private var mTitle:String=""
 
     companion object IntentOptions{
         var Intent.iprovince by IntentExtraString("province")//商品代码
@@ -112,6 +117,7 @@ class UpOrderActivity : BaseActivity(R.layout.activity_up_order) {
                     mBinding.ivOrderpic.load(imgShow?:"")
                     mBinding.ivOrderpic.load(imgShow?:"")
                     mBinding.tvPrice.text="￥".plus(priceActual?:"")
+                    mTitle=name?:""
                 }
 //                mBinding.tvTotalPrice.text=(priceActual?:0.00).toString()
 
@@ -144,6 +150,9 @@ class UpOrderActivity : BaseActivity(R.layout.activity_up_order) {
      */
     private fun showPay(){
         payDialog.contentView=payBinding.root
+        payBinding.orderPopnumber.text=mBinding.tvTotalPrice.text
+        val amount=payBinding.orderPopnumber.text//付款价格
+
         payBinding.payClose.setOnClickListener {
             payDialog.dismiss()
         }
@@ -169,7 +178,18 @@ class UpOrderActivity : BaseActivity(R.layout.activity_up_order) {
             payBinding.wxCheck.isSelected=false
             payBinding.zfbCheck.isSelected=true
         }
-        payBinding.orderPopnumber.text=mBinding.tvTotalPrice.text
+        //立即支付
+        payBinding.btnZhifu.fastClick {
+            when(mPayWay){
+                1->{
+                    weiChatPay(amount.toString(),mTitle,mOrderSn)
+                }
+                2->{
+
+                }
+            }
+        }
+
         payDialog.setOutSideDismiss(true).setOutSideTouchable(true)
             .setPopupGravity(Gravity.BOTTOM)
             .setShowAnimation(
@@ -189,5 +209,52 @@ class UpOrderActivity : BaseActivity(R.layout.activity_up_order) {
         return ConfirmOrderRequestBody(intent.icode?:"",intent.isku?:"",
             intent.inum.toString(),intent.icoupon?:""
         ).toMap()
+    }
+
+    /***
+     * 微信支付
+     */
+    private fun weiChatPay(amount:String,subject:String,order:String){
+        viewModel.weiChatPay(amount, subject, order).observe(this, Observer {
+            it?.run {
+               when(code){
+                   1000->{
+                       val weChatAppBean=data
+                       weChatAppBean?.run {
+                           val mWxApi = WXAPIFactory.createWXAPI(this@UpOrderActivity, appid)
+                           mWxApi.registerApp(appid)
+
+                           Handler(mainLooper).post {
+                               //实体类
+                               val req = PayReq()
+                               //微信的id
+                               req.appId = appid
+                               //商户号
+                               req.partnerId = partnerid
+                               //        //预支付订单
+                               req.prepayId = prepayid
+                               //随机的字符串
+                               req.nonceStr = noncestr
+                               //时间戳
+                               req.timeStamp = timestamp + ""
+                               //扩展字段
+                               req.packageValue = packageX
+                               //支付签名
+                               req.sign = sign
+                               // 在支付之前，如果应用没有注册到微信，应该先调用IWXMsg.registerApp将应用注册到微信
+//        //3.调用微信支付sdk支付方法
+                               mWxApi.sendReq(req)
+                           }
+                       }
+
+                   }
+                   401->{
+                       toast("登录状态失效,请重新登录")
+                   }else->{
+                       toast(message.toString())
+                   }
+               }
+            }
+        })
     }
 }

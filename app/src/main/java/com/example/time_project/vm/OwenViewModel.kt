@@ -119,4 +119,14 @@ class OwenViewModel() : BaseViewModel() {
         return doPunchData
     }
 
+    //微信支付
+    private val weiXinPayData=MutableLiveData<BaseResponse<WeiXinPay?>>()
+    fun weiChatPay(amount:String,subject:String,order:String):MutableLiveData<BaseResponse<WeiXinPay?>>{
+        launchUI {
+            val result = owenReps.weiChatPay(amount, subject, order)
+            weiXinPayData.value = result
+        }
+        return weiXinPayData
+    }
+
 }

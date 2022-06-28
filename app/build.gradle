@@ -110,7 +110,7 @@ dependencies {
 
     implementation('com.github.getActivity:GsonFactory:6.0')
 
-    implementation 'com.google.code.gson:gson:2.9.0'
+//    implementation 'com.google.code.gson:gson:2.9.0'
 
 //友盟分享相关
     api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:6.8.0'//微信
