@@ -78,6 +78,7 @@ interface ApiService {
                               @Field("courses_id") courses_id:String,
                               @Field("time") time:String):BaseResponse<String?>
 
+    //已购-分页
     @POST("api/product/getUserProductlist")
     @FormUrlEncoded
     suspend fun pageYiGou(@Field("type") type:String,
@@ -85,6 +86,18 @@ interface ApiService {
     ):BaseResponse<YiGouPage?>
 
 
+    @POST("api/pay/wechatApp")
+    @FormUrlEncoded
+    suspend fun wechatPay(@Field("type") type:String,
+                          @Field("page") page:String
+    ):BaseResponse<YiGouPage?>
+
+    //课程打卡
+    @POST("api/course/doPunch")
+    @FormUrlEncoded
+    suspend fun doPunch(@Field("product_id") product_id:String,
+                          @Field("courses_id") courses_id:String
+    ):BaseResponse<String?>
 
     companion object {
 //        const val BASE_URL = "http://192.168.2.184:8080/"

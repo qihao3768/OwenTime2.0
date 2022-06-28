@@ -5,5 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.RecordActivity">
+    <com.google.android.exoplayer2.ui.PlayerView
+        android:id="@+id/rolevideo_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:clickable="false"
+        app:show_buffering="when_playing"
+        app:controller_layout_id="@layout/layout_custom_exo2" />
+    <com.hjq.bar.TitleBar
+        android:id="@+id/exo_titlebar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        app:title="播放视频"
+        android:visibility="invisible"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

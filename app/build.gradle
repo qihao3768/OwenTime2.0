@@ -124,5 +124,7 @@ dependencies {
 
 //    支付相关
     api('com.alipay.sdk:alipaysdk-android:+@aar')//支付宝
+    implementation ('com.github.zhaolewei:ZlwAudioRecorder:v1.08')//录音相关
+    implementation ('com.github.microshow:RxFFmpeg:4.9.0-lite')//FF
 
 }

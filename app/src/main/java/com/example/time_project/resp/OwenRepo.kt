@@ -120,4 +120,11 @@ class OwenRepo():BaseRepository(){
     suspend fun pageYiGou(type:String,page:String): BaseResponse<YiGouPage?> = request {
         mService.pageYiGou(type, page)
     }
+
+    /***
+     * 打卡
+     */
+    suspend fun doPunch(product:String,course:String): BaseResponse<String?> = request {
+        mService.doPunch(product, course)
+    }
 }

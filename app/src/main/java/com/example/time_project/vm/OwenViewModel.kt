@@ -109,4 +109,14 @@ class OwenViewModel() : BaseViewModel() {
         return yiGouPageData
     }
 
+    //打卡
+    private val doPunchData=MutableLiveData<BaseResponse<String?>>()
+    fun doPunch(product:String,course:String):MutableLiveData<BaseResponse<String?>>{
+        launchUI {
+            val result = owenReps.doPunch(product, course)
+            doPunchData.value = result
+        }
+        return doPunchData
+    }
+
 }

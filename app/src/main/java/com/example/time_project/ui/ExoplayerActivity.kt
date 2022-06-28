@@ -253,7 +253,8 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
                 Player.STATE_BUFFERING -> {}
                 Player.STATE_READY -> {}
                 Player.STATE_ENDED -> {
-                    share()
+//                    share()
+                    doPunch(intent.iproductId.toString(),intent.courseId.toString())
                 }
             }
         }
@@ -336,6 +337,28 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
         super.onDestroy()
         exoPlayer.removeListener(playerListener)
         exoPlayer.release()
+    }
+
+    /***
+     * 打卡
+     */
+    private fun doPunch(product:String,course:String){
+        viewModel.doPunch(product, course).observe(this, Observer {
+            it?.run {
+                when(code){
+                    1000->{
+                        toast("解锁成功")
+                        share()
+                    }
+                    401->{
+
+                    }
+                    else->{
+                        toast(message.toString())
+                    }
+                }
+            }
+        })
     }
 
 }
