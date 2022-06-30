@@ -38,12 +38,12 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
         debug {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
@@ -124,7 +124,9 @@ dependencies {
 
 //    支付相关
     api('com.alipay.sdk:alipaysdk-android:+@aar')//支付宝
-    implementation ('com.github.zhaolewei:ZlwAudioRecorder:v1.08')//录音相关
+//    implementation ('com.github.zhaolewei:ZlwAudioRecorder:v1.08')//录音相关
+    implementation('com.github.ideastudios:IdealRecorder:2.0.4')//录音相关
     implementation ('com.github.microshow:RxFFmpeg:4.9.0-lite')//FF
+    implementation('androidx.paging:paging-runtime:3.1.1')//使用paging3做分页
 
 }

@@ -13,6 +13,10 @@ import com.drake.brv.utils.setup
 import com.example.time_project.R
 import com.example.time_project.base.BaseFragment
 import com.example.time_project.bean.*
+import com.example.time_project.bean.yigou.AlreadyBuyModel
+import com.example.time_project.bean.yigou.Product02
+import com.example.time_project.bean.yigou.Purchased
+import com.example.time_project.bean.yigou.Recommend
 import com.example.time_project.databinding.ProjectFragmentBinding
 import com.example.time_project.imp.HoverHeaderModel
 import com.example.time_project.start
@@ -63,13 +67,13 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
             it?.run {
                 when(code){
                     1000->{
-                        val body:AlreadyBuyModel?=data
+                        val body: AlreadyBuyModel?=data
                         body?.run {
                             val data01=getYiGouData(purchased)
                             if (data01.isNullOrEmpty()){
                                 //展示推荐列表
                                 mBinding.productList02.visibility=View.VISIBLE
-                                if (recommend.isNullOrEmpty()){
+                                if (recommend.data.isNullOrEmpty()){
                                     mBinding.stateWorks.apply {
                                         emptyLayout=R.layout.empty_order
                                     }.showEmpty()
@@ -79,7 +83,7 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
                                         addType<HoverHeaderModel> { R.layout.layout_hover_header }
                                         val list= mutableListOf<Any>()
                                         list.add(HoverHeaderModel("推荐",0,0))
-                                        list.addAll(recommend)
+                                        list.addAll(recommend.data)
 
                                         models= list
                                         onClick(R.id.root_product){

@@ -17,4 +17,8 @@ object AppConfig {
      var CHILDREN_AGREEMENT : String = ""//儿童服务协议
 
      var  CHILDREN_AGREEMENT_URL: String = "https://www.owentime.cn/api/dict/getChildrenPrivacy" //儿童服务协议
+
+    fun addActivity(){
+
+    }
 }

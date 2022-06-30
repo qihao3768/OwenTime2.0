@@ -1,4 +1,4 @@
-package com.example.time_project.bean
+package com.example.time_project.bean.other
 
 import com.drake.brv.BindingAdapter
 import com.drake.brv.item.ItemBind

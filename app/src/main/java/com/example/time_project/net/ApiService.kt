@@ -2,6 +2,17 @@ package com.example.time_project.net
 
 import com.example.time_project.base.BaseResponse
 import com.example.time_project.bean.*
+import com.example.time_project.bean.home.HomeModel
+import com.example.time_project.bean.home.User
+import com.example.time_project.bean.login.LoginModel
+import com.example.time_project.bean.login.PhotoModel
+import com.example.time_project.bean.login.SmsModel
+import com.example.time_project.bean.order.ConfirmOrderModel
+import com.example.time_project.bean.order.Course
+import com.example.time_project.bean.order.GoodsDetail
+import com.example.time_project.bean.order.OrderSn
+import com.example.time_project.bean.yigou.AlreadyBuyModel
+import com.example.time_project.bean.yigou.YiGouPage
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.*
@@ -33,7 +44,7 @@ interface ApiService {
     @FormUrlEncoded
     suspend fun getUser(@Field("token") token: String):BaseResponse<User?>
 
-//注销
+//退出登录
     @POST("api/user/logout")
     suspend fun logOut():BaseResponse<String?>
 //商品详情
@@ -108,12 +119,16 @@ interface ApiService {
     ):BaseResponse<WeiXinPay?>
 
     //支付宝支付
-    @POST("api/pay/wechatApp")
+    @POST("api/pay/aliApp")
     @FormUrlEncoded
     suspend fun aliPay(@Field("amount") amount:String,
                            @Field("subject") subject:String,
                            @Field("order") order:String
-    ):BaseResponse<WeiXinPay?>
+    ):BaseResponse<String?>
+
+//注销
+    @POST("api/user/logOff")
+    suspend fun logOff():BaseResponse<String?>
 
     companion object {
 //        const val BASE_URL = "http://192.168.2.184:8080/"

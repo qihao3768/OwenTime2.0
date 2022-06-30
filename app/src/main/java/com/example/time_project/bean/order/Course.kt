@@ -1,4 +1,4 @@
-package com.example.time_project.bean
+package com.example.time_project.bean.order
 import android.view.View
 import com.drake.brv.BindingAdapter
 import com.drake.brv.item.ItemBind
@@ -7,7 +7,9 @@ import com.example.time_project.databinding.LayoutWorksBinding
 import com.example.time_project.load
 import com.google.gson.annotations.SerializedName
 
-
+/***
+ * 课程详情
+ */
 data class Course(
     @SerializedName("course")
     val course: List<CourseX>? = listOf(),

@@ -1,6 +1,6 @@
-package com.example.time_project.bean
-import com.google.gson.annotations.SerializedName
+package com.example.time_project.bean.login
 
+import com.google.gson.annotations.SerializedName
 
 //获取短信
 //@SerializedNameClass(generateAdapter = true)
@@ -44,5 +44,3 @@ data class UserModel(
     @SerializedName("sex")
     val sex: String? = ""
 )
-
-

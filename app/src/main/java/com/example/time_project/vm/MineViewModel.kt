@@ -2,7 +2,7 @@ package com.example.time_project.vm
 
 import androidx.lifecycle.MutableLiveData
 import com.example.time_project.base.BaseViewModel
-import com.example.time_project.bean.User
+import com.example.time_project.bean.home.User
 import com.example.time_project.resp.OwenRepo
 
 class MineViewModel : BaseViewModel() {

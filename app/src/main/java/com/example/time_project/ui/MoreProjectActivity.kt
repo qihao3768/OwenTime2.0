@@ -13,9 +13,8 @@ import com.drake.brv.utils.linear
 import com.drake.brv.utils.setup
 import com.example.time_project.R
 import com.example.time_project.base.BaseActivity
-import com.example.time_project.bean.GoodsModel
-import com.example.time_project.bean.Product
-import com.example.time_project.bean.Product02
+import com.example.time_project.bean.yigou.Product02
+
 import com.example.time_project.databinding.ActivityMoreProjectBinding
 import com.example.time_project.fastClick
 import com.example.time_project.start

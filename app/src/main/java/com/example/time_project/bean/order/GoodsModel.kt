@@ -1,4 +1,4 @@
-package com.example.time_project.bean
+package com.example.time_project.bean.order
 
 import androidx.core.content.ContextCompat.getColor
 import com.drake.brv.BindingAdapter

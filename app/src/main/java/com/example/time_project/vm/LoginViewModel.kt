@@ -3,9 +3,9 @@ package com.example.time_project.vm
 import androidx.lifecycle.MutableLiveData
 import com.example.time_project.base.BaseResponse
 import com.example.time_project.base.BaseViewModel
-import com.example.time_project.bean.LoginModel
+import com.example.time_project.bean.login.LoginModel
+import com.example.time_project.bean.login.SmsModel
 
-import com.example.time_project.bean.SmsModel
 import com.example.time_project.resp.OwenRepo
 
 class LoginViewModel:BaseViewModel() {

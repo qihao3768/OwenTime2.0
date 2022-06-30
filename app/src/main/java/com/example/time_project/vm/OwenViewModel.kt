@@ -5,6 +5,13 @@ import com.example.time_project.base.BaseResponse
 
 import com.example.time_project.base.BaseViewModel
 import com.example.time_project.bean.*
+import com.example.time_project.bean.home.HomeModel
+import com.example.time_project.bean.order.ConfirmOrderModel
+import com.example.time_project.bean.order.Course
+import com.example.time_project.bean.order.GoodsDetail
+import com.example.time_project.bean.order.OrderSn
+import com.example.time_project.bean.yigou.AlreadyBuyModel
+import com.example.time_project.bean.yigou.YiGouPage
 import com.example.time_project.resp.OwenRepo
 
 class OwenViewModel() : BaseViewModel() {
@@ -127,6 +134,43 @@ class OwenViewModel() : BaseViewModel() {
             weiXinPayData.value = result
         }
         return weiXinPayData
+    }
+
+
+    //微信支付
+    private val aliPayData=MutableLiveData<BaseResponse<String?>>()
+    fun aliPay(amount:String,subject:String,order:String):MutableLiveData<BaseResponse<String?>>{
+        launchUI {
+            val result = owenReps.aliPay(amount, subject, order)
+            aliPayData.value = result
+        }
+        return aliPayData
+    }
+
+    /***
+     * 退出登录
+     */
+    private val _logout = MutableLiveData<String?>()
+    fun logOut(): MutableLiveData<String?> {
+        launchUI {
+            val result=owenReps.logOut().data?:""
+            _logout.value= result
+
+        }
+        return _logout
+    }
+
+    /***
+     * 销户
+     */
+    private val logOffData=MutableLiveData<BaseResponse<String?>>()
+    fun logOff(): MutableLiveData<BaseResponse<String?>> {
+        launchUI {
+            val result=owenReps.logOff()
+            logOffData.value= result
+
+        }
+        return logOffData
     }
 
 }

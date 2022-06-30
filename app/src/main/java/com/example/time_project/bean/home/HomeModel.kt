@@ -1,4 +1,4 @@
-package com.example.time_project.bean
+package com.example.time_project.bean.home
 import android.view.View
 import coil.load
 import com.drake.brv.BindingAdapter

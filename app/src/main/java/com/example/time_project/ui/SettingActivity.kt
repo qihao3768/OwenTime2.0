@@ -9,6 +9,7 @@ import com.example.time_project.base.BaseActivity
 import com.example.time_project.base.BasePopWindow
 import com.example.time_project.databinding.ActivitySettingBinding
 import com.example.time_project.databinding.LayoutExitBinding
+import com.example.time_project.vm.OwenViewModel
 import com.example.time_project.vm.UserViewModel
 import com.example.time_project.web.WebActivity
 import com.gyf.immersionbar.ktx.immersionBar
@@ -23,7 +24,7 @@ class SettingActivity : BaseActivity(R.layout.activity_setting) {
     private lateinit var exitBinding:LayoutExitBinding
     private lateinit var exitDialog:BasePopWindow
 
-    private val mViewModel by viewModels<UserViewModel>()
+    private val mViewModel by viewModels<OwenViewModel>()
 
     override fun initData() {
         immersionBar {
@@ -88,6 +89,7 @@ class SettingActivity : BaseActivity(R.layout.activity_setting) {
                 }
                 1->{
                     // TODO: 调用注销接口
+
                 }
             }
         }
@@ -110,10 +112,4 @@ class SettingActivity : BaseActivity(R.layout.activity_setting) {
 
     }
 
-    /***
-     * 注销
-     */
-    private fun cancellation(){
-
-    }
 }

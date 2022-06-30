@@ -13,7 +13,7 @@ import com.example.time_project.adapter.ImageTitleHolder
 import com.example.time_project.base.BaseActivity
 import com.example.time_project.base.BasePopWindow
 import com.example.time_project.bean.FlexTagModel
-import com.example.time_project.bean.Sku
+import com.example.time_project.bean.order.Sku
 import com.example.time_project.databinding.ActivityProductDetailBinding
 import com.example.time_project.databinding.LayoutSpecificationsBinding
 import com.example.time_project.load

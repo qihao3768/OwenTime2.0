@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--     进度条的背景色-->
+    <item android:id="@android:id/background">
+        <shape>
+            <corners android:radius="21.5dp" />
+            <solid android:color="@color/e0e0e0" />
+        </shape>
+    </item>
+    <!--    缓冲进度条的背景色-->
+    <item android:id="@android:id/secondaryProgress">
+        <clip>
+            <shape>
+                <corners android:radius="21.5dp" />
+                <solid android:color="@color/F777777" />
+            </shape>
+        </clip>
+    </item>
+    <!--  进度条的背景色-->
+    <item android:id="@android:id/progress">
+        <clip>
+            <shape>
+                <corners android:radius="21.5dp" />
+                <solid android:color="@color/FE9520"/>
+            </shape>
+        </clip>
+    </item>
+</layer-list>

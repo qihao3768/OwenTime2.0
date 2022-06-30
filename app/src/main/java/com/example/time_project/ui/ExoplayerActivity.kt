@@ -1,39 +1,56 @@
 package com.example.time_project.ui
 
+import android.Manifest
 import android.content.pm.ActivityInfo
+import android.media.AudioFormat
+import android.media.MediaRecorder
 import android.net.Uri
+import android.os.Handler
+import android.util.Log
 import android.view.Gravity
 import android.view.KeyEvent
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.core.widget.ContentLoadingProgressBar
 import androidx.lifecycle.Observer
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.example.time_project.*
 import com.example.time_project.R
 import com.example.time_project.base.BaseActivity
 import com.example.time_project.base.BasePopWindow
 import com.example.time_project.databinding.ActivityExoplayerBinding
 import com.example.time_project.databinding.LayoutCustomExo2Binding
 import com.example.time_project.databinding.LayoutShareBinding
+import com.example.time_project.fastClick
+import com.example.time_project.start
+import com.example.time_project.toast
+import com.example.time_project.util.IntentExtra.Companion.courseDub
 import com.example.time_project.util.IntentExtra.Companion.courseId
 import com.example.time_project.util.IntentExtra.Companion.courseTime
 import com.example.time_project.util.IntentExtra.Companion.courseTitle
 import com.example.time_project.util.IntentExtra.Companion.courseUrl
 import com.example.time_project.util.IntentExtra.Companion.iproductId
+import com.example.time_project.util.RecordUtil
 import com.example.time_project.vm.OwenViewModel
 import com.google.android.exoplayer2.*
-import com.google.android.exoplayer2.ExoPlaybackException.TYPE_SOURCE
 import com.google.android.exoplayer2.Player.PositionInfo
 import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 import com.gyf.immersionbar.BarHide
 import com.gyf.immersionbar.ktx.immersionBar
+import com.permissionx.guolindev.PermissionX
 import com.umeng.socialize.ShareAction
 import com.umeng.socialize.UMShareListener
 import com.umeng.socialize.bean.SHARE_MEDIA
 import com.umeng.socialize.media.UMImage
+import io.microshow.rxffmpeg.RxFFmpegInvoke
+import io.microshow.rxffmpeg.RxFFmpegSubscriber
 import razerdp.util.animation.AnimationHelper
 import razerdp.util.animation.TranslationConfig
+import tech.oom.idealrecorder.IdealRecorder
+import tech.oom.idealrecorder.IdealRecorder.RecordConfig
+import tech.oom.idealrecorder.StatusListener
+import java.io.File
 
 
 /***
@@ -54,6 +71,21 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
 
     private var postion:Long=0L//视频播放进度
 
+    private lateinit var idealRecorder: IdealRecorder
+    private lateinit var recordConfig: RecordConfig
+    //录音用到的权限
+    private val permissions = listOf(
+        Manifest.permission.RECORD_AUDIO, Manifest.permission.READ_EXTERNAL_STORAGE,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE)
+
+    private lateinit var popWindow //合成的进度条
+            : BasePopWindow
+    private lateinit var bar: ContentLoadingProgressBar
+    private lateinit var tv_bar_start: TextView
+    private lateinit var tv_bar_end: TextView
+    private lateinit var progressTitle: TextView
+
+
      override fun initData() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         immersionBar {
@@ -63,8 +95,32 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
             init()
         }
 
+         //        IdealRecorder.getInstance().init(this);
+         idealRecorder = IdealRecorder.getInstance()
+         idealRecorder.init(this)
+         recordConfig = RecordConfig(
+             MediaRecorder.AudioSource.MIC,
+             48000,
+             AudioFormat.CHANNEL_IN_MONO,
+             AudioFormat.ENCODING_PCM_16BIT
+         )
+
         //初始化播放器
-        val uri = Uri.parse(intent.courseUrl)
+        var uri = Uri.parse(intent.courseUrl)
+//         如果courseDub不为空，说明这节视频需要配音，后续走配音流程
+         if (!intent.courseDub.isNullOrEmpty()){
+             uri= Uri.parse(intent.courseDub)
+
+             popWindow = BasePopWindow(this)
+             popWindow.setContentView(R.layout.layout_synthetic_progress)
+             popWindow.setPopupGravity(Gravity.CENTER).setOutSideDismiss(false).isOutSideTouchable =
+                 false
+             popWindow.setBackPressEnable(false)
+             bar = popWindow.contentView.findViewById(R.id.hecheng_pb)
+             progressTitle = popWindow.contentView.findViewById(R.id.tv_progress_title)
+             tv_bar_end = popWindow.contentView.findViewById(R.id.tv_bar_end)
+             tv_bar_start = popWindow.contentView.findViewById(R.id.tv_bar_start)
+         }
         exoPlayer = ExoPlayer.Builder(this).build()
         exoPlayer.videoScalingMode = C.VIDEO_SCALING_MODE_SCALE_TO_FIT
 
@@ -255,14 +311,26 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
                 Player.STATE_ENDED -> {
 //                    share()
                     doPunch(intent.iproductId.toString(),intent.courseId.toString())
+                    //配音
+                    if (!intent.courseDub.isNullOrEmpty()){
+                        RecordUtil.stopRecord(this@ExoplayerActivity,idealRecorder)
+                        toast("停止配音，开始合成...")
+                    }
+
                 }
             }
         }
 
         override fun onPlayWhenReadyChanged(playWhenReady: Boolean, reason: Int) {
+
             if (playWhenReady){
                 //进入到播放页面的时候先保存一次播放记录，目的是防止应用大退时无法保存
                 storageRecord("0")
+                //配音
+                if (!intent.courseDub.isNullOrEmpty()){
+                    getPermission()
+                }
+
             }
         }
 
@@ -348,10 +416,13 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
                 when(code){
                     1000->{
                         toast("解锁成功")
-                        share()
+                        if (intent.courseDub.isNullOrEmpty()){
+                            share()
+                        }
+
                     }
                     401->{
-
+                        toast("登录状态失效，请重新登录")
                     }
                     else->{
                         toast(message.toString())
@@ -359,6 +430,150 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
                 }
             }
         })
+    }
+
+    /***
+     * 录音回调
+     */
+    private val statusListener: StatusListener = object : StatusListener() {
+        override fun onStartRecording() {}
+        override fun onRecordData(data: ShortArray, length: Int) {
+//            tech.oom.idealrecorder.utils.Log.d("MainActivity", "current buffer size is " + length);
+        }
+
+        override fun onVoiceVolume(volume: Int) {
+            val myVolume = ((volume - 40) * 4).toDouble()
+            //            tech.oom.idealrecorder.utils.Log.d("MainActivity", "current volume is " + volume);
+        }
+
+        override fun onRecordError(code: Int, errorMsg: String) {
+            // tips.setText("录音错误" + errorMsg);
+        }
+
+        override fun onFileSaveFailed(error: String) {
+            toast("文件保存失败")
+
+        }
+
+        override fun onFileSaveSuccess(fileUri: String) {
+            toast("文件保存成功")
+            runFFmpegRxJava(intent.courseDub?:"", fileUri)
+        }
+
+        override fun onStopRecording() {
+            //tips.setText("录音结束");
+        }
+    }
+
+    /***
+     * 获取录音权限
+     */
+    //    private PlayerView mVideoView;
+
+    private fun getPermission() {
+        PermissionX.init(this).permissions(permissions)
+            .request { allGranted, grantedList, deniedList ->
+                 if (allGranted) {
+                     startRecord()
+                } else {
+                    toast("您拒绝了一下权限 $deniedList 可能会对您的正常使用造成影响")
+                }
+            }
+    }
+
+    //开始录音
+    private fun startRecord(){
+        RecordUtil.record(statusListener, idealRecorder, recordConfig, this@ExoplayerActivity)
+        toast("开始配音...")
+    }
+
+    /***
+     * 合并音视频ffffff
+     */
+    private fun runFFmpegRxJava(url: String, path: String) {
+        val resultFile = File(getExternalFilesDir(null), "/result.mp4")
+        if (resultFile.exists()) {
+            resultFile.delete()
+        }
+        val noAideoFile = File(getExternalFilesDir(null), "/noAideo.mp4")
+        if (noAideoFile.exists()) {
+            noAideoFile.delete()
+        }
+        val text1 = "ffmpeg -i " + url + " -an -vcodec copy " + noAideoFile.path //只保留视频流
+        val commands1 = text1.split(" ").toTypedArray()
+
+//        String text= "ffmpeg -i "+url+" -i "+path+" -filter_complex amix=inputs=2 "+resultFile.getPath();//音视频合成
+        val text = "ffmpeg -i " + noAideoFile.path + " -i " + path + " " + resultFile.path //音视频合成
+        val commands2 = text.split(" ").toTypedArray()
+        getVideo(commands1, commands2)
+    }
+
+    private fun getVideo(commons1: Array<String>, commons2: Array<String>) {
+        progressTitle.text = "正在提取视频,请不要退出..."
+        popWindow.showPopupWindow()
+        RxFFmpegInvoke.getInstance()
+            .runCommandRxJava(commons1)
+            .subscribe(object : RxFFmpegSubscriber() {
+                override fun onFinish() {
+                    toast("视频提取成功")
+                    heCheng(commons2)
+                }
+
+                override fun onProgress(progress: Int, progressTime: Long) {
+                    Log.d("progress1", "" + progress)
+                    Handler(mainLooper).post {
+                        bar.progress = progress
+                        tv_bar_end.text = "$progress/100"
+                        tv_bar_start.text = "$progress%"
+                    }
+                }
+
+                override fun onCancel() {
+                    toast("已取消")
+                }
+
+                override fun onError(message: String) {
+                    toast(message)
+                }
+            })
+    }
+
+    private fun heCheng(commons: Array<String>) {
+        progressTitle.text = "正在合成视频，请不要退出..."
+        if (!popWindow.isShowing) {
+            popWindow.showPopupWindow()
+        }
+
+        //开始执行FFmpeg命令ffffffffefefefefefehhh
+        RxFFmpegInvoke.getInstance()
+            .runCommandRxJava(commons)
+            .subscribe(object : RxFFmpegSubscriber() {
+                override fun onFinish() {
+                    toast("合成成功")
+                    popWindow.dismiss()
+
+                    //合成成功之后自动转入到预览页面
+//                    showPreivew()
+                }
+
+                override fun onProgress(progress: Int, progressTime: Long) {
+//                        Log.d("progress1",""+progress);
+//                        Log.d("progress2",""+progressTime);
+                    Handler(mainLooper).post {
+                        bar.progress = progress
+                        tv_bar_end.text = "$progress/100"
+                        tv_bar_start.text = "$progress%"
+                    }
+                }
+
+                override fun onCancel() {
+                    toast("已取消")
+                }
+
+                override fun onError(message: String) {
+                   toast(message)
+                }
+            })
     }
 
 }

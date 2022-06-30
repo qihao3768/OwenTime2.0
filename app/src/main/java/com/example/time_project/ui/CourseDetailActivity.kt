@@ -8,10 +8,13 @@ import com.drake.brv.utils.linear
 import com.drake.brv.utils.setup
 import com.example.time_project.*
 import com.example.time_project.base.BaseActivity
-import com.example.time_project.bean.Course
+
 import com.example.time_project.bean.CourseItemModel
-import com.example.time_project.bean.CourseX
+import com.example.time_project.bean.order.Course
+import com.example.time_project.bean.order.CourseX
+
 import com.example.time_project.databinding.ActivityCourseDetailBinding
+import com.example.time_project.util.IntentExtra.Companion.courseDub
 import com.example.time_project.util.IntentExtra.Companion.courseId
 import com.example.time_project.util.IntentExtra.Companion.courseTitle
 import com.example.time_project.util.IntentExtra.Companion.courseUrl
@@ -48,7 +51,7 @@ class CourseDetailActivity : BaseActivity(R.layout.activity_course_detail) {
                 it?.run {
                     when(code){
                         1000->{
-                            val body:Course?=data
+                            val body: Course?=data
                             if (body==null){
                                 show(null)
                             }else{
@@ -91,9 +94,10 @@ class CourseDetailActivity : BaseActivity(R.layout.activity_course_detail) {
                         toast("请先观看上一节视频，完成解锁")
                     }else{
                         intent.courseTitle=model.name?:""
-                        intent.courseUrl=model.url?:""
-                        intent.courseId=(model.id?:0).toString()
+                        intent.courseUrl=model.url?:""//课程链接
+                        intent.courseId=(model.id?:0).toString()//课程id
                         intent.iproductId=model.productId?:0
+                        intent.courseDub=model.dubCourse?:""//配音视频链接，有内容表示这是一个需要配音的视频
                         start(this@CourseDetailActivity,ExoplayerActivity().javaClass,intent)
 //                        if (model.dubCourse.isNullOrEmpty()){
 //                            start(this@CourseDetailActivity,ExoplayerActivity().javaClass,intent)

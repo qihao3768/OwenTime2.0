@@ -2,11 +2,14 @@ package com.example.time_project.ui
 
 import android.content.Intent
 import android.os.Handler
+import android.os.Message
+import android.text.TextUtils
 import android.view.Gravity
 import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.alipay.sdk.app.PayTask
 import com.example.time_project.*
 import com.example.time_project.base.BaseActivity
 import com.example.time_project.base.BasePopWindow
@@ -26,6 +29,7 @@ import com.example.time_project.util.IntentExtraInt
 import com.example.time_project.util.IntentExtraString
 import com.example.time_project.vm.OwenViewModel
 import com.gyf.immersionbar.ktx.immersionBar
+import com.jeremyliao.liveeventbus.LiveEventBus
 import com.tencent.mm.opensdk.modelpay.PayReq
 import com.tencent.mm.opensdk.openapi.WXAPIFactory
 import razerdp.util.animation.AnimationHelper
@@ -41,6 +45,44 @@ class UpOrderActivity : BaseActivity(R.layout.activity_up_order) {
     private var mOrderSn:String=""//订单号
     private var mPayWay:Int=1//支付方式，1 微信 2 支付宝
     private var mTitle:String=""
+
+    private val SDK_PAY_FLAG:Int=1001
+
+    private val mHandler: Handler= Handler(Handler.Callback() {
+        when (it.what) {
+            SDK_PAY_FLAG -> {
+                val payResult = PayResult(it.obj as MutableMap<String, String>)
+                //同步获取结果
+                val resultInfo = payResult.result
+//                Log.i("Pay", "Pay:$resultInfo")
+                val resultStatus = payResult.resultStatus
+                val memo = payResult.memo
+//                Log.e("resultStatus", "resultStatus:$resultStatus$memo")
+//                Log.e("memo", "memo:$memo")
+                // 判断resultStatus 为9000则代表支付成功
+                if (TextUtils.equals(resultStatus, "9000")) {
+                    toast("支付成功")
+                    start(this@UpOrderActivity,PaySuccessActivity().javaClass,true)
+
+
+                } else {
+//                    LiveEventBus.get<Any>("dfk").post(1000)
+//                    val intent = Intent()
+//                    intent.putExtra("ordersn", mOrderSn)
+//                    intent.setClass(this@UpOrderActivityKt, OrderDfkActivity::class.java)
+//                    startActivity(intent)
+//                    this@UpOrderActivity.finish()
+                    toast("付款失败")
+
+                }
+                true
+            }
+            else -> {
+                false
+            }
+        }
+    }
+    )
 
     companion object IntentOptions{
         var Intent.iprovince by IntentExtraString("province")//商品代码
@@ -185,7 +227,7 @@ class UpOrderActivity : BaseActivity(R.layout.activity_up_order) {
                     weiChatPay(amount.toString(),mTitle,mOrderSn)
                 }
                 2->{
-
+                    aliPay(amount.toString(),mTitle,mOrderSn)
                 }
             }
         }
@@ -254,6 +296,28 @@ class UpOrderActivity : BaseActivity(R.layout.activity_up_order) {
                        toast(message.toString())
                    }
                }
+            }
+        })
+    }
+
+    /****
+     * 支付宝支付
+     */
+    private fun aliPay(amount:String,subject:String,order:String){
+        viewModel.aliPay(amount, subject, order).observe(this, Observer {
+            it?.run {
+                when(code){
+                    1000->{
+                        Thread {
+                            val alipay = PayTask(this@UpOrderActivity)
+                            val result = alipay.payV2(data, true)
+                            val message = Message()
+                            message.what = SDK_PAY_FLAG
+                            message.obj = result
+                            mHandler.sendMessage(message)
+                        }.start()
+                    }
+                }
             }
         })
     }

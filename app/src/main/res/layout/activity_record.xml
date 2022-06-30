@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.RecordActivity">
     <com.google.android.exoplayer2.ui.PlayerView
-        android:id="@+id/rolevideo_view"
+        android:id="@+id/record_exo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintStart_toStartOf="parent"

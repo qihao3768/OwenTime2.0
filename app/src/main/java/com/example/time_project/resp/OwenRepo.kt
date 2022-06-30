@@ -3,6 +3,17 @@ package com.example.time_project.resp
 import com.example.time_project.base.BaseRepository
 import com.example.time_project.base.BaseResponse
 import com.example.time_project.bean.*
+import com.example.time_project.bean.home.HomeModel
+import com.example.time_project.bean.home.User
+import com.example.time_project.bean.login.LoginModel
+import com.example.time_project.bean.login.PhotoModel
+import com.example.time_project.bean.login.SmsModel
+import com.example.time_project.bean.order.ConfirmOrderModel
+import com.example.time_project.bean.order.Course
+import com.example.time_project.bean.order.GoodsDetail
+import com.example.time_project.bean.order.OrderSn
+import com.example.time_project.bean.yigou.AlreadyBuyModel
+import com.example.time_project.bean.yigou.YiGouPage
 import com.example.time_project.net.RetrofitClient
 import com.example.time_project.util.RequestFileUtil
 import okhttp3.MultipartBody
@@ -133,5 +144,19 @@ class OwenRepo():BaseRepository(){
      */
     suspend fun weiChatPay(amount:String,subject:String,order:String): BaseResponse<WeiXinPay?> = request {
         mService.weiChatPay(amount, subject, order)
+    }
+
+    /***
+     * 微信支付
+     */
+    suspend fun aliPay(amount:String,subject:String,order:String): BaseResponse<String?> = request {
+        mService.aliPay(amount, subject, order)
+    }
+
+    /***
+     * 注销
+     */
+    suspend fun logOff(): BaseResponse<String?> = request {
+        mService.logOff()
     }
 }

@@ -2,7 +2,8 @@ package com.example.time_project.vm
 
 import androidx.lifecycle.MutableLiveData
 import com.example.time_project.base.BaseViewModel
-import com.example.time_project.bean.PhotoModel
+
+import com.example.time_project.bean.login.PhotoModel
 import com.example.time_project.resp.OwenRepo
 
 class UserViewModel:BaseViewModel() {
@@ -29,15 +30,15 @@ class UserViewModel:BaseViewModel() {
     }
 
 
-    /***
-     * 退出登录
-     */
-    fun logOut(): MutableLiveData<String?> {
-        launchUI {
-            val result=_userRepo.logOut().data?:""
-            _logout.value= result
-
-        }
-        return _logout
-    }
+//    /***
+//     * 退出登录
+//     */
+//    fun logOut(): MutableLiveData<String?> {
+//        launchUI {
+//            val result=_userRepo.logOut().data?:""
+//            _logout.value= result
+//
+//        }
+//        return _logout
+//    }
 }

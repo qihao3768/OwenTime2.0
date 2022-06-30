@@ -6,7 +6,7 @@ import com.drake.brv.utils.linear
 import com.drake.brv.utils.setup
 import com.example.time_project.R
 import com.example.time_project.base.BaseActivity
-import com.example.time_project.bean.WorksBean
+import com.example.time_project.bean.other.WorksBean
 import com.example.time_project.databinding.ActivityWorksBinding
 import com.example.time_project.fastClick
 import com.example.time_project.start

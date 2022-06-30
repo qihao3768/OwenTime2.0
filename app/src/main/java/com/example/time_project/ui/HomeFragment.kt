@@ -11,15 +11,15 @@ import androidx.core.app.SharedElementCallback
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import by.kirich1409.viewbindingdelegate.viewBinding
-import coil.load
+
 import com.drake.brv.utils.linear
 import com.drake.brv.utils.setup
 import com.example.time_project.R
 import com.example.time_project.adapter.NoticeAdapter
 import com.example.time_project.base.BaseFragment
 import com.example.time_project.bean.NoticeBean
-import com.example.time_project.bean.Product
-import com.example.time_project.bean.Studying
+import com.example.time_project.bean.home.Product
+import com.example.time_project.bean.home.Studying
 import com.example.time_project.databinding.HomeFragmentBinding
 import com.example.time_project.load
 import com.example.time_project.start
@@ -58,7 +58,7 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
 
     private lateinit var mmkv: MMKV
 
-    private var studying:Studying?=null//正在观看的视频
+    private var studying: Studying?=null//正在观看的视频
     private var mUserName:String?=""//用户名
     private var mSex:Int=0//性别
     private var mBirth:String?=""//生日
