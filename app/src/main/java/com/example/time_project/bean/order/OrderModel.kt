@@ -1,11 +1,9 @@
-package com.example.time_project.bean
-import android.view.View
-import coil.load
+package com.example.time_project.bean.order
+
 import com.drake.brv.BindingAdapter
 import com.drake.brv.item.ItemBind
-import com.example.time_project.databinding.ItemProductBinding
+import com.example.time_project.databinding.ItemOrderBinding
 import com.google.gson.annotations.SerializedName
-import com.tencent.mmkv.MMKV
 
 //订单确认
 //start————————————————————————————————————————————————————————
@@ -96,84 +94,63 @@ data class OrderSn(
     @SerializedName("order_sn")
     val orderSn: String? = ""
 )
-//已购start-------------------------------------------------------------
-data class AlreadyBuyModel(
-    @SerializedName("purchased")
-    val purchased: List<Purchased>? = listOf(),
-    @SerializedName("recommend")
-    val recommend: List<Recommend>? = listOf()
-)
 
-data class Purchased(
-    @SerializedName("id")
-    val id: Int? = 0,
-    @SerializedName("name")
-    val name: String? = "",
-    @SerializedName("product")
-    val product: List<Product02>? = listOf()
-)
-
-data class Recommend(
-    @SerializedName("code")
-    val code: String? = "",
-    @SerializedName("id")
-    val id: Int? = 0,
-    @SerializedName("img_head")
-    val imgHead: String? = "",
-    @SerializedName("introduction")
-    val introduction: String? = "",
-    @SerializedName("name")
-    val name: String? = "",
-    @SerializedName("price_actual")
-    val priceActual: String? = "",
-    @SerializedName("price_show")
-    val priceShow: String? = "",
-    @SerializedName("user_count")
-    val userCount: Int? = 0
-):ItemBind {
-    val token = MMKV.defaultMMKV().decodeString("token")
+data class OrderModel(val pic:String,val title:String,val price:String,val state:String): ItemBind {
     override fun onBind(holder: BindingAdapter.BindingViewHolder) {
-        val binding = ItemProductBinding.bind(holder.itemView)
-        binding.ivProduct.load(imgHead)
-        binding.tvProductTitle.text = name
-        binding.tvProductDesc.text = introduction
-        binding.tvProductPrice02.text = priceShow
-        binding.tvProductPtnum.text = userCount.toString().plus("人购买")
-        binding.btnGoto.visibility = View.GONE
+        val binding= ItemOrderBinding.bind(holder.itemView)
+        binding.orderTitle.text=title
+//        binding.orderPic.load(pic)
+        binding.orderPrice.text=price
+        binding.orderState.text=state
 
     }
 }
 
-data class Product02(
-    @SerializedName("code")
-    val code: String? = "",
-    @SerializedName("id")
-    val id: Int? = 0,
-    @SerializedName("img_head")
-    val imgHead: String? = "",
-    @SerializedName("img_sku")
-    val imgSku: String? = "",
-    @SerializedName("introduction")
-    val introduction: String? = "",
+//订单列表
+data class OrderListModel(
+    @SerializedName("data")
+    val `data`: List<OrderListData>? = listOf(),
+    @SerializedName("page_count")
+    val pageCount: Int? = 0
+)
+
+data class OrderListData(
+    @SerializedName("close_time")
+    val closeTime: String? = "",
+    @SerializedName("delivery_company")
+    val deliveryCompany: String? = "",
+    @SerializedName("delivery_sn")
+    val deliverySn: String? = "",
+    @SerializedName("detail")
+    val detail: List<OrderListDetail>? = listOf(),
+    @SerializedName("hour")
+    val hour: List<String?>? = listOf(),
+    @SerializedName("order_sn")
+    val orderSn: String? = "",
+    @SerializedName("order_status")
+    val orderStatus: Int? = 0,
+    @SerializedName("order_type")
+    val orderType: Int? = 0,
+    @SerializedName("pay_amount")
+    val payAmount: Double? = 0.0
+)
+
+data class OrderListDetail(
     @SerializedName("name")
     val name: String? = "",
+    @SerializedName("num")
+    val num: Int? = 0,
+    @SerializedName("price")
+    val price: String? = "",
+    @SerializedName("product_id")
+    val productId: Int? = 0,
+    @SerializedName("product_img")
+    val productImg: String? = "",
     @SerializedName("sku_id")
     val skuId: Int? = 0,
+    @SerializedName("sku_img")
+    val skuImg: String? = "",
     @SerializedName("sku_name")
-    val skuName: String? = "",
-    @SerializedName("type")
-    val type: Int? = 0
-): ItemBind {
-    val token= MMKV.defaultMMKV().decodeString("token")
-    override fun onBind(holder: BindingAdapter.BindingViewHolder) {
-        val binding= ItemProductBinding.bind(holder.itemView)
-        binding.ivProduct.load(imgHead)
-        binding.tvProductTitle.text=name
-        binding.tvProductDesc.text=introduction
-        binding.tvProductPrice02.visibility=View.GONE
-        binding.tvProductPtnum.visibility=View.GONE
-        binding.btnGoto.visibility=View.INVISIBLE
+    val skuName: String? = ""
+)
 
-    }
-}
-//已购end------------------------------------------------------
