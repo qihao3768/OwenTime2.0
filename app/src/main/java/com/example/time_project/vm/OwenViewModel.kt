@@ -6,10 +6,7 @@ import com.example.time_project.base.BaseResponse
 import com.example.time_project.base.BaseViewModel
 import com.example.time_project.bean.*
 import com.example.time_project.bean.home.HomeModel
-import com.example.time_project.bean.order.ConfirmOrderModel
-import com.example.time_project.bean.order.Course
-import com.example.time_project.bean.order.GoodsDetail
-import com.example.time_project.bean.order.OrderSn
+import com.example.time_project.bean.order.*
 import com.example.time_project.bean.yigou.AlreadyBuyModel
 import com.example.time_project.bean.yigou.YiGouPage
 import com.example.time_project.resp.OwenRepo
@@ -173,4 +170,17 @@ class OwenViewModel() : BaseViewModel() {
         return logOffData
     }
 
+
+    /***
+     * 销户
+     */
+    private val orderListData=MutableLiveData<BaseResponse<OrderListModel?>>()
+    fun orderList(status:String,page: String): MutableLiveData<BaseResponse<OrderListModel?>> {
+        launchUI {
+            val result=owenReps.orderList(status, page)
+            orderListData.value= result
+
+        }
+        return orderListData
+    }
 }

@@ -1,8 +1,11 @@
 package com.example.time_project.bean.order
 
+import android.view.View
 import com.drake.brv.BindingAdapter
 import com.drake.brv.item.ItemBind
+import com.example.time_project.R
 import com.example.time_project.databinding.ItemOrderBinding
+import com.example.time_project.databinding.LayoutWorksBinding
 import com.google.gson.annotations.SerializedName
 
 //订单确认
@@ -103,13 +106,14 @@ data class OrderModel(val pic:String,val title:String,val price:String,val state
         binding.orderPrice.text=price
         binding.orderState.text=state
 
+
     }
 }
 
 //订单列表
 data class OrderListModel(
     @SerializedName("data")
-    val `data`: List<OrderListData>? = listOf(),
+    val orderlist: MutableList<OrderListData>? = mutableListOf(),
     @SerializedName("page_count")
     val pageCount: Int? = 0
 )
@@ -122,9 +126,9 @@ data class OrderListData(
     @SerializedName("delivery_sn")
     val deliverySn: String? = "",
     @SerializedName("detail")
-    val detail: List<OrderListDetail>? = listOf(),
+    val detail: MutableList<OrderListDetail>? = mutableListOf(),
     @SerializedName("hour")
-    val hour: List<String?>? = listOf(),
+    val hour: MutableList<String?>? = mutableListOf(),
     @SerializedName("order_sn")
     val orderSn: String? = "",
     @SerializedName("order_status")
@@ -133,7 +137,54 @@ data class OrderListData(
     val orderType: Int? = 0,
     @SerializedName("pay_amount")
     val payAmount: Double? = 0.0
-)
+):ItemBind{
+    override fun onBind(holder: BindingAdapter.BindingViewHolder) {
+        val binding= ItemOrderBinding.bind(holder.itemView)
+        detail?.run {
+            binding.orderTitle.text= this[0].name
+            binding.orderState.text=getState(orderStatus?:-1,binding)
+            binding.orderPrice.text="实付款".plus("￥ ").plus(payAmount)
+
+            binding.orderSn.text=orderSn
+        }
+
+    }
+
+    /***
+     * 转换订单状态
+     */
+    private fun getState(state: Int,binding:ItemOrderBinding):String{
+        return when(state){
+            0->{
+                "待付款"
+            }
+            1->{
+//                binding.layoutNumber.visibility=View.GONE
+//                binding.orderState.setTextColor(R.color.A8A8A8)
+                binding.btnPay.visibility=View.GONE
+
+                "待发货"
+            }
+            2->{
+                "已发货"
+            }
+            3->{
+                "已完成"
+            }
+            4->{
+                "已关闭"
+            }
+            5->{
+                "已取消"
+            }
+            else -> {
+                "状态未知"
+            }
+        }
+    }
+
+
+}
 
 data class OrderListDetail(
     @SerializedName("name")

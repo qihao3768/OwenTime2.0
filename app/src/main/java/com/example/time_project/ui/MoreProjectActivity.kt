@@ -52,15 +52,19 @@ class MoreProjectActivity : BaseActivity(R.layout.activity_more_project) {
         }
 
         mBinding.productPage.onRefresh {
-            addData(getData(index)){
-                toast("123")
-                models=getData(index)
-                index<totalPage
-            }
+            postDelayed(
+                {
+                    addData(getData(index)){
+                        toast("123")
+                        models=getData(index)
+                        index<totalPage
+                    }
+                },
+            1000
+            )
 
-//            postDelayed(runnable, 2000)
 
-        }.autoRefresh(1000)
+        }.autoRefresh(1500)
 
 
     }

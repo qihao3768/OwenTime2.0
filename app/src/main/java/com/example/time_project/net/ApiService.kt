@@ -7,10 +7,7 @@ import com.example.time_project.bean.home.User
 import com.example.time_project.bean.login.LoginModel
 import com.example.time_project.bean.login.PhotoModel
 import com.example.time_project.bean.login.SmsModel
-import com.example.time_project.bean.order.ConfirmOrderModel
-import com.example.time_project.bean.order.Course
-import com.example.time_project.bean.order.GoodsDetail
-import com.example.time_project.bean.order.OrderSn
+import com.example.time_project.bean.order.*
 import com.example.time_project.bean.yigou.AlreadyBuyModel
 import com.example.time_project.bean.yigou.YiGouPage
 import okhttp3.MultipartBody
@@ -129,6 +126,10 @@ interface ApiService {
 //注销
     @POST("api/user/logOff")
     suspend fun logOff():BaseResponse<String?>
+//订单列表
+    @POST("api/order/list")
+    @FormUrlEncoded
+    suspend fun orderList(@Field("status") status:String,@Field("page") page: String):BaseResponse<OrderListModel?>
 
     companion object {
 //        const val BASE_URL = "http://192.168.2.184:8080/"

@@ -1,5 +1,8 @@
 package com.example.time_project.resp
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.example.time_project.base.BaseRepository
 import com.example.time_project.base.BaseResponse
 import com.example.time_project.bean.*
@@ -8,10 +11,7 @@ import com.example.time_project.bean.home.User
 import com.example.time_project.bean.login.LoginModel
 import com.example.time_project.bean.login.PhotoModel
 import com.example.time_project.bean.login.SmsModel
-import com.example.time_project.bean.order.ConfirmOrderModel
-import com.example.time_project.bean.order.Course
-import com.example.time_project.bean.order.GoodsDetail
-import com.example.time_project.bean.order.OrderSn
+import com.example.time_project.bean.order.*
 import com.example.time_project.bean.yigou.AlreadyBuyModel
 import com.example.time_project.bean.yigou.YiGouPage
 import com.example.time_project.net.RetrofitClient
@@ -158,5 +158,13 @@ class OwenRepo():BaseRepository(){
      */
     suspend fun logOff(): BaseResponse<String?> = request {
         mService.logOff()
+    }
+
+    /***
+     * 注销
+     */
+    suspend fun orderList(status:String,page: String): BaseResponse<OrderListModel?> = request {
+        mService.orderList(status, page)
+
     }
 }
