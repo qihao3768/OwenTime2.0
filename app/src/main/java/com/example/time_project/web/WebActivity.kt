@@ -5,12 +5,12 @@ import com.example.time_project.R
 import com.example.time_project.base.BaseActivity
 import com.example.time_project.databinding.ActivityWebBinding
 import com.tencent.smtt.sdk.WebSettings
+import com.tencent.smtt.sdk.WebView
+import com.tencent.smtt.sdk.WebViewClient
 
 class WebActivity : BaseActivity(R.layout.activity_web) {
     private val mBinding by viewBinding(ActivityWebBinding::bind)
     override fun initData() {
-        val url=intent.getStringExtra("url")
-       mBinding.web.loadUrl(url?:"")
 
 
         val settings: WebSettings = mBinding.web.settings
@@ -33,6 +33,7 @@ class WebActivity : BaseActivity(R.layout.activity_web) {
         settings.domStorageEnabled = true //开启本地DOM存储
 
         settings.loadsImagesAutomatically = true // 加载图片
+        settings.blockNetworkImage = false // 加载图片
 
         settings.mediaPlaybackRequiresUserGesture = false //播放音频，多媒体需要用户手动？设置为false为可自动播放
 
@@ -40,5 +41,25 @@ class WebActivity : BaseActivity(R.layout.activity_web) {
         // 加入自动缩放
         settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
         settings.loadWithOverviewMode = true
+
+        mBinding.web.setBackgroundColor(getColor(R.color.white))
+//        mBinding.web.settingsExtension.setForcePinchScaleEnabled(true)//强制缩放
+//        mBinding.web.settingsExtension.setShouldTrackVisitedLinks(true)//无痕模式
+//        mBinding.web.settingsExtension.setDisplayCutoutEnable(true)//刘海屏适配
+        mBinding.web.webViewClient=client
+        val url=intent.getStringExtra("url")
+        mBinding.web.loadUrl(url?:"")
+
+
+    }
+
+    private val client: WebViewClient = object : WebViewClient() {
+        /**
+         * 防止加载网页时调起系统浏览器
+         */
+        override fun shouldOverrideUrlLoading(view: WebView, url: String?): Boolean {
+            view.loadUrl(url)
+            return false
+        }
     }
 }

@@ -1,6 +1,9 @@
 package com.example.time_project.vm
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.example.time_project.base.BaseResponse
 
 import com.example.time_project.base.BaseViewModel
@@ -10,6 +13,7 @@ import com.example.time_project.bean.order.*
 import com.example.time_project.bean.yigou.AlreadyBuyModel
 import com.example.time_project.bean.yigou.YiGouPage
 import com.example.time_project.resp.OwenRepo
+import kotlinx.coroutines.flow.collectLatest
 
 class OwenViewModel() : BaseViewModel() {
     private val owenReps by lazy { OwenRepo() }
@@ -171,15 +175,28 @@ class OwenViewModel() : BaseViewModel() {
     }
 
 
-    /***
-     * 销户
-     */
-    private val orderListData=MutableLiveData<BaseResponse<OrderListModel?>>()
-    fun orderList(status:String,page: String): MutableLiveData<BaseResponse<OrderListModel?>> {
-        launchUI {
-            val result=owenReps.orderList(status, page)
-            orderListData.value= result
+//    /***
+//     * 订单列表
+//     */
+//    private val orderListData=MutableLiveData<BaseResponse<OrderListModel?>>()
+//    fun orderList(status:String,page: String): MutableLiveData<BaseResponse<OrderListModel?>> {
+//        launchUI {
+//            val result=owenReps.orderList(status, page)
+//            orderListData.value= result
+//
+//        }
+//        return orderListData
+//    }
 
+    /***
+     * 订单列表
+     */
+    private val orderListData=MutableLiveData<PagingData<OrderListData>>()
+    fun orderList(status:String,page: String): MutableLiveData<PagingData<OrderListData>> {
+        launchUI {
+            owenReps.orderListPage().cachedIn(viewModelScope).collectLatest {
+                orderListData.value= it
+            }
         }
         return orderListData
     }

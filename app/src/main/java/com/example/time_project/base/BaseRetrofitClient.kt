@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit
 abstract class BaseRetrofitClient {
 
     companion object CLIENT {
-        private const val TIME_OUT = 5
+        private const val TIME_OUT = 5000
     }
 
     private val client: OkHttpClient by lazy {
@@ -26,7 +26,7 @@ abstract class BaseRetrofitClient {
         val builder = OkHttpClient.Builder()
                 .addNetworkInterceptor(getHttpLoggingInterceptor())
             .addInterceptor(Interceptor())
-                .connectTimeout(TIME_OUT.toLong(), TimeUnit.SECONDS)
+                .connectTimeout(TIME_OUT.toLong(), TimeUnit.MILLISECONDS)
         handleBuilder(builder)
         builder.build()
     }

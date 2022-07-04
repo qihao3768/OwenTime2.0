@@ -131,6 +131,10 @@ interface ApiService {
     @FormUrlEncoded
     suspend fun orderList(@Field("status") status:String,@Field("page") page: String):BaseResponse<OrderListModel?>
 
+    @POST("api/order/list")
+    @FormUrlEncoded
+    suspend fun orderListPage(@Field("status") status:String,@Field("page") page: String):OrderListModel
+
     companion object {
 //        const val BASE_URL = "http://192.168.2.184:8080/"
         const val BASE_URL = "https://new.owentime.cn/"

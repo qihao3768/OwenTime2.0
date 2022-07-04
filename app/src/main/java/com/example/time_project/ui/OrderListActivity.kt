@@ -3,10 +3,12 @@ package com.example.time_project.ui
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.drake.brv.utils.linear
 import com.drake.brv.utils.setup
 import com.example.time_project.R
+import com.example.time_project.adapter.OrderListAdapter
 import com.example.time_project.base.BaseActivity
 import com.example.time_project.bean.order.OrderListData
 import com.example.time_project.bean.order.OrderListModel
@@ -18,6 +20,7 @@ import com.example.time_project.start
 import com.example.time_project.toast
 import com.example.time_project.vm.OwenViewModel
 import com.gyf.immersionbar.ktx.immersionBar
+import kotlinx.coroutines.launch
 
 class OrderListActivity : BaseActivity(R.layout.activity_order_list) {
 
@@ -42,22 +45,23 @@ class OrderListActivity : BaseActivity(R.layout.activity_order_list) {
                 start(this@OrderListActivity,OrderDetailActivity().javaClass,false)
             }
         }
-        mBinding.pageOrder.preloadIndex=0
-        mBinding.pageOrder.index=1
-        //刷新
-        mBinding.pageOrder.onRefresh {
-            postDelayed({
-                getData("1",index.toString())
-            }, 1000)
-        }.autoRefresh(1500)//下拉刷新
-//加载更多
-        mBinding.pageOrder.onLoadMore {
-            if (index <= TOTAL_PAGE) {
-                getData("1", index.toString())// 模拟网络请求2秒后成功, 创建假的数据集
-            } else {
-                finishLoadMoreWithNoMoreData()
-            }
-        }
+//        mBinding.pageOrder.preloadIndex=0
+//        mBinding.pageOrder.index=1
+        getData("1","1")
+//        //刷新
+//        mBinding.pageOrder.onRefresh {
+//            postDelayed({
+//                getData("1",index.toString())
+//            }, 1000)
+//        }.autoRefresh(1500)//下拉刷新
+////加载更多
+//        mBinding.pageOrder.onLoadMore {
+//            if (index <= TOTAL_PAGE) {
+//                getData("1", index.toString())// 模拟网络请求2秒后成功, 创建假的数据集
+//            } else {
+//                finishLoadMoreWithNoMoreData()
+//            }
+//        }
 
         mBinding.titleOrder.leftView.fastClick {
             finish()
@@ -68,40 +72,14 @@ class OrderListActivity : BaseActivity(R.layout.activity_order_list) {
      * 测试数据
      */
     private fun getData(status:String,page:String){
-        Log.d("page",page)
+        val orderListAdapter=OrderListAdapter()
+        mBinding.listOrder.adapter=orderListAdapter
         mViewModel.orderList(status, page).observe(this, Observer {
-            it?.run {
-                when(code){
-                    1000->{
-                        data?.run {
-                            val list= mutableListOf<OrderListData>()
-                            list.addAll(orderlist)
-                            Log.d("page",list?.size.toString())
-                            if (list.isNullOrEmpty()){
-                                mBinding.pageOrder.showEmpty()
-                                toast(message.toString())
-                            }else{
-                                mBinding.pageOrder.addData(list)
-                                TOTAL_PAGE=pageCount?:0
-                            }
 
-                        }
-
-                    }
-                    401->{
-                        toast("登录状态失效，请重新登录")
-                    }else->{
-                    mBinding.pageOrder.showEmpty()
-                    }
-                }
-            }
-        })
+           lifecycleScope.launch {
+               orderListAdapter.submitData(it)
+           }
+       })
     }
 
-    /***
-     *
-     */
-    private fun cancel(){
-
-    }
 }

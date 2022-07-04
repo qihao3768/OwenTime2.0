@@ -76,6 +76,7 @@ class LoginActivity : BaseActivity(R.layout.activity_login) {
         }
 
         mBinding.btnLogin.setOnClickListener {
+            mBinding.edtPhone.checkLength(11,"请输入11位手机号")?:return@setOnClickListener
             mBinding.loginCheck.checked("请先查看并勾选相关协议")?:return@setOnClickListener
             if (mKeyCode.isNullOrBlank()){
                 toast("请先获取短信验证码")
@@ -118,6 +119,9 @@ class LoginActivity : BaseActivity(R.layout.activity_login) {
             timer.start()
             getSms(mBinding.edtPhone.text.toString())
             toast("短信已发送,请注意查收")
+        }
+        mBinding.ivSmsclear.fastClick {
+            mBinding.edtSms.text.clear()
         }
     }
 

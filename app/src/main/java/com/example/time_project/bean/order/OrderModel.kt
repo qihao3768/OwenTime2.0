@@ -113,7 +113,7 @@ data class OrderModel(val pic:String,val title:String,val price:String,val state
 //订单列表
 data class OrderListModel(
     @SerializedName("data")
-    val orderlist: MutableList<OrderListData>? = mutableListOf(),
+    val orderlist: List<OrderListData> = emptyList(),
     @SerializedName("page_count")
     val pageCount: Int? = 0
 )

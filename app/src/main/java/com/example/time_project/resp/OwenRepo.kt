@@ -15,14 +15,16 @@ import com.example.time_project.bean.order.*
 import com.example.time_project.bean.yigou.AlreadyBuyModel
 import com.example.time_project.bean.yigou.YiGouPage
 import com.example.time_project.net.RetrofitClient
+import com.example.time_project.paging.OrderListPagingSource
 import com.example.time_project.util.RequestFileUtil
+import kotlinx.coroutines.flow.Flow
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
 
 
 class OwenRepo():BaseRepository(){
-
+    private val PAGE_SIZE=10
     private val mService by lazy {
         RetrofitClient.service
     }
@@ -166,5 +168,12 @@ class OwenRepo():BaseRepository(){
     suspend fun orderList(status:String,page: String): BaseResponse<OrderListModel?> = request {
         mService.orderList(status, page)
 
+    }
+
+
+    fun orderListPage(): Flow<PagingData<OrderListData>> {
+        return Pager(config = PagingConfig(PAGE_SIZE, prefetchDistance = 0), pagingSourceFactory = {
+            OrderListPagingSource(mService)
+        }).flow
     }
 }

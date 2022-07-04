@@ -122,8 +122,11 @@
                 android:textColorHint="@color/CCCCCC"
                 android:textColor="@color/CCCCCC"
                 android:textSize="17dp"
-                android:background="@null"
                 android:inputType="text"
+                android:gravity="end"
+                android:maxLength="20"
+                android:background="@color/white"
+                android:textCursorDrawable="@drawable/cursor"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/label_name"
                 app:layout_constraintBottom_toBottomOf="@+id/label_name"/>
@@ -135,6 +138,7 @@
                 android:textColorHint="@color/CCCCCC"
                 android:textSize="17dp"
                 android:textColor="@color/black"
+                android:gravity="end"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/label_sex"
                 app:layout_constraintBottom_toBottomOf="@+id/label_sex"/>
@@ -148,6 +152,7 @@
                 android:textColor="@color/CCCCCC"
                 android:textSize="17dp"
                 android:background="@null"
+                android:gravity="end"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/label_his"
                 app:layout_constraintBottom_toBottomOf="@+id/label_his"/>

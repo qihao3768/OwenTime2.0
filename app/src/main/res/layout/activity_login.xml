@@ -78,6 +78,7 @@
             android:hint="请输入手机号"
             android:textSize="17dp"
             android:inputType="phone"
+            android:maxLength="11"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/iv_phoneclear" />
         <ImageView
@@ -111,8 +112,9 @@
             android:background="@null"
             android:inputType="number"
             android:maxLength="6"
+            android:layout_marginEnd="5dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/tv_sms"/>
+            app:layout_constraintEnd_toStartOf="@id/iv_smsclear"/>
         <TextView
             android:id="@+id/tv_sms"
             android:layout_width="wrap_content"
@@ -121,6 +123,17 @@
             android:textColor="@color/FE9520"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
+
+        <ImageView
+            android:id="@+id/iv_smsclear"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/clear_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv_sms"
+            android:layout_marginEnd="10dp"/>
 
     </com.hjq.shape.layout.ShapeConstraintLayout>
 

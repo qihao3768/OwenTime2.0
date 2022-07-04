@@ -1,6 +1,7 @@
 package com.example.time_project.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -33,6 +34,7 @@ class OrderListAdapter: PagingDataAdapter<OrderListData, OrderListAdapter.ViewHo
                 detail?.run {
                     binding.orderTitle.text= this[0].name?:""
                     getState(orderStatus?:-1)
+                    binding.layoutNumber.visibility=View.GONE
                 }
 
             }

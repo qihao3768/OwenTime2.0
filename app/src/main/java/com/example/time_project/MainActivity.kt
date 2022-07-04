@@ -82,6 +82,7 @@ class MainActivity: BaseActivity(R.layout.activity_main) {
 
             }
         })
+        QbSdk.setDownloadWithoutWifi(true)
     }
 
 

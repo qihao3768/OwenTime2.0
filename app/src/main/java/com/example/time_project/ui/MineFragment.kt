@@ -95,6 +95,17 @@ class MineFragment : BaseFragment(R.layout.mine_fragment) {
             }
         })
 
+        mBinding.personalName.checkLogin(requireActivity(), object : TodoListener {
+            override fun todo() {
+                requireActivity().intent.iSkip=true
+                requireActivity().intent.iUserName=mUserName
+                requireActivity().intent.iSex=mSex
+                requireActivity().intent.iBirthday=mBirth
+                requireActivity().intent.iHead=mHead
+                start(requireActivity(),PerfectActivity().javaClass,requireActivity().intent)
+            }
+        })
+
         getUser()
 
         LiveEventBus.get<String>("logout").observe(this, logoutOb)

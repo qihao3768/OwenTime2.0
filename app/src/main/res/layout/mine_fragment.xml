@@ -255,7 +255,8 @@
             android:paddingTop="20dp"
             android:paddingBottom="20dp"
             app:shape_radius="11dp"
-            app:shape_solidColor="@color/white">
+            app:shape_solidColor="@color/white"
+            android:visibility="gone">
             <ImageView
                 android:id="@+id/iv_tuihuo"
                 android:layout_width="20dp"

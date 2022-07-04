@@ -148,8 +148,9 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
                                 return super.onCreateHolder(parent, viewType)
                             }
                         })
-                    mBinding.homeBanner.setOnBannerListener(OnBannerListener<String> { data, _ ->
-                        requireActivity().intent.iurl=data
+                    mBinding.homeBanner.setOnBannerListener(OnBannerListener<String> { _, position ->
+
+                        requireActivity().intent.iurl= banner?.get(position)?.activityLinks
                         start(requireActivity(),WebActivity().javaClass,requireActivity().intent)
                     })
                     it.product?.run {
