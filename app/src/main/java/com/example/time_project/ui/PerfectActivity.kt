@@ -52,14 +52,17 @@ class PerfectActivity : BaseActivity(R.layout.activity_perfect) {
         mBinding.titlePerfect.leftView.visibility=View.GONE
         immersionBar {
             statusBarView(mBinding.titlePerfect)
-            keyboardEnable(true)
-            statusBarDarkFont(true)
-            fitsSystemWindows(true)
+            keyboardEnable(false)
+            statusBarDarkFont(false)
+            fitsSystemWindows(false)
         }
         //隐藏skip按钮
-        if (intent.iSkip) mBinding.tvSkip.visibility=View.GONE
+        if (intent.iSkip) {
+            mBinding.titlePerfect.rightView.visibility=View.GONE
+            mBinding.titlePerfect.leftView.visibility=View.VISIBLE
+        }
 
-        mBinding.tvSkip.setOnClickListener {
+        mBinding.titlePerfect.leftView.setOnClickListener {
             finish()
         }
         mBinding.ivHead.setOnClickListener {
@@ -93,7 +96,7 @@ class PerfectActivity : BaseActivity(R.layout.activity_perfect) {
                 if (allGranted) {
                     showDialog()
                 } else {
-                    toast("您拒绝了一下权限 $deniedList 可能会对您的正常使用造成影响")
+                    toast("您拒绝了以下权限 $deniedList 可能会对您的正常使用造成影响")
                 }
             }
     }

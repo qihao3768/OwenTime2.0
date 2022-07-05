@@ -25,7 +25,12 @@ class MainActivity: BaseActivity(R.layout.activity_main) {
     override fun initData() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
-        Log.d("tag","main")
+        immersionBar {
+            statusBarColor(R.color.FE9520)
+            keyboardEnable(false)
+            statusBarDarkFont(false)
+            fitsSystemWindows(true)
+        }
         fragments.add(HomeFragment.newInstance())
         fragments.add(ProjectFragment.newInstance())
 //        fragments.add(PublicFragment.newInstance())
@@ -40,8 +45,8 @@ class MainActivity: BaseActivity(R.layout.activity_main) {
                 R.id.home -> {
                     immersionBar {
                         statusBarColor(R.color.FE9520)
-                        keyboardEnable(true)
-                        statusBarDarkFont(true)
+                        keyboardEnable(false)
+                        statusBarDarkFont(false)
                         fitsSystemWindows(true)
                     }
                     mBinding.homeVp.setCurrentItem(0,false)

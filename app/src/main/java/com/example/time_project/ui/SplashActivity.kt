@@ -42,6 +42,7 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
         immersionBar {
             statusBarColor(R.color.white)
+            fitsSystemWindows(true)
         }
         timer= object : CountDownTimer(TIME,STEP) {
             override fun onTick(p0: Long) {

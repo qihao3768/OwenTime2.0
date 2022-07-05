@@ -14,15 +14,14 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 
 import com.drake.brv.utils.linear
 import com.drake.brv.utils.setup
-import com.example.time_project.R
+import com.example.time_project.*
 import com.example.time_project.adapter.NoticeAdapter
 import com.example.time_project.base.BaseFragment
 import com.example.time_project.bean.NoticeBean
+import com.example.time_project.bean.home.Banner
 import com.example.time_project.bean.home.Product
 import com.example.time_project.bean.home.Studying
 import com.example.time_project.databinding.HomeFragmentBinding
-import com.example.time_project.load
-import com.example.time_project.start
 import com.example.time_project.ui.UpOrderActivity.IntentOptions.iname
 import com.example.time_project.util.IntentExtra.Companion.code
 import com.example.time_project.util.IntentExtra.Companion.courseTime
@@ -32,6 +31,8 @@ import com.example.time_project.util.IntentExtra.Companion.iHead
 import com.example.time_project.util.IntentExtra.Companion.iSex
 import com.example.time_project.util.IntentExtra.Companion.iSkip
 import com.example.time_project.util.IntentExtra.Companion.iUserName
+import com.example.time_project.util.IntentExtra.Companion.icode
+import com.example.time_project.util.IntentExtra.Companion.iproductId
 import com.example.time_project.util.IntentExtra.Companion.iurl
 import com.example.time_project.util.IntentExtraString
 import com.example.time_project.vm.OwenViewModel
@@ -41,6 +42,10 @@ import com.jeremyliao.liveeventbus.LiveEventBus
 import com.tencent.mmkv.MMKV
 import com.youth.banner.adapter.BannerImageAdapter
 import com.youth.banner.holder.BannerImageHolder
+import com.youth.banner.indicator.BaseIndicator
+import com.youth.banner.indicator.Indicator
+import com.youth.banner.indicator.RectangleIndicator
+import com.youth.banner.indicator.RoundLinesIndicator
 import com.youth.banner.listener.OnBannerListener
 
 class HomeFragment : BaseFragment(R.layout.home_fragment){
@@ -79,9 +84,13 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
         mmkv = MMKV.defaultMMKV()
         immersionBar {
             statusBarColor(R.color.FE9520)
+            keyboardEnable(false)
+            statusBarDarkFont(false)
+            fitsSystemWindows(true)
         }
         mBinding.titleHome.leftView.visibility=View.GONE
         mBinding.homeBanner.setBannerRound2(11F)
+        mBinding.homeBanner.indicator = RectangleIndicator(requireActivity())//指示器
         mBinding.ivHomeHead.setOnClickListener {
             //判断是否已经登录，如果登录，跳转修改用户信息，否则跳转登录
             val target=if (mmkv.decodeString("token").isNullOrBlank()){
@@ -150,8 +159,25 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
                         })
                     mBinding.homeBanner.setOnBannerListener(OnBannerListener<String> { _, position ->
 
-                        requireActivity().intent.iurl= banner?.get(position)?.activityLinks
-                        start(requireActivity(),WebActivity().javaClass,requireActivity().intent)
+                        val ban: Banner? = banner?.get(position)
+                        ban?.run {
+                            when(jumpType){
+                                1->{
+                                    requireActivity().intent.iurl=activityLinks
+                                    start(requireActivity(),WebActivity().javaClass,requireActivity().intent)
+                                }
+                                4->{
+                                    mBinding.homeBanner.checkLogin(requireActivity(),
+                                        object : TodoListener {
+                                            override fun todo() {
+                                                requireActivity().intent.icode= productCode
+                                                start(requireActivity(),ProductDetailActivity().javaClass,requireActivity().intent)
+                                            }
+                                        })
+
+                                }
+                            }
+                        }
                     })
                     it.product?.run {
                         initArticle(this)

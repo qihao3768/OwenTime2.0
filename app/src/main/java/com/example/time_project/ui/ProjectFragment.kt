@@ -104,7 +104,7 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
                                 //展示已经购买的课程列表
                                 mBinding.productList01.visibility=View.VISIBLE
                                 mBinding.productList01.linear().setup {
-                                    addType<Product02> { R.layout.item_product }
+                                    addType<Product02> { R.layout.item_product2 }
                                     addType<HoverHeaderModel> { R.layout.layout_hover_header }
                                     models=data01
                                     onClick(R.id.root_product){

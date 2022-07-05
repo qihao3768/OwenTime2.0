@@ -2,6 +2,7 @@ package com.example.time_project.ui
 
 import android.content.Intent
 import android.os.CountDownTimer
+import android.view.View
 import androidx.activity.viewModels
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Observer
@@ -99,7 +100,7 @@ class LoginActivity : BaseActivity(R.layout.activity_login) {
         mBinding.tvChildAgreement.setOnClickListener {
             start(this@LoginActivity,WebActivity().javaClass,"url",AppConfig.CHILDREN_AGREEMENT_URL)
         }
-
+//发送短信
         mBinding.tvSms.setOnClickListener {
             val phone=mBinding.edtPhone.checked("请输入手机号")?:return@setOnClickListener
             mBinding.edtPhone.checkLength(11,"请输入11位手机号")?:return@setOnClickListener
@@ -120,8 +121,18 @@ class LoginActivity : BaseActivity(R.layout.activity_login) {
             getSms(mBinding.edtPhone.text.toString())
             toast("短信已发送,请注意查收")
         }
+        //清空短信
         mBinding.ivSmsclear.fastClick {
             mBinding.edtSms.text.clear()
+        }
+
+        mBinding.edtPhone.setOnFocusChangeListener { _, b ->
+
+            mBinding.ivPhoneclear.visibility=if (b) View.VISIBLE else View.GONE
+        }
+
+        mBinding.edtSms.setOnFocusChangeListener { _, b ->
+            mBinding.ivSmsclear.visibility=if (b) View.VISIBLE else View.GONE
         }
     }
 

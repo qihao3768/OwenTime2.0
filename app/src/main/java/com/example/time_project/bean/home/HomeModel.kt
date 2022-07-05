@@ -35,7 +35,9 @@ data class Banner(
     @SerializedName("title")
     val title: String? = "",
     @SerializedName("url")
-    val url: String? = ""
+    val url: String? = "",
+    @SerializedName("product_code")
+    val productCode:String?=""
 )
 
 data class Product(

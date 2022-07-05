@@ -47,14 +47,15 @@
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/iv_home_head"
             android:layout_width="33dp"
-            android:layout_height="33dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="h,1:1"
             android:scaleType="centerCrop"
             android:src="@drawable/logo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:shapeAppearance="@style/circleImage"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="15dp"
             app:strokeColor="@color/white"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.core.widget.NestedScrollView
@@ -92,7 +93,14 @@
                 app:layout_constraintStart_toEndOf="@+id/home_lineleft"
                 app:layout_constraintEnd_toStartOf="@+id/home_lineright"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp"
+                app:banner_indicator_space="5dp"
+                app:banner_indicator_selected_color="@color/white"
+                app:banner_indicator_normal_color="#50FFFFFF"
+                app:banner_indicator_radius="2dp"
+                app:banner_indicator_normal_width="12dp"
+                app:banner_indicator_selected_width="12dp"
+                app:banner_indicator_height="4dp"/>
             <com.hjq.shape.layout.ShapeConstraintLayout
                 android:id="@+id/layout_notice"
                 android:layout_width="0dp"
@@ -160,7 +168,7 @@
                     app:shape_radius="11dp"
                     app:shape_gradientType="radial"
                     app:strokeColor="@color/white"
-                    app:shapeAppearance="@style/circle11Image"
+                    app:shapeAppearance="@style/circle11Image2"
                     android:transitionName="playing"/>
 
 
@@ -275,7 +283,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/label_recommend"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:layout_marginTop="15dp"
                 tools:listitem="@layout/item_product"/>
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/group_playing"

@@ -43,7 +43,7 @@ class MoreProjectActivity : BaseActivity(R.layout.activity_more_project) {
         }
         mBinding.moreTitle.title=intent.courseTitle
         mBinding.listMore.linear().setup {
-            addType<Product02>(R.layout.item_product)
+            addType<Product02>(R.layout.item_product2)
             onClick(R.id.root_product){
                 intent.iproductId=getModel<Product02>(modelPosition).id?:-1
                 start(this@MoreProjectActivity,CourseDetailActivity().javaClass,intent)

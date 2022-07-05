@@ -149,7 +149,7 @@ fun toast(msg:String){
     val inflate =View.inflate(App.getContext(), R.layout.layout_toast,null )//自定义布局
     inflate.findViewById<TextView>(R.id.toast).text=msg
     toast.view = inflate //将自定义view设置给toast
-    toast.setGravity(Gravity.CENTER, 0, 0) //自定义位置
+    toast.setGravity(Gravity.BOTTOM, 0, 30) //自定义位置
     toast.show()
 
 }
