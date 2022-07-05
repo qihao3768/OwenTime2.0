@@ -124,7 +124,7 @@ fun ViewGroup.checkLogin(context:Context,todoListener: TodoListener){
 //    val userInfo=MMKV.defaultMMKV().decodeParcelable("user",Register::class.java)
     val islogin=MMKV.defaultMMKV().decodeString("token","")
     this.setOnClickListener {
-         if (islogin.isNullOrEmpty()){
+         if (islogin.isNullOrBlank()){
              start01(context as Activity,LoginActivity().javaClass,false)
         }else{
              todoListener.todo()
@@ -137,7 +137,7 @@ fun View.checkLogin(context:Context,todoListener: TodoListener){
 
     this.setOnClickListener {
         val islogin=MMKV.defaultMMKV().decodeString("token","")
-        if (islogin.isNullOrEmpty()){
+        if (islogin.isNullOrBlank()){
             start01(context as Activity,LoginActivity().javaClass,false)
         }else{
             todoListener.todo()
@@ -155,7 +155,7 @@ fun toast(msg:String){
 }
 
  fun EditText.checked(msg:String):String?{
-    return if (this.text.isNullOrEmpty()){
+    return if (this.text.isNullOrBlank()){
         toast(msg)
         null
     }else{
@@ -163,7 +163,7 @@ fun toast(msg:String){
     }
 }
 fun EditText.checkLength(length:Int,msg:String):String?{
-    return if (this.text.isNullOrEmpty() || this.text.length!=length){
+    return if (this.text.isNullOrBlank() || this.text.length!=length){
         toast(msg)
         null
     }else{
@@ -172,7 +172,7 @@ fun EditText.checkLength(length:Int,msg:String):String?{
 }
 
 fun TextView.checked(msg:String):String?{
-    return if (this.text.isNullOrEmpty()){
+    return if (this.text.isNullOrBlank()){
         toast(msg)
         null
     }else{

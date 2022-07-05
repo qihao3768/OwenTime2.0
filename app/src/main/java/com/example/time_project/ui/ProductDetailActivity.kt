@@ -3,6 +3,9 @@ package com.example.time_project.ui
 import android.content.Intent
 import android.view.Gravity
 import android.view.ViewGroup
+import android.webkit.WebSettings
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -205,6 +208,39 @@ class ProductDetailActivity : BaseActivity(R.layout.activity_product_detail) {
      * 获取详情数据
      */
     private fun getDetail(code:String){
+        val settings: WebSettings = mBinding.groupDetailPic.settings
+        settings.javaScriptEnabled = true //是否允许JavaScript脚本运行，默认为false。设置true时，会提醒可能造成XSS漏洞
+        settings.useWideViewPort = true //设置此属性，可任意比例缩放。大视图模式
+        settings.loadWithOverviewMode = true //和setUseWideViewPort(true)一起解决网页自适应问题
+        mBinding.groupDetailPic.webViewClient= object : WebViewClient() {
+            /**
+             * 防止加载网页时调起系统浏览器
+             */
+            override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+                view.loadUrl(url)
+                return true
+            }
+
+            override fun onPageFinished(p0: WebView, p1: String) {
+            super.onPageFinished(p0, p1)
+                val javascript = "javascript:function ResizeImages() {" +
+                        "var myimg,oldwidth;" +
+                        "var maxwidth = document.body.clientWidth;" +
+                        "for(i=0;i <document.images.length;i++){" +
+                        "myimg = document.images[i];" +
+                        "if(myimg.width > maxwidth){" +
+                        "oldwidth = myimg.width;" +
+                        "myimg.width = maxwidth;" +
+                        "}" +
+                        "}" +
+                        "}"
+//                String width = String.valueOf(AppUtils.getPhoneWidthPixels(BuyTryStudyActivity.this));
+                //                String width = String.valueOf(AppUtils.getPhoneWidthPixels(BuyTryStudyActivity.this));
+                p0.loadUrl(javascript)
+                p0.loadUrl("javascript:ResizeImages();")
+
+            }
+        }
         viewModel.getDetail(code).observe(this, Observer {
             it?.run {
                 val images:MutableList<String> = mutableListOf(imgHead?:"")

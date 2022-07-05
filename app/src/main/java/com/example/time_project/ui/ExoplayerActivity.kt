@@ -108,7 +108,7 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
         //初始化播放器
         var uri = Uri.parse(intent.courseUrl)
 //         如果courseDub不为空，说明这节视频需要配音，后续走配音流程
-         if (!intent.courseDub.isNullOrEmpty()){
+         if (!intent.courseDub.isNullOrBlank()){
              uri= Uri.parse(intent.courseDub)
 
              popWindow = BasePopWindow(this)
@@ -312,7 +312,7 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
 //                    share()
                     doPunch(intent.iproductId.toString(),intent.courseId.toString())
                     //配音
-                    if (!intent.courseDub.isNullOrEmpty()){
+                    if (!intent.courseDub.isNullOrBlank()){
                         RecordUtil.stopRecord(this@ExoplayerActivity,idealRecorder)
                         toast("停止配音，开始合成...")
                     }
@@ -327,7 +327,7 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
                 //进入到播放页面的时候先保存一次播放记录，目的是防止应用大退时无法保存
                 storageRecord("0")
                 //配音
-                if (!intent.courseDub.isNullOrEmpty()){
+                if (!intent.courseDub.isNullOrBlank()){
                     getPermission()
                 }
 
@@ -416,7 +416,7 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
                 when(code){
                     1000->{
                         toast("解锁成功")
-                        if (intent.courseDub.isNullOrEmpty()){
+                        if (intent.courseDub.isNullOrBlank()){
                             share()
                         }
 

@@ -13,7 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="#F5F5F5"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/layout_buy">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -69,12 +70,11 @@
 
 
             </com.hjq.shape.layout.ShapeConstraintLayout>
-            <com.tencent.smtt.sdk.WebView
+            <WebView
                 android:id="@+id/group_detail_pic"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/layout_goods_price" />
 
@@ -91,8 +91,10 @@
         app:leftTitleColor="@color/white"
         app:leftIconTint="@color/white"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/transparent"/>
+        android:background="@color/transparent"
+        app:lineVisible="false"/>
     <com.hjq.shape.layout.ShapeConstraintLayout
+        android:id="@+id/layout_buy"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingStart="15dp"

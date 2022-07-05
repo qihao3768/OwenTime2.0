@@ -87,7 +87,7 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
 
                                         models= list
                                         onClick(R.id.root_product){
-                                            val target=if (token.isNullOrEmpty()){
+                                            val target=if (token.isNullOrBlank()){
                                                 LoginActivity()
                                             }else{
                                                 requireActivity().intent.code=getModel<Recommend>(modelPosition).code

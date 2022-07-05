@@ -6,6 +6,8 @@ import com.drake.brv.item.ItemBind
 import com.example.time_project.databinding.ItemProductBinding
 
 import com.example.time_project.load
+import com.example.time_project.util.DensityUtils
+
 
 import com.google.gson.annotations.SerializedName
 //import com.squareup.moshi.SerializedName
@@ -65,6 +67,7 @@ data class Product(
         binding.tvProductTitle.text=name
         binding.tvProductDesc.text=introduction
         binding.tvProductPrice02.text=priceShow
+        binding.tvProductPrice02.textSize= DensityUtils.dp2px(binding.root.context,8).toFloat()
         binding.tvProductPtnum.text=userCount.toString().plus("人购买")
         binding.btnGoto.visibility=View.GONE
     }

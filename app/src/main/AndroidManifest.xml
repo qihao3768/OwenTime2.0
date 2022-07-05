@@ -106,7 +106,9 @@
             android:exported="false" />
         <activity
             android:name=".web.WebActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:configChanges="orientation|screenSize|keyboardHidden|fontScale"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|fontScale"

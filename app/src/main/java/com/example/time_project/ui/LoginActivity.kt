@@ -166,18 +166,30 @@ class LoginActivity : BaseActivity(R.layout.activity_login) {
     private fun login(phone: String,sms:String){
 
         mViewModel.login(phone, sms, mKeyCode).observe(this, Observer {
+
             it?.run {
-                intent.token=accessToken?:""
-                mmkv.encode("token",intent.token)//每次登录更新一下token
-                when(infoFlag){
-                    0->{
-                        start(this@LoginActivity,PerfectActivity().javaClass,intent)
-                    }
-                    1->{
-                        LiveEventBus.get<String>("refresh").post("refresh")
-                        start(this@LoginActivity,MainActivity().javaClass,intent)
+                when(code){
+                    1000->{
+                        if (data!=null){
+                            intent.token=data.accessToken?:""
+                            mmkv.encode("token",intent.token)//每次登录更新一下token
+                            when(data.infoFlag){
+                                0->{
+                                    start(this@LoginActivity,PerfectActivity().javaClass,intent)
+                                }
+                                1->{
+                                    LiveEventBus.get<String>("refresh").post("refresh")
+                                    start(this@LoginActivity,MainActivity().javaClass,intent)
+                                }
+                            }
+                        }else{
+                            toast(message.toString())
+                        }
+                    }else-> {
+                       toast(message.toString())
                     }
                 }
+
 
             }
         })

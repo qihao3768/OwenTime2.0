@@ -20,10 +20,13 @@ class HoverHeaderModel(val header: String, val count: Int, val id: Int) : ItemHo
     override fun onBind(holder: BindingAdapter.BindingViewHolder) {
         val binding = LayoutHoverHeaderBinding.bind(holder.itemView)
         binding.tvHeader.text = header
-        binding.tvSeemore.visibility = if (token.isNullOrEmpty()) {
+        binding.tvSeemore.visibility = if (token.isNullOrBlank()) {
             View.GONE
         } else {
             when (count) {
+                0->{
+                    View.GONE
+                }
                 in 1..4 -> {
                     View.GONE
                 }

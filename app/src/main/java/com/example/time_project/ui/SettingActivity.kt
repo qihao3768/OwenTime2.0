@@ -62,6 +62,7 @@ class SettingActivity : BaseActivity(R.layout.activity_setting) {
             finish()
         }
 
+
     }
 
     /***

@@ -87,7 +87,11 @@ class PerfectActivity : BaseActivity(R.layout.activity_perfect) {
         mBinding.edtName.setText(intent.iUserName)
         mBinding.tvSex.text=intent.iSex.intToSex()
         mBinding.tvHis.text=intent.iBirthday
-        mBinding.ivHead.load(intent.iHead)
+//        mBinding.ivHead.load(intent.iHead)
+        mBinding.ivHead.load(intent.iHead){
+            placeholder(R.drawable.logo)
+                .error(R.drawable.logo)
+        }
     }
 
     private fun getPermission() {
