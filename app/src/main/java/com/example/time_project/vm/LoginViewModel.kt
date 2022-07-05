@@ -1,5 +1,6 @@
 package com.example.time_project.vm
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.time_project.base.BaseResponse
 import com.example.time_project.base.BaseViewModel
@@ -23,11 +24,12 @@ class LoginViewModel:BaseViewModel() {
         return _smsData
     }
 
-    private val _login=MutableLiveData<LoginModel?>()
-    fun login(phone:String,sms:String,key:String):MutableLiveData<LoginModel?>{
+    private val _login=MutableLiveData<BaseResponse<LoginModel?>>()
+    fun login(phone:String,sms:String,key:String):MutableLiveData<BaseResponse<LoginModel?>>{
         launchUI {
             val result=_loginReps.login(phone,sms,key)
-            _login.value = result.data
+            Log.d("login","login")
+            _login.value = result
 
         }
         return _login
