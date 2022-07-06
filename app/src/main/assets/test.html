@@ -1,0 +1,23 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://new.owentime.cn/js/jquery-3.5.1.min.js"></script>
+    <title>course</title>
+</head>
+<body style="margin:0;">
+<div style="overflow: hidden;">
+    <p style="margin:0;"><img src="https://owen-time.oss-cn-beijing.aliyuncs.com/products/editor/1656145327_e7bcefd1cddb3b86.jpg" alt="" style="width: 2048px; height: 3642.71px;" width="750" height="1334"></p>
+</div>
+
+
+<script>
+    var width = window.screen.width;
+    //获取图片的长宽
+    var picWidth = $("img").width();
+    var picHeight = $("img").height();
+    //重新计算值
+    $("img").width(width);
+    $("img").height(width/picWidth*picHeight);
+</script>
+</body></html>

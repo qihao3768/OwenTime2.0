@@ -58,6 +58,7 @@ android {
 
     buildFeatures {
         viewBinding true
+//        dataBinding true
     }
 
 }
@@ -92,7 +93,7 @@ dependencies {
     implementation 'com.github.getActivity:ShapeView:6.2'
 
     implementation 'com.github.li-xiaojun:FlycoTabLayout:2.0.6'
-    implementation 'com.tencent.tbs:tbssdk:44176'
+//    implementation 'com.tencent.tbs:tbssdk:44176'//腾讯webview
     implementation 'com.tencent:mmkv:1.2.13'//替代sp
     implementation 'io.github.jeremyliao:live-event-bus-x:1.8.0'
 

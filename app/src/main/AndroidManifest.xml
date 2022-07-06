@@ -15,9 +15,9 @@
         <activity
             android:name=".ui.PaySuccessActivity"
             android:exported="false" />
-        <activity
-            android:name=".ui.RecordActivity"
-            android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".ui.RecordActivity"-->
+<!--            android:exported="false" />-->
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"

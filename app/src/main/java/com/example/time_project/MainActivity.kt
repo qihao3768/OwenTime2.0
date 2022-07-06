@@ -13,7 +13,7 @@ import com.example.time_project.ui.HomeFragment
 import com.example.time_project.ui.MineFragment
 import com.example.time_project.ui.ProjectFragment
 import com.gyf.immersionbar.ktx.immersionBar
-import com.tencent.smtt.sdk.QbSdk
+//import com.tencent.smtt.sdk.QbSdk
 import kotlin.system.exitProcess
 
 class MainActivity: BaseActivity(R.layout.activity_main) {
@@ -74,21 +74,22 @@ class MainActivity: BaseActivity(R.layout.activity_main) {
             true
         }
         mBinding.bottomNav.selectedItemId=0
-        initX5()
+//        initX5()
     }
 
-    private fun initX5(){
-        QbSdk.initX5Environment(application, object : QbSdk.PreInitCallback {
-            override fun onCoreInitFinished() {
-
-            }
-
-            override fun onViewInitFinished(p0: Boolean) {
-
-            }
-        })
-        QbSdk.setDownloadWithoutWifi(true)
-    }
+//    初始化腾讯x5
+//    private fun initX5(){
+//        QbSdk.initX5Environment(application, object : QbSdk.PreInitCallback {
+//            override fun onCoreInitFinished() {
+//
+//            }
+//
+//            override fun onViewInitFinished(p0: Boolean) {
+//
+//            }
+//        })
+//        QbSdk.setDownloadWithoutWifi(true)
+//    }
 
 
     private var exitTime=0L
@@ -100,7 +101,6 @@ class MainActivity: BaseActivity(R.layout.activity_main) {
             }else{
                 finish()
                 exitProcess(0)
-
             }
             return true
         }

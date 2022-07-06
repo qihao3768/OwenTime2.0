@@ -2,6 +2,7 @@ package com.example.time_project.ui
 
 import android.content.Intent
 import android.view.Gravity
+import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebSettings
 import android.webkit.WebView
@@ -123,22 +124,44 @@ class ProductDetailActivity : BaseActivity(R.layout.activity_product_detail) {
      */
     private fun showBuy(){
         spbinding.tvSub.isEnabled=false
-        spbinding.listSpecification.layoutManager=FlexboxLayoutManager(this)
-        spbinding.listSpecification.setup {
-            addType<Sku> { R.layout.layout_flex_tag }
-            onClick(R.id.tv_specification){
-                val model=getModel<Sku>(modelPosition)
-                model.run {
-                    spbinding.tvSkuPrice.text=model.priceActual?:""
-                    model.selected=model.selected?.not()
-                    notifyDataSetChanged()
-                    spbinding.ivSpecification.load(imgShow)
-                }
-                selectSku=model
+        mSku?.run {
+            if (this.isEmpty()){
+                //规格列表是空的
+                spbinding.labelSpecification.visibility=View.GONE
+                spbinding.listSpecification.visibility=View.GONE
 
+            }else{
+                //规格列表不是空的
+                spbinding.tvSkuPrice.text= this[0].priceActual ?:""
+                spbinding.ivSpecification.load(this[0].imgShow)
+                when(size){
+                    1->{
+                        spbinding.labelSpecification.visibility=View.GONE
+                        spbinding.listSpecification.visibility=View.GONE
+                        selectSku=this[0]
+                    }else->{
+                    spbinding.listSpecification.layoutManager=FlexboxLayoutManager(this@ProductDetailActivity)
+                    spbinding.listSpecification.setup {
+                        addType<Sku> { R.layout.layout_flex_tag }
+                        onClick(R.id.tv_specification){
+                            val model=getModel<Sku>(modelPosition)
+                            model.run {
+                                spbinding.tvSkuPrice.text=model.priceActual?:""
+                                model.selected=model.selected?.not()
+                                notifyDataSetChanged()
+                                spbinding.ivSpecification.load(imgShow)
+                            }
+                            selectSku=model
+
+                        }
+                        models=mSku
+                    }
+                    }
+                }
             }
-            models=mSku
         }
+
+
         spbinding.tvPlus.setOnClickListener {
             val count=spbinding.tvCount.text.toString()
             spbinding.tvCount.text=count.toInt().plus(1).toString()

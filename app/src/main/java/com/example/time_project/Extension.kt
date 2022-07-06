@@ -144,8 +144,9 @@ fun View.checkLogin(context:Context,todoListener: TodoListener){
         }
     }
 }
+val toast = Toast(App.getContext())
 fun toast(msg:String){
-    val toast = Toast(App.getContext())
+
     val inflate =View.inflate(App.getContext(), R.layout.layout_toast,null )//自定义布局
     inflate.findViewById<TextView>(R.id.toast).text=msg
     toast.view = inflate //将自定义view设置给toast
