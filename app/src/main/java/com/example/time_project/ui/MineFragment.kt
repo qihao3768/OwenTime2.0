@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import by.kirich1409.viewbindingdelegate.viewBinding
+import coil.load
 import com.example.time_project.*
 import com.example.time_project.base.BaseFragment
 import com.example.time_project.databinding.MineFragmentBinding
@@ -38,10 +39,11 @@ class MineFragment : BaseFragment(R.layout.mine_fragment) {
     private var mBirth:String?=""//生日
     private var mHead:String?=""//头像
 
-    private val logoutOb:Observer<String> = Observer {
-        getUser()
-    }
+//    private val logoutOb:Observer<String> = Observer {
+//        getUser()
+//    }
     private val refreshOb:Observer<String> = Observer {
+
         getUser()
     }
     override fun initData() {
@@ -108,7 +110,7 @@ class MineFragment : BaseFragment(R.layout.mine_fragment) {
 
         getUser()
 
-        LiveEventBus.get<String>("logout").observe(this, logoutOb)
+//        LiveEventBus.get<String>("logout").observe(this, logoutOb)
         LiveEventBus.get<String>("refresh").observe(this, refreshOb)
     }
 
@@ -120,7 +122,10 @@ class MineFragment : BaseFragment(R.layout.mine_fragment) {
         if (mToken.isNotEmpty()){
             mViewModel.getUser(mToken).observe(requireActivity(), Observer {
                 it?.run {
-                    mBinding.personalPhoto.load(photo?:"")
+                    mBinding.personalPhoto.load(photo?:""){
+                        placeholder(R.drawable.logo)
+                            .error(R.drawable.logo)
+                    }
                     mBinding.personalName.text= if (name.isNullOrBlank()){
                         "Owen".plus(Random.nextInt(1,5))
                     }else{
@@ -141,7 +146,7 @@ class MineFragment : BaseFragment(R.layout.mine_fragment) {
 
     override fun onDestroy() {
         super.onDestroy()
-        LiveEventBus.get<String>("logout").removeObserver(logoutOb)
+//        LiveEventBus.get<String>("logout").removeObserver(logoutOb)
         LiveEventBus.get<String>("refresh").removeObserver(refreshOb)
     }
 }

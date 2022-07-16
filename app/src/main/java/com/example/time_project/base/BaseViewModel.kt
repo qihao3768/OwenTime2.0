@@ -7,6 +7,7 @@ import com.example.time_project.toast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeout
+import kotlinx.coroutines.withTimeoutOrNull
 import retrofit2.HttpException
 import java.net.SocketTimeoutException
 
@@ -16,7 +17,10 @@ open class BaseViewModel : ViewModel(), LifecycleObserver {
     //运行在UI线程的协程
     fun launchUI(block: suspend CoroutineScope.() -> Unit) = viewModelScope.launch {
         try {
-            withTimeout(15 * 1000) {
+//            withTimeout(15 * 1000) {
+//                block()
+//            }
+            withTimeoutOrNull(15 * 1000) {
                 block()
             }
         } catch (e: Exception) {
@@ -38,5 +42,7 @@ open class BaseViewModel : ViewModel(), LifecycleObserver {
         }
     }
 
-
+    override fun onCleared() {
+        super.onCleared()
+    }
 }

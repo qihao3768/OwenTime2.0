@@ -69,15 +69,23 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
     private var mBirth:String?=""//生日
     private var mHead:String?=""//头像
 
-    private val refreshOb:Observer<String> = Observer {
-        initBanner()
-    }
-    private val logoutOb:Observer<String> = Observer {
-        it?.run {
-            mBinding.ivHomeHead.setImageResource(R.drawable.logo)
-            mBinding.groupPlaying.visibility=View.GONE
+    private val refreshOb:Observer<String> = Observer {string ->
+        when(string){
+            "refresh"->{
+                initBanner()
+            }
+            "logout"->{
+                mBinding.ivHomeHead.setImageResource(R.drawable.logo)
+                mBinding.groupPlaying.visibility=View.GONE
+            }
         }
+
     }
+//    private val logoutOb:Observer<String> = Observer {
+//        it?.run {
+//
+//        }
+//    }
 
 
     override fun initData() {
@@ -89,7 +97,7 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
             fitsSystemWindows(true)
         }
         mBinding.titleHome.leftView.visibility=View.GONE
-        mBinding.homeBanner.setBannerRound2(11F)
+        mBinding.homeBanner.setBannerRound2(22F)
         mBinding.homeBanner.indicator = RectangleIndicator(requireActivity())//指示器
         mBinding.ivHomeHead.setOnClickListener {
             //判断是否已经登录，如果登录，跳转修改用户信息，否则跳转登录
@@ -108,7 +116,7 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
         }
         initBanner()
         LiveEventBus.get<String>("refresh").observe(this,refreshOb)
-        LiveEventBus.get<String>("logout").observe(this, logoutOb)
+//        LiveEventBus.get<String>("logout").observe(this, logoutOb)
         initNotice()
 
         setExitSharedElementCallback(object : SharedElementCallback() {
@@ -268,7 +276,7 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
     override fun onDestroy() {
         super.onDestroy()
         LiveEventBus.get<String>("refresh").removeObserver(refreshOb)
-        LiveEventBus.get<String>("logout").removeObserver(logoutOb)
+//        LiveEventBus.get<String>("logout").removeObserver(logoutOb)
     }
 
 }

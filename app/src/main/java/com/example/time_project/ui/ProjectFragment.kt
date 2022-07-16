@@ -45,14 +45,14 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
     private val refreshOb:Observer<String> = Observer {
         getData()
     }
-    private val logoutOb:Observer<String> = Observer {
-        getData()
-    }
+//    private val logoutOb:Observer<String> = Observer {
+//        getData()
+//    }
 
     override fun initData()  {
         getData()
         LiveEventBus.get<String>("refresh").observe(this, refreshOb)
-        LiveEventBus.get<String>("logout").observe(this, logoutOb)
+//        LiveEventBus.get<String>("logout").observe(this, logoutOb)
     }
 
 
@@ -159,6 +159,6 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
     override fun onDestroy() {
         super.onDestroy()
         LiveEventBus.get<String>("refresh").removeObserver(refreshOb)
-        LiveEventBus.get<String>("logout").removeObserver(logoutOb)
+//        LiveEventBus.get<String>("logout").removeObserver(logoutOb)
     }
 }

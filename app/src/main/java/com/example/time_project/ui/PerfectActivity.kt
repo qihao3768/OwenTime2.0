@@ -20,6 +20,7 @@ import com.example.time_project.util.IntentExtra.Companion.iSkip
 import com.example.time_project.util.IntentExtra.Companion.iUserName
 import com.example.time_project.vm.UserViewModel
 import com.gyf.immersionbar.ktx.immersionBar
+import com.jeremyliao.liveeventbus.LiveEventBus
 import com.luck.picture.lib.basic.PictureSelector
 import com.luck.picture.lib.config.SelectMimeType
 import com.luck.picture.lib.entity.LocalMedia
@@ -88,10 +89,13 @@ class PerfectActivity : BaseActivity(R.layout.activity_perfect) {
         mBinding.tvSex.text=intent.iSex.intToSex()
         mBinding.tvHis.text=intent.iBirthday
 //        mBinding.ivHead.load(intent.iHead)
-        mBinding.ivHead.load(intent.iHead){
-            placeholder(R.drawable.logo)
-                .error(R.drawable.logo)
+        intent.iHead?.run {
+            mBinding.ivHead.load(this){
+                placeholder(R.drawable.logo)
+                    .error(R.drawable.logo)
+            }
         }
+
     }
 
     private fun getPermission() {
@@ -160,13 +164,14 @@ class PerfectActivity : BaseActivity(R.layout.activity_perfect) {
         imm.hideSoftInputFromWindow(window.decorView.windowToken, 0)
 
         val date = Calendar.getInstance()
-        date[2000, 5] = 1
+        date[2000, 1] = 1
         val date2 = Calendar.getInstance()
-        date2[2020, 5] = 1
+//        date2[date2.get(Calendar.YEAR), 1] = 1
         val popup =
-            TimePickerPopup(this) //                        .setDefaultDate(date)  //设置默认选中日期
-                //                        .setYearRange(1990, 1999) //设置年份范围
-                //                        .setDateRange(date, date2) //设置日期范围
+            TimePickerPopup(this) //
+                                    .setDefaultDate(date2)  //设置默认选中日期
+                                        .setYearRange(2000,date2.get(Calendar.YEAR)) //设置年份范围
+//                                        .setDateRange(date, date2) //设置日期范围
                 .setTimePickerListener(object : TimePickerListener {
                     override fun onTimeChanged(date: Date?) {
                         //时间改变
@@ -207,7 +212,7 @@ class PerfectActivity : BaseActivity(R.layout.activity_perfect) {
         mViewModel.uploadInfo(intent.token?:"",name,sex,bir).observe(this, androidx.lifecycle.Observer {
             it?.run {
                 toast("上传成功")
-
+                LiveEventBus.get<String>("refresh").post("refresh")
                 start(this@PerfectActivity,MainActivity().javaClass,true)
             }
         })
