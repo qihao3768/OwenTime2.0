@@ -3,6 +3,7 @@ package com.example.time_project.ui
 import android.content.Intent
 import android.os.CountDownTimer
 import android.view.View
+import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Observer
@@ -77,6 +78,7 @@ class LoginActivity : BaseActivity(R.layout.activity_login) {
         }
 
         mBinding.btnLogin.setOnClickListener {
+            mBinding.edtPhone.format("手机号格式错误")?:return@setOnClickListener
             mBinding.edtPhone.checkLength(11,"请输入11位手机号")?:return@setOnClickListener
             mBinding.loginCheck.checked("请先查看并勾选相关协议")?:return@setOnClickListener
             if (mKeyCode.isNullOrBlank()){
@@ -103,6 +105,7 @@ class LoginActivity : BaseActivity(R.layout.activity_login) {
 //发送短信
         mBinding.tvSms.setOnClickListener {
             val phone=mBinding.edtPhone.checked("请输入手机号")?:return@setOnClickListener
+            mBinding.edtPhone.format("手机号格式错误")?:return@setOnClickListener
             mBinding.edtPhone.checkLength(11,"请输入11位手机号")?:return@setOnClickListener
             timer = object : CountDownTimer(TIME,STEP) {
                 override fun onTick(p0: Long) {
@@ -134,15 +137,19 @@ class LoginActivity : BaseActivity(R.layout.activity_login) {
         mBinding.edtSms.setOnFocusChangeListener { _, b ->
             mBinding.ivSmsclear.visibility=if (b) View.VISIBLE else View.GONE
         }
+
+
     }
 
     /***
      * 获取验证码
      */
     private fun getSms(phone:String){
+        showLoading()
         mViewModel.sendSms(phone).observe(this, Observer {
             // TODO:
             it?.run {
+                hideLoading()
                 val body: SmsModel?=data
                 when(code){
                     1000->{
@@ -197,6 +204,15 @@ class LoginActivity : BaseActivity(R.layout.activity_login) {
 
     private fun ShapeCheckBox.checked(msg:String):String?{
         return if (this.isChecked){
+            ""
+        }else{
+            toast(msg)
+            null
+        }
+    }
+
+    private fun EditText.format(msg:String):String?{
+        return if (this.text.startsWith("1")){
             ""
         }else{
             toast(msg)

@@ -121,10 +121,10 @@ fun View.fastClick(listener: (view: View) -> Unit) {
 //}
 //检查登录
 fun ViewGroup.checkLogin(context:Context,todoListener: TodoListener){
-//    val userInfo=MMKV.defaultMMKV().decodeParcelable("user",Register::class.java)
-    val islogin=MMKV.defaultMMKV().decodeString("token")
+
     this.setOnClickListener {
-         if (islogin.isNullOrBlank()){
+        val token :String?=MMKV.defaultMMKV().decodeString("token","")
+         if (token.isNullOrBlank()){
              start01(context as Activity,LoginActivity().javaClass,false)
         }else{
              todoListener.todo()
@@ -136,8 +136,8 @@ fun ViewGroup.checkLogin(context:Context,todoListener: TodoListener){
 fun View.checkLogin(context:Context,todoListener: TodoListener){
 
     this.setOnClickListener {
-        val islogin=MMKV.defaultMMKV().decodeString("token")
-        if (islogin.isNullOrBlank()){
+        val token :String?=MMKV.defaultMMKV().decodeString("token","")
+        if (token.isNullOrBlank()){
             start01(context as Activity,LoginActivity().javaClass,false)
         }else{
             todoListener.todo()

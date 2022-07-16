@@ -31,7 +31,7 @@ class LogoutActivity : BaseActivity(R.layout.activity_logout) {
                     when(code){
                         1000->{
                             toast("注销成功")
-                            MMKV.defaultMMKV().remove("token")
+                            MMKV.defaultMMKV().clearAll()
                             LiveEventBus.get<String>("logout").post("logout")
                             ActivityManager.instance.removeActivity(this@LogoutActivity)
                             ActivityManager.instance.removeActivity(SettingActivity())

@@ -175,14 +175,14 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
                                     start(requireActivity(),WebActivity().javaClass,requireActivity().intent)
                                 }
                                 4->{
-                                    mBinding.homeBanner.checkLogin(requireActivity(),
-                                        object : TodoListener {
-                                            override fun todo() {
-                                                requireActivity().intent.icode= productCode
-                                                start(requireActivity(),ProductDetailActivity().javaClass,requireActivity().intent)
-                                            }
-                                        })
-
+                                    val token=mmkv.decodeString("token")
+                                    val target=if (token.isNullOrBlank()){
+                                        LoginActivity()
+                                    }else{
+                                        requireActivity().intent.icode= productCode
+                                        ProductDetailActivity()
+                                    }
+                                    start(requireActivity(),target.javaClass,requireActivity().intent)
                                 }
                             }
                         }

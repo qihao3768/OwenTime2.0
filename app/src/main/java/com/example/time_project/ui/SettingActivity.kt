@@ -81,7 +81,7 @@ class SettingActivity : BaseActivity(R.layout.activity_setting) {
 
                     mViewModel.logOut().observe(this, Observer {
                         toast("退出成功")
-                        MMKV.defaultMMKV().remove("token")
+                        MMKV.defaultMMKV().remove("token").apply()
                         LiveEventBus.get<String>("refresh").post("logout")
                         exitDialog.dismiss()
                         finish()
