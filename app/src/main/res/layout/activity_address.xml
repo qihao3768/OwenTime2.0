@@ -75,7 +75,7 @@
             android:hint="请填写11位手机号"
             android:inputType="phone"
             android:textSize="17dp"
-            android:maxEms="11"
+            android:maxLength="11"
             android:textColor="@color/F1A1A1A"
             app:layout_constraintBottom_toBottomOf="@id/tv_addresslabel02"
             app:layout_constraintStart_toEndOf="@id/tv_addresslabel04"

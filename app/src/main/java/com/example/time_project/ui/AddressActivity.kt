@@ -1,19 +1,18 @@
 package com.example.time_project.ui
 
+
+import android.content.Intent
+import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.time_project.R
-
-
 import com.example.time_project.base.BaseActivity
 import com.example.time_project.bean.AddressRequestBody
 import com.example.time_project.bean.ChangeAddressRequestBody
 import com.example.time_project.checked
 import com.example.time_project.databinding.ActivityAddressBinding
 import com.example.time_project.fastClick
-
 import com.example.time_project.toast
 import com.example.time_project.ui.UpOrderActivity.IntentOptions.iaddress
 import com.example.time_project.ui.UpOrderActivity.IntentOptions.iarea
@@ -25,6 +24,7 @@ import com.example.time_project.ui.UpOrderActivity.IntentOptions.iphone
 import com.example.time_project.ui.UpOrderActivity.IntentOptions.iprovince
 import com.example.time_project.vm.OwenViewModel
 import com.gyf.immersionbar.ktx.immersionBar
+import com.jeremyliao.liveeventbus.LiveEventBus
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopupext.listener.CityPickerListener
 import com.lxj.xpopupext.popup.CityPickerPopup
@@ -70,12 +70,23 @@ class AddressActivity : BaseActivity(R.layout.activity_address) {
                             intent.iid.toString(),
                             ""
                         )
-                    viewModel.changeAddress(body.toMap()).observe(this, Observer {
-                      it?.run {
-                          toast(message.toString())
-                          finish()
-                      }
-                    })
+                    viewModel.changeAddress(body.toMap()).observe(this) {
+                        it?.run {
+                            toast(message.toString())
+
+
+                            val intent = Intent()
+                            intent.putExtra("name", name)
+                            intent.putExtra("phone", phone)
+                            intent.putExtra("province", mProvince)
+                            intent.putExtra("city", mCity)
+                            intent.putExtra("area", mArea)
+                            intent.putExtra("detail", detail)
+                            LiveEventBus.get<Intent>("refresh").post(intent)
+//                            setResult(-1, intent)
+                            finish()
+                        }
+                    }
                 }
                 else -> {
                     val body = AddressRequestBody(
@@ -87,12 +98,12 @@ class AddressActivity : BaseActivity(R.layout.activity_address) {
                         detail,
                         1.toString()
                     )
-                    viewModel.saveAddress(body.toMap()).observe(this, Observer {
-                       it?.run {
-                           toast(message.toString())
-                           finish()
-                       }
-                    })
+                    viewModel.saveAddress(body.toMap()).observe(this) {
+                        it?.run {
+                            toast(message.toString())
+                            finish()
+                        }
+                    }
                 }
             }
 

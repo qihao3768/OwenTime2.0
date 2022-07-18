@@ -1,11 +1,16 @@
 package com.example.time_project.ui
 
 import android.content.Intent
+import android.location.Address
 import android.os.Handler
 import android.os.Message
 import android.text.TextUtils
 import android.view.Gravity
 import android.view.View
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -57,8 +62,7 @@ class UpOrderActivity : BaseActivity(R.layout.activity_up_order) {
 //                Log.i("Pay", "Pay:$resultInfo")
                 val resultStatus = payResult.resultStatus
                 val memo = payResult.memo
-//                Log.e("resultStatus", "resultStatus:$resultStatus$memo")
-//                Log.e("memo", "memo:$memo")
+
                 // 判断resultStatus 为9000则代表支付成功
                 if (TextUtils.equals(resultStatus, "9000")) {
                     toast("支付成功")
@@ -93,6 +97,13 @@ class UpOrderActivity : BaseActivity(R.layout.activity_up_order) {
         var Intent.iaddress by IntentExtraString("address")//收货地址
         var Intent.iid by IntentExtraInt("id")//优惠券id
         var Intent.iflag by IntentExtraString("change")//优惠券id
+    }
+
+
+    private val addressObserver: Observer<Intent> = Observer {
+        it?.run {
+            getAddress(this)
+        }
     }
 
     override fun initData() {
@@ -141,6 +152,7 @@ class UpOrderActivity : BaseActivity(R.layout.activity_up_order) {
                 address?.run {
                     mBinding.layoutAddress01.visibility= View.GONE
                     mBinding.groupAddress.visibility=View.VISIBLE
+                    mBinding.layoutAddress02.visibility=View.VISIBLE
                     mBinding.addressName.text=name?:""
                     mBinding.addressPhone.text=phone?:""
                     val maddress=(province?:"").plus(city?:"").plus(area?:"").plus(address?:"")
@@ -157,7 +169,7 @@ class UpOrderActivity : BaseActivity(R.layout.activity_up_order) {
                 product?.run {
                     mBinding.tvOrdertitle.text=name?:""
                     mBinding.ivOrderpic.load(imgShow?:"")
-                    mBinding.ivOrderpic.load(imgShow?:"")
+//                    mBinding.ivOrderpic.load(imgShow?:"")
                     mBinding.tvPrice.text="￥".plus(priceActual?:"")
                     mTitle=name?:""
                 }
@@ -180,11 +192,19 @@ class UpOrderActivity : BaseActivity(R.layout.activity_up_order) {
         mBinding.titleOrder.leftView.fastClick {
             finish()
         }
+        //activity启动器
+
+        LiveEventBus.get<Intent>("refresh").observe(this, addressObserver)
+
         //去修改地址
         mBinding.layoutAddress02.fastClick {
             intent.iflag="change"
+//            intent.setClass(this@UpOrderActivity,AddressActivity::class.java)
+
             start(this@UpOrderActivity,AddressActivity().javaClass,intent)
         }
+        //activity启动器
+
     }
 
     /***
@@ -320,5 +340,21 @@ class UpOrderActivity : BaseActivity(R.layout.activity_up_order) {
                 }
             }
         })
+    }
+
+    private fun getAddress(intent: Intent){
+        mBinding.addressName.text = intent.getStringExtra("name")
+        mBinding.addressPhone.text = intent.getStringExtra("phone")
+        val province = intent.getStringExtra("province")
+        val city = intent.getStringExtra("city")
+        val area = intent.getStringExtra("area")
+        val detail = intent.getStringExtra("detail")
+        mBinding.tvAddressDetail.text = province.plus(city).plus(area).plus(detail)
+        mBinding.layoutAddress02.visibility = View.VISIBLE
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        LiveEventBus.get<Intent>("refresh").removeObserver(addressObserver)
     }
 }

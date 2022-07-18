@@ -186,7 +186,8 @@ class LoginActivity : BaseActivity(R.layout.activity_login) {
                                 }
                                 1->{
                                     LiveEventBus.get<String>("refresh").post("refresh")
-                                    start(this@LoginActivity,MainActivity().javaClass,intent)
+                                    ActivityManager.instance.removeActivity(this@LoginActivity)
+//                                    start(this@LoginActivity,MainActivity().javaClass,intent)
                                 }
                             }
                         }else{

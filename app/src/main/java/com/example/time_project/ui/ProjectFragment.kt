@@ -1,6 +1,7 @@
 package com.example.time_project.ui
 
 import android.content.Intent
+import android.util.Log
 import android.view.View
 import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.Fragment
@@ -43,7 +44,12 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
     private val mmkv=MMKV.defaultMMKV()
 
     private val refreshOb:Observer<String> = Observer {
-        getData()
+        when(it){
+            "refresh"->{
+                getData()
+            }
+        }
+
     }
 //    private val logoutOb:Observer<String> = Observer {
 //        getData()
@@ -67,10 +73,12 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
             it?.run {
                 when(code){
                     1000->{
+
                         val body: AlreadyBuyModel?=data
                         body?.run {
                             val data01=getYiGouData(purchased)
                             if (data01.isNullOrEmpty()){
+                                Log.d("123","123")
                                 //展示推荐列表
                                 mBinding.productList02.visibility=View.VISIBLE
                                 if (recommend.data.isNullOrEmpty()){
@@ -102,6 +110,7 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
 
                             }else{
                                 //展示已经购买的课程列表
+                                Log.d("123","456")
                                 mBinding.productList01.visibility=View.VISIBLE
                                 mBinding.productList01.linear().setup {
                                     addType<Product02> { R.layout.item_product2 }
