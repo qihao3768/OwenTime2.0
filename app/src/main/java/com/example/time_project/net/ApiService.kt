@@ -73,6 +73,9 @@ interface ApiService {
     //已购
     @POST("api/product/getUserProduct")
     suspend fun alreadyBuy():BaseResponse<AlreadyBuyModel?>
+    //已购分页
+    @POST("api/product/getUserProduct")
+    suspend fun alreadyBuy(@Field("page") page: String):BaseResponse<AlreadyBuyModel?>
 
     //以后商品下的课程列表
     @POST("api/course/productCourse")

@@ -46,8 +46,16 @@ class MineFragment : BaseFragment(R.layout.mine_fragment) {
 
     private var zhujiao = BasePopWindow(this)
     private val refreshOb:Observer<String> = Observer {
+        when(it){
+            "login"->{
+                getUser()
+            }
+            "loginout"->{
+                mBinding.personalPhoto.load(R.drawable.logo)
+                mBinding.personalName.text="登录/注册"
+            }
+        }
 
-        getUser()
     }
     override fun initData() {
         immersionBar {

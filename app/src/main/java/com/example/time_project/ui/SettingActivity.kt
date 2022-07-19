@@ -37,7 +37,7 @@ class SettingActivity : BaseActivity(R.layout.activity_setting) {
         exitBinding = LayoutExitBinding.bind(view)
 
         mBinding.btnExit.setOnClickListener {
-            logout("确认退出登录?","退出登录",0)
+            logout("确认退出登录?","退出登录")
         }
         mBinding.layoutSetting04.setOnClickListener {
 //            logout("确认注销账户?","注销账户",1)
@@ -69,30 +69,19 @@ class SettingActivity : BaseActivity(R.layout.activity_setting) {
      * 退出登录
      * 0 退出 1 注销
      */
-    private fun logout(title:String,ok:String,flag:Int){
+    private fun logout(title:String,ok:String){
         exitDialog = BasePopWindow(this)
         exitBinding.tvExitTitle.text=title
         exitBinding.btnExitOk.text=ok
         exitBinding.btnExitOk.setOnClickListener {
             // TODO: 调用退出登录接口
-            when(flag) {
-                0->{
-                    // TODO: 调用退出接口
-
-                    mViewModel.logOut().observe(this, Observer {
-                        toast("退出成功")
-                        MMKV.defaultMMKV().remove("token").apply()
-                        LiveEventBus.get<String>("refresh").post("refresh")
-                        exitDialog.dismiss()
-                        finish()
-                    })
-
-                }
-                1->{
-                    // TODO: 调用注销接口
-
-                }
-            }
+            mViewModel.logOut().observe(this, Observer {
+                toast("退出成功")
+                MMKV.defaultMMKV().clearAll()
+                LiveEventBus.get<String>("refresh").post("logout")
+                exitDialog.dismiss()
+                ActivityManager.instance.removeActivity(this)
+            })
         }
         exitBinding.btnExitCancel.setOnClickListener {
             exitDialog.dismiss()

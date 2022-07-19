@@ -11,6 +11,7 @@ import androidx.core.app.SharedElementCallback
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import by.kirich1409.viewbindingdelegate.viewBinding
+import coil.load
 
 import com.drake.brv.utils.linear
 import com.drake.brv.utils.setup
@@ -71,11 +72,11 @@ class HomeFragment : BaseFragment(R.layout.home_fragment){
 
     private val refreshOb:Observer<String> = Observer {string ->
         when(string){
-            "refresh"->{
+            "login"->{
                 initBanner()
             }
             "logout"->{
-                mBinding.ivHomeHead.setImageResource(R.drawable.logo)
+                mBinding.ivHomeHead.load(R.drawable.logo)
                 mBinding.groupPlaying.visibility=View.GONE
             }
         }

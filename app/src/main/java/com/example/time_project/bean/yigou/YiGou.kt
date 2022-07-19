@@ -64,7 +64,10 @@ data class Recommend(
     @SerializedName("price_show")
     val priceShow: String? = "",
     @SerializedName("user_count")
-    val userCount: Int? = 0
+    val userCount: Int? = 0,
+    @SerializedName("type")
+    val type: Int? = 0
+
 ): ItemBind {
     val token = MMKV.defaultMMKV().decodeString("token")
     override fun onBind(holder: BindingAdapter.BindingViewHolder) {
@@ -99,7 +102,7 @@ data class Product02(
     @SerializedName("type")
     val type: Int? = 0
 ): ItemBind {
-    val token= MMKV.defaultMMKV().decodeString("token")
+//    val token= MMKV.defaultMMKV().decodeString("token")
     override fun onBind(holder: BindingAdapter.BindingViewHolder) {
         val binding= ItemProductBinding.bind(holder.itemView)
         binding.ivProduct.load(imgHead)

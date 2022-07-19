@@ -1,16 +1,21 @@
 package com.example.time_project.vm
 
+import androidx.lifecycle.MutableLiveData
+import com.example.time_project.base.BaseResponse
 import com.example.time_project.base.BaseViewModel
+import com.example.time_project.bean.yigou.AlreadyBuyModel
+import com.example.time_project.resp.OwenRepo
 
 class ProjectViewModel : BaseViewModel() {
-//    private val _projectRepo by lazy { ProjectRepo() }
-//    private val _projectData by lazy { MutableLiveData<List<ProjectTree>>() }
-//    fun getProjectTree():MutableLiveData<List<ProjectTree>>{
-//        launchUI {
-//            val result = _projectRepo.project()
-//            _projectData.value = result.data
-//        }
-//        return _projectData
-//    }
+    private val owenReps by lazy { OwenRepo() }
 
+//已购
+private val alreadyBuyData= MutableLiveData<BaseResponse<AlreadyBuyModel?>>()
+    fun alreadyBuy(): MutableLiveData<BaseResponse<AlreadyBuyModel?>> {
+        launchUI {
+            val result = owenReps.alreadyBuy()
+            alreadyBuyData.value = result
+        }
+        return alreadyBuyData
+    }
 }

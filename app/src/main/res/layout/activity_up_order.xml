@@ -36,7 +36,7 @@
             app:leftTitleColor="@color/white"
             app:leftIconTint="@color/white"
             app:lineVisible="false"
-            app:childPaddingHorizontal="15dp"/>
+            />
         <com.hjq.shape.layout.ShapeConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
