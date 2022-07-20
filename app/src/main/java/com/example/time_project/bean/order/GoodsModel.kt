@@ -55,19 +55,5 @@ data class Sku(
     @SerializedName("product_id")
     val productId: Int? = 0,
     @SerializedName("stock")
-    val stock: Int? = 0,
-
-    var selected:Boolean?=false
-):ItemBind{
-    override fun onBind(holder: BindingAdapter.BindingViewHolder) {
-        val binding= LayoutFlexTagBinding.bind(holder.itemView)
-        binding.tvSpecification.text=name
-        if (selected == true){
-            binding.tvSpecification.shapeDrawableBuilder.setSolidColor(getColor(binding.root.context,R.color.FE9520)).intoBackground()
-            binding.tvSpecification.setTextColor(R.color.FE9520)
-        }else{
-            binding.tvSpecification.shapeDrawableBuilder.setSolidColor(getColor(binding.root.context,R.color.F5F5F5)).intoBackground()
-            binding.tvSpecification.setTextColor(R.color.F4D4D4D)
-        }
-    }
-}
+    val stock: Int? = 0
+)

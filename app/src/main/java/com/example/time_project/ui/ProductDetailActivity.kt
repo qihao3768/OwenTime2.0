@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.load
+import com.donkingliang.labels.LabelsView
 import com.drake.brv.utils.setup
 import com.example.time_project.*
 import com.example.time_project.adapter.ImageTitleHolder
@@ -27,10 +29,10 @@ import com.example.time_project.util.IntentExtra.Companion.icoupon
 import com.example.time_project.util.IntentExtra.Companion.inum
 import com.example.time_project.util.IntentExtra.Companion.iproductId
 import com.example.time_project.util.IntentExtra.Companion.isku
+import com.example.time_project.util.IntentExtra.Companion.iskuName
 import com.example.time_project.util.IntentExtraInt
 import com.example.time_project.util.IntentExtraString
 import com.example.time_project.vm.OwenViewModel
-import com.google.android.flexbox.FlexboxLayoutManager
 import com.gyf.immersionbar.ktx.immersionBar
 import com.umeng.socialize.ShareAction
 import com.umeng.socialize.ShareContent
@@ -52,7 +54,7 @@ class ProductDetailActivity : BaseActivity(R.layout.activity_product_detail) {
 
     private val viewModel by viewModels<OwenViewModel>()
 
-    private var mSku :List<Sku>?= listOf<Sku>()//规格列表
+    private var mSku :MutableList<Sku>?= mutableListOf()
 
     private var selectSku:Sku?=null
 
@@ -63,10 +65,10 @@ class ProductDetailActivity : BaseActivity(R.layout.activity_product_detail) {
 
     override fun initData() {
         immersionBar {
-            statusBarColor(R.color.transparent)
-            keyboardEnable(true)
-            statusBarDarkFont(true)
-            fitsSystemWindows(true)
+            statusBarView(R.id.product_title)
+            keyboardEnable(false)
+            statusBarDarkFont(false)
+            fitsSystemWindows(false)
         }
         val view=layoutInflater.inflate(R.layout.layout_specifications,null)
         spbinding= LayoutSpecificationsBinding.bind(view)
@@ -123,7 +125,7 @@ class ProductDetailActivity : BaseActivity(R.layout.activity_product_detail) {
      * 显示商品规格
      */
     private fun showBuy(){
-        spbinding.tvSub.isEnabled=false
+
         mSku?.run {
             if (this.isEmpty()){
                 //规格列表是空的
@@ -140,22 +142,15 @@ class ProductDetailActivity : BaseActivity(R.layout.activity_product_detail) {
                         spbinding.listSpecification.visibility=View.GONE
                         selectSku=this[0]
                     }else->{
-                    spbinding.listSpecification.layoutManager=FlexboxLayoutManager(this@ProductDetailActivity)
-                    spbinding.listSpecification.setup {
-                        addType<Sku> { R.layout.layout_flex_tag }
-                        onClick(R.id.tv_specification){
-                            val model=getModel<Sku>(modelPosition)
-                            model.run {
-                                spbinding.tvSkuPrice.text=model.priceActual?:""
-                                model.selected=model.selected?.not()
-                                notifyDataSetChanged()
-                                spbinding.ivSpecification.load(imgShow)
-                            }
-                            selectSku=model
-
-                        }
-                        models=mSku
+                    spbinding.listSpecification.setLabels(mSku
+                    ) { _, _, data -> data.name }
+                    spbinding.listSpecification.setOnLabelSelectChangeListener { _, data, _, _ ->
+                        val sku=data as Sku
+                        selectSku = sku
+                        spbinding.tvSkuPrice.text=sku.priceActual?:""
+                        spbinding.ivSpecification.load(sku.imgShow)
                     }
+//
                     }
                 }
             }
@@ -165,13 +160,16 @@ class ProductDetailActivity : BaseActivity(R.layout.activity_product_detail) {
         spbinding.tvPlus.setOnClickListener {
             val count=spbinding.tvCount.text.toString()
             spbinding.tvCount.text=count.toInt().plus(1).toString()
-            spbinding.tvSub.isEnabled=true
+            spbinding.tvSub.setTextColor(R.color.F1A1A1A)
         }
 
         spbinding.tvSub.setOnClickListener {
             val count=spbinding.tvCount.text.toString()
-            spbinding.tvCount.text=count.toInt().minus(1).toString()
-            spbinding.tvSub.isEnabled = "1" != count
+            if (count!="1"){
+                spbinding.tvCount.text=count.toInt().minus(1).toString()
+            }else{
+                spbinding.tvSub.setTextColor(R.color.CCCCCC)
+            }
 
         }
 
@@ -193,6 +191,7 @@ class ProductDetailActivity : BaseActivity(R.layout.activity_product_detail) {
                     buyDialog.dismiss()
                     intent.icode=intent.code
                     intent.isku=selectSku?.id.toString()
+                    intent.iskuName=selectSku?.name.toString()
                     intent.inum=count
                     intent.icoupon=""//优惠券暂时没有
                     intent.iproductId=selectSku?.productId?:0
@@ -220,12 +219,7 @@ class ProductDetailActivity : BaseActivity(R.layout.activity_product_detail) {
             .showPopupWindow()
     }
 
-    /***
-     * 商品规格
-     */
-    private fun getSpecification():MutableList<Any> {
-        return mutableListOf<Any>(FlexTagModel("绘声绘色"),FlexTagModel("1234"),FlexTagModel("XXXL"),FlexTagModel("XL"),FlexTagModel("绘声绘色"))
-    }
+
 
     /***
      * 获取详情数据
@@ -270,10 +264,10 @@ class ProductDetailActivity : BaseActivity(R.layout.activity_product_detail) {
                 initTopBanner(images,name?:"")
                 mBinding.groupDetailPic.loadUrl(detail?:"")
                 //价格默认取规格列表的第一条
-                mBinding.tvGoodsPrice.text=sku?.get(0)?.priceActual ?: ""
+                mBinding.tvGoodsPrice.text="￥".plus(sku?.get(0)?.priceActual ?: "")
                 mBinding.tvGoodsTitle.text=name?:""
                 mBinding.tvGoodsDesc.text=introduction?:""
-                mSku= sku
+                mSku= sku?.toMutableList()
             }
         })
     }

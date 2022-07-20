@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.hjq.shape.layout.ShapeConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:shape_topLeftRadius="25dp"
+    app:shape_topRightRadius="25dp"
+    app:shape_solidColor="@color/white"
+    android:paddingTop="20dp"
+    android:paddingStart="15dp"
+    android:paddingEnd="15dp"
+    android:paddingBottom="15dp">
+    <TextView
+        android:id="@+id/tv_notetile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="订单备注"
+        android:textSize="17dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/edt_note"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"/>
+
+    <com.hjq.shape.view.ShapeEditText
+        android:id="@+id/edt_note"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btn_note"
+        app:shape_radius="11dp"
+        app:shape_solidColor="@color/F5F5F5"
+        app:layout_constraintDimensionRatio="h,1:0.32"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="110dp"
+        android:gravity="start"
+        android:hint="请输入文字..."
+        android:textColorHint="@color/CCCCCC"
+        android:textSize="14dp"
+        android:textColor="@color/CCCCCC"
+        android:padding="15dp"/>
+
+    <com.hjq.shape.view.ShapeButton
+        android:id="@+id/btn_note"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="确定"
+        android:textSize="14dp"
+        android:textColor="@color/white"
+        app:shape_radius="16.5dp"
+        app:shape_solidColor="@color/FE9520"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+    <ImageView
+        android:id="@+id/note_close"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:src="@drawable/close_icon"
+        app:layout_constraintTop_toTopOf="@id/tv_notetile"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+
+</com.hjq.shape.layout.ShapeConstraintLayout>

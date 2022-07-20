@@ -17,6 +17,7 @@
         app:layout_constraintBottom_toTopOf="@id/layout_buy">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/detail_top"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -24,8 +25,7 @@
                 android:id="@+id/group_banner"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                app:layout_constraintCircleRadius="5dp"
-                app:layout_constraintDimensionRatio="h,1:0.56"
+                app:layout_constraintDimensionRatio="h,1:0.88"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.hjq.shape.layout.ShapeConstraintLayout
@@ -70,13 +70,23 @@
 
 
             </com.hjq.shape.layout.ShapeConstraintLayout>
-            <WebView
-                android:id="@+id/group_detail_pic"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layout_goods_price" />
+
+<androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/layout_goods_price"
+    app:cardCornerRadius="11dp"
+    android:layout_margin="15dp"
+    app:cardElevation="0dp">
+    <WebView
+        android:id="@+id/group_detail_pic"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+
+</androidx.cardview.widget.CardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
@@ -90,7 +100,7 @@
         app:rightIcon="@drawable/share_icon_details"
         app:leftTitleColor="@color/white"
         app:leftIconTint="@color/white"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/detail_linet"
         android:background="@color/transparent"
         app:lineVisible="false"/>
     <com.hjq.shape.layout.ShapeConstraintLayout
@@ -125,5 +135,10 @@
             app:shape_solidColor="@color/FE9520"/>
     </com.hjq.shape.layout.ShapeConstraintLayout>
 
-
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/detail_linet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="0.04"
+        android:orientation="horizontal"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

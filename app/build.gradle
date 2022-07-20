@@ -92,7 +92,7 @@ dependencies {
     implementation 'com.github.getActivity:TitleBar:9.5'
     implementation 'com.github.getActivity:ShapeView:6.2'
 
-    implementation 'com.github.li-xiaojun:FlycoTabLayout:2.0.6'
+//    implementation 'com.github.li-xiaojun:FlycoTabLayout:2.0.6'
 //    implementation 'com.tencent.tbs:tbssdk:44176'//腾讯webview
     implementation 'com.tencent:mmkv:1.2.13'//替代sp
     implementation 'io.github.jeremyliao:live-event-bus-x:1.8.0'
@@ -107,7 +107,7 @@ dependencies {
     implementation('com.github.li-xiaojun:XPopupExt:0.0.8')//三级联动
     implementation('com.github.li-xiaojun:XPopup:2.6.3')//三级联动
     implementation('com.github.liangjingkanji:BRV:1.3.79')//一个recycleview库
-    implementation('com.google.android.flexbox:flexbox:3.0.0')
+//    implementation('com.google.android.flexbox:flexbox:3.0.0')
 
     implementation('com.github.getActivity:GsonFactory:6.0')
 
@@ -130,6 +130,8 @@ dependencies {
     implementation ('com.github.microshow:RxFFmpeg:4.9.0-lite')//FF
     implementation('androidx.paging:paging-runtime:3.1.1')//使用paging3做分页
     implementation('com.github.ydstar:loadingdialog:1.0.0')//loading
+
+    implementation 'com.github.donkingliang:LabelsView:1.6.5'//标签控件
 
 //    implementation "com.mikepenz:fastadapter:5.6.0"
 

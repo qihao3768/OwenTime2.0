@@ -23,12 +23,15 @@ import com.example.time_project.bean.UpOrderDetailRequestBody
 import com.example.time_project.bean.UpOrderRequestBody
 import com.example.time_project.bean.WeiXinPay
 import com.example.time_project.databinding.ActivityUpOrderBinding
+import com.example.time_project.databinding.LayoutNoteBinding
+import com.example.time_project.databinding.LayoutSpecificationsBinding
 import com.example.time_project.databinding.SelectbuywayLayout2Binding
 import com.example.time_project.util.IntentExtra.Companion.icode
 import com.example.time_project.util.IntentExtra.Companion.icoupon
 import com.example.time_project.util.IntentExtra.Companion.inum
 import com.example.time_project.util.IntentExtra.Companion.iproductId
 import com.example.time_project.util.IntentExtra.Companion.isku
+import com.example.time_project.util.IntentExtra.Companion.iskuName
 
 import com.example.time_project.util.IntentExtraInt
 import com.example.time_project.util.IntentExtraString
@@ -106,6 +109,9 @@ class UpOrderActivity : BaseActivity(R.layout.activity_up_order) {
         }
     }
 
+    private var noteDialog=BasePopWindow(this)
+    private lateinit var noteBinding: LayoutNoteBinding
+
     override fun initData() {
         immersionBar {
             keyboardEnable(true)
@@ -120,26 +126,22 @@ class UpOrderActivity : BaseActivity(R.layout.activity_up_order) {
         }
         mBinding.btnOrdersubmit.setOnClickListener {
             //如果订单号不为空，说明在当前页面已经执行了一次下单操作，并且已经生成了订单，就不能再当前页面重复下单了
-            if (mOrderSn.isEmpty()){
-                //下单成功之后弹出支付方式
-                body?.run {
-                    viewModel.upOrder(this).observe(this@UpOrderActivity, Observer {
-                        it?.run {
-                            when(code){
-                                1000->{
-                                    data?.run {
-                                        mOrderSn=orderSn.toString()
-                                        showPay()
-                                    }
-                                }else->{
-                                toast(message.toString())
-                            }
+            body?.run {
+                note=mBinding.tvOrdernote.text.toString()
+                viewModel.upOrder(this).observe(this@UpOrderActivity, Observer {
+                    it?.run {
+                        when(code){
+                            1000->{
+                                data?.run {
+                                    mOrderSn=orderSn.toString()
+                                    showPay()
+                                }
+                            }else->{
+                            toast(message.toString())
                             }
                         }
-                    })
-                }
-            }else{
-                showPay()
+                    }
+                })
             }
         }
 //订单确认
@@ -172,6 +174,13 @@ class UpOrderActivity : BaseActivity(R.layout.activity_up_order) {
 //                    mBinding.ivOrderpic.load(imgShow?:"")
                     mBinding.tvPrice.text="￥".plus(priceActual?:"")
                     mTitle=name?:""
+
+                    //赠品
+                    gift?.run {
+                        if (isNotEmpty()){
+//                            mBinding.ivGiftpic.load(head)
+                        }
+                    }
                 }
 //                mBinding.tvTotalPrice.text=(priceActual?:0.00).toString()
 
@@ -203,8 +212,15 @@ class UpOrderActivity : BaseActivity(R.layout.activity_up_order) {
 
             start(this@UpOrderActivity,AddressActivity().javaClass,intent)
         }
-        //activity启动器
-
+        //规格
+        intent.iskuName?.run {
+            mBinding.tvSpecifications.visibility=View.VISIBLE
+            mBinding.tvSpecifications.text="商品规格:".plus(this)//规格
+        }
+//        备注
+        mBinding.tvOrdernote.fastClick {
+            showNote()
+        }
     }
 
     /***
@@ -342,15 +358,51 @@ class UpOrderActivity : BaseActivity(R.layout.activity_up_order) {
         })
     }
 
-    private fun getAddress(intent: Intent){
-        mBinding.addressName.text = intent.getStringExtra("name")
-        mBinding.addressPhone.text = intent.getStringExtra("phone")
-        val province = intent.getStringExtra("province")
-        val city = intent.getStringExtra("city")
-        val area = intent.getStringExtra("area")
-        val detail = intent.getStringExtra("detail")
+    private fun getAddress(i: Intent){
+        val name=i.getStringExtra("name")
+        val phone=i.getStringExtra("phone")
+        val province = i.getStringExtra("province")
+        val city = i.getStringExtra("city")
+        val area = i.getStringExtra("area")
+        val detail = i.getStringExtra("detail")
         mBinding.tvAddressDetail.text = province.plus(city).plus(area).plus(detail)
+        mBinding.addressName.text = name
+        mBinding.addressPhone.text = phone
         mBinding.layoutAddress02.visibility = View.VISIBLE
+
+        intent.iprovince=province
+        intent.icity=city
+        intent.iarea=area
+        intent.iaddress=detail
+        intent.iname=name
+        intent.iphone=phone
+    }
+
+    /***
+     * 备注
+     */
+    private fun showNote(){
+        val view=layoutInflater.inflate(R.layout.layout_note,null)
+        noteBinding= LayoutNoteBinding.bind(view)
+        noteBinding.btnNote.fastClick {
+            mBinding.tvOrdernote.text=noteBinding.edtNote.text.toString()
+            noteDialog.dismiss()
+        }
+        noteBinding.noteClose.fastClick {
+            noteDialog.dismiss()
+        }
+        noteDialog.contentView=noteBinding.root
+        noteDialog.setOutSideDismiss(true).setOutSideTouchable(true)
+            .setPopupGravity(Gravity.BOTTOM)
+            .setShowAnimation(
+                AnimationHelper.asAnimation().withTranslation(TranslationConfig.FROM_BOTTOM)
+                    .toShow()
+            )
+            .setDismissAnimation(
+                AnimationHelper.asAnimation().withTranslation(TranslationConfig.TO_BOTTOM)
+                    .toDismiss()
+            )
+            .showPopupWindow()
     }
 
     override fun onDestroy() {

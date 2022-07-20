@@ -7,7 +7,7 @@
     <com.hjq.shape.layout.ShapeConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="15dp"
+        android:padding="16dp"
         app:shape_topLeftRadius="25dp"
         app:shape_topRightRadius="25dp"
         app:shape_solidColor="@color/white"
@@ -45,10 +45,7 @@
         app:shape_solidColor="@color/white"
         app:shape_strokeWidth="0.5dp"
         app:shape_strokeColor="@color/CCCCCC"
-        android:paddingStart="15dp"
-        android:paddingTop="8dp"
-        android:paddingEnd="15dp"
-        android:paddingBottom="8dp"
+
         android:orientation="horizontal"
         app:layout_constraintTop_toTopOf="@id/label_count"
         app:layout_constraintBottom_toBottomOf="@id/label_count"
@@ -56,49 +53,77 @@
         <TextView
             android:id="@+id/tv_sub"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="-"
-            android:textColor="@color/CCCCCC"/>
+            android:textColor="@color/CCCCCC"
+            android:paddingStart="18dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="18dp"
+            android:paddingBottom="10dp"/>
 
         <TextView
             android:layout_width="0.5dp"
             android:layout_height="match_parent"
             android:text=""
             android:background="@color/CCCCCC"
-            android:layout_marginStart="10dp"/>
+            android:layout_marginStart="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"/>
 
         <TextView
             android:id="@+id/tv_count"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="1"
             android:textColor="@color/F1A1A1A"
-            android:layout_marginStart="10dp"/>
+            android:layout_marginStart="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"/>
 
         <TextView
             android:layout_width="0.5dp"
             android:layout_height="match_parent"
             android:text=""
             android:background="@color/CCCCCC"
-            android:layout_marginStart="10dp"/>
+            android:layout_marginStart="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"/>
 
         <TextView
             android:id="@+id/tv_plus"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginStart="10dp"
             android:text="+"
-            android:textColor="@color/F1A1A1A"/>
+            android:textColor="@color/F1A1A1A"
+            android:paddingStart="18dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="18dp"
+            android:paddingBottom="10dp"/>
 
     </com.hjq.shape.layout.ShapeLinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list_specification"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:listitem="@layout/layout_flex_tag"
-        app:layout_constraintBottom_toTopOf="@id/label_count"
-        android:layout_marginBottom="38dp"/>
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/list_specification"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        tools:listitem="@layout/layout_flex_tag"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/label_count"-->
+<!--        android:layout_marginBottom="38dp"-->
+<!--        android:visibility="gone"/>-->
+
+        <com.donkingliang.labels.LabelsView
+            android:id="@+id/list_specification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/label_count"
+            android:layout_marginBottom="38dp"
+            app:labelTextSize="14dp"
+            app:selectType="SINGLE"
+            app:labelBackground="@drawable/label_bg"
+            app:labelTextColor="@drawable/label_text_color"
+            app:lineMargin="15dp"
+            app:wordMargin="10dp"/>
 
 
     <TextView

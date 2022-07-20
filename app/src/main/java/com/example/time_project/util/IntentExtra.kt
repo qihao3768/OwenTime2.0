@@ -11,6 +11,7 @@ class IntentExtra {
 
         var Intent.icode by IntentExtraString("code")//商品代码
         var Intent.isku by IntentExtraString("sku")//skuid
+        var Intent.iskuName by IntentExtraString("skuname")//skuid
         var Intent.inum by IntentExtraInt("num")//购买数量
         var Intent.icoupon by IntentExtraString("coupon")//优惠券id
         var Intent.iproductId by IntentExtraInt("productId")//商品ID
