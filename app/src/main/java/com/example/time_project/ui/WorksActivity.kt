@@ -29,19 +29,13 @@ class WorksActivity : BaseActivity(R.layout.activity_works) {
             fitsSystemWindows(true)
         }
         val data=getData()
-        if (data.isNullOrEmpty()){
-            mBinding.stateWorks.apply {
-                emptyLayout=R.layout.empty_works
-            }.showEmpty()
-        }else{
-            mBinding.rvWorks.linear().setup {
-                addType<WorksBean>(R.layout.layout_works)
-                onFastClick(R.id.btn_play){
-                    intent.url="https://owen-time-test.oss-cn-beijing.aliyuncs.com/courses/cou/1643348728_216a94a44ba39a71.mp4"
-                    start(this@WorksActivity,ExoplayerActivity().javaClass,intent)
-                }
-            }.models=data
-        }
+        mBinding.rvWorks.linear().setup {
+            addType<WorksBean>(R.layout.layout_works)
+            onFastClick(R.id.btn_play){
+                intent.url="https://owen-time-test.oss-cn-beijing.aliyuncs.com/courses/cou/1643348728_216a94a44ba39a71.mp4"
+                start(this@WorksActivity,ExoplayerActivity().javaClass,intent)
+            }
+        }.models=data
 
 
         mBinding.titleWorks.leftView.fastClick {

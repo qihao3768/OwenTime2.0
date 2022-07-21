@@ -43,12 +43,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:ellipsize="end"
-        android:maxLines="1"
         android:textColor="@color/F1A1A1A"
         android:textSize="14dp"
         app:layout_constraintEnd_toStartOf="@id/layout_show"
         app:layout_constraintStart_toEndOf="@id/course_left"
-        app:layout_constraintTop_toBottomOf="@id/iv_course_pic" />
+        app:layout_constraintTop_toBottomOf="@id/iv_course_pic"
+        android:visibility="invisible"/>
     <LinearLayout
         android:id="@+id/layout_show"
         android:layout_width="wrap_content"
@@ -67,8 +67,7 @@
         <ImageView
             android:id="@+id/iv_show"
             android:layout_width="12dp"
-            android:layout_height="8dp"
-            android:background="@drawable/video_down_icon"/>
+            android:layout_height="8dp" />
     </LinearLayout>
     <com.drake.statelayout.StateLayout
         android:id="@+id/state_course"

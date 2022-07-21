@@ -39,11 +39,13 @@ android {
     buildTypes {
         release {
             minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
         debug {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
@@ -132,6 +134,7 @@ dependencies {
     implementation('com.github.ydstar:loadingdialog:1.0.0')//loading
 
     implementation 'com.github.donkingliang:LabelsView:1.6.5'//标签控件
+
 
 //    implementation "com.mikepenz:fastadapter:5.6.0"
 

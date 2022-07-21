@@ -164,8 +164,9 @@ class OwenViewModel() : BaseViewModel() {
     /***
      * 销户
      */
-    private val logOffData=MutableLiveData<BaseResponse<String?>>()
+
     fun logOff(): MutableLiveData<BaseResponse<String?>> {
+        val logOffData=MutableLiveData<BaseResponse<String?>>()
         launchUI {
             val result=owenReps.logOff()
             logOffData.value= result
@@ -199,5 +200,18 @@ class OwenViewModel() : BaseViewModel() {
             }
         }
         return orderListData
+    }
+
+    /***
+     * 保存配音
+     */
+    fun storageDub(courseId: String,url:String):MutableLiveData<BaseResponse<String?>>{
+        val liveData=MutableLiveData<BaseResponse<String?>>()
+        launchUI {
+            val result=owenReps.storageDub(courseId,url)
+            liveData.value= result
+
+        }
+        return liveData
     }
 }

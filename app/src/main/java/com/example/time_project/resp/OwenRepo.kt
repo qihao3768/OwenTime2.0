@@ -170,6 +170,16 @@ class OwenRepo():BaseRepository(){
 
     }
 
+    /***
+     * 保存配音
+     */
+    suspend fun storageDub(courseid:String,path:String): BaseResponse<String?> = request {
+//        val mtoken = RequestBody.create(null, token)
+        val file = File(path)
+        val requestBody: MultipartBody.Part = RequestFileUtil.uploadFile("photo", file)
+        mService.storageDub(courseid,requestBody)
+    }
+
 
     fun orderListPage(): Flow<PagingData<OrderListData>> {
         return Pager(config = PagingConfig(PAGE_SIZE, prefetchDistance = 0), pagingSourceFactory = {
