@@ -12,16 +12,19 @@ import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.lifecycle.Observer
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.alipay.sdk.app.PayTask
+import com.drake.brv.utils.linear
+import com.drake.brv.utils.setup
 import com.example.time_project.*
 import com.example.time_project.base.BaseActivity
 import com.example.time_project.base.BasePopWindow
-import com.example.time_project.bean.ConfirmOrderRequestBody
-import com.example.time_project.bean.UpOrderDetailRequestBody
-import com.example.time_project.bean.UpOrderRequestBody
-import com.example.time_project.bean.WeiXinPay
+import com.example.time_project.bean.*
+import com.example.time_project.bean.order.Gift
+import com.example.time_project.bean.order.Product01
+import com.example.time_project.bean.yigou.Product02
 import com.example.time_project.databinding.ActivityUpOrderBinding
 import com.example.time_project.databinding.LayoutNoteBinding
 import com.example.time_project.databinding.LayoutSpecificationsBinding
@@ -169,18 +172,29 @@ class UpOrderActivity : BaseActivity(R.layout.activity_up_order) {
                     intent.iid=addressId?:-1
                 }
                 product?.run {
-                    mBinding.tvOrdertitle.text=name?:""
-                    mBinding.ivOrderpic.load(imgShow?:"")
-//                    mBinding.ivOrderpic.load(imgShow?:"")
-                    mBinding.tvPrice.text="￥".plus(priceActual?:"")
-                    mTitle=name?:""
-
-                    //赠品
-                    gift?.run {
-                        if (isNotEmpty()){
-//                            mBinding.ivGiftpic.load(head)
+                    mBinding.giftList.linear().setup {
+                        addType<Product01>(R.layout.item_uporder)
+                        addType<Gift>(R.layout.item_gift)
+                        val list= mutableListOf<Any>()
+                        list.add(product)
+                        gift?.forEach {_gift->
+                            list.add(_gift)
                         }
+                        models=list
+
                     }
+//                    mBinding.tvOrdertitle.text=name?:""
+//                    mBinding.ivOrderpic.load(imgShow?:"")
+////                    mBinding.ivOrderpic.load(imgShow?:"")
+//                    mBinding.tvPrice.text="￥".plus(priceActual?:"")
+//                    mTitle=name?:""
+//
+//                    //赠品
+//                    gift?.run {
+//                        if (isNotEmpty()){
+//
+//                        }
+//                    }
                 }
 //                mBinding.tvTotalPrice.text=(priceActual?:0.00).toString()
 

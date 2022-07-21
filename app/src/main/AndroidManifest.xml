@@ -52,7 +52,9 @@
             android:exported="false" />
         <activity
             android:name=".ui.CourseDetailActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:configChanges="orientation|screenSize|keyboardHidden|fontScale"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.VideoListActivity"
             android:exported="false" />

@@ -41,12 +41,15 @@ data class CourseX(
     @SerializedName("sort")
     val sort: Int? = 0,
     @SerializedName("url")
-    val url: String? = ""
+    val url: String? = "",
+    @SerializedName("duration")
+    val duration: String? = ""
 ):ItemBind{
     override fun onBind(holder: BindingAdapter.BindingViewHolder) {
         val binding= ItemCourseBinding.bind(holder.itemView)
-        binding.ivPlayingCourse.load(image?:"")
-        binding.tvPlayingTitle.text=name?:""
+        binding.ivPlayingCourse.load(image?:"")//图像
+        binding.tvPlayingTitle.text=name?:""//名字
+        binding.tvPlayingTime.text=duration?:""//时长
         binding.ivSuo.visibility=when(isLocked){
             0->{
                 View.GONE

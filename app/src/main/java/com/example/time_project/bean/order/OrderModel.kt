@@ -4,8 +4,11 @@ import android.view.View
 import com.drake.brv.BindingAdapter
 import com.drake.brv.item.ItemBind
 import com.example.time_project.R
+import com.example.time_project.databinding.ItemGiftBinding
 import com.example.time_project.databinding.ItemOrderBinding
+import com.example.time_project.databinding.ItemUporderBinding
 import com.example.time_project.databinding.LayoutWorksBinding
+import com.example.time_project.load
 import com.google.gson.annotations.SerializedName
 
 //订单确认
@@ -72,7 +75,22 @@ data class Product01(
     val skuId: Int? = 0,
     @SerializedName("sku_name")
     val skuName: String? = ""
-)
+):ItemBind{
+    override fun onBind(holder: BindingAdapter.BindingViewHolder) {
+        val binding= ItemUporderBinding.bind(holder.itemView)
+        binding.tvOrdertitle.text=name?:""
+        binding.ivOrderpic.load(imgShow?:"")
+//                    mBinding.ivOrderpic.load(imgShow?:"")
+        binding.tvPrice.text="￥".plus(priceActual?:"")
+        binding.tvSpecifications.text=if (skuName.isNullOrEmpty()) {
+            ""
+        }else{
+
+            "商品规格:".plus(skuName)
+        }
+
+    }
+}
 
 data class Gift(
     @SerializedName("gift_id")
@@ -89,7 +107,15 @@ data class Gift(
     val price: String? = "",
     @SerializedName("sku_id")
     val skuId: Int? = 0
-)
+):ItemBind{
+    override fun onBind(holder: BindingAdapter.BindingViewHolder) {
+        val binding= ItemGiftBinding.bind(holder.itemView)
+        binding.tvGifttitle.text=name?:""
+        binding.ivGiftpic.load(imgHead?:"")
+//                    mBinding.ivOrderpic.load(imgShow?:"")
+        binding.tvGiftprice.text="￥".plus(price?:"")
+    }
+}
 //end————————————————————————————————————————————————————————
 
 //下单start----------------------------------------------------------

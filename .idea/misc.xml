@@ -36,6 +36,7 @@
         <entry key="..\:/work/OwenTime/app/src/main/res/layout/project_fragment.xml" value="0.2151268115942029" />
         <entry key="..\:/workcode/kotlin/app/src/main/res/drawable/background_progress.xml" value="0.1695" />
         <entry key="..\:/workcode/kotlin/app/src/main/res/drawable/cursor.xml" value="0.1675" />
+        <entry key="..\:/workcode/kotlin/app/src/main/res/drawable/item_divider.xml" value="0.1385" />
         <entry key="..\:/workcode/kotlin/app/src/main/res/drawable/label_bg.xml" value="0.1385" />
         <entry key="..\:/workcode/kotlin/app/src/main/res/drawable/label_text_color.xml" value="0.1385" />
         <entry key="..\:/workcode/kotlin/app/src/main/res/drawable/select_zf.xml" value="0.1685" />
@@ -78,11 +79,14 @@
         <entry key="..\:/workcode/kotlin/app/src/main/res/layout/home_fragment.xml" value="0.264" />
         <entry key="..\:/workcode/kotlin/app/src/main/res/layout/include_exo3.xml" value="0.1755399296835761" />
         <entry key="..\:/workcode/kotlin/app/src/main/res/layout/item_course.xml" value="0.1755399296835761" />
+        <entry key="..\:/workcode/kotlin/app/src/main/res/layout/item_divider.xml" value="0.3640625" />
+        <entry key="..\:/workcode/kotlin/app/src/main/res/layout/item_gift.xml" value="0.3640625" />
         <entry key="..\:/workcode/kotlin/app/src/main/res/layout/item_order.xml" value="0.1755399296835761" />
         <entry key="..\:/workcode/kotlin/app/src/main/res/layout/item_product.xml" value="0.3484375" />
         <entry key="..\:/workcode/kotlin/app/src/main/res/layout/item_product01.xml" value="0.16666666666666666" />
         <entry key="..\:/workcode/kotlin/app/src/main/res/layout/item_product03.xml" value="0.16666666666666666" />
         <entry key="..\:/workcode/kotlin/app/src/main/res/layout/item_product2.xml" value="0.36041666666666666" />
+        <entry key="..\:/workcode/kotlin/app/src/main/res/layout/item_uporder.xml" value="0.3640625" />
         <entry key="..\:/workcode/kotlin/app/src/main/res/layout/item_video.xml" value="0.3484375" />
         <entry key="..\:/workcode/kotlin/app/src/main/res/layout/layout_article.xml" value="0.3484375" />
         <entry key="..\:/workcode/kotlin/app/src/main/res/layout/layout_custom_exo.xml" value="0.1755399296835761" />
