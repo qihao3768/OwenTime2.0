@@ -72,10 +72,11 @@ interface ApiService {
 
     //已购
     @POST("api/product/getUserProduct")
-    suspend fun alreadyBuy():BaseResponse<AlreadyBuyModel?>
-    //已购分页
-    @POST("api/product/getUserProduct")
+    @FormUrlEncoded
     suspend fun alreadyBuy(@Field("page") page: String):BaseResponse<AlreadyBuyModel?>
+    //已购分页
+//    @POST("api/product/getUserProduct")
+//    suspend fun alreadyBuy(@Field("page") page: String):BaseResponse<AlreadyBuyModel?>
 
     //以后商品下的课程列表
     @POST("api/course/productCourse")
@@ -134,9 +135,9 @@ interface ApiService {
     @FormUrlEncoded
     suspend fun orderList(@Field("status") status:String,@Field("page") page: String):BaseResponse<OrderListModel?>
 
-    @POST("api/order/list")
-    @FormUrlEncoded
-    suspend fun orderListPage(@Field("status") status:String,@Field("page") page: String):OrderListModel
+//    @POST("api/order/list")
+//    @FormUrlEncoded
+//    suspend fun orderListPage(@Field("status") status:String,@Field("page") page: String):OrderListModel
 
     //保存配音
     @POST("api/dub/storageDub")

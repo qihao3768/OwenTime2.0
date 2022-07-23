@@ -68,4 +68,6 @@
 -keep class com.github.getActivity.TitleBar** {*;}#下拉刷新
 -keep class com.github.getActivity.ShapeView** {*;}#下拉刷新
 
+-keep class com.example.time_project.bean* {*;}
+
 

@@ -170,7 +170,6 @@ data class OrderListData(
             binding.orderTitle.text= this[0].name
             binding.orderState.text=getState(orderStatus?:-1,binding)
             binding.orderPrice.text="实付款".plus("￥ ").plus(payAmount)
-
             binding.orderSn.text=orderSn
         }
 

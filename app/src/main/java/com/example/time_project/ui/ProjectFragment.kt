@@ -34,10 +34,11 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
         fun newInstance() = ProjectFragment()
     }
 
-    private val viewModel by viewModels<ProjectViewModel>()
+    private val viewModel by viewModels<OwenViewModel>()
     private val mBinding by viewBinding(ProjectFragmentBinding::bind)
     private val mFragmens= mutableListOf<Fragment>()
 
+    private var total=1
     private val mmkv=MMKV.defaultMMKV()
 
     private val refreshOb:Observer<String> = Observer {
@@ -63,113 +64,90 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
      * case 2 已经登录 但是没有购买任何商品，显示推荐
      * case 3 已经登录，并且有购买商品，显示已购列表
      */
-//    private fun getData(){
-//        val token=mmkv.decodeString("token")
-//        viewModel.alreadyBuy().observe(this, Observer {
-//            it?.run {
-//                when(code){
-//                    1000->{
-//
-//                        val body: AlreadyBuyModel?=data
-//                        body?.run {
-//                            val data01=getYiGouData(purchased)
-//                            if (data01.isNullOrEmpty()){
-//                                Log.d("123","123")
-//                                //展示推荐列表
-//                                mBinding.productList02.visibility=View.VISIBLE
-//                                if (recommend.data.isNullOrEmpty()){
-//                                    mBinding.stateWorks.apply {
-//                                        emptyLayout=R.layout.empty_order
-//                                    }.showEmpty()
-//                                }else{
-//                                    mBinding.productList02.linear().setup {
-//                                        addType<Recommend> { R.layout.item_product }
-//                                        addType<HoverHeaderModel> { R.layout.layout_hover_header }
-//                                        val list= mutableListOf<Any>()
-//                                        list.add(HoverHeaderModel("推荐",0,0))
-//                                        list.addAll(recommend.data)
-//
-//                                        models= list
-//                                        onClick(R.id.root_product){
-//                                            val target=if (token.isNullOrBlank()){
-//                                                LoginActivity()
-//                                            }else{
-//                                                requireActivity().intent.code=getModel<Recommend>(modelPosition).code
-//                                                ProductDetailActivity()
-//                                            }
-//                                            start(requireActivity(),target.javaClass,requireActivity().intent)
-//                                        }
-//
-//
-//                                    }
-//                                }
-//
-//                            }else{
-//                                //展示已经购买的课程列表
-//                                Log.d("123","456")
-//                                mBinding.productList01.visibility=View.VISIBLE
-//                                mBinding.productList01.linear().setup {
-//                                    addType<Product02> { R.layout.item_product2 }
-//                                    addType<HoverHeaderModel> { R.layout.layout_hover_header }
-//                                    models=data01
-//                                    onClick(R.id.root_product){
-//                                        requireActivity().intent.iproductId=getModel<Product02>(modelPosition).id?:-1
-//                                        start(requireActivity(),CourseDetailActivity().javaClass,requireActivity().intent)
-//                                    }
-//                                    onClick(R.id.tv_seemore){
-//                                        requireActivity().intent.iproductId=getModel<HoverHeaderModel>(modelPosition).id?:-1
-//                                        requireActivity().intent.courseTitle=getModel<HoverHeaderModel>(modelPosition).header
-//                                        start(requireActivity(),MoreProjectActivity().javaClass,requireActivity().intent)
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-//                    401->{
-//                        toast("登录状态失效，请重新登录")
-//                    }
-//                    else->{
-//                        toast(message.toString())
-//                    }
-//                }
-//            }
-//        })
-//    }
 
     /***
      * 获取列表数据
      */
     private fun getData(){
-        viewModel.alreadyBuy().observe(this, Observer {
-            it?.run {
-                when(code){
-                    1000->{
-                        data?.run {
-                            val yigou=getYiGouData(purchased)
-                            if (yigou.isNullOrEmpty()){
-                                mBinding.productList02.visibility=View.VISIBLE
-                                if (recommend.data.isNullOrEmpty()){
-                                    mBinding.stateWorks.apply {
-                                        emptyLayout=R.layout.empty_order
-                                    }.showEmpty()
-                                }else{
-                                    showRecommond(recommend)
+
+        //已购
+        mBinding.productList01.linear().setup {
+            addType<Product02> { R.layout.item_product2 }
+            addType<HoverHeaderModel> { R.layout.layout_hover_header }
+
+            onClick(R.id.root_product){
+                requireActivity().intent.iproductId=getModel<Product02>(modelPosition).id?:-1
+                start(requireActivity(),CourseDetailActivity().javaClass,requireActivity().intent)
+            }
+            onClick(R.id.tv_seemore){
+                requireActivity().intent.iproductId=getModel<HoverHeaderModel>(modelPosition).id?:-1
+                requireActivity().intent.courseTitle=getModel<HoverHeaderModel>(modelPosition).header
+                start(requireActivity(),MoreProjectActivity().javaClass,requireActivity().intent)
+            }
+        }
+        //推荐
+        mBinding.productList02.linear().setup {
+            addType<Recommend> { R.layout.item_product }
+            addType<HoverHeaderModel> { R.layout.layout_hover_header }
+
+            onClick(R.id.root_product){
+                val token=mmkv.decodeString("token")
+                val target=if (token.isNullOrBlank()){
+                    LoginActivity()
+                }else{
+                    requireActivity().intent.code=getModel<Recommend>(modelPosition).code
+                    ProductDetailActivity()
+                }
+                start(requireActivity(),target.javaClass,requireActivity().intent)
+            }
+        }
+        mBinding.stateWorks.onRefresh {
+            if (index<=total){
+                viewModel.alreadyBuy(index.toString()).observe(this@ProjectFragment, Observer {
+                    it?.run {
+                        when(code){
+                            1000->{
+                                data?.run {
+                                    val yigou=getYiGouData(purchased)
+                                    if (yigou.isNullOrEmpty()){
+
+                                        mBinding.productList02.visibility=View.VISIBLE
+                                        if (recommend.data.isNullOrEmpty()){
+                                            mBinding.stateWorks.apply {
+                                                emptyLayout=R.layout.empty_order
+                                            }.showEmpty()
+                                        }else{
+
+                                            val list= mutableListOf<Any>()
+                                            list.add(HoverHeaderModel("推荐",0,0))
+                                            recommend.data.let { it1 -> list.addAll(it1) }
+                                            addData(list)
+//                                            showRecommond(recommend)
+                                        }
+                                    }else{
+                                        mBinding.productList02.visibility=View.GONE
+                                        mBinding.productList01.visibility=View.VISIBLE
+                                        addData(yigou)
+//                                        showYiGou(yigou)
+                                    }
                                 }
-                            }else{
-                                showYiGou(yigou)
                             }
+                            401->{
+                                toast("登录状态失效，请重新登录")
+                            }
+                            else->{
+                                toast(message.toString())
+                            }
+
                         }
                     }
-                    401->{
-
-                    }
-                    else->{
-                        toast(message.toString())
-                    }
-
-                }
+                })
+            }else{
+                finishLoadMoreWithNoMoreData()
             }
-        })
+
+        }.autoRefresh(1500)
+
     }
 
     /***
@@ -195,51 +173,51 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
 //        LiveEventBus.get<String>("logout").removeObserver(logoutOb)
     }
 
-    /***
-     * 显示已购
-     */
-    private fun showYiGou(data01:List<Any>){
-        mBinding.productList01.visibility=View.VISIBLE
-        mBinding.productList01.linear().setup {
-            addType<Product02> { R.layout.item_product2 }
-            addType<HoverHeaderModel> { R.layout.layout_hover_header }
-            models=data01
-            onClick(R.id.root_product){
-                requireActivity().intent.iproductId=getModel<Product02>(modelPosition).id?:-1
-                start(requireActivity(),CourseDetailActivity().javaClass,requireActivity().intent)
-            }
-            onClick(R.id.tv_seemore){
-                requireActivity().intent.iproductId=getModel<HoverHeaderModel>(modelPosition).id?:-1
-                requireActivity().intent.courseTitle=getModel<HoverHeaderModel>(modelPosition).header
-                start(requireActivity(),MoreProjectActivity().javaClass,requireActivity().intent)
-            }
-        }
-    }
-
-    /***
-     * 显示推荐
-     */
-    private fun showRecommond(recommend: RecommendData){
-        val token=mmkv.decodeString("token")
-        mBinding.productList02.linear().setup {
-            addType<Recommend> { R.layout.item_product }
-            addType<HoverHeaderModel> { R.layout.layout_hover_header }
-            val list= mutableListOf<Any>()
-            list.add(HoverHeaderModel("推荐",0,0))
-            recommend.data?.let { it1 -> list.addAll(it1) }
-
-            models= list
-            onClick(R.id.root_product){
-                val target=if (token.isNullOrBlank()){
-                    LoginActivity()
-                }else{
-                    requireActivity().intent.code=getModel<Recommend>(modelPosition).code
-                    ProductDetailActivity()
-                }
-                start(requireActivity(),target.javaClass,requireActivity().intent)
-            }
-        }
-    }
+//    /***
+//     * 显示已购
+//     */
+//    private fun showYiGou(data01:List<Any>){
+//        mBinding.productList01.visibility=View.VISIBLE
+//        mBinding.productList01.linear().setup {
+//            addType<Product02> { R.layout.item_product2 }
+//            addType<HoverHeaderModel> { R.layout.layout_hover_header }
+//            models=data01
+//            onClick(R.id.root_product){
+//                requireActivity().intent.iproductId=getModel<Product02>(modelPosition).id?:-1
+//                start(requireActivity(),CourseDetailActivity().javaClass,requireActivity().intent)
+//            }
+//            onClick(R.id.tv_seemore){
+//                requireActivity().intent.iproductId=getModel<HoverHeaderModel>(modelPosition).id?:-1
+//                requireActivity().intent.courseTitle=getModel<HoverHeaderModel>(modelPosition).header
+//                start(requireActivity(),MoreProjectActivity().javaClass,requireActivity().intent)
+//            }
+//        }
+//    }
+//
+//    /***
+//     * 显示推荐
+//     */
+//    private fun showRecommond(recommend: RecommendData){
+//        val token=mmkv.decodeString("token")
+//        mBinding.productList02.linear().setup {
+//            addType<Recommend> { R.layout.item_product }
+//            addType<HoverHeaderModel> { R.layout.layout_hover_header }
+//            val list= mutableListOf<Any>()
+//            list.add(HoverHeaderModel("推荐",0,0))
+//            recommend.data?.let { it1 -> list.addAll(it1) }
+//
+//            models= list
+//            onClick(R.id.root_product){
+//                val target=if (token.isNullOrBlank()){
+//                    LoginActivity()
+//                }else{
+//                    requireActivity().intent.code=getModel<Recommend>(modelPosition).code
+//                    ProductDetailActivity()
+//                }
+//                start(requireActivity(),target.javaClass,requireActivity().intent)
+//            }
+//        }
+//    }
 
 
 }

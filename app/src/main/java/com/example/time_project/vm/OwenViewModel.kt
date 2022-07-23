@@ -2,8 +2,8 @@ package com.example.time_project.vm
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
+//import androidx.paging.PagingData
+//import androidx.paging.cachedIn
 import com.example.time_project.base.BaseResponse
 
 import com.example.time_project.base.BaseViewModel
@@ -78,10 +78,11 @@ class OwenViewModel() : BaseViewModel() {
     }
 
     //已购
-    private val alreadyBuyData=MutableLiveData<BaseResponse<AlreadyBuyModel?>>()
-    fun alreadyBuy():MutableLiveData<BaseResponse<AlreadyBuyModel?>>{
+
+    fun alreadyBuy(page: String):MutableLiveData<BaseResponse<AlreadyBuyModel?>>{
+        val alreadyBuyData=MutableLiveData<BaseResponse<AlreadyBuyModel?>>()
         launchUI {
-            val result = owenReps.alreadyBuy()
+            val result = owenReps.alreadyBuy(page)
             alreadyBuyData.value = result
         }
         return alreadyBuyData
@@ -128,24 +129,26 @@ class OwenViewModel() : BaseViewModel() {
     }
 
     //微信支付
-    private val weiXinPayData=MutableLiveData<BaseResponse<WeiXinPay?>>()
+
     fun weiChatPay(amount:String,subject:String,order:String):MutableLiveData<BaseResponse<WeiXinPay?>>{
+        val liveData=MutableLiveData<BaseResponse<WeiXinPay?>>()
         launchUI {
             val result = owenReps.weiChatPay(amount, subject, order)
-            weiXinPayData.value = result
+            liveData.value = result
         }
-        return weiXinPayData
+        return liveData
     }
 
 
     //微信支付
-    private val aliPayData=MutableLiveData<BaseResponse<String?>>()
+
     fun aliPay(amount:String,subject:String,order:String):MutableLiveData<BaseResponse<String?>>{
+        val liveData=MutableLiveData<BaseResponse<String?>>()
         launchUI {
             val result = owenReps.aliPay(amount, subject, order)
-            aliPayData.value = result
+            liveData.value = result
         }
-        return aliPayData
+        return liveData
     }
 
     /***
@@ -176,31 +179,32 @@ class OwenViewModel() : BaseViewModel() {
     }
 
 
-//    /***
-//     * 订单列表
-//     */
-//    private val orderListData=MutableLiveData<BaseResponse<OrderListModel?>>()
-//    fun orderList(status:String,page: String): MutableLiveData<BaseResponse<OrderListModel?>> {
-//        launchUI {
-//            val result=owenReps.orderList(status, page)
-//            orderListData.value= result
-//
-//        }
-//        return orderListData
-//    }
+    /***
+     * 订单列表
+     */
+
+    fun orderList(status:String,page: String): MutableLiveData<BaseResponse<OrderListModel?>> {
+        val liveData=MutableLiveData<BaseResponse<OrderListModel?>>()
+        launchUI {
+            val result=owenReps.orderList(status, page)
+            liveData.value= result
+
+        }
+        return liveData
+    }
 
     /***
      * 订单列表
      */
-    private val orderListData=MutableLiveData<PagingData<OrderListData>>()
-    fun orderList(status:String,page: String): MutableLiveData<PagingData<OrderListData>> {
-        launchUI {
-            owenReps.orderListPage().cachedIn(viewModelScope).collectLatest {
-                orderListData.value= it
-            }
-        }
-        return orderListData
-    }
+//    private val orderListData=MutableLiveData<PagingData<OrderListData>>()
+//    fun orderList(status:String,page: String): MutableLiveData<PagingData<OrderListData>> {
+//        launchUI {
+//            owenReps.orderListPage().cachedIn(viewModelScope).collectLatest {
+//                orderListData.value= it
+//            }
+//        }
+//        return orderListData
+//    }
 
     /***
      * 保存配音
@@ -214,4 +218,5 @@ class OwenViewModel() : BaseViewModel() {
         }
         return liveData
     }
+
 }

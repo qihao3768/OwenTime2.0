@@ -11,9 +11,9 @@ class ProjectViewModel : BaseViewModel() {
 
 //已购
 private val alreadyBuyData= MutableLiveData<BaseResponse<AlreadyBuyModel?>>()
-    fun alreadyBuy(): MutableLiveData<BaseResponse<AlreadyBuyModel?>> {
+    fun alreadyBuy(page:String): MutableLiveData<BaseResponse<AlreadyBuyModel?>> {
         launchUI {
-            val result = owenReps.alreadyBuy()
+            val result = owenReps.alreadyBuy(page)
             alreadyBuyData.value = result
         }
         return alreadyBuyData

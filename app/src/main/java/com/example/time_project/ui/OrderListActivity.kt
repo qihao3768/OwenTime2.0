@@ -5,14 +5,14 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.drake.brv.BindingAdapter
 import com.drake.brv.utils.linear
 import com.drake.brv.utils.setup
+import com.drake.statelayout.StateConfig.emptyLayout
 import com.example.time_project.R
-import com.example.time_project.adapter.OrderListAdapter
 import com.example.time_project.base.BaseActivity
 import com.example.time_project.bean.order.OrderListData
-import com.example.time_project.bean.order.OrderListModel
-import com.example.time_project.bean.order.OrderModel
+
 
 import com.example.time_project.databinding.ActivityOrderListBinding
 import com.example.time_project.fastClick
@@ -28,7 +28,7 @@ class OrderListActivity : BaseActivity(R.layout.activity_order_list) {
     private val mViewModel by viewModels<OwenViewModel>()
     private val image01="https://owen-time-test.oss-cn-beijing.aliyuncs.com/banner/1653729726_c61eaad874317a85.jpg"
 
-    private var TOTAL_PAGE:Int=0
+    private var total:Int=1
 
     override fun initData() {
         immersionBar {
@@ -44,42 +44,45 @@ class OrderListActivity : BaseActivity(R.layout.activity_order_list) {
 //                    toast(getModel<OrderModel>(modelPosition).price)
                 start(this@OrderListActivity,OrderDetailActivity().javaClass,false)
             }
+
         }
-//        mBinding.pageOrder.preloadIndex=0
-//        mBinding.pageOrder.index=1
-        getData("1","1")
-//        //刷新
-//        mBinding.pageOrder.onRefresh {
-//            postDelayed({
-//                getData("1",index.toString())
-//            }, 1000)
-//        }.autoRefresh(1500)//下拉刷新
-////加载更多
-//        mBinding.pageOrder.onLoadMore {
-//            if (index <= TOTAL_PAGE) {
-//                getData("1", index.toString())// 模拟网络请求2秒后成功, 创建假的数据集
-//            } else {
-//                finishLoadMoreWithNoMoreData()
-//            }
-//        }
+        //下拉刷新
+        mBinding.pageOrder.onRefresh {
+            if (index<=total){
+                mViewModel.orderList("",index.toString()).observe(this@OrderListActivity, Observer {
+                    it?.run {
+                        when(code){
+                            1000->{
+                                data?.run {
+                                    total=pageCount?:1
+                                    if (orderlist.isNullOrEmpty()){
+                                        mBinding.pageOrder.apply {
+                                            emptyLayout=R.layout.empty_order
+                                        }.showEmpty()
+                                    }else{
+                                        addData(orderlist)
+                                    }
+                                }
+
+                            }
+                            401->{
+                                toast("登录状态失效，请重新登录")
+                            }else->{
+                            toast(message.toString())
+                        }
+                        }
+                    }
+                })
+            }else{
+                finishLoadMoreWithNoMoreData()
+            }
+
+        }.autoRefresh(1500)
+
 
         mBinding.titleOrder.leftView.fastClick {
             finish()
         }
-    }
-
-    /***
-     * 测试数据
-     */
-    private fun getData(status:String,page:String){
-        val orderListAdapter=OrderListAdapter()
-        mBinding.listOrder.adapter=orderListAdapter
-        mViewModel.orderList(status, page).observe(this, Observer {
-
-           lifecycleScope.launch {
-               orderListAdapter.submitData(it)
-           }
-       })
     }
 
 }

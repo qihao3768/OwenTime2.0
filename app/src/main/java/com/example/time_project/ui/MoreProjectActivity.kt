@@ -28,7 +28,7 @@ import kotlinx.coroutines.coroutineScope
 class MoreProjectActivity : BaseActivity(R.layout.activity_more_project) {
     private val mBinding by viewBinding(ActivityMoreProjectBinding::bind)
     private val viewModel by viewModels<OwenViewModel>()
-    private var totalPage=0//总页数
+    private var total=1//总页数
 
     override fun initData() {
         immersionBar {
@@ -52,53 +52,34 @@ class MoreProjectActivity : BaseActivity(R.layout.activity_more_project) {
         }
 
         mBinding.productPage.onRefresh {
-            postDelayed(
-                {
-                    addData(getData(index)){
-                        toast("123")
-                        models=getData(index)
-                        index<totalPage
-                    }
-                },
-            1000
-            )
-
-
-        }.autoRefresh(1500)
-
-
-    }
-    private fun getData(index:Int):List<Product02>{
-        return mutableListOf<Product02>().apply {
-            viewModel.pageYiGou(intent.iproductId.toString(),index.toString()).observe(this@MoreProjectActivity, Observer {
-                it?.run {
-                    when(code){
-                        1000->{
-                            data?.run {
-                                if (data==null){
-                                    toast(message.toString())
-                                }else{
-                                    totalPage=pageCount?:1
-                                    data.product?.forEach {product02->
-                                        if (product02 != null) {
-                                            add(product02)
-                                        }
+            if (index<=total){
+                viewModel.pageYiGou(intent.iproductId.toString(),index.toString()).observe(this@MoreProjectActivity, Observer {
+                    it?.run {
+                        when(code){
+                            1000->{
+                                data?.run {
+                                    if (data==null){
+                                        toast(message.toString())
+                                    }else{
+                                        total=pageCount?:1
+                                        addData(data.product)
                                     }
-//                                    mBinding.productPage.addData(data.product)
                                 }
                             }
-                        }
-                        401->{
-                            toast("登录状态失效，请重新登录")
-                        }
-                        else->{
-                            toast(message.toString())
+                            401->{
+                                toast("登录状态失效，请重新登录")
+                            }
+                            else->{
+                                toast(message.toString())
+                            }
                         }
                     }
-                }
-            })
-        }
-
+                })
+            }else{
+                finishLoadMoreWithNoMoreData()
+            }
+        }.autoRefresh(1500)
 
     }
+
 }

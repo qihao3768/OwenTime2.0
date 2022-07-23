@@ -1,8 +1,8 @@
 package com.example.time_project.resp
 
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
+//import androidx.paging.Pager
+//import androidx.paging.PagingConfig
+//import androidx.paging.PagingData
 import com.example.time_project.base.BaseRepository
 import com.example.time_project.base.BaseResponse
 import com.example.time_project.bean.*
@@ -15,7 +15,7 @@ import com.example.time_project.bean.order.*
 import com.example.time_project.bean.yigou.AlreadyBuyModel
 import com.example.time_project.bean.yigou.YiGouPage
 import com.example.time_project.net.RetrofitClient
-import com.example.time_project.paging.OrderListPagingSource
+//import com.example.time_project.paging.OrderListPagingSource
 import com.example.time_project.util.RequestFileUtil
 import kotlinx.coroutines.flow.Flow
 import okhttp3.MultipartBody
@@ -109,8 +109,8 @@ class OwenRepo():BaseRepository(){
     /***
      * 已购
      */
-    suspend fun alreadyBuy(): BaseResponse<AlreadyBuyModel?> = request {
-        mService.alreadyBuy()
+    suspend fun alreadyBuy(page: String): BaseResponse<AlreadyBuyModel?> = request {
+        mService.alreadyBuy(page)
     }
 
     /***
@@ -163,7 +163,7 @@ class OwenRepo():BaseRepository(){
     }
 
     /***
-     * 注销
+     * 订单列表
      */
     suspend fun orderList(status:String,page: String): BaseResponse<OrderListModel?> = request {
         mService.orderList(status, page)
@@ -181,9 +181,9 @@ class OwenRepo():BaseRepository(){
     }
 
 
-    fun orderListPage(): Flow<PagingData<OrderListData>> {
-        return Pager(config = PagingConfig(PAGE_SIZE, prefetchDistance = 0), pagingSourceFactory = {
-            OrderListPagingSource(mService)
-        }).flow
-    }
+//    fun orderListPage(): Flow<PagingData<OrderListData>> {
+//        return Pager(config = PagingConfig(PAGE_SIZE, prefetchDistance = 0), pagingSourceFactory = {
+//            OrderListPagingSource(mService)
+//        }).flow
+//    }
 }

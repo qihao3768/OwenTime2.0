@@ -181,7 +181,7 @@ class UpOrderActivity : BaseActivity(R.layout.activity_up_order) {
                             list.add(_gift)
                         }
                         models=list
-
+                        mTitle=name?:""
                     }
 //                    mBinding.tvOrdertitle.text=name?:""
 //                    mBinding.ivOrderpic.load(imgShow?:"")
