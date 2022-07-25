@@ -49,7 +49,7 @@ class OrderListActivity : BaseActivity(R.layout.activity_order_list) {
         //下拉刷新
         mBinding.pageOrder.onRefresh {
             if (index<=total){
-                mViewModel.orderList("",index.toString()).observe(this@OrderListActivity, Observer {
+                mViewModel.orderList("1,2,3",index.toString()).observe(this@OrderListActivity, Observer {
                     it?.run {
                         when(code){
                             1000->{

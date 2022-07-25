@@ -61,7 +61,7 @@ interface ApiService {
     @FormUrlEncoded
     suspend fun confirmPage(@FieldMap map:HashMap<String,Any>):BaseResponse<ConfirmOrderModel?>
 
-    //确认订单
+    //修改地址
     @POST("api/address/change")
     @FormUrlEncoded
     suspend fun changeAddress(@FieldMap map:HashMap<String,Any>):BaseResponse<String?>
@@ -141,9 +141,8 @@ interface ApiService {
 
     //保存配音
     @POST("api/dub/storageDub")
-    @FormUrlEncoded
     @Multipart
-    suspend fun storageDub(@Field("course_id") course_id:String,@Part url: MultipartBody.Part):BaseResponse<String?>
+    suspend fun storageDub(@Part("course_id") course_id:RequestBody,@Part url: MultipartBody.Part):BaseResponse<EmptyModel?>
 
     companion object {
 //        const val BASE_URL = "http://192.168.2.184:8080/"

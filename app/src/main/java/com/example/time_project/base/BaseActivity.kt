@@ -53,4 +53,8 @@ abstract class BaseActivity(@LayoutRes private val layoutId:Int) : AppCompatActi
             this.dismiss()
         }
     }
+
+    protected fun removeActivity(){
+        ActivityManager.instance.removeActivity(this)
+    }
 }

@@ -1,8 +1,11 @@
 package com.example.time_project.ui
 
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.load
 import com.drake.brv.annotaion.AnimationType
@@ -10,11 +13,8 @@ import com.drake.brv.utils.linear
 import com.drake.brv.utils.setup
 import com.example.time_project.*
 import com.example.time_project.base.BaseActivity
-
-import com.example.time_project.bean.CourseItemModel
 import com.example.time_project.bean.order.Course
 import com.example.time_project.bean.order.CourseX
-
 import com.example.time_project.databinding.ActivityCourseDetailBinding
 import com.example.time_project.util.IntentExtra.Companion.courseDub
 import com.example.time_project.util.IntentExtra.Companion.courseId
@@ -22,10 +22,9 @@ import com.example.time_project.util.IntentExtra.Companion.courseTitle
 import com.example.time_project.util.IntentExtra.Companion.courseUrl
 import com.example.time_project.util.IntentExtra.Companion.iproductId
 import com.example.time_project.util.TextViewLinesUtil
-import com.example.time_project.vm.LoginViewModel
 import com.example.time_project.vm.OwenViewModel
-import com.example.time_project.widget.ExpandTextView
 import com.gyf.immersionbar.ktx.immersionBar
+import kotlinx.coroutines.launch
 
 
 class CourseDetailActivity : BaseActivity(R.layout.activity_course_detail) {
@@ -83,7 +82,22 @@ class CourseDetailActivity : BaseActivity(R.layout.activity_course_detail) {
                                     tv.visibility=View.VISIBLE
                                 }
                                 mBinding.ivShow.load(R.drawable.video_down_icon)
-                                mBinding.ivCoursePic.load(body.imgHead?:"")
+//                                mBinding.ivCoursePic.load(body.imgHead?:"")
+                                 lifecycleScope.launch{
+                                    val bitmap=getImageBitmapByUrl(body.imgHead?:"")
+                                     val width=bitmap?.width
+                                     val height=bitmap?.height
+                                     Log.d("width",width.toString())
+                                     Log.d("height",height.toString())
+                                     val scll= width?.div(height?:width)
+                                     Log.d("scll",scll.toString())
+
+                                     val constraintSet = ConstraintSet()
+                                     constraintSet.setDimensionRatio(mBinding.ivCoursePic.id, "h,$scll")
+
+                                     mBinding.ivCoursePic.load(body.imgHead?:"")
+                                }
+
                                 show(body.course)
                             }
 
@@ -108,7 +122,7 @@ class CourseDetailActivity : BaseActivity(R.layout.activity_course_detail) {
         if (data.isNullOrEmpty()){
             //显示空视图
             mBinding.stateCourse.apply {
-                emptyLayout=R.layout.empty_order
+                emptyLayout=R.layout.empty_course
             }.showEmpty()
         }else{
             mBinding.listCourse.linear().setup {

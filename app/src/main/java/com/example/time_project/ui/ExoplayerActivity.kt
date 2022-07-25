@@ -9,6 +9,7 @@ import android.os.Handler
 import android.util.Log
 import android.view.Gravity
 import android.view.KeyEvent
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -38,6 +39,8 @@ import com.google.android.exoplayer2.Player.PositionInfo
 import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 import com.gyf.immersionbar.BarHide
 import com.gyf.immersionbar.ktx.immersionBar
+import com.hjq.shape.view.ShapeButton
+import com.hjq.shape.view.ShapeTextView
 import com.permissionx.guolindev.PermissionX
 import com.umeng.socialize.ShareAction
 import com.umeng.socialize.UMShareListener
@@ -85,6 +88,10 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
     private lateinit var tv_bar_end: TextView
     private lateinit var progressTitle: TextView
 
+    private lateinit var save:ShapeTextView
+    private lateinit var reset:ShapeTextView
+    private lateinit var exobinding:LayoutCustomExo2Binding
+
 
      override fun initData() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
@@ -105,6 +112,35 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
              AudioFormat.ENCODING_PCM_16BIT
          )
 
+         exoPlayer = ExoPlayer.Builder(this).build()
+         exoPlayer.videoScalingMode = C.VIDEO_SCALING_MODE_SCALE_TO_FIT
+
+         //初始化播放器控件
+         val view = layoutInflater.inflate(R.layout.layout_custom_exo2, null, false)
+
+         exobinding = LayoutCustomExo2Binding.bind(view)
+         exobinding.exoPause.setOnClickListener {
+             // TODO: 报错播放记录
+             val postion = exoPlayer.contentPosition / 1000
+             storageRecord(postion.toString())
+         }
+         val include=layoutInflater.inflate(R.layout.include_exo3,null,true)
+         //分享
+         val share=include.findViewById<ImageView>(R.id.video_share)
+         share.fastClick {
+             share()
+         }
+         //保存配音
+         save=include.findViewById<ShapeTextView>(R.id.tv_save)
+         save.fastClick {
+             save()
+         }
+
+         reset=include.findViewById<ShapeTextView>(R.id.btn_reset)
+         save.fastClick {
+             save()
+         }
+
         //初始化播放器
         var uri = Uri.parse(intent.courseUrl)
 //         如果courseDub不为空，说明这节视频需要配音，后续走配音流程
@@ -121,24 +157,7 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
              tv_bar_end = popWindow.contentView.findViewById(R.id.tv_bar_end)
              tv_bar_start = popWindow.contentView.findViewById(R.id.tv_bar_start)
          }
-        exoPlayer = ExoPlayer.Builder(this).build()
-        exoPlayer.videoScalingMode = C.VIDEO_SCALING_MODE_SCALE_TO_FIT
 
-        //初始化播放器控件
-        val view = layoutInflater.inflate(R.layout.layout_custom_exo2, null, false)
-
-         val binding:LayoutCustomExo2Binding = LayoutCustomExo2Binding.bind(view)
-         binding.exoPause.setOnClickListener {
-             // TODO: 报错播放记录
-             val postion = exoPlayer.contentPosition / 1000
-             storageRecord(postion.toString())
-         }
-        val include=layoutInflater.inflate(R.layout.include_exo3,null,true)
-         //分享
-         val share=include.findViewById<ImageView>(R.id.video_share)
-         share.setOnClickListener {
-             share()
-         }
 
          //投屏，暂时不做
 //         val forscreen=include.findViewById<TextView>(R.id.tv_forscreen)
@@ -177,7 +196,8 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
          shareBinding = LayoutShareBinding.bind(panel)
 
          mBinding.exoTitle.leftView.fastClick {
-
+             stop()
+             removeActivity()
          }
     }
 
@@ -394,7 +414,7 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
                 exitTime = System.currentTimeMillis()
             }else{
                 stop()
-                finish()
+                removeActivity()
             }
             return true
         }
@@ -553,7 +573,7 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
                     popWindow.dismiss()
 
                     //合成成功之后自动转入到预览页面
-//                    showPreivew()
+                    showPreivew()
                 }
 
                 override fun onProgress(progress: Int, progressTime: Long) {
@@ -574,6 +594,51 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
                    toast(message)
                 }
             })
+    }
+
+    /***
+     * 保存配音
+     */
+    private fun save(){
+        pause()
+        showLoading()
+        viewModel.storageDub(courseId = intent.courseId?:"", url = getExternalFilesDir(null).toString() + "/result.mp4").observe(this
+        ) {
+            hideLoading()
+            it?.run {
+                when (code) {
+                    1000 -> {
+                        toast("上传成功")
+                    }
+                    401 -> {
+                        toast("登录状态失效")
+                    }
+                    else -> {
+                        toast(message.toString())
+                    }
+                }
+            }
+        }
+    }
+
+    /***
+     * 预览
+     */
+    private fun showPreivew() {
+        exoPlayer.clearMediaItems()
+        mBinding.exoPlayer.controllerAutoShow = false
+        exoPlayer.removeListener(playerListener)
+        exoPlayer.seekTo(0L)
+        val local = getExternalFilesDir(null).toString() + "/result.mp4"
+        val uri1 = Uri.parse(local)
+        val item1 = MediaItem.fromUri(uri1)
+        exoPlayer.setMediaItem(item1)
+        exoPlayer.repeatMode = Player.REPEAT_MODE_ALL
+        exoPlayer.prepare()
+        exoPlayer.play()
+        exobinding.exoPlay.visibility = View.GONE
+        exobinding.exoPause.visibility = View.GONE
+        save.visibility = View.VISIBLE
     }
 
 }

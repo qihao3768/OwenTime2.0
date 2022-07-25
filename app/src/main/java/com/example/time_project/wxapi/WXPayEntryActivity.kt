@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.time_project.*
 import com.example.time_project.ui.PaySuccessActivity
+import com.jeremyliao.liveeventbus.LiveEventBus
 import com.tencent.mm.opensdk.modelbase.BaseReq
 import com.tencent.mm.opensdk.modelbase.BaseResp
 import com.tencent.mm.opensdk.openapi.IWXAPI
@@ -35,6 +36,7 @@ class WXPayEntryActivity : AppCompatActivity(),IWXAPIEventHandler {
 //            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
 //            intent.putExtra("id", 0)
 //            startActivity(intent)
+    LiveEventBus.get<String>("refresh").post("buy")
             start(this@WXPayEntryActivity,PaySuccessActivity().javaClass,false)
         } else if (baseResp.errCode == -2) {
 //            LiveEventBus.get("dfk").post(1000)

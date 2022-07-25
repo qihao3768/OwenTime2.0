@@ -3,6 +3,7 @@ import android.view.View
 import coil.load
 import com.drake.brv.BindingAdapter
 import com.drake.brv.item.ItemBind
+import com.example.time_project.databinding.ItemProduct2Binding
 
 import com.example.time_project.databinding.ItemProductBinding
 import com.google.gson.annotations.SerializedName
@@ -28,7 +29,7 @@ data class AlreadyBuyModel(
     @SerializedName("purchased")
     val purchased: List<Purchased>? = listOf(),
     @SerializedName("recommend")
-    val recommend: RecommendData = RecommendData(),
+    val recommend: RecommendData ?= RecommendData(),
     @SerializedName("page_count")
     val pageCount: Int? = 0
 //    @SerializedName("recommend")
@@ -104,13 +105,13 @@ data class Product02(
 ): ItemBind {
 //    val token= MMKV.defaultMMKV().decodeString("token")
     override fun onBind(holder: BindingAdapter.BindingViewHolder) {
-        val binding= ItemProductBinding.bind(holder.itemView)
+        val binding= ItemProduct2Binding.bind(holder.itemView)
         binding.ivProduct.load(imgHead)
         binding.tvProductTitle.text=name
         binding.tvProductDesc.text=introduction
         binding.tvProductPrice02.visibility= View.GONE
         binding.tvProductPtnum.visibility= View.GONE
-        binding.btnGoto.visibility= View.INVISIBLE
+        binding.btnGoto.visibility= View.VISIBLE
 
     }
 }

@@ -209,12 +209,11 @@ class OwenViewModel() : BaseViewModel() {
     /***
      * 保存配音
      */
-    fun storageDub(courseId: String,url:String):MutableLiveData<BaseResponse<String?>>{
-        val liveData=MutableLiveData<BaseResponse<String?>>()
+    fun storageDub(courseId: String,url:String):MutableLiveData<BaseResponse<EmptyModel?>>{
+        val liveData=MutableLiveData<BaseResponse<EmptyModel?>>()
         launchUI {
             val result=owenReps.storageDub(courseId,url)
             liveData.value= result
-
         }
         return liveData
     }

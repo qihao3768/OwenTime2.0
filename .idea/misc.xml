@@ -45,7 +45,7 @@
         <entry key="..\:/workcode/kotlin/app/src/main/res/drawable/selector_map.xml" value="0.1985" />
         <entry key="..\:/workcode/kotlin/app/src/main/res/drawable/selector_mine.xml" value="0.1985" />
         <entry key="..\:/workcode/kotlin/app/src/main/res/layout/activity_address.xml" value="0.1755399296835761" />
-        <entry key="..\:/workcode/kotlin/app/src/main/res/layout/activity_course_detail.xml" value="0.16" />
+        <entry key="..\:/workcode/kotlin/app/src/main/res/layout/activity_course_detail.xml" value="0.2" />
         <entry key="..\:/workcode/kotlin/app/src/main/res/layout/activity_detail.xml" value="0.3640625" />
         <entry key="..\:/workcode/kotlin/app/src/main/res/layout/activity_dutorial_directory.xml" value="0.16666666666666666" />
         <entry key="..\:/workcode/kotlin/app/src/main/res/layout/activity_exoplayer.xml" value="0.1755399296835761" />
@@ -73,6 +73,7 @@
         <entry key="..\:/workcode/kotlin/app/src/main/res/layout/activity_wxpay_entry.xml" value="0.16666666666666666" />
         <entry key="..\:/workcode/kotlin/app/src/main/res/layout/banner_image_title.xml" value="0.1755399296835761" />
         <entry key="..\:/workcode/kotlin/app/src/main/res/layout/dialog_photo.xml" value="0.3640625" />
+        <entry key="..\:/workcode/kotlin/app/src/main/res/layout/empty_course.xml" value="0.3640625" />
         <entry key="..\:/workcode/kotlin/app/src/main/res/layout/empty_order.xml" value="0.1755399296835761" />
         <entry key="..\:/workcode/kotlin/app/src/main/res/layout/empty_works.xml" value="0.3640625" />
         <entry key="..\:/workcode/kotlin/app/src/main/res/layout/fragment_blank.xml" value="0.16666666666666666" />
@@ -109,7 +110,7 @@
         <entry key="..\:/workcode/kotlin/app/src/main/res/layout/layout_works.xml" value="0.15715579710144928" />
         <entry key="..\:/workcode/kotlin/app/src/main/res/layout/layout_wxarticle.xml" value="0.16666666666666666" />
         <entry key="..\:/workcode/kotlin/app/src/main/res/layout/mine_fragment.xml" value="0.3484375" />
-        <entry key="..\:/workcode/kotlin/app/src/main/res/layout/project_fragment.xml" value="0.3484375" />
+        <entry key="..\:/workcode/kotlin/app/src/main/res/layout/project_fragment.xml" value="0.25" />
         <entry key="..\:/workcode/kotlin/app/src/main/res/layout/project_fragment2.xml" value="0.3640625" />
         <entry key="..\:/workcode/kotlin/app/src/main/res/layout/project_sub_fragment.xml" value="0.36041666666666666" />
         <entry key="..\:/workcode/kotlin/app/src/main/res/layout/public_fragment.xml" value="0.16666666666666666" />

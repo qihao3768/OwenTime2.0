@@ -3,6 +3,8 @@ package com.example.time_project
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.view.Gravity
 import android.view.KeyEvent
@@ -14,7 +16,10 @@ import android.widget.TextView
 import android.widget.Toast
 
 import androidx.fragment.app.Fragment
+import coil.imageLoader
 import coil.load
+import coil.request.ImageRequest
+import coil.request.SuccessResult
 //import com.example.owentime.bean.Register
 import com.example.time_project.ui.LoginActivity
 
@@ -200,3 +205,13 @@ fun Activity.exit(keyCode:Int,event:KeyEvent,msg: String,exit:Boolean):Boolean{
     }
     return onKeyDown(keyCode, event)
 }
+
+suspend fun Context.getImageBitmapByUrl(url: String): Bitmap? {
+    val request = ImageRequest.Builder(this)
+        .data(url)
+        .allowHardware(false)
+        .build()
+    val result = (imageLoader.execute(request) as SuccessResult).drawable
+    return (result as BitmapDrawable).bitmap
+}
+

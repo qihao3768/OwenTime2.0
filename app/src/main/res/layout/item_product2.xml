@@ -102,7 +102,7 @@
         android:paddingEnd="23dp"
         android:paddingBottom="5dp"
         android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@id/tv_product_desc"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:visibility="visible"/>
 

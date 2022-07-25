@@ -20,6 +20,7 @@ import com.example.time_project.util.RequestFileUtil
 import kotlinx.coroutines.flow.Flow
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 
 
@@ -173,11 +174,12 @@ class OwenRepo():BaseRepository(){
     /***
      * 保存配音
      */
-    suspend fun storageDub(courseid:String,path:String): BaseResponse<String?> = request {
+    suspend fun storageDub(courseid:String,path:String): BaseResponse<EmptyModel?> = request {
 //        val mtoken = RequestBody.create(null, token)
         val file = File(path)
-        val requestBody: MultipartBody.Part = RequestFileUtil.uploadFile("photo", file)
-        mService.storageDub(courseid,requestBody)
+        val requestBody: MultipartBody.Part = RequestFileUtil.uploadFile("url", file)
+        val courses_id= courseid.toRequestBody(null)
+        mService.storageDub(courses_id,requestBody)
     }
 
 

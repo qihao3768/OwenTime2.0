@@ -46,7 +46,6 @@
         android:layout_marginTop="10dp"
         android:textColor="@color/white"
         android:textSize="14dp"
-        android:text="12345"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -58,7 +57,60 @@
         android:text="投屏"
         app:layout_constraintEnd_toStartOf="@id/video_share"
         app:layout_constraintTop_toTopOf="@id/video_share"
-        android:layout_marginEnd="10dp"/>
+        android:layout_marginEnd="10dp"
+        android:visibility="gone"/>
 
+    <com.hjq.shape.view.ShapeTextView
+        android:id="@+id/tv_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="保存"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        app:shape_radius="20dp"
+        app:shape_solidColor="@color/FE9520"
+        android:textSize="14dp"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"/>
 
+    <com.hjq.shape.view.ShapeTextView
+        android:id="@+id/btn_preview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="预览"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        app:shape_radius="20dp"
+        app:shape_solidColor="@color/FE9520"
+        android:textSize="14dp"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <com.hjq.shape.view.ShapeTextView
+        android:id="@+id/btn_reset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="重录"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        app:shape_radius="20dp"
+        app:shape_solidColor="@color/FE9520"
+        android:textSize="14dp"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toStartOf="@id/btn_preview"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <androidx.constraintlayout.widget.Group
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="btn_preview,btn_reset"
+        android:visibility="gone"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

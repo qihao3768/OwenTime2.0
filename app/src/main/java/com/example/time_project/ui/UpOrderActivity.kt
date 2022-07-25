@@ -24,7 +24,7 @@ import com.example.time_project.base.BasePopWindow
 import com.example.time_project.bean.*
 import com.example.time_project.bean.order.Gift
 import com.example.time_project.bean.order.Product01
-import com.example.time_project.bean.yigou.Product02
+
 import com.example.time_project.databinding.ActivityUpOrderBinding
 import com.example.time_project.databinding.LayoutNoteBinding
 import com.example.time_project.databinding.LayoutSpecificationsBinding
