@@ -9,18 +9,21 @@ import com.drake.brv.utils.setup
 
 import com.example.time_project.R
 import com.example.time_project.base.BaseFragment
+import com.example.time_project.bean.home.Product
 
 import com.example.time_project.bean.yigou.*
 import com.example.time_project.databinding.ProjectFragmentBinding
 import com.example.time_project.imp.HoverHeaderModel
 import com.example.time_project.start
 import com.example.time_project.toast
+import com.example.time_project.util.IntentExtra.Companion.code
 
 import com.example.time_project.util.IntentExtra.Companion.courseTitle
 import com.example.time_project.util.IntentExtra.Companion.iproductId
 import com.example.time_project.vm.OwenViewModel
 
 import com.jeremyliao.liveeventbus.LiveEventBus
+import com.tencent.mmkv.MMKV
 
 
 class ProjectFragment : BaseFragment(R.layout.project_fragment) {
@@ -34,23 +37,16 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
 
     private var total=1
 
+    private var showModel=0// 0 展示的是推荐 1 展示的是已购
+
     private val refreshOb:Observer<String> = Observer {
         getData()
-//        when(it){
-//            "login"->{
-//                getData()
-//            }
-//            "logout"->{
-//                getData()
-//            }
-//            "buy"->{
-//                getData()
-//            }
-//        }
-
     }
 
+    private lateinit var mmkv: String
+
     override fun initData()  {
+        mmkv= MMKV.defaultMMKV().decodeString("token")?:""
         getData()
         LiveEventBus.get<String>("refresh").observe(this, refreshOb)
     }
@@ -74,8 +70,20 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
             addType<HoverHeaderModel> { R.layout.layout_hover_header }
 
             onClick(R.id.root_product){
-                requireActivity().intent.iproductId=getModel<Product02>(modelPosition).id?:-1
-                start(requireActivity(),CourseDetailActivity().javaClass,requireActivity().intent)
+                if (mmkv.isNullOrBlank()){
+                    start(requireActivity(),LoginActivity().javaClass,false)
+                }else{
+                    when(showModel){
+                        0->{
+                            requireActivity().intent.code=getModel<Recommend>(modelPosition).code
+                            start(requireActivity(),ProductDetailActivity().javaClass,requireActivity().intent)
+                        }
+                        1->{
+                            requireActivity().intent.iproductId=getModel<Product02>(modelPosition).id?:-1
+                            start(requireActivity(),CourseDetailActivity().javaClass,requireActivity().intent)
+                        }
+                    }
+                }
             }
             onClick(R.id.tv_seemore){
                 requireActivity().intent.iproductId=getModel<HoverHeaderModel>(modelPosition).id?:-1
@@ -93,7 +101,7 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
                                 data?.run {
                                     val yigou=getYiGouData(purchased)
                                     if (yigou.isNullOrEmpty()){
-
+                                        showModel=0
                                         recommend?.run {
                                             if (data.isNullOrEmpty()){
                                                 mBinding.statePurchased.apply {
@@ -109,6 +117,7 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
                                         }
 
                                     }else{
+                                        showModel=1
                                         addData(yigou)
                                     }
                                 }
@@ -127,7 +136,7 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
                 finishLoadMoreWithNoMoreData()
             }
 
-        }.autoRefresh(1500)
+        }.autoRefresh(1000)
 
     }
 

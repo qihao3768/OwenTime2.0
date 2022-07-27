@@ -9,6 +9,8 @@ import com.example.time_project.base.BaseResponse
 import com.example.time_project.base.BaseViewModel
 import com.example.time_project.bean.*
 import com.example.time_project.bean.home.HomeModel
+import com.example.time_project.bean.mine.Dub
+import com.example.time_project.bean.mine.DubListModel
 import com.example.time_project.bean.order.*
 import com.example.time_project.bean.yigou.AlreadyBuyModel
 import com.example.time_project.bean.yigou.YiGouPage
@@ -213,6 +215,18 @@ class OwenViewModel() : BaseViewModel() {
         val liveData=MutableLiveData<BaseResponse<EmptyModel?>>()
         launchUI {
             val result=owenReps.storageDub(courseId,url)
+            liveData.value= result
+        }
+        return liveData
+    }
+
+    /***
+     * 保存配音
+     */
+    fun dublist():MutableLiveData<BaseResponse<List<DubListModel>?>>{
+        val liveData=MutableLiveData<BaseResponse<List<DubListModel>?>>()
+        launchUI {
+            val result=owenReps.dublist()
             liveData.value= result
         }
         return liveData

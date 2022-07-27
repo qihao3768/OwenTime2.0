@@ -7,6 +7,7 @@ import com.example.time_project.bean.home.User
 import com.example.time_project.bean.login.LoginModel
 import com.example.time_project.bean.login.PhotoModel
 import com.example.time_project.bean.login.SmsModel
+import com.example.time_project.bean.mine.DubListModel
 import com.example.time_project.bean.order.*
 import com.example.time_project.bean.yigou.AlreadyBuyModel
 import com.example.time_project.bean.yigou.YiGouPage
@@ -143,6 +144,10 @@ interface ApiService {
     @POST("api/dub/storageDub")
     @Multipart
     suspend fun storageDub(@Part("course_id") course_id:RequestBody,@Part url: MultipartBody.Part):BaseResponse<EmptyModel?>
+
+    //配音列表
+    @POST("api/dub/getDub")
+    suspend fun getDub():BaseResponse<List<DubListModel>?>
 
     companion object {
 //        const val BASE_URL = "http://192.168.2.184:8080/"

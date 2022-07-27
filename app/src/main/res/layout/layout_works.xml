@@ -78,7 +78,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15.5dp"
             android:layout_marginTop="3dp"
-            android:text="绘声绘色"
             android:textColor="@color/F1A1A1A"
             android:textSize="16dp"
             app:layout_constraintBottom_toTopOf="@+id/tv_works_time"
@@ -90,7 +89,6 @@
             android:id="@+id/tv_works_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2022-01-01 18:00"
             android:textColor="@color/A8A8A8"
             android:textSize="12dp"
             app:layout_constraintBottom_toTopOf="@+id/btn_play"
@@ -101,7 +99,7 @@
             android:id="@+id/iv_work"
             android:layout_width="130dp"
             android:layout_height="0dp"
-            android:background="@drawable/aa"
+            android:scaleType="centerCrop"
             app:layout_constraintDimensionRatio="h,1:0.625"
             app:shapeAppearance="@style/circle11Image2" />
 

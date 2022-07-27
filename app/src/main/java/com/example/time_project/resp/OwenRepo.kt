@@ -11,6 +11,7 @@ import com.example.time_project.bean.home.User
 import com.example.time_project.bean.login.LoginModel
 import com.example.time_project.bean.login.PhotoModel
 import com.example.time_project.bean.login.SmsModel
+import com.example.time_project.bean.mine.DubListModel
 import com.example.time_project.bean.order.*
 import com.example.time_project.bean.yigou.AlreadyBuyModel
 import com.example.time_project.bean.yigou.YiGouPage
@@ -188,4 +189,11 @@ class OwenRepo():BaseRepository(){
 //            OrderListPagingSource(mService)
 //        }).flow
 //    }
+
+    /***
+     * 配音列表
+     */
+    suspend fun dublist():BaseResponse<List<DubListModel>?> =request{
+        mService.getDub()
+    }
 }
