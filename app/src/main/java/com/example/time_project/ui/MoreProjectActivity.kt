@@ -23,6 +23,9 @@ import com.example.time_project.util.IntentExtra.Companion.courseTitle
 import com.example.time_project.util.IntentExtra.Companion.iproductId
 import com.example.time_project.vm.OwenViewModel
 import com.gyf.immersionbar.ktx.immersionBar
+import com.scwang.smart.refresh.layout.api.RefreshLayout
+import com.scwang.smart.refresh.layout.constant.RefreshState
+import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import kotlinx.coroutines.coroutineScope
 
 class MoreProjectActivity : BaseActivity(R.layout.activity_more_project) {
@@ -59,10 +62,14 @@ class MoreProjectActivity : BaseActivity(R.layout.activity_more_project) {
                             1000->{
                                 data?.run {
                                     if (data==null){
-                                        toast(message.toString())
+                                        mBinding.productPage.showEmpty()
                                     }else{
                                         total=pageCount?:1
-                                        addData(data.product)
+                                        val model=data.product
+                                        addData(model)
+                                        if (state==RefreshState.RefreshFinish){
+                                            index=1
+                                        }
                                     }
                                 }
                             }
@@ -78,7 +85,8 @@ class MoreProjectActivity : BaseActivity(R.layout.activity_more_project) {
             }else{
                 finishLoadMoreWithNoMoreData()
             }
-        }.autoRefresh(1500)
+        }.autoRefresh(1000)
+
 
     }
 

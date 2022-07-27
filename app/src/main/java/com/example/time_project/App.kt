@@ -62,6 +62,7 @@ class App : Application() {
         SmartRefreshLayout.setDefaultRefreshFooterCreator { context, layout -> ClassicsFooter(this) }
 
         PageRefreshLayout.startIndex = 1//分页第一页
+        PageRefreshLayout.preloadIndex = 0//全局预加载索引
     }
 
 }

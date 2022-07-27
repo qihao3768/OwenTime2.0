@@ -23,7 +23,6 @@
         android:id="@+id/more_title"
         android:layout_width="match_parent"
         android:layout_height="44dp"
-        app:title="游戏王国"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -34,15 +33,16 @@
         app:layout_constraintStart_toEndOf="@id/project_lineleft"
         app:layout_constraintEnd_toStartOf="@id/project_lineright"
         app:layout_constraintTop_toBottomOf="@id/more_title"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:stateEnabled="true"
+        app:srlEnableAutoLoadMore="false">
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list_more"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:listitem="@layout/item_product"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:layout_marginTop="30dp"
-            android:transitionName="project"/>
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
     </com.drake.brv.PageRefreshLayout>
 
 
