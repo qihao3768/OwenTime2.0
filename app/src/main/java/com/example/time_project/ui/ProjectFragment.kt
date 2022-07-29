@@ -46,7 +46,7 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
     private lateinit var mmkv: String
 
     override fun initData()  {
-        mmkv= MMKV.defaultMMKV().decodeString("token")?:""
+
         getData()
         LiveEventBus.get<String>("refresh").observe(this, refreshOb)
     }
@@ -62,7 +62,7 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
      * 获取列表数据
      */
     private fun getData(){
-
+        mmkv= MMKV.defaultMMKV().decodeString("token")?:""
         //已购
         mBinding.productList01.linear().setup {
             addType<Product02> { R.layout.item_product2 }
