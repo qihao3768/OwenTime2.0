@@ -18,7 +18,7 @@
         app:layout_constraintTop_toBottomOf="@+id/title_works"
         app:layout_constraintBottom_toBottomOf="parent"
         app:empty_layout="@string/order_empty"
-        app:srlEnableLoadMore="false">
+        app:stateEnabled="true">
 
 
     <androidx.recyclerview.widget.RecyclerView

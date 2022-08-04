@@ -5,6 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:viewBindingIgnore="true">
+
+
     <com.hjq.shape.view.ShapeTextView
         android:id="@+id/content"
         android:layout_width="wrap_content"

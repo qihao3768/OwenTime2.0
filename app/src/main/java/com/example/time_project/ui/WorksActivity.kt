@@ -107,6 +107,11 @@ class WorksActivity : BaseActivity(R.layout.activity_works) {
                         401->{
                             toast("登录状态已失效,请重新登录")
                         }
+                        1100->{
+                            mBinding.worksRefresh.apply {
+                                emptyLayout=R.layout.empty_order
+                            }.showEmpty()
+                        }
                         else->{
                             toast(message.toString())
                         }
@@ -115,6 +120,7 @@ class WorksActivity : BaseActivity(R.layout.activity_works) {
                 }
             })
         }.autoRefresh(1000)
+
     }
 
     /***

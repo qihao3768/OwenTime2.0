@@ -101,11 +101,11 @@
                 app:banner_indicator_normal_width="12dp"
                 app:banner_indicator_selected_width="12dp"
                 app:banner_indicator_height="4dp"/>
+            <!--app:layout_constraintDimensionRatio="h,1:0.15"-->
             <com.hjq.shape.layout.ShapeConstraintLayout
                 android:id="@+id/layout_notice"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintDimensionRatio="h,1:0.15"
                 app:layout_constraintTop_toBottomOf="@+id/home_banner"
                 app:layout_constraintStart_toStartOf="@+id/home_banner"
                 app:layout_constraintEnd_toEndOf="@id/home_banner"

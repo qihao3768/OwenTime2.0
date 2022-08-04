@@ -238,4 +238,5 @@ class PerfectActivity : BaseActivity(R.layout.activity_perfect) {
         }
     }
 
+
 }

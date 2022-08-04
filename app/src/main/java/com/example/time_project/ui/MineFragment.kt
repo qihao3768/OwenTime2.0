@@ -1,6 +1,5 @@
 package com.example.time_project.ui
 
-import android.content.Intent
 import android.view.Gravity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -15,8 +14,6 @@ import com.example.time_project.util.IntentExtra.Companion.iHead
 import com.example.time_project.util.IntentExtra.Companion.iSex
 import com.example.time_project.util.IntentExtra.Companion.iSkip
 import com.example.time_project.util.IntentExtra.Companion.iUserName
-import com.example.time_project.util.IntentExtraBoolean
-import com.example.time_project.util.IntentExtraString
 import com.example.time_project.vm.MineViewModel
 import com.gyf.immersionbar.ktx.immersionBar
 import com.hjq.shape.view.ShapeTextView
@@ -73,11 +70,11 @@ class MineFragment : BaseFragment(R.layout.mine_fragment) {
         })
         mBinding.layoutYouhui.checkLogin(requireActivity(), object : TodoListener {
             override fun todo() {
-
+                start(requireActivity(),OrderListActivity().javaClass,false)
             }
         })
         mBinding.layoutKefu.fastClick {
-            showZhujiao("400-870-2880")
+            showKefu("400-870-2880")
         }
         mBinding.layoutZhujiao.fastClick {
             showZhujiao("400-870-2880")
@@ -115,10 +112,15 @@ class MineFragment : BaseFragment(R.layout.mine_fragment) {
             }
         })
 
-        getUser()
+
 
 //        LiveEventBus.get<String>("logout").observe(this, logoutOb)
         LiveEventBus.get<String>("refresh").observe(this, refreshOb)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getUser()
     }
 
     /***
@@ -158,7 +160,24 @@ class MineFragment : BaseFragment(R.layout.mine_fragment) {
     }
 
     private fun showZhujiao(content:String){
-        val view=layoutInflater.inflate(R.layout.layout_string,null)
+        val view=layoutInflater.inflate(R.layout.layout_zhujiao,null)
+        view.findViewById<ShapeTextView>(R.id.content).text=content
+        zhujiao.contentView=view
+        zhujiao.setOutSideDismiss(true).setOutSideTouchable(true)
+            .setPopupGravity(Gravity.CENTER)
+            .setShowAnimation(
+                AnimationHelper.asAnimation().withTranslation(TranslationConfig.FROM_BOTTOM)
+                    .toShow()
+            )
+            .setDismissAnimation(
+                AnimationHelper.asAnimation().withTranslation(TranslationConfig.TO_BOTTOM)
+                    .toDismiss()
+            )
+            .showPopupWindow()
+    }
+
+    private fun showKefu(content:String){
+        val view=layoutInflater.inflate(R.layout.layout_kefu,null)
         view.findViewById<ShapeTextView>(R.id.content).text=content
         zhujiao.contentView=view
         zhujiao.setOutSideDismiss(true).setOutSideTouchable(true)
