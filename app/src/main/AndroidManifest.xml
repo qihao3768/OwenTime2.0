@@ -13,11 +13,13 @@
         android:theme="@style/Theme.WanAndroid"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.PaySuccessActivity"
+            android:name=".ui.CouponActivity"
             android:exported="false" />
-<!--        <activity-->
-<!--            android:name=".ui.RecordActivity"-->
-<!--            android:exported="false" />-->
+        <activity
+            android:name=".ui.PaySuccessActivity"
+            android:exported="false" /> <!-- <activity -->
+        <!-- android:name=".ui.RecordActivity" -->
+        <!-- android:exported="false" /> -->
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -52,9 +54,9 @@
             android:exported="false" />
         <activity
             android:name=".ui.CourseDetailActivity"
-            android:exported="false"
             android:configChanges="orientation|screenSize|keyboardHidden|fontScale"
-            android:screenOrientation="portrait"/>
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.VideoListActivity"
             android:exported="false" />
@@ -68,7 +70,7 @@
         <activity
             android:name=".ui.UpOrderActivity"
             android:exported="false"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop" />
         <activity
             android:name=".ui.DetailActivity"
             android:exported="false" />
@@ -109,9 +111,9 @@
             android:exported="false" />
         <activity
             android:name=".web.WebActivity"
-            android:exported="false"
             android:configChanges="orientation|screenSize|keyboardHidden|fontScale"
-            android:launchMode="singleTop"/>
+            android:exported="false"
+            android:launchMode="singleTop" />
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|fontScale"
@@ -145,7 +147,6 @@
 
         <!-- <package android:name="hk.alipay.wallet" /> -->
     </queries>
-    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 从Android 11开始，需要在AndroidManifest.xml清单文件中加入query权限申请，才能检测到手机上安装的三方应用包安装状态 -->
     <!-- <queries> -->
     <!-- <package android:name="com.tencent.mm" />            // 指定微信包名 -->
@@ -160,7 +161,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
 
 </manifest>

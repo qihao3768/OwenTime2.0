@@ -70,7 +70,7 @@ class MineFragment : BaseFragment(R.layout.mine_fragment) {
         })
         mBinding.layoutYouhui.checkLogin(requireActivity(), object : TodoListener {
             override fun todo() {
-                start(requireActivity(),OrderListActivity().javaClass,false)
+                start(requireActivity(),CouponActivity().javaClass,false)
             }
         })
         mBinding.layoutKefu.fastClick {
@@ -81,7 +81,12 @@ class MineFragment : BaseFragment(R.layout.mine_fragment) {
         }
         mBinding.layoutSetup.checkLogin(requireActivity(), object : TodoListener {
             override fun todo() {
-                start(requireActivity(),SettingActivity().javaClass,false)
+                requireActivity().intent.iSkip=true
+                requireActivity().intent.iUserName=mUserName
+                requireActivity().intent.iSex=mSex
+                requireActivity().intent.iBirthday=mBirth
+                requireActivity().intent.iHead=mHead
+                start(requireActivity(),SettingActivity().javaClass,requireActivity().intent)
             }
         })
         mBinding.layoutDub.checkLogin(requireActivity(), object : TodoListener {

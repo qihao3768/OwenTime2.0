@@ -9,6 +9,7 @@ import com.example.time_project.base.BaseActivity
 import com.example.time_project.base.BasePopWindow
 import com.example.time_project.databinding.ActivitySettingBinding
 import com.example.time_project.databinding.LayoutExitBinding
+import com.example.time_project.util.IntentExtra.Companion.iSkip
 import com.example.time_project.vm.OwenViewModel
 import com.example.time_project.vm.UserViewModel
 import com.example.time_project.web.WebActivity
@@ -45,7 +46,8 @@ class SettingActivity : BaseActivity(R.layout.activity_setting) {
         }
         mBinding.layoutSettingAccount.checkLogin(this, object : TodoListener {
             override fun todo() {
-                start(this@SettingActivity,PerfectActivity().javaClass,false)
+                intent.iSkip=true
+                start(this@SettingActivity,PerfectActivity().javaClass, intent)
             }
         })
         mBinding.layoutSetting05.setOnClickListener {
