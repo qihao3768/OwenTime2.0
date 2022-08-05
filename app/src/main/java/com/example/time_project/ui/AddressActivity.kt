@@ -101,6 +101,14 @@ class AddressActivity : BaseActivity(R.layout.activity_address) {
                     viewModel.saveAddress(body.toMap()).observe(this) {
                         it?.run {
                             toast(message.toString())
+                            val intent = Intent()
+                            intent.putExtra("name", name)
+                            intent.putExtra("phone", phone)
+                            intent.putExtra("province", mProvince)
+                            intent.putExtra("city", mCity)
+                            intent.putExtra("area", mArea)
+                            intent.putExtra("detail", detail)
+                            LiveEventBus.get<Intent>("refresh").post(intent)
                             finish()
                         }
                     }
