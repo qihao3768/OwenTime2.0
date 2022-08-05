@@ -42,7 +42,7 @@ class OrderListActivity : BaseActivity(R.layout.activity_order_list) {
             addType<OrderListData> { R.layout.item_order }
             onFastClick(R.id.order_root){
 //                    toast(getModel<OrderModel>(modelPosition).price)
-                start(this@OrderListActivity,OrderDetailActivity().javaClass,false)
+               // start(this@OrderListActivity,OrderDetailActivity().javaClass,false)
             }
 
         }

@@ -11,6 +11,7 @@
        app:shape_radius="11dp"
        app:shape_solidColor="@color/white">
        <LinearLayout
+           android:visibility="gone"
            android:id="@+id/layout_number"
            android:layout_width="0dp"
            android:layout_height="wrap_content"
@@ -89,6 +90,7 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintBottom_toBottomOf="@id/order_pic"/>
        <com.hjq.shape.view.ShapeButton
+           android:visibility="gone"
            android:id="@+id/btn_pay"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
@@ -105,6 +107,7 @@
            app:shape_radius="26dp"
            android:textColor="@color/white" />
        <com.hjq.shape.view.ShapeButton
+           android:visibility="gone"
            android:id="@+id/btn_address"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
@@ -126,6 +129,7 @@
            app:layout_goneMarginEnd="0dp"/>
 
        <com.hjq.shape.view.ShapeButton
+           android:visibility="gone"
            android:id="@+id/btn_cancel"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"

@@ -1,5 +1,9 @@
 package com.example.time_project.ui
 
+import android.content.Intent
+import android.provider.Settings
+import android.provider.Settings.EXTRA_APP_PACKAGE
+import android.provider.Settings.EXTRA_CHANNEL_ID
 import android.view.Gravity
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
@@ -9,6 +13,7 @@ import com.example.time_project.base.BaseActivity
 import com.example.time_project.base.BasePopWindow
 import com.example.time_project.databinding.ActivitySettingBinding
 import com.example.time_project.databinding.LayoutExitBinding
+import com.example.time_project.util.DataCleanManager
 import com.example.time_project.util.IntentExtra.Companion.iSkip
 import com.example.time_project.vm.OwenViewModel
 import com.example.time_project.vm.UserViewModel
@@ -50,6 +55,19 @@ class SettingActivity : BaseActivity(R.layout.activity_setting) {
                 start(this@SettingActivity,PerfectActivity().javaClass, intent)
             }
         })
+        mBinding.layoutSetting01.setOnClickListener {
+            val intent =  Intent()
+            intent.setAction(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+            intent.putExtra(EXTRA_APP_PACKAGE, getPackageName())
+            intent.putExtra(EXTRA_CHANNEL_ID, getApplicationInfo().uid)
+            startActivity(intent)
+        }
+        mBinding.cacheMb.text=DataCleanManager.getTotalCacheSize(this)
+        mBinding.layoutSetting02.setOnClickListener {
+            DataCleanManager.clearAllCache(this)
+            toast("清除成功")
+            mBinding.cacheMb.text="0.0MB"
+        }
         mBinding.layoutSetting05.setOnClickListener {
             start(this@SettingActivity,WebActivity().javaClass,"url",AppConfig.PRIVACY_AGREEMENT_URL)
         }

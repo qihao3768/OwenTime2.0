@@ -64,6 +64,7 @@
     </com.hjq.shape.layout.ShapeConstraintLayout>
 
     <com.hjq.shape.view.ShapeButton
+        android:id="@+id/btn_close"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_margin="10dp"

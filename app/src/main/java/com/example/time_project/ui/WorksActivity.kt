@@ -69,7 +69,8 @@ class WorksActivity : BaseActivity(R.layout.activity_works) {
                 } else {expandOrCollapse()}
             }
             onFastClick(R.id.btn_play){
-                toast("播放")
+
+                toast("播放"+getModel<Dub>().url)
             }
             onFastClick(R.id.layout_sharewx){
 
@@ -109,7 +110,7 @@ class WorksActivity : BaseActivity(R.layout.activity_works) {
                         }
                         1100->{
                             mBinding.worksRefresh.apply {
-                                emptyLayout=R.layout.empty_order
+                                emptyLayout=R.layout.empty_works
                             }.showEmpty()
                         }
                         else->{

@@ -1,5 +1,7 @@
 package com.example.time_project.ui
 
+import android.content.Intent
+import android.net.Uri
 import android.view.Gravity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -16,6 +18,7 @@ import com.example.time_project.util.IntentExtra.Companion.iSkip
 import com.example.time_project.util.IntentExtra.Companion.iUserName
 import com.example.time_project.vm.MineViewModel
 import com.gyf.immersionbar.ktx.immersionBar
+import com.hjq.shape.view.ShapeButton
 import com.hjq.shape.view.ShapeTextView
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.tencent.mmkv.MMKV
@@ -167,6 +170,12 @@ class MineFragment : BaseFragment(R.layout.mine_fragment) {
     private fun showZhujiao(content:String){
         val view=layoutInflater.inflate(R.layout.layout_zhujiao,null)
         view.findViewById<ShapeTextView>(R.id.content).text=content
+        view.findViewById<ShapeButton>(R.id.btn_dail).fastClick {
+            dail(content)
+        }
+        view.findViewById<ShapeButton>(R.id.btn_close).fastClick {
+            zhujiao.dismiss()
+        }
         zhujiao.contentView=view
         zhujiao.setOutSideDismiss(true).setOutSideTouchable(true)
             .setPopupGravity(Gravity.CENTER)
@@ -184,6 +193,12 @@ class MineFragment : BaseFragment(R.layout.mine_fragment) {
     private fun showKefu(content:String){
         val view=layoutInflater.inflate(R.layout.layout_kefu,null)
         view.findViewById<ShapeTextView>(R.id.content).text=content
+        view.findViewById<ShapeButton>(R.id.btn_dail).fastClick {
+           dail(content)
+        }
+        view.findViewById<ShapeButton>(R.id.btn_close).fastClick {
+            zhujiao.dismiss()
+        }
         zhujiao.contentView=view
         zhujiao.setOutSideDismiss(true).setOutSideTouchable(true)
             .setPopupGravity(Gravity.CENTER)
@@ -196,5 +211,14 @@ class MineFragment : BaseFragment(R.layout.mine_fragment) {
                     .toDismiss()
             )
             .showPopupWindow()
+    }
+
+    private fun dail(content: String) {
+        val action = Intent.ACTION_DIAL
+        val intent= Intent(action)
+        //携带数据
+        intent.setData(Uri.parse("tel:" + content))
+        //start
+        startActivity(intent)
     }
 }

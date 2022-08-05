@@ -41,6 +41,7 @@ class WXPayEntryActivity : AppCompatActivity(),IWXAPIEventHandler {
         } else if (baseResp.errCode == -2) {
 //            LiveEventBus.get("dfk").post(1000)
     toast("未付款")
+            finish()
 //            val intent = Intent()
 //            intent.putExtra("ordersn", SPUtil.get(SPContans.Order_sn, ""))
 //            intent.setClass(this@WXPayEntryActivity, OrderDfkActivity::class.java)
