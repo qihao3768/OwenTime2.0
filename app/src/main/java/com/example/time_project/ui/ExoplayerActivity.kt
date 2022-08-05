@@ -130,6 +130,12 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
          share.fastClick {
              share()
          }
+         val back=include.findViewById<ImageView>(R.id.video_back)
+         back.fastClick {
+             stop()
+             removeActivity()
+         }
+
          //保存配音
          save=include.findViewById<ShapeTextView>(R.id.tv_save)
          save.fastClick {

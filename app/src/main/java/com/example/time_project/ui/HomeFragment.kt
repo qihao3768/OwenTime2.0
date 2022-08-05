@@ -1,21 +1,18 @@
 package com.example.time_project.ui
 
-import android.content.Intent
 import android.graphics.Matrix
 import android.graphics.RectF
 import android.os.Parcelable
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.ActivityOptionsCompat
 import androidx.core.app.SharedElementCallback
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.load
-
 import com.drake.brv.utils.linear
 import com.drake.brv.utils.setup
-import com.example.time_project.*
+import com.example.time_project.R
 import com.example.time_project.adapter.NoticeAdapter
 import com.example.time_project.base.BaseFragment
 import com.example.time_project.bean.NoticeBean
@@ -23,9 +20,9 @@ import com.example.time_project.bean.home.Banner
 import com.example.time_project.bean.home.Product
 import com.example.time_project.bean.home.Studying
 import com.example.time_project.databinding.HomeFragmentBinding
-import com.example.time_project.ui.UpOrderActivity.IntentOptions.iname
-import com.example.time_project.util.DateUtil
+import com.example.time_project.start
 import com.example.time_project.util.IntentExtra.Companion.code
+import com.example.time_project.util.IntentExtra.Companion.courseId
 import com.example.time_project.util.IntentExtra.Companion.courseTime
 import com.example.time_project.util.IntentExtra.Companion.courseUrl
 import com.example.time_project.util.IntentExtra.Companion.iBirthday
@@ -34,9 +31,7 @@ import com.example.time_project.util.IntentExtra.Companion.iSex
 import com.example.time_project.util.IntentExtra.Companion.iSkip
 import com.example.time_project.util.IntentExtra.Companion.iUserName
 import com.example.time_project.util.IntentExtra.Companion.icode
-import com.example.time_project.util.IntentExtra.Companion.iproductId
 import com.example.time_project.util.IntentExtra.Companion.iurl
-import com.example.time_project.util.IntentExtraString
 import com.example.time_project.vm.MineViewModel
 import com.example.time_project.vm.OwenViewModel
 import com.example.time_project.web.WebActivity
@@ -45,12 +40,8 @@ import com.jeremyliao.liveeventbus.LiveEventBus
 import com.tencent.mmkv.MMKV
 import com.youth.banner.adapter.BannerImageAdapter
 import com.youth.banner.holder.BannerImageHolder
-import com.youth.banner.indicator.BaseIndicator
-import com.youth.banner.indicator.Indicator
 import com.youth.banner.indicator.RectangleIndicator
-import com.youth.banner.indicator.RoundLinesIndicator
 import com.youth.banner.listener.OnBannerListener
-import kotlin.random.Random
 
 class HomeFragment : BaseFragment(R.layout.home_fragment) {
 
@@ -139,6 +130,14 @@ class HomeFragment : BaseFragment(R.layout.home_fragment) {
                 )
             }
         })
+    }
+
+    fun transfom(time: Int): String {
+        val shi = time / 3600
+        val fen = time % 3600 / 60
+        val miao = time % 3600 % 60
+        //shi< 10 ? ("0" + shi) : shi)判断时否大于10时的话就执行shi,否则执行括号中的
+        return (if (shi < 10) "0$shi" else shi).toString() + ":" + (if (fen < 10) "0$fen" else fen) + ":" + if (miao < 10) "0$miao" else miao
     }
 
     override fun onResume() {
@@ -291,13 +290,14 @@ class HomeFragment : BaseFragment(R.layout.home_fragment) {
         playing.run {
             mBinding.ivPlayingCourse.load(image ?: "")
             mBinding.tvPlayingTitle.text = name ?: ""
-            mBinding.tvPlayingTime.text = time.toString()
+            mBinding.tvPlayingTime.text = time?.let { transfom(it) }
         }
         mBinding.layoutPlaying.setOnClickListener {
 
 //            val bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(),mBinding.ivPlayingCourse,"palying").toBundle()
             requireActivity().intent.courseUrl = playing.url ?: ""
             requireActivity().intent.courseTime = playing.time ?: 0
+            requireActivity().intent.courseId = playing.coursesId.toString()
             start(requireActivity(), ExoplayerActivity().javaClass, requireActivity().intent)
         }
 
