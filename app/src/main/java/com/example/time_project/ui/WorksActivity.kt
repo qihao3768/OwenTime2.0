@@ -22,6 +22,10 @@ import com.example.time_project.databinding.LayoutShareBinding
 import com.example.time_project.fastClick
 import com.example.time_project.start
 import com.example.time_project.toast
+import com.example.time_project.util.IntentExtra.Companion.courseId
+import com.example.time_project.util.IntentExtra.Companion.courseTime
+import com.example.time_project.util.IntentExtra.Companion.courseUrl
+import com.example.time_project.util.IntentExtra.Companion.iproductId
 import com.example.time_project.util.IntentExtraString
 import com.example.time_project.vm.OwenViewModel
 import com.gyf.immersionbar.ktx.immersionBar
@@ -69,8 +73,10 @@ class WorksActivity : BaseActivity(R.layout.activity_works) {
                 } else {expandOrCollapse()}
             }
             onFastClick(R.id.btn_play){
-
-                toast("播放"+getModel<Dub>().url)
+                intent.courseUrl = getModel<Dub>().url?: ""
+                intent.courseTime =0
+                intent.courseId = getModel<Dub>().courseId.toString()
+                start(this@WorksActivity, ExoplayerActivity().javaClass, intent)
             }
             onFastClick(R.id.layout_sharewx){
 

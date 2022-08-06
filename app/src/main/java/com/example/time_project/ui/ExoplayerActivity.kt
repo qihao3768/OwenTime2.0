@@ -200,11 +200,6 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
          //初始化分享面板
          val panel=layoutInflater.inflate(R.layout.layout_share,null)
          shareBinding = LayoutShareBinding.bind(panel)
-
-         mBinding.exoTitle.leftView.fastClick {
-             stop()
-             removeActivity()
-         }
     }
 
 
