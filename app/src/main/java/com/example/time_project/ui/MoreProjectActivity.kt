@@ -61,10 +61,10 @@ class MoreProjectActivity : BaseActivity(R.layout.activity_more_project) {
                         when(code){
                             1000->{
                                 data?.run {
+                                    total=pageCount?:1
                                     if (data==null){
                                         mBinding.productPage.showEmpty()
                                     }else{
-                                        total=pageCount?:1
                                         val model=data.product
                                         addData(model)
                                         if (state==RefreshState.RefreshFinish){

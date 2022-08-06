@@ -24,10 +24,7 @@ class HoverHeaderModel(val header: String, val count: Int, val id: Int) : ItemHo
             View.GONE
         } else {
             when (count) {
-                0->{
-                    View.GONE
-                }
-                in 1..3 -> {
+                in 0..2 -> {
                     View.GONE
                 }
                 else -> {
