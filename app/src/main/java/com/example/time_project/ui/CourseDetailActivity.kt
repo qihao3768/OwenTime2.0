@@ -21,6 +21,7 @@ import com.example.time_project.util.IntentExtra.Companion.courseId
 import com.example.time_project.util.IntentExtra.Companion.courseTitle
 import com.example.time_project.util.IntentExtra.Companion.courseUrl
 import com.example.time_project.util.IntentExtra.Companion.iproductId
+import com.example.time_project.util.IntentExtra.Companion.position
 import com.example.time_project.util.TextViewLinesUtil
 import com.example.time_project.vm.OwenViewModel
 import com.gyf.immersionbar.ktx.immersionBar
@@ -143,6 +144,7 @@ class CourseDetailActivity : BaseActivity(R.layout.activity_course_detail) {
                         intent.courseId=(model.id?:0).toString()//课程id
                         intent.iproductId=model.productId?:0
                         intent.courseDub=model.dubCourse?:""//配音视频链接，有内容表示这是一个需要配音的视频
+                        intent.position=modelPosition?:0
                         start(this@CourseDetailActivity,ExoplayerActivity().javaClass,intent)
 //                        if (model.dubCourse.isNullOrEmpty()){
 //                            start(this@CourseDetailActivity,ExoplayerActivity().javaClass,intent)

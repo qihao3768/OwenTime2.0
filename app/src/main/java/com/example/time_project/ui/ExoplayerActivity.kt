@@ -14,25 +14,29 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.widget.ContentLoadingProgressBar
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
+import coil.load
+import com.example.time_project.*
 import com.example.time_project.R
 import com.example.time_project.base.BaseActivity
 import com.example.time_project.base.BasePopWindow
+import com.example.time_project.bean.order.Course
 import com.example.time_project.databinding.ActivityExoplayerBinding
 import com.example.time_project.databinding.LayoutCustomExo2Binding
 import com.example.time_project.databinding.LayoutShareBinding
-import com.example.time_project.fastClick
-import com.example.time_project.start
-import com.example.time_project.toast
 import com.example.time_project.util.IntentExtra.Companion.courseDub
 import com.example.time_project.util.IntentExtra.Companion.courseId
 import com.example.time_project.util.IntentExtra.Companion.courseTime
 import com.example.time_project.util.IntentExtra.Companion.courseTitle
 import com.example.time_project.util.IntentExtra.Companion.courseUrl
 import com.example.time_project.util.IntentExtra.Companion.iproductId
+import com.example.time_project.util.IntentExtra.Companion.position
 import com.example.time_project.util.RecordUtil
+import com.example.time_project.util.TextViewLinesUtil
 import com.example.time_project.vm.OwenViewModel
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.Player.PositionInfo
@@ -48,6 +52,7 @@ import com.umeng.socialize.bean.SHARE_MEDIA
 import com.umeng.socialize.media.UMImage
 import io.microshow.rxffmpeg.RxFFmpegInvoke
 import io.microshow.rxffmpeg.RxFFmpegSubscriber
+import kotlinx.coroutines.launch
 import razerdp.util.animation.AnimationHelper
 import razerdp.util.animation.TranslationConfig
 import tech.oom.idealrecorder.IdealRecorder
@@ -103,6 +108,8 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
             init()
         }
 
+
+
          //        IdealRecorder.getInstance().init(this);
          idealRecorder = IdealRecorder.getInstance()
          idealRecorder.init(this)
@@ -148,11 +155,15 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
              save()
          }
 
-        //初始化播放器
-        var uri = Uri.parse(intent.courseUrl)
+         if (intent.position==-1){
+             initUrlSource()
+         }else{
+             getData()
+         }
+
 //         如果courseDub不为空，说明这节视频需要配音，后续走配音流程
          if (!intent.courseDub.isNullOrBlank()){
-             uri= Uri.parse(intent.courseDub)
+       //      uri= Uri.parse(intent.courseDub)
 
              popWindow = BasePopWindow(this)
              popWindow.setContentView(R.layout.layout_synthetic_progress)
@@ -177,7 +188,7 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
          mBinding.exoPlayer.resizeMode=AspectRatioFrameLayout.RESIZE_MODE_FIT
 //        mBinding.exoPlayer.setShutterBackgroundColor(R.color.transparent)
          mBinding.exoTitle.title=intent.courseTitle
-         val item = MediaItem.fromUri(uri)
+
 //         val item2=MediaItem.fromUri(mUrl)
        /*  val url_list: ArrayList<String>? = intent.getStringArrayListExtra("url_list")
 
@@ -185,7 +196,6 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
              val fromUri = MediaItem.fromUri(it)
              exoPlayer.setMediaItem(fromUri)
          }*/
-         exoPlayer.setMediaItem(item)
 //         exoPlayer.setMediaItem(item2)
          exoPlayer.seekTo(intent.courseTime.toLong())
          exoPlayer.prepare()
@@ -213,6 +223,39 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
              exoPlayer.play()
          }
 
+
+    }
+
+    private fun initUrlSource() {
+        //初始化播放器
+           var uri = Uri.parse(intent.courseUrl)
+        val item = MediaItem.fromUri(uri)
+        exoPlayer.setMediaItem(item)
+    }
+
+    private val mViewModel by viewModels<OwenViewModel>()
+    private fun getData(){
+        mViewModel.getCourse(intent.iproductId.toString()).observe(
+            this, Observer {
+                it?.run {
+                    when(code){
+                        1000->{
+                            val body: Course?=data
+                            for (i in intent.position until body?.course?.size!!){
+                                var uri = Uri.parse(body?.course.get(i).url)
+                                val item = MediaItem.fromUri(uri)
+                                exoPlayer.addMediaItem(item)
+                            }
+                        }
+                        401->{
+                            toast("登录状态失效，请重新登录")
+                        }else->{
+                        toast(message.toString())
+                    }
+                    }
+                }
+            }
+        )
     }
 
 
@@ -341,7 +384,9 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
             when (state) {
                 Player.STATE_IDLE -> {}
                 Player.STATE_BUFFERING -> {}
-                Player.STATE_READY -> {}
+                Player.STATE_READY -> {
+
+                }
                 Player.STATE_ENDED -> {
 //                    share()
                     doPunch(intent.iproductId.toString(),intent.courseId.toString())

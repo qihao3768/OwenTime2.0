@@ -6,13 +6,14 @@ import com.example.time_project.databinding.ItemCourseBinding
 import com.example.time_project.databinding.LayoutWorksBinding
 import com.example.time_project.load
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 /***
  * 课程详情
  */
 data class Course(
     @SerializedName("course")
-    val course: List<CourseX>? = listOf(),
+    val course: List<CourseX> = listOf(),
     @SerializedName("id")
     val id: Int? = 0,
     @SerializedName("img_head")
@@ -23,7 +24,7 @@ data class Course(
     val name: String? = "",
     @SerializedName("punch_status")
     val punchStatus: Int? = 0
-)
+):Serializable
 
 data class CourseX(
     @SerializedName("dub_course")
@@ -44,7 +45,7 @@ data class CourseX(
     val url: String? = "",
     @SerializedName("duration")
     val duration: String? = ""
-):ItemBind{
+):ItemBind,Serializable{
     override fun onBind(holder: BindingAdapter.BindingViewHolder) {
         val binding= ItemCourseBinding.bind(holder.itemView)
         binding.ivPlayingCourse.load(image?:"")//图像

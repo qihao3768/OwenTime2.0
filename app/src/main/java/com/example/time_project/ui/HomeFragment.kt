@@ -32,6 +32,7 @@ import com.example.time_project.util.IntentExtra.Companion.iSkip
 import com.example.time_project.util.IntentExtra.Companion.iUserName
 import com.example.time_project.util.IntentExtra.Companion.icode
 import com.example.time_project.util.IntentExtra.Companion.iurl
+import com.example.time_project.util.IntentExtra.Companion.position
 import com.example.time_project.vm.MineViewModel
 import com.example.time_project.vm.OwenViewModel
 import com.example.time_project.web.WebActivity
@@ -299,6 +300,7 @@ class HomeFragment : BaseFragment(R.layout.home_fragment) {
             requireActivity().intent.courseUrl = playing.url ?: ""
             requireActivity().intent.courseTime = playing.time ?: 0
             requireActivity().intent.courseId = playing.coursesId.toString()
+            requireActivity().intent.position = -1
             //requireActivity().intent.putStringArrayListExtra("url_list",list_playing)
             start(requireActivity(), ExoplayerActivity().javaClass, requireActivity().intent)
         }

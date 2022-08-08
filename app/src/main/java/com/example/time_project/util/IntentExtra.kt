@@ -28,7 +28,7 @@ class IntentExtra {
         var Intent.courseId by IntentExtraString("courseId")//课程ID
         var Intent.courseTime by IntentExtraInt("courseTime")//课程进度
         var Intent.courseDub by IntentExtraString("courseDub")//配音课程链接，如果有内容表示这节课需要配音
-
+        var Intent.position by IntentExtraInt("position")
     }
 }
 class IntentExtraString(private val key: String? = null) {

@@ -26,6 +26,7 @@ import com.example.time_project.util.IntentExtra.Companion.courseId
 import com.example.time_project.util.IntentExtra.Companion.courseTime
 import com.example.time_project.util.IntentExtra.Companion.courseUrl
 import com.example.time_project.util.IntentExtra.Companion.iproductId
+import com.example.time_project.util.IntentExtra.Companion.position
 import com.example.time_project.util.IntentExtraString
 import com.example.time_project.vm.OwenViewModel
 import com.gyf.immersionbar.ktx.immersionBar
@@ -76,6 +77,7 @@ class WorksActivity : BaseActivity(R.layout.activity_works) {
                 intent.courseUrl = getModel<Dub>().url?: ""
                 intent.courseTime =0
                 intent.courseId = getModel<Dub>().courseId.toString()
+                intent.position=-1
                // intent.putStringArrayListExtra("url_list",url_list)
                 start(this@WorksActivity, ExoplayerActivity().javaClass, intent)
             }
