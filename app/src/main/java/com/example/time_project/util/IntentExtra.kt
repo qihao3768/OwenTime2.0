@@ -66,3 +66,4 @@ class IntentExtraBoolean(private val key: String? = null) {
         intent.putExtra(property.extraName, value)
     }
 }
+

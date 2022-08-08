@@ -79,11 +79,12 @@
         android:id="@+id/top_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
         android:layout_marginBottom="15dp"
         android:text="客服热线"
         android:textColor="@color/white"
         android:textSize="17sp"
         app:layout_constraintBottom_toTopOf="@+id/layout_content"
-        app:layout_constraintLeft_toLeftOf="@+id/layout_content" />
+        app:layout_constraintLeft_toLeftOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

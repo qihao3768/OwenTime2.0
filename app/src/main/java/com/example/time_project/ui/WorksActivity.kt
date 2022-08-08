@@ -45,7 +45,7 @@ class WorksActivity : BaseActivity(R.layout.activity_works) {
     companion object IntentOptions{
         var Intent.url by IntentExtraString("url")
     }
-
+    var url_list = arrayListOf<String>()
     private lateinit var shareDialog: BasePopWindow//分享面板
     private lateinit var shareBinding: LayoutShareBinding
 
@@ -76,6 +76,7 @@ class WorksActivity : BaseActivity(R.layout.activity_works) {
                 intent.courseUrl = getModel<Dub>().url?: ""
                 intent.courseTime =0
                 intent.courseId = getModel<Dub>().courseId.toString()
+               // intent.putStringArrayListExtra("url_list",url_list)
                 start(this@WorksActivity, ExoplayerActivity().javaClass, intent)
             }
             onFastClick(R.id.layout_sharewx){
@@ -103,6 +104,7 @@ class WorksActivity : BaseActivity(R.layout.activity_works) {
                                     _data.dub?.forEach { _dub->
                                         _dub?.name=_data.name
                                         _dub?.image=_data.image
+                                        url_list.add(_dub?.url.toString())
                                     }
                                     itemSublist=_data.dub
                                 }

@@ -23,15 +23,7 @@ class HoverHeaderModel(val header: String, val count: Int, val id: Int) : ItemHo
         binding.tvSeemore.visibility = if (token.isNullOrBlank()) {
             View.GONE
         } else {
-            when (count) {
-                in 0..2 -> {
-                    View.GONE
-                }
-                else -> {
-                    View.VISIBLE
-                }
-            }
-//
+            View.VISIBLE
         }
     }
 

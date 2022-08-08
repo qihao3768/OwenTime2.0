@@ -144,7 +144,7 @@ class HomeFragment : BaseFragment(R.layout.home_fragment) {
         super.onResume()
         val token = mmkv.decodeString("token")
         if (token.isNullOrBlank()) {
-            start(requireActivity(), LoginActivity().javaClass, false)
+            //start(requireActivity(), LoginActivity().javaClass, false)
         } else {
             getUser(token)
         }
@@ -292,12 +292,14 @@ class HomeFragment : BaseFragment(R.layout.home_fragment) {
             mBinding.tvPlayingTitle.text = name ?: ""
             mBinding.tvPlayingTime.text = time?.let { transfom(it) }
         }
+        var list_playing = arrayListOf<String>(playing.url ?: "")
         mBinding.layoutPlaying.setOnClickListener {
 
 //            val bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(),mBinding.ivPlayingCourse,"palying").toBundle()
             requireActivity().intent.courseUrl = playing.url ?: ""
             requireActivity().intent.courseTime = playing.time ?: 0
             requireActivity().intent.courseId = playing.coursesId.toString()
+            //requireActivity().intent.putStringArrayListExtra("url_list",list_playing)
             start(requireActivity(), ExoplayerActivity().javaClass, requireActivity().intent)
         }
 

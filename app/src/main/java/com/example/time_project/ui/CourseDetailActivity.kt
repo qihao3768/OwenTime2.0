@@ -40,7 +40,7 @@ class CourseDetailActivity : BaseActivity(R.layout.activity_course_detail) {
             fitsSystemWindows(true)
         }
 
-        getData()
+
         mBinding.detailTitle.leftView.fastClick {
             finish()
         }
@@ -58,6 +58,11 @@ class CourseDetailActivity : BaseActivity(R.layout.activity_course_detail) {
             }
             show=!show
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getData()
     }
 
     /***

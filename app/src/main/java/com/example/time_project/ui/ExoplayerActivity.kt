@@ -54,6 +54,7 @@ import tech.oom.idealrecorder.IdealRecorder
 import tech.oom.idealrecorder.IdealRecorder.RecordConfig
 import tech.oom.idealrecorder.StatusListener
 import java.io.File
+import java.util.ArrayList
 
 
 /***
@@ -178,6 +179,12 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
          mBinding.exoTitle.title=intent.courseTitle
          val item = MediaItem.fromUri(uri)
 //         val item2=MediaItem.fromUri(mUrl)
+       /*  val url_list: ArrayList<String>? = intent.getStringArrayListExtra("url_list")
+
+         url_list?.forEach {
+             val fromUri = MediaItem.fromUri(it)
+             exoPlayer.setMediaItem(fromUri)
+         }*/
          exoPlayer.setMediaItem(item)
 //         exoPlayer.setMediaItem(item2)
          exoPlayer.seekTo(intent.courseTime.toLong())
@@ -200,6 +207,12 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
          //初始化分享面板
          val panel=layoutInflater.inflate(R.layout.layout_share,null)
          shareBinding = LayoutShareBinding.bind(panel)
+
+         if (intent.courseDub.isNullOrBlank()){
+             exoPlayer.repeatMode=Player.REPEAT_MODE_OFF
+             exoPlayer.play()
+         }
+
     }
 
 
@@ -436,7 +449,7 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
             it?.run {
                 when(code){
                     1000->{
-                        toast("解锁成功")
+                       // toast("解锁成功")
                         if (intent.courseDub.isNullOrBlank()){
                             share()
                         }
@@ -634,7 +647,7 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
         val uri1 = Uri.parse(local)
         val item1 = MediaItem.fromUri(uri1)
         exoPlayer.setMediaItem(item1)
-        exoPlayer.repeatMode = Player.REPEAT_MODE_ALL
+        exoPlayer.repeatMode = Player.REPEAT_MODE_OFF
         exoPlayer.prepare()
         exoPlayer.play()
         exobinding.exoPlay.visibility = View.GONE

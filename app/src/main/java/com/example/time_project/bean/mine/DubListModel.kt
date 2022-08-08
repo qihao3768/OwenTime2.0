@@ -11,7 +11,7 @@ import com.google.gson.annotations.SerializedName
 
 data class DubListModel(
     @SerializedName("dub")
-    var dub: List<Dub?>? = listOf(),
+    var dub: List<Dub?> = listOf(),
     @SerializedName("dub_course")
     val dubCourse: String? = "",
     @SerializedName("id")

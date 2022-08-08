@@ -34,14 +34,12 @@
         app:layout_constraintEnd_toStartOf="@id/project_lineright"
         app:layout_constraintTop_toBottomOf="@id/more_title"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:stateEnabled="true"
-        app:srlEnableAutoLoadMore="false">
+        app:stateEnabled="true">
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list_more"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:listitem="@layout/item_product"
-            android:layout_marginTop="30dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
     </com.drake.brv.PageRefreshLayout>
 

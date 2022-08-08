@@ -76,12 +76,19 @@ class MineFragment : BaseFragment(R.layout.mine_fragment) {
                 start(requireActivity(),CouponActivity().javaClass,false)
             }
         })
-        mBinding.layoutKefu.fastClick {
-            showKefu("400-870-2880")
-        }
-        mBinding.layoutZhujiao.fastClick {
-            showZhujiao("400-870-2880")
-        }
+        mBinding.layoutKefu.checkLogin(requireActivity(),object :TodoListener{
+            override fun todo() {
+                showKefu("400-870-2880")
+            }
+
+        })
+        mBinding.layoutZhujiao.checkLogin(requireActivity(),object :TodoListener{
+            override fun todo() {
+                showZhujiao("400-870-2880")
+            }
+
+        })
+        
         mBinding.layoutSetup.checkLogin(requireActivity(), object : TodoListener {
             override fun todo() {
                 requireActivity().intent.iSkip=true
