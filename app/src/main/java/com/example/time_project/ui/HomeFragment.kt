@@ -204,12 +204,14 @@ class HomeFragment : BaseFragment(R.layout.home_fragment) {
                     ban?.run {
                         when (jumpType) {
                             1 -> {
-                                requireActivity().intent.iurl = activityLinks
-                                start(
-                                    requireActivity(),
-                                    WebActivity().javaClass,
-                                    requireActivity().intent
-                                )
+                                val token = mmkv.decodeString("token")
+                                val target = if (token.isNullOrBlank()) {
+                                    LoginActivity()
+                                } else {
+                                    requireActivity().intent.iurl = activityLinks
+                                    WebActivity()
+                                }
+                                start(requireActivity(), target.javaClass, requireActivity().intent)
                             }
                             4 -> {
                                 val token = mmkv.decodeString("token")
