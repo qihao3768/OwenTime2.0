@@ -409,7 +409,6 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
                 if (!intent.courseDub.isNullOrBlank()){
                     getPermission()
                 }
-
             }
         }
 
