@@ -67,8 +67,9 @@ import java.util.ArrayList
  */
 class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
     private val mBinding by viewBinding(ActivityExoplayerBinding::bind)
-//    private var mUrl="https://owen-time-test.oss-cn-beijing.aliyuncs.com/courses/cou/1643348728_216a94a44ba39a712.mp4"
-    private lateinit var exoPlayer:ExoPlayer
+
+    //    private var mUrl="https://owen-time-test.oss-cn-beijing.aliyuncs.com/courses/cou/1643348728_216a94a44ba39a712.mp4"
+    private lateinit var exoPlayer: ExoPlayer
     private var isLock = false //是否锁屏
 
     private lateinit var shareDialog: BasePopWindow//分享面板
@@ -78,14 +79,16 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
 
     private val viewModel by viewModels<OwenViewModel>()
 
-    private var postion:Long=0L//视频播放进度
+    private var postion: Long = 0L//视频播放进度
 
     private lateinit var idealRecorder: IdealRecorder
     private lateinit var recordConfig: RecordConfig
+
     //录音用到的权限
     private val permissions = listOf(
         Manifest.permission.RECORD_AUDIO, Manifest.permission.READ_EXTERNAL_STORAGE,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        Manifest.permission.WRITE_EXTERNAL_STORAGE
+    )
 
     private lateinit var popWindow //合成的进度条
             : BasePopWindow
@@ -94,164 +97,179 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
     private lateinit var tv_bar_end: TextView
     private lateinit var progressTitle: TextView
 
-    private lateinit var save:ShapeTextView
-    private lateinit var reset:ShapeTextView
-    private lateinit var exobinding:LayoutCustomExo2Binding
+    private lateinit var save: ShapeTextView
+    private lateinit var reset: ShapeTextView
+    private lateinit var exobinding: LayoutCustomExo2Binding
+    private val mViewModel by viewModels<OwenViewModel>()//获取播放列表vm
+
+        var courseId:String = ""
+        var productId:String = ""
+        var courseDub:String = ""
 
 
-     override fun initData() {
+    override fun initData() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         immersionBar {
-            titleBar(mBinding.exoTitle,false)
+            titleBar(mBinding.exoTitle, false)
             transparentBar()
             hideBar(BarHide.FLAG_HIDE_BAR)
             init()
         }
 
 
+        //        IdealRecorder.getInstance().init(this);
+        idealRecorder = IdealRecorder.getInstance()
+        idealRecorder.init(this)
+        recordConfig = RecordConfig(
+            MediaRecorder.AudioSource.MIC,
+            48000,
+            AudioFormat.CHANNEL_IN_MONO,
+            AudioFormat.ENCODING_PCM_16BIT
+        )
 
-         //        IdealRecorder.getInstance().init(this);
-         idealRecorder = IdealRecorder.getInstance()
-         idealRecorder.init(this)
-         recordConfig = RecordConfig(
-             MediaRecorder.AudioSource.MIC,
-             48000,
-             AudioFormat.CHANNEL_IN_MONO,
-             AudioFormat.ENCODING_PCM_16BIT
-         )
+        exoPlayer = ExoPlayer.Builder(this).build()
+        exoPlayer.videoScalingMode = C.VIDEO_SCALING_MODE_SCALE_TO_FIT
 
-         exoPlayer = ExoPlayer.Builder(this).build()
-         exoPlayer.videoScalingMode = C.VIDEO_SCALING_MODE_SCALE_TO_FIT
+        //初始化播放器控件
+        val view = layoutInflater.inflate(R.layout.layout_custom_exo2, null, false)
 
-         //初始化播放器控件
-         val view = layoutInflater.inflate(R.layout.layout_custom_exo2, null, false)
+        exobinding = LayoutCustomExo2Binding.bind(view)
+        exobinding.exoPause.setOnClickListener {
+            val postion = exoPlayer.contentPosition / 1000
+            storageRecord(postion.toString())
+        }
+        val include = layoutInflater.inflate(R.layout.include_exo3, null, true)
+        //分享
+        val share = include.findViewById<ImageView>(R.id.video_share)
+        share.fastClick {
+            share()
+        }
+        val back = include.findViewById<ImageView>(R.id.video_back)
+        back.fastClick {
+            stop()
+            removeActivity()
+        }
 
-         exobinding = LayoutCustomExo2Binding.bind(view)
-         exobinding.exoPause.setOnClickListener {
-             // TODO: 报错播放记录
-             val postion = exoPlayer.contentPosition / 1000
-             storageRecord(postion.toString())
-         }
-         val include=layoutInflater.inflate(R.layout.include_exo3,null,true)
-         //分享
-         val share=include.findViewById<ImageView>(R.id.video_share)
-         share.fastClick {
-             share()
-         }
-         val back=include.findViewById<ImageView>(R.id.video_back)
-         back.fastClick {
-             stop()
-             removeActivity()
-         }
+        //保存配音
+        save = include.findViewById<ShapeTextView>(R.id.tv_save)
+        save.fastClick {
+            save()
+        }
 
-         //保存配音
-         save=include.findViewById<ShapeTextView>(R.id.tv_save)
-         save.fastClick {
-             save()
-         }
+        reset = include.findViewById<ShapeTextView>(R.id.btn_reset)
+        save.fastClick {
+            save()
+        }
 
-         reset=include.findViewById<ShapeTextView>(R.id.btn_reset)
-         save.fastClick {
-             save()
-         }
-
-         if (intent.position==-1){
-             initUrlSource()
-         }else{
-             getData()
-         }
-
-//         如果courseDub不为空，说明这节视频需要配音，后续走配音流程
-         if (!intent.courseDub.isNullOrBlank()){
-       //      uri= Uri.parse(intent.courseDub)
-
-             popWindow = BasePopWindow(this)
-             popWindow.setContentView(R.layout.layout_synthetic_progress)
-             popWindow.setPopupGravity(Gravity.CENTER).setOutSideDismiss(false).isOutSideTouchable =
-                 false
-             popWindow.setBackPressEnable(false)
-             bar = popWindow.contentView.findViewById(R.id.hecheng_pb)
-             progressTitle = popWindow.contentView.findViewById(R.id.tv_progress_title)
-             tv_bar_end = popWindow.contentView.findViewById(R.id.tv_bar_end)
-             tv_bar_start = popWindow.contentView.findViewById(R.id.tv_bar_start)
-         }
+        if (intent.position == -1) {
+            initUrlSource()
+        } else {
+            initUrlList()
+        }
 
 
-         //投屏，暂时不做
+        //投屏，暂时不做
 //         val forscreen=include.findViewById<TextView>(R.id.tv_forscreen)
 //         forscreen.setOnClickListener {
 //
 //         }
-         mBinding.exoPlayer.overlayFrameLayout?.addView(include)
-         mBinding.exoPlayer.keepScreenOn=true
-         mBinding.exoPlayer.controllerAutoShow=true
-         mBinding.exoPlayer.resizeMode=AspectRatioFrameLayout.RESIZE_MODE_FIT
+        mBinding.exoPlayer.overlayFrameLayout?.addView(include)
+        mBinding.exoPlayer.keepScreenOn = true
+        mBinding.exoPlayer.controllerAutoShow = true
+        mBinding.exoPlayer.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIT
 //        mBinding.exoPlayer.setShutterBackgroundColor(R.color.transparent)
-         mBinding.exoTitle.title=intent.courseTitle
+        mBinding.exoTitle.title = intent.courseTitle
 
 //         val item2=MediaItem.fromUri(mUrl)
-       /*  val url_list: ArrayList<String>? = intent.getStringArrayListExtra("url_list")
+        /*  val url_list: ArrayList<String>? = intent.getStringArrayListExtra("url_list")
 
-         url_list?.forEach {
-             val fromUri = MediaItem.fromUri(it)
-             exoPlayer.setMediaItem(fromUri)
-         }*/
+          url_list?.forEach {
+              val fromUri = MediaItem.fromUri(it)
+              exoPlayer.setMediaItem(fromUri)
+          }*/
 //         exoPlayer.setMediaItem(item2)
-         exoPlayer.seekTo(intent.courseTime.toLong())
-         exoPlayer.prepare()
-         registerVideoListener(playerListener)
+        exoPlayer.seekTo(intent.courseTime.toLong())
+        exoPlayer.prepare()
+        registerVideoListener(playerListener)
 
-         mBinding.exoPlayer.player=exoPlayer
-         mBinding.ivUnlock.setOnClickListener {
-             mBinding.ivUnlock.setBackgroundResource(if (isLock) R.drawable.icon_player_unlock else R.drawable.icon_player_lock)
-             mBinding.exoPlayer.useController = isLock
-             mBinding.exoPlayer.controllerAutoShow = isLock
-             if (isLock) {
-                 mBinding.exoPlayer.showController()
-             } else {
-                 mBinding.exoPlayer.hideController()
-             }
-             isLock = !isLock
-         }
+        mBinding.exoPlayer.player = exoPlayer
+        mBinding.ivUnlock.setOnClickListener {
+            mBinding.ivUnlock.setBackgroundResource(if (isLock) R.drawable.icon_player_unlock else R.drawable.icon_player_lock)
+            mBinding.exoPlayer.useController = isLock
+            mBinding.exoPlayer.controllerAutoShow = isLock
+            if (isLock) {
+                mBinding.exoPlayer.showController()
+            } else {
+                mBinding.exoPlayer.hideController()
+            }
+            isLock = !isLock
+        }
 
-         //初始化分享面板
-         val panel=layoutInflater.inflate(R.layout.layout_share,null)
-         shareBinding = LayoutShareBinding.bind(panel)
+        //初始化分享面板
+        val panel = layoutInflater.inflate(R.layout.layout_share, null)
+        shareBinding = LayoutShareBinding.bind(panel)
 
-         if (intent.courseDub.isNullOrBlank()){
-             exoPlayer.repeatMode=Player.REPEAT_MODE_OFF
-             exoPlayer.play()
-         }
+        if (intent.courseDub.isNullOrBlank()) {
+            exoPlayer.repeatMode = Player.REPEAT_MODE_OFF
+            exoPlayer.play()
+        }
 
 
     }
 
     private fun initUrlSource() {
         //初始化播放器
-           var uri = Uri.parse(intent.courseUrl)
+        //         如果courseDub不为空，说明这节视频需要配音，后续走配音流程
+        val uri: Uri
+        if (!intent.courseDub.isNullOrBlank()) {
+            uri = Uri.parse(intent.courseDub)
+            popWindow = BasePopWindow(this)
+            popWindow.setContentView(R.layout.layout_synthetic_progress)
+            popWindow.setPopupGravity(Gravity.CENTER).setOutSideDismiss(false).isOutSideTouchable =
+                false
+            popWindow.setBackPressEnable(false)
+            bar = popWindow.contentView.findViewById(R.id.hecheng_pb)
+            progressTitle = popWindow.contentView.findViewById(R.id.tv_progress_title)
+            tv_bar_end = popWindow.contentView.findViewById(R.id.tv_bar_end)
+            tv_bar_start = popWindow.contentView.findViewById(R.id.tv_bar_start)
+        } else {
+            uri = Uri.parse(intent.courseUrl)
+        }
         val item = MediaItem.fromUri(uri)
         exoPlayer.setMediaItem(item)
+
     }
 
-    private val mViewModel by viewModels<OwenViewModel>()
-    private fun getData(){
+    private fun initUrlList() {
         mViewModel.getCourse(intent.iproductId.toString()).observe(
             this, Observer {
                 it?.run {
-                    when(code){
-                        1000->{
-                            val body: Course?=data
-                            for (i in intent.position until body?.course?.size!!){
-                                var uri = Uri.parse(body?.course.get(i).url)
-                                val item = MediaItem.fromUri(uri)
-                                exoPlayer.addMediaItem(item)
+                    when (code) {
+                        1000 -> {
+                            val body: Course? = data
+                            val mmd: MediaMetadata.Builder = MediaMetadata.Builder()
+                            val mediaItem: MediaItem.Builder = MediaItem.Builder()
+                            for (i in intent.position until body?.course?.size!!) {
+                                val uri = Uri.parse(body.course[i].url)
+                                mediaItem.setUri(uri)
+                                if (i == intent.position) {
+                                    mediaItem.setMediaId("0")
+                                } else {
+                                    mediaItem.setMediaId("1")
+                                }
+                                mmd.setTitle("${body.course[i].id}")
+                                mmd.setSubtitle("${body.course[i].productId}")
+                                mmd.setStation(body.course[i].dubCourse ?: "")
+                                mediaItem.setMediaMetadata(mmd.build())
+                                exoPlayer.addMediaItem(mediaItem.build())
                             }
                         }
-                        401->{
+                        401 -> {
                             toast("登录状态失效，请重新登录")
-                        }else->{
-                        toast(message.toString())
-                    }
+                        }
+                        else -> {
+                            toast(message.toString())
+                        }
                     }
                 }
             }
@@ -262,9 +280,9 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
     /***
      * 停止播放
      */
-    private fun stop(){
+    private fun stop() {
         mBinding.exoPlayer.run {
-            if (exoPlayer.isPlaying){
+            if (exoPlayer.isPlaying) {
                 exoPlayer.stop()
                 exoPlayer.release()
                 val postion = exoPlayer.contentPosition / 1000
@@ -272,9 +290,10 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
             }
         }
     }
-    private fun pause(){
+
+    private fun pause() {
         mBinding.exoPlayer.run {
-            if (exoPlayer.isPlaying){
+            if (exoPlayer.isPlaying) {
                 exoPlayer.pause()
                 val postion = exoPlayer.contentPosition / 1000
                 storageRecord(postion.toString())
@@ -295,12 +314,14 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
     /***
      * 分享
      */
-    private fun share(){
+    private fun share() {
         mShareAction = ShareAction(this)
         shareDialog = BasePopWindow(this)
-        shareDialog.contentView=shareBinding.root
+        shareDialog.contentView = shareBinding.root
         shareBinding.shareClose.setOnClickListener {
+            exoPlayer.play()
             shareDialog.dismiss()
+
         }
         shareBinding.shareQuan.setOnClickListener {
             shareWX(SHARE_MEDIA.WEIXIN_CIRCLE)
@@ -329,7 +350,7 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
      * 分享到微信
      * platform 平台 微信、朋友圈
      */
-    private fun shareWX(platform:SHARE_MEDIA){
+    private fun shareWX(platform: SHARE_MEDIA) {
         val umImage = UMImage(this, R.drawable.share_tiyan)
         mShareAction.setPlatform(platform)
             .withMedia(umImage)
@@ -378,6 +399,7 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
     private fun registerVideoListener(listener: Player.Listener) {
         exoPlayer.addListener(listener)
     }
+
     //播放器监听器
     private val playerListener: Player.Listener = object : Player.Listener {
         override fun onPlaybackStateChanged(state: Int) {
@@ -388,11 +410,10 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
 
                 }
                 Player.STATE_ENDED -> {
-//                    share()
-                    doPunch(intent.iproductId.toString(),intent.courseId.toString())
-                    //配音
-                    if (!intent.courseDub.isNullOrBlank()){
-                        RecordUtil.stopRecord(this@ExoplayerActivity,idealRecorder)
+                    share()
+                    //停止配音
+                    if (!intent.courseDub.isNullOrBlank()) {
+                        RecordUtil.stopRecord(this@ExoplayerActivity, idealRecorder)
                         toast("停止配音，开始合成...")
                     }
 
@@ -402,34 +423,61 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
 
         override fun onPlayWhenReadyChanged(playWhenReady: Boolean, reason: Int) {
 
-            if (playWhenReady){
+            if (playWhenReady) {
                 //进入到播放页面的时候先保存一次播放记录，目的是防止应用大退时无法保存
                 storageRecord("0")
                 //配音
-                if (!intent.courseDub.isNullOrBlank()){
+                if (!intent.courseDub.isNullOrBlank()) {
                     getPermission()
                 }
             }
         }
 
+        override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
+            super.onMediaItemTransition(mediaItem, reason)
+
+            productId=mediaItem?.mediaMetadata?.subtitle.toString()
+            courseId=mediaItem?.mediaMetadata?.title.toString()
+            courseDub=mediaItem?.mediaMetadata?.station.toString()
+            Log.e(
+                "TAG",
+                "onMediaItemTransition: " + courseId
+                        + "----" + productId
+                        + "----" + courseDub
+            )
+            doPunch(mediaItem?.mediaMetadata?.subtitle.toString(), mediaItem?.mediaMetadata?.title.toString())
+            if (mediaItem?.mediaId.equals("1")) {
+                exoPlayer.pause()
+                share()
+            }
+
+        }
+
+
         override fun onTimelineChanged(timeline: Timeline, reason: Int) {
 
         }
 
+
         override fun onPlayerError(error: PlaybackException) {
-            when(error.errorCode){
-                    PlaybackException.ERROR_CODE_IO_BAD_HTTP_STATUS->{toast("播放失败")}
-                PlaybackException.ERROR_CODE_IO_FILE_NOT_FOUND->{
-                    toast("找不到视频文件")}
-                PlaybackException.ERROR_CODE_IO_NO_PERMISSION->{
-                    toast("缺少权限")}
-                else->{
+            when (error.errorCode) {
+                PlaybackException.ERROR_CODE_IO_BAD_HTTP_STATUS -> {
+                    toast("播放失败")
+                }
+                PlaybackException.ERROR_CODE_IO_FILE_NOT_FOUND -> {
+                    toast("找不到视频文件")
+                }
+                PlaybackException.ERROR_CODE_IO_NO_PERMISSION -> {
+                    toast("缺少权限")
+                }
+                else -> {
                     toast("播放失败")
                 }
 
             }
             super.onPlayerError(error)
         }
+
         override fun onPositionDiscontinuity(
             oldPosition: PositionInfo,
             newPosition: PositionInfo,
@@ -445,32 +493,34 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
      * courseId 课程id
      * time 时长
      */
-    private fun storageRecord(time:String){
-        viewModel.storageRecord(intent.iproductId.toString(),intent.courseId.toString(),time).observe(this@ExoplayerActivity,
-            Observer {
-                it?.run {
-                    when(code){
-                        1000->{
+    private fun storageRecord(time: String) {
+        viewModel.storageRecord(intent.iproductId.toString(), intent.courseId.toString(), time)
+            .observe(this@ExoplayerActivity,
+                Observer {
+                    it?.run {
+                        when (code) {
+                            1000 -> {
 
+                            }
+                            401 -> {
+                                toast("登录状态已失效，请重新登录")
+                                start(this@ExoplayerActivity, LoginActivity().javaClass, true)
+                            }
+                            else -> {
+                                toast(message.toString())
+                            }
                         }
-                        401->{
-                            toast("登录状态已失效，请重新登录")
-                            start(this@ExoplayerActivity,LoginActivity().javaClass,true)
-                        }else->{
-                        toast(message.toString())
                     }
-                    }
-                }
-            })
+                })
     }
 
-    private var exitTime=0L
+    private var exitTime = 0L
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.action==KeyEvent.ACTION_DOWN){
-            if (System.currentTimeMillis()-exitTime>2000){
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_DOWN) {
+            if (System.currentTimeMillis() - exitTime > 2000) {
                 toast("再按一次退出播放")
                 exitTime = System.currentTimeMillis()
-            }else{
+            } else {
                 stop()
                 removeActivity()
             }
@@ -488,21 +538,17 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
     /***
      * 打卡
      */
-    private fun doPunch(product:String,course:String){
+    private fun doPunch(product: String, course: String) {
         viewModel.doPunch(product, course).observe(this, Observer {
             it?.run {
-                when(code){
-                    1000->{
-                       // toast("解锁成功")
-                        if (intent.courseDub.isNullOrBlank()){
-                            share()
-                        }
+                when (code) {
+                    1000 -> {
 
                     }
-                    401->{
+                    401 -> {
                         toast("登录状态失效，请重新登录")
                     }
-                    else->{
+                    else -> {
                         toast(message.toString())
                     }
                 }
@@ -535,7 +581,7 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
 
         override fun onFileSaveSuccess(fileUri: String) {
             toast("文件保存成功")
-            runFFmpegRxJava(intent.courseDub?:"", fileUri)
+            runFFmpegRxJava(intent.courseDub ?: "", fileUri)
         }
 
         override fun onStopRecording() {
@@ -551,8 +597,8 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
     private fun getPermission() {
         PermissionX.init(this).permissions(permissions)
             .request { allGranted, grantedList, deniedList ->
-                 if (allGranted) {
-                     startRecord()
+                if (allGranted) {
+                    startRecord()
                 } else {
                     toast("您拒绝了一下权限 $deniedList 可能会对您的正常使用造成影响")
                 }
@@ -560,7 +606,7 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
     }
 
     //开始录音
-    private fun startRecord(){
+    private fun startRecord() {
         RecordUtil.record(statusListener, idealRecorder, recordConfig, this@ExoplayerActivity)
         toast("开始配音...")
     }
@@ -649,7 +695,7 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
                 }
 
                 override fun onError(message: String) {
-                   toast(message)
+                    toast(message)
                 }
             })
     }
@@ -657,10 +703,14 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
     /***
      * 保存配音
      */
-    private fun save(){
+    private fun save() {
         pause()
         showLoading()
-        viewModel.storageDub(courseId = intent.courseId?:"", url = getExternalFilesDir(null).toString() + "/result.mp4").observe(this
+        viewModel.storageDub(
+            courseId = intent.courseId ?: "",
+            url = getExternalFilesDir(null).toString() + "/result.mp4"
+        ).observe(
+            this
         ) {
             hideLoading()
             it?.run {

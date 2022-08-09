@@ -295,7 +295,6 @@ class HomeFragment : BaseFragment(R.layout.home_fragment) {
             mBinding.tvPlayingTitle.text = name ?: ""
             mBinding.tvPlayingTime.text = time?.let { transfom(it) }
         }
-        var list_playing = arrayListOf<String>(playing.url ?: "")
         mBinding.layoutPlaying.setOnClickListener {
 
 //            val bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(),mBinding.ivPlayingCourse,"palying").toBundle()
@@ -303,7 +302,6 @@ class HomeFragment : BaseFragment(R.layout.home_fragment) {
             requireActivity().intent.courseTime = playing.time ?: 0
             requireActivity().intent.courseId = playing.coursesId.toString()
             requireActivity().intent.position = -1
-            //requireActivity().intent.putStringArrayListExtra("url_list",list_playing)
             start(requireActivity(), ExoplayerActivity().javaClass, requireActivity().intent)
         }
 

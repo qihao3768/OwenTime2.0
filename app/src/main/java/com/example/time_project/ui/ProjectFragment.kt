@@ -43,7 +43,7 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
         getData()
     }
 
-    private lateinit var mmkv: String
+    private lateinit var token: String
 
     override fun initData()  {
 
@@ -62,7 +62,7 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
      * 获取列表数据
      */
     private fun getData(){
-        mmkv= MMKV.defaultMMKV().decodeString("token")?:""
+        token= MMKV.defaultMMKV().decodeString("token")?:""
         //已购
         mBinding.productList01.linear().setup {
             addType<Product02> { R.layout.item_product2 }
@@ -70,7 +70,7 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
             addType<HoverHeaderModel> { R.layout.layout_hover_header }
 
             onClick(R.id.root_product){
-                if (mmkv.isNullOrBlank()){
+                if (token.isNullOrBlank()){
                     start(requireActivity(),LoginActivity().javaClass,false)
                 }else{
                     when(showModel){
