@@ -181,12 +181,6 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
         mBinding.exoTitle.title = intent.courseTitle
 
 //         val item2=MediaItem.fromUri(mUrl)
-        /*  val url_list: ArrayList<String>? = intent.getStringArrayListExtra("url_list")
-
-          url_list?.forEach {
-              val fromUri = MediaItem.fromUri(it)
-              exoPlayer.setMediaItem(fromUri)
-          }*/
 //         exoPlayer.setMediaItem(item2)
         exoPlayer.seekTo(intent.courseTime.toLong())
         exoPlayer.prepare()
@@ -208,12 +202,10 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
         //初始化分享面板
         val panel = layoutInflater.inflate(R.layout.layout_share, null)
         shareBinding = LayoutShareBinding.bind(panel)
-
+        exoPlayer.repeatMode = Player.REPEAT_MODE_OFF
         if (intent.courseDub.isNullOrBlank()) {
-            exoPlayer.repeatMode = Player.REPEAT_MODE_OFF
             exoPlayer.play()
         }
-
 
     }
 
@@ -223,15 +215,6 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
         val uri: Uri
         if (!intent.courseDub.isNullOrBlank()) {
             uri = Uri.parse(intent.courseDub)
-            popWindow = BasePopWindow(this)
-            popWindow.setContentView(R.layout.layout_synthetic_progress)
-            popWindow.setPopupGravity(Gravity.CENTER).setOutSideDismiss(false).isOutSideTouchable =
-                false
-            popWindow.setBackPressEnable(false)
-            bar = popWindow.contentView.findViewById(R.id.hecheng_pb)
-            progressTitle = popWindow.contentView.findViewById(R.id.tv_progress_title)
-            tv_bar_end = popWindow.contentView.findViewById(R.id.tv_bar_end)
-            tv_bar_start = popWindow.contentView.findViewById(R.id.tv_bar_start)
         } else {
             uri = Uri.parse(intent.courseUrl)
         }
@@ -319,7 +302,10 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
         shareDialog = BasePopWindow(this)
         shareDialog.contentView = shareBinding.root
         shareBinding.shareClose.setOnClickListener {
-            exoPlayer.play()
+            if (courseDub.isBlank()){
+                exoPlayer.play()
+            }
+            //exoPlayer.play()
             shareDialog.dismiss()
 
         }
@@ -411,8 +397,14 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
                 }
                 Player.STATE_ENDED -> {
                     share()
+                    Log.e(
+                        "TAG",
+                        "STATE_ENDED: " + courseId
+                                + "----" + productId
+                                + "----" + courseDub
+                    )
                     //停止配音
-                    if (!intent.courseDub.isNullOrBlank()) {
+                    if (!intent.courseDub.isNullOrBlank()|| courseDub.isNotBlank()) {
                         RecordUtil.stopRecord(this@ExoplayerActivity, idealRecorder)
                         toast("停止配音，开始合成...")
                     }
@@ -427,7 +419,7 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
                 //进入到播放页面的时候先保存一次播放记录，目的是防止应用大退时无法保存
                 storageRecord("0")
                 //配音
-                if (!intent.courseDub.isNullOrBlank()) {
+                if (!intent.courseDub.isNullOrBlank()|| courseDub.isNotBlank()) {
                     getPermission()
                 }
             }
@@ -581,7 +573,13 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
 
         override fun onFileSaveSuccess(fileUri: String) {
             toast("文件保存成功")
-            runFFmpegRxJava(intent.courseDub ?: "", fileUri)
+            var url:String=""
+            if (intent.courseDub.equals("")){
+                url=courseDub
+            }else{
+                url=intent.courseDub.toString()
+            }
+            runFFmpegRxJava(url, fileUri)
         }
 
         override fun onStopRecording() {
@@ -633,6 +631,15 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
     }
 
     private fun getVideo(commons1: Array<String>, commons2: Array<String>) {
+        popWindow = BasePopWindow(this)
+        popWindow.setContentView(R.layout.layout_synthetic_progress)
+        popWindow.setPopupGravity(Gravity.CENTER).setOutSideDismiss(false).isOutSideTouchable =
+            false
+        popWindow.setBackPressEnable(false)
+        bar = popWindow.contentView.findViewById(R.id.hecheng_pb)
+        progressTitle = popWindow.contentView.findViewById(R.id.tv_progress_title)
+        tv_bar_end = popWindow.contentView.findViewById(R.id.tv_bar_end)
+        tv_bar_start = popWindow.contentView.findViewById(R.id.tv_bar_start)
         progressTitle.text = "正在提取视频,请不要退出..."
         popWindow.showPopupWindow()
         RxFFmpegInvoke.getInstance()
