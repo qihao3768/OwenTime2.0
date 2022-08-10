@@ -60,19 +60,6 @@ class MoreProjectActivity : BaseActivity(R.layout.activity_more_project) {
                     it?.run {
                         when(code){
                             1000->{
-                               /* data?.run {
-                                    total=pageCount?:1
-                                    if (data==null){
-                                        mBinding.productPage.showEmpty()
-                                    }else{
-                                        if (state==RefreshState.RefreshFinish){
-                                            index=1
-                                        }
-                                        val model=data.product
-                                        addData(model)
-                                    }
-                                }*/
-
                                 data?.run {
                                     if (state==RefreshState.RefreshFinish){
                                         index=1
@@ -83,8 +70,11 @@ class MoreProjectActivity : BaseActivity(R.layout.activity_more_project) {
                                             emptyLayout=R.layout.empty_order
                                         }.showEmpty()
                                     }else{
-                                        addData(data?.product)
                                         total=pageCount?:1
+                                        addData(data?.product){
+                                            index<total
+                                        }
+
                                     }
                                 }
                             }

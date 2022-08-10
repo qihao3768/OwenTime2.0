@@ -90,7 +90,6 @@ class WorksActivity : BaseActivity(R.layout.activity_works) {
             }
         }
         mBinding.worksRefresh.onRefresh {
-
             viewModel.dublist().observe(this@WorksActivity, Observer {
                 it?.run {
                     when(code){
@@ -100,16 +99,16 @@ class WorksActivity : BaseActivity(R.layout.activity_works) {
                                 val model=DubGroupModel().apply {
                                     name=_data.name
                                     image=_data.image
-                                    time= _data.dub?.get(0)?.createdAt
-                                    _data.dub?.forEach { _dub->
+                                    time= _data.dub[0]?.createdAt
+                                    _data.dub.forEach { _dub->
                                         _dub?.name=_data.name
                                         _dub?.image=_data.image
                                     }
                                     itemSublist=_data.dub
                                 }
                                 list.add(model)
-
                             }
+                            //接口没返回pageCount 暂时不允许加载更多
                            addData(list)
                         }
                         401->{
