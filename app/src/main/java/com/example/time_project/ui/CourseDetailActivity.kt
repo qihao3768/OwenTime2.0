@@ -81,6 +81,8 @@ class CourseDetailActivity : BaseActivity(R.layout.activity_course_detail) {
                             }else{
                                 mBinding.detailTitle.title=body.name?:""
                                 mBinding.courseJianjie.text=body.introduction?:""
+                                var labels = body.tags.toString().split("、")
+                                mBinding.courseLabels.setLabels(labels)
                                 mBinding.courseJianjie.let { tv->
                                     tv.text=body.introduction?:""
                                     lines=TextViewLinesUtil.getTextViewLines(tv,tv.width)

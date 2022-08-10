@@ -48,17 +48,33 @@
                 app:layout_constraintDimensionRatio="h,0.8"
                 app:layout_constraintTop_toTopOf="parent"/>
 
+            <com.donkingliang.labels.LabelsView
+                android:id="@+id/course_labels"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                app:labelTextSize="12sp"
+                app:singleLine="true"
+                app:labelBackground="@drawable/label_bg_shape"
+                app:labelTextColor="#FFC482"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_course_pic"
+                app:layout_constraintBottom_toTopOf="@+id/course_jianjie"/>
+
             <TextView
                 android:id="@+id/course_jianjie"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="5dp"
                 android:ellipsize="end"
                 android:textColor="@color/F1A1A1A"
                 android:textSize="14dp"
                 app:layout_constraintStart_toEndOf="@id/course_left"
                 app:layout_constraintEnd_toStartOf="@id/layout_show"
-                app:layout_constraintTop_toBottomOf="@id/iv_course_pic"
+                app:layout_constraintTop_toBottomOf="@id/course_labels"
                 android:visibility="invisible"/>
             <LinearLayout
                 android:id="@+id/layout_show"
@@ -88,7 +104,7 @@
                 app:layout_constraintEnd_toStartOf="@id/course_right"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/layout_show"
-                android:layout_marginTop="30dp">
+                android:layout_marginTop="10dp">
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/list_course"
                     android:layout_width="match_parent"

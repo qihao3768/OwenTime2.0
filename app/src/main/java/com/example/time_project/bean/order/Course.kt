@@ -22,6 +22,8 @@ data class Course(
     val introduction: String? = "",
     @SerializedName("name")
     val name: String? = "",
+    @SerializedName("tags")
+    val tags: String? = "",
     @SerializedName("punch_status")
     val punchStatus: Int? = 0
 ):Serializable
