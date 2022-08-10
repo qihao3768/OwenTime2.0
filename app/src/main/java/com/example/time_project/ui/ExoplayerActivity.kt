@@ -132,12 +132,16 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
 
         //初始化播放器控件
         val view = layoutInflater.inflate(R.layout.layout_custom_exo2, null, false)
-
-        exobinding = LayoutCustomExo2Binding.bind(view)
-        exobinding.exoPause.setOnClickListener {
+        view.findViewById<ImageView>(R.id.exo_pause).setOnClickListener {
             val postion = exoPlayer.contentPosition / 1000
             storageRecord(postion.toString())
         }
+        view.findViewById<ImageView>(R.id.exo_play).setImageDrawable(resources.getDrawable(R.drawable.alipay_icon))
+      /*  exobinding = LayoutCustomExo2Binding.bind(view)
+        exobinding.exoPause.setOnClickListener {
+            val postion = exoPlayer.contentPosition / 1000
+            storageRecord(postion.toString())
+        }*/
         val include = layoutInflater.inflate(R.layout.include_exo3, null, true)
         //分享
         val share = include.findViewById<ImageView>(R.id.video_share)
@@ -302,12 +306,12 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
         shareDialog = BasePopWindow(this)
         shareDialog.contentView = shareBinding.root
         shareBinding.shareClose.setOnClickListener {
+            doPunch(productId, courseId)
+            //exoPlayer.play()
+            shareDialog.dismiss()
             if (courseDub.isBlank()){
                 exoPlayer.play()
             }
-            //exoPlayer.play()
-            shareDialog.dismiss()
-
         }
         shareBinding.shareQuan.setOnClickListener {
             shareWX(SHARE_MEDIA.WEIXIN_CIRCLE)
@@ -427,17 +431,9 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
 
         override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
             super.onMediaItemTransition(mediaItem, reason)
-
             productId=mediaItem?.mediaMetadata?.subtitle.toString()
             courseId=mediaItem?.mediaMetadata?.title.toString()
             courseDub=mediaItem?.mediaMetadata?.station.toString()
-            Log.e(
-                "TAG",
-                "onMediaItemTransition: " + courseId
-                        + "----" + productId
-                        + "----" + courseDub
-            )
-            doPunch(mediaItem?.mediaMetadata?.subtitle.toString(), mediaItem?.mediaMetadata?.title.toString())
             if (mediaItem?.mediaId.equals("1")) {
                 exoPlayer.pause()
                 share()
