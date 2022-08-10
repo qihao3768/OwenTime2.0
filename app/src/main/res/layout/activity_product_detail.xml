@@ -75,16 +75,14 @@
     android:layout_height="match_parent"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintTop_toBottomOf="@id/layout_goods_price"
+    android:layout_marginTop="15dp"
     app:cardCornerRadius="11dp"
-    android:layout_margin="15dp"
     app:cardElevation="0dp">
     <WebView
         android:id="@+id/group_detail_pic"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
-
-
 </androidx.cardview.widget.CardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
