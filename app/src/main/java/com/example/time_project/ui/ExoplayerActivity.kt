@@ -102,10 +102,10 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
     private lateinit var exobinding: LayoutCustomExo2Binding
     private val mViewModel by viewModels<OwenViewModel>()//获取播放列表vm
 
-        var courseId:String = ""
-        var productId:String = ""
-        var courseDub:String = ""
-
+    var courseId: String = ""
+    var productId: String = ""
+    var courseDub: String = ""
+    var mediaItemId: String = "0"
 
     override fun initData() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
@@ -136,9 +136,10 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
             val postion = exoPlayer.contentPosition / 1000
             storageRecord(postion.toString())
         }
-        view.findViewById<ImageView>(R.id.exo_play).setImageDrawable(resources.getDrawable(R.drawable.alipay_icon))
-      /*  exobinding = LayoutCustomExo2Binding.bind(view)
-        exobinding.exoPause.setOnClickListener {
+       /* view.findViewById<ImageView>(R.id.exo_play)
+            .setImageDrawable(resources.getDrawable(R.drawable.alipay_icon))*/
+        exobinding = LayoutCustomExo2Binding.bind(view)
+      /*  exobinding.exoPause.setOnClickListener {
             val postion = exoPlayer.contentPosition / 1000
             storageRecord(postion.toString())
         }*/
@@ -173,23 +174,18 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
 
 
         //投屏，暂时不做
-//         val forscreen=include.findViewById<TextView>(R.id.tv_forscreen)
-//         forscreen.setOnClickListener {
-//
-//         }
+        /*   val forscreen=include.findViewById<TextView>(R.id.tv_forscreen)
+           forscreen.setOnClickListener {
+
+           }*/
         mBinding.exoPlayer.overlayFrameLayout?.addView(include)
         mBinding.exoPlayer.keepScreenOn = true
         mBinding.exoPlayer.controllerAutoShow = true
         mBinding.exoPlayer.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIT
-//        mBinding.exoPlayer.setShutterBackgroundColor(R.color.transparent)
         mBinding.exoTitle.title = intent.courseTitle
-
-//         val item2=MediaItem.fromUri(mUrl)
-//         exoPlayer.setMediaItem(item2)
-        exoPlayer.seekTo(intent.courseTime.toLong())
         exoPlayer.prepare()
         registerVideoListener(playerListener)
-
+        exoPlayer.seekTo(intent.courseTime.toLong())
         mBinding.exoPlayer.player = exoPlayer
         mBinding.ivUnlock.setOnClickListener {
             mBinding.ivUnlock.setBackgroundResource(if (isLock) R.drawable.icon_player_unlock else R.drawable.icon_player_lock)
@@ -223,6 +219,7 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
             uri = Uri.parse(intent.courseUrl)
         }
         val item = MediaItem.fromUri(uri)
+        mediaItemId="1"
         exoPlayer.setMediaItem(item)
 
     }
@@ -240,7 +237,12 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
                                 val uri = Uri.parse(body.course[i].url)
                                 mediaItem.setUri(uri)
                                 if (i == intent.position) {
-                                    mediaItem.setMediaId("0")
+                                    if (intent.courseDub.isNullOrBlank()){
+                                        mediaItem.setMediaId("0")
+                                    }else{
+                                        mediaItem.setMediaId("1")
+                                    }
+
                                 } else {
                                     mediaItem.setMediaId("1")
                                 }
@@ -306,10 +308,11 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
         shareDialog = BasePopWindow(this)
         shareDialog.contentView = shareBinding.root
         shareBinding.shareClose.setOnClickListener {
-            doPunch(productId, courseId)
-            //exoPlayer.play()
+            if (productId.isNotEmpty() && courseId.isNotEmpty()) {
+                doPunch(productId, courseId)
+            }
             shareDialog.dismiss()
-            if (courseDub.isBlank()){
+            if (courseDub.isBlank()) {
                 exoPlayer.play()
             }
         }
@@ -400,18 +403,15 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
 
                 }
                 Player.STATE_ENDED -> {
-                    share()
-                    Log.e(
-                        "TAG",
-                        "STATE_ENDED: " + courseId
-                                + "----" + productId
-                                + "----" + courseDub
-                    )
-                    //停止配音
-                    if (!intent.courseDub.isNullOrBlank()|| courseDub.isNotBlank()) {
-                        RecordUtil.stopRecord(this@ExoplayerActivity, idealRecorder)
-                        toast("停止配音，开始合成...")
+                    if (mediaItemId.equals("1")) {
+                        //停止配音
+                        if (!intent.courseDub.isNullOrBlank() || courseDub.isNotBlank()) {
+                            toast("停止配音，开始合成...")
+                            RecordUtil.stopRecord(this@ExoplayerActivity, idealRecorder)
+                        }
+                        share()
                     }
+
 
                 }
             }
@@ -423,7 +423,7 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
                 //进入到播放页面的时候先保存一次播放记录，目的是防止应用大退时无法保存
                 storageRecord("0")
                 //配音
-                if (!intent.courseDub.isNullOrBlank()|| courseDub.isNotBlank()) {
+                if (!intent.courseDub.isNullOrBlank() || courseDub.isNotBlank()) {
                     getPermission()
                 }
             }
@@ -431,10 +431,12 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
 
         override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
             super.onMediaItemTransition(mediaItem, reason)
-            productId=mediaItem?.mediaMetadata?.subtitle.toString()
-            courseId=mediaItem?.mediaMetadata?.title.toString()
-            courseDub=mediaItem?.mediaMetadata?.station.toString()
-            if (mediaItem?.mediaId.equals("1")) {
+            productId = mediaItem?.mediaMetadata?.subtitle.toString()
+            courseId = mediaItem?.mediaMetadata?.title.toString()
+            courseDub = mediaItem?.mediaMetadata?.station.toString()
+            mediaItemId = mediaItem?.mediaId.toString()
+            Log.e("TAG", "onMediaItemTransition: " + mediaItemId)
+            if (mediaItemId.equals("1")) {
                 exoPlayer.pause()
                 share()
             }
@@ -569,11 +571,11 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
 
         override fun onFileSaveSuccess(fileUri: String) {
             toast("文件保存成功")
-            var url:String=""
-            if (intent.courseDub.equals("")){
-                url=courseDub
-            }else{
-                url=intent.courseDub.toString()
+            var url: String = ""
+            if (intent.courseDub.equals("")) {
+                url = courseDub
+            } else {
+                url = intent.courseDub.toString()
             }
             runFFmpegRxJava(url, fileUri)
         }
