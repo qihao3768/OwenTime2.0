@@ -309,8 +309,10 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
         shareDialog.contentView = shareBinding.root
         shareBinding.shareClose.setOnClickListener {
 
-            if (productId!="null" && courseId!="null") {
-                doPunch(productId, courseId)
+            if (!productId.isNullOrBlank() && !courseId.isNullOrBlank()) {
+                if (productId!="null"&&courseId!="null"){
+                    doPunch(productId, courseId)
+                }
             }
             shareDialog.dismiss()
             if (courseDub.isBlank()) {
