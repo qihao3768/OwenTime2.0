@@ -308,7 +308,9 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
         shareDialog = BasePopWindow(this)
         shareDialog.contentView = shareBinding.root
         shareBinding.shareClose.setOnClickListener {
-            if (productId.isNotEmpty() && courseId.isNotEmpty()) {
+
+            if (productId!="null" && courseId!="null") {
+                Log.e("TAG", "share:${productId} "+"```"+courseId )
                 doPunch(productId, courseId)
             }
             shareDialog.dismiss()
