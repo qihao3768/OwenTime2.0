@@ -105,7 +105,7 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
     var courseId: String = ""
     var productId: String = ""
     var courseDub: String = ""
-    var mediaItemId: String = "0"
+    var mediaItemId: String = ""
 
     override fun initData() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
@@ -310,7 +310,6 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
         shareBinding.shareClose.setOnClickListener {
 
             if (productId!="null" && courseId!="null") {
-                Log.e("TAG", "share:${productId} "+"```"+courseId )
                 doPunch(productId, courseId)
             }
             shareDialog.dismiss()
@@ -414,7 +413,6 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
                         share()
                     }
 
-
                 }
             }
         }
@@ -440,7 +438,10 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
             Log.e("TAG", "onMediaItemTransition: " + mediaItemId)
             if (mediaItemId.equals("1")) {
                 exoPlayer.pause()
-                share()
+                if (intent.courseDub.isNullOrBlank()){
+                    share()
+                }
+
             }
 
         }
