@@ -46,6 +46,7 @@ import com.gyf.immersionbar.ktx.immersionBar
 import com.hjq.shape.view.ShapeButton
 import com.hjq.shape.view.ShapeTextView
 import com.permissionx.guolindev.PermissionX
+import com.tencent.mmkv.MMKV
 import com.umeng.socialize.ShareAction
 import com.umeng.socialize.UMShareListener
 import com.umeng.socialize.bean.SHARE_MEDIA
@@ -106,6 +107,7 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
     var productId: String = ""
     var courseDub: String = ""
     var mediaItemId: String = ""
+    val mmkv:MMKV= MMKV.defaultMMKV()
 
     override fun initData() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
@@ -251,6 +253,7 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
                                 mmd.setStation(body.course[i].dubCourse ?: "")
                                 mediaItem.setMediaMetadata(mmd.build())
                                 exoPlayer.addMediaItem(mediaItem.build())
+                                mmkv.encode("courseid",body.course[i].id.toString())
                             }
                         }
                         401 -> {
@@ -437,7 +440,7 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
             courseId = mediaItem?.mediaMetadata?.title.toString()
             courseDub = mediaItem?.mediaMetadata?.station.toString()
             mediaItemId = mediaItem?.mediaId.toString()
-            Log.e("TAG", "onMediaItemTransition: " + mediaItemId)
+
             if (mediaItemId.equals("1")) {
                 exoPlayer.pause()
                 if (intent.courseDub.isNullOrBlank()){
@@ -620,6 +623,7 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
         if (resultFile.exists()) {
             resultFile.delete()
         }
+
         val noAideoFile = File(getExternalFilesDir(null), "/noAideo.mp4")
         if (noAideoFile.exists()) {
             noAideoFile.delete()
@@ -717,7 +721,7 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
         pause()
         showLoading()
         viewModel.storageDub(
-            courseId = intent.courseId ?: "",
+            courseId = mmkv.decodeString("courseid")!!,
             url = getExternalFilesDir(null).toString() + "/result.mp4"
         ).observe(
             this
