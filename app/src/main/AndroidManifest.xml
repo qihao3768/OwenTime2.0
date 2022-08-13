@@ -87,6 +87,7 @@
             android:name=".ui.ExoplayerActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|fontScale"
             android:exported="false"
+            android:launchMode="singleTask"
             android:screenOrientation="landscape" />
         <activity
             android:name=".ui.ProductDetailActivity"

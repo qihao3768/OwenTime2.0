@@ -24,6 +24,7 @@ import com.example.time_project.*
 import com.example.time_project.R
 import com.example.time_project.base.BaseActivity
 import com.example.time_project.base.BasePopWindow
+import com.example.time_project.bean.mine.DubGroupModel
 import com.example.time_project.bean.order.Course
 import com.example.time_project.databinding.ActivityExoplayerBinding
 import com.example.time_project.databinding.LayoutCustomExo2Binding
@@ -167,7 +168,7 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
         save.fastClick {
             save()
         }
-
+        Log.e("TAG", "initData:oncreate " )
         if (intent.position == -1) {
             initUrlSource()
         } else {
@@ -210,7 +211,6 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
         }
 
     }
-
     private fun initUrlSource() {
         //初始化播放器
         //         如果courseDub不为空，说明这节视频需要配音，后续走配音流程

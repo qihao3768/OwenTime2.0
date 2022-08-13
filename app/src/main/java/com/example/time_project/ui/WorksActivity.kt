@@ -1,6 +1,7 @@
 package com.example.time_project.ui
 
 import android.content.Intent
+import android.util.Log
 import android.view.Gravity
 import android.view.ViewGroup
 import androidx.activity.viewModels
@@ -72,12 +73,18 @@ class WorksActivity : BaseActivity(R.layout.activity_works) {
                 if (getModel<ItemExpand>().itemExpand) {expandOrCollapse()
                 } else {expandOrCollapse()}
             }
-            onFastClick(R.id.btn_play){
+
+            onClick(R.id.btn_play){
+                Log.e("TAG", "getData: ", )
+                val intent:Intent= Intent(this@WorksActivity,ExoplayerActivity::class.java)
                 intent.courseUrl = getModel<Dub>().url?: ""
                 intent.courseTime =0
                 intent.courseId = getModel<Dub>().courseId.toString()
                 intent.position=-1
-                start(this@WorksActivity, ExoplayerActivity().javaClass, intent)
+                startActivity(intent)
+                finish()
+               // start(this@WorksActivity, ExoplayerActivity().javaClass,intent)
+
             }
             onFastClick(R.id.layout_sharewx){
 
