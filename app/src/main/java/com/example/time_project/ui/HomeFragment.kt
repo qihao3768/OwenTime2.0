@@ -22,6 +22,7 @@ import com.example.time_project.bean.home.Studying
 import com.example.time_project.databinding.HomeFragmentBinding
 import com.example.time_project.start
 import com.example.time_project.util.IntentExtra.Companion.code
+import com.example.time_project.util.IntentExtra.Companion.courseDub
 import com.example.time_project.util.IntentExtra.Companion.courseId
 import com.example.time_project.util.IntentExtra.Companion.courseTime
 import com.example.time_project.util.IntentExtra.Companion.courseUrl
@@ -301,7 +302,9 @@ class HomeFragment : BaseFragment(R.layout.home_fragment) {
             requireActivity().intent.courseUrl = playing.url ?: ""
             requireActivity().intent.courseTime = playing.time ?: 0
             requireActivity().intent.courseId = playing.coursesId.toString()
+            requireActivity().intent.courseDub = playing.dubCourse ?: ""
             requireActivity().intent.position = -1
+            mmkv.encode("courseid",playing.coursesId.toString())
             start(requireActivity(), ExoplayerActivity().javaClass, requireActivity().intent)
         }
 

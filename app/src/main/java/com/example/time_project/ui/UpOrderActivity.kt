@@ -129,23 +129,28 @@ class UpOrderActivity : BaseActivity(R.layout.activity_up_order) {
         }
         mBinding.btnOrdersubmit.setOnClickListener {
             //如果订单号不为空，说明在当前页面已经执行了一次下单操作，并且已经生成了订单，就不能再当前页面重复下单了
-            body?.run {
-                note=mBinding.tvOrdernote.text.toString()
-                viewModel.upOrder(this).observe(this@UpOrderActivity, Observer {
-                    it?.run {
-                        when(code){
-                            1000->{
-                                data?.run {
-                                    mOrderSn=orderSn.toString()
-                                    showPay()
-                                }
-                            }else->{
-                            toast(message.toString())
+            if (intent.iprovince.isNullOrBlank()){
+                toast("请先完善地址信息")
+            }else{
+                body?.run {
+                    note=mBinding.tvOrdernote.text.toString()
+                    viewModel.upOrder(this).observe(this@UpOrderActivity, Observer {
+                        it?.run {
+                            when(code){
+                                1000->{
+                                    data?.run {
+                                        mOrderSn=orderSn.toString()
+                                        showPay()
+                                    }
+                                }else->{
+                                toast(message.toString())
+                            }
                             }
                         }
-                    }
-                })
+                    })
+                }
             }
+
         }
 //订单确认
         viewModel.confirmPage(initParams()).observe(this, Observer {

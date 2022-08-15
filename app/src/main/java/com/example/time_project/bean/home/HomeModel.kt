@@ -1,4 +1,5 @@
 package com.example.time_project.bean.home
+
 import android.view.View
 import coil.load
 import com.drake.brv.BindingAdapter
@@ -30,7 +31,7 @@ data class HomeModel(
 data class Banner(
     @SerializedName("activity_links")
     val activityLinks: String? = "",
-    @SerializedName( "id")
+    @SerializedName("id")
     val id: Int? = 0,
     @SerializedName("jump_type")
     val jumpType: Int? = 0,
@@ -39,7 +40,7 @@ data class Banner(
     @SerializedName("url")
     val url: String? = "",
     @SerializedName("product_code")
-    val productCode:String?=""
+    val productCode: String? = ""
 )
 
 data class Product(
@@ -59,17 +60,17 @@ data class Product(
     val priceShow: String? = "",
     @SerializedName("user_count")
     val userCount: Int? = 0
-):ItemBind{
-    val token= MMKV.defaultMMKV().decodeString("token")
+) : ItemBind {
+    val token = MMKV.defaultMMKV().decodeString("token")
     override fun onBind(holder: BindingAdapter.BindingViewHolder) {
-        val binding= ItemProductBinding.bind(holder.itemView)
+        val binding = ItemProductBinding.bind(holder.itemView)
         binding.ivProduct.load(imgHead)
-        binding.tvProductTitle.text=name
-        binding.tvProductDesc.text=introduction
-        binding.tvProductPrice02.text=priceShow
-        binding.tvProductPrice02.textSize= DensityUtils.dp2px(binding.root.context,8).toFloat()
-        binding.tvProductPtnum.text=userCount.toString().plus("人购买")
-        binding.btnGoto.visibility=View.GONE
+        binding.tvProductTitle.text = name
+        binding.tvProductDesc.text = introduction
+        binding.tvProductPrice02.text = priceShow
+        binding.tvProductPrice02.textSize = DensityUtils.dp2px(binding.root.context, 8).toFloat()
+        binding.tvProductPtnum.text = userCount.toString().plus("人购买")
+        binding.btnGoto.visibility = View.GONE
     }
 }
 
@@ -87,13 +88,14 @@ data class User(
     @SerializedName("name")
     val name: String? = "",
     @SerializedName("birthday")
-    val birthday:String?=""
+    val birthday: String? = ""
 )
+
 data class Studying(
     @SerializedName("courses_id")
     val coursesId: Int? = 0,
     @SerializedName("dub_course")
-    val dubCourse: Any? = Any(),
+    val dubCourse: String? = "",
     @SerializedName("image")
     val image: String? = "",
     @SerializedName("name")
@@ -103,5 +105,6 @@ data class Studying(
     @SerializedName("time")
     val time: Int? = 0,
     @SerializedName("url")
-    val url: String? = ""
+    val url: String? = "",
+
 )

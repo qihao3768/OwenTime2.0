@@ -604,7 +604,7 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
                 if (allGranted) {
                     startRecord()
                 } else {
-                    toast("您拒绝了一下权限 $deniedList 可能会对您的正常使用造成影响")
+                    toast("您拒绝了相关权限可能会对您的正常使用造成影响")
                 }
             }
     }
