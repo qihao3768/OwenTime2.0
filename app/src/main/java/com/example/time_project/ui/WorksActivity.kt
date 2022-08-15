@@ -84,7 +84,6 @@ class WorksActivity : BaseActivity(R.layout.activity_works) {
                 startActivity(intent)
                 finish()
                // start(this@WorksActivity, ExoplayerActivity().javaClass,intent)
-
             }
             onFastClick(R.id.layout_sharewx){
 
