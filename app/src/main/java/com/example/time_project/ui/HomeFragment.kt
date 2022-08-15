@@ -149,6 +149,7 @@ class HomeFragment : BaseFragment(R.layout.home_fragment) {
             //start(requireActivity(), LoginActivity().javaClass, false)
         } else {
             getUser(token)
+            initBanner()
         }
     }
 

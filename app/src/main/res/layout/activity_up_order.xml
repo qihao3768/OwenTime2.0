@@ -424,7 +424,7 @@
         android:text="提交订单"
         android:textColor="@color/white"
         android:textSize="17dp"
-        app:shape_solidColor="@color/FFC482"
+        app:shape_solidColor="@color/FE9520"
         app:layout_constraintStart_toEndOf="@id/layout_ordertotal"
         app:layout_constraintEnd_toEndOf="parent"
         android:paddingTop="14dp"

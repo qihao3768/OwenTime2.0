@@ -4,6 +4,7 @@ import android.content.Intent
 import android.location.Address
 import android.os.Handler
 import android.os.Message
+import android.text.Editable
 import android.text.TextUtils
 import android.view.Gravity
 import android.view.View
@@ -133,7 +134,6 @@ class UpOrderActivity : BaseActivity(R.layout.activity_up_order) {
                 toast("请先完善地址信息")
             }else{
                 body?.run {
-                    note=mBinding.tvOrdernote.text.toString()
                     viewModel.upOrder(this).observe(this@UpOrderActivity, Observer {
                         it?.run {
                             when(code){
@@ -152,70 +152,7 @@ class UpOrderActivity : BaseActivity(R.layout.activity_up_order) {
             }
 
         }
-//订单确认
-        viewModel.confirmPage(initParams()).observe(this, Observer {
-            it?.run {
 
-                mBinding.orderPrice.text="￥".plus(priceShow)
-                mBinding.tvOrdernum.text="x".plus(intent.inum)
-                mBinding.tvOrderjianshu.text="共".plus(intent.inum).plus("件")
-                address?.run {
-                    mBinding.layoutAddress01.visibility= View.GONE
-                    mBinding.groupAddress.visibility=View.VISIBLE
-                    mBinding.layoutAddress02.visibility=View.VISIBLE
-                    mBinding.addressName.text=name?:""
-                    mBinding.addressPhone.text=phone?:""
-                    val maddress=(province?:"").plus(city?:"").plus(area?:"").plus(address?:"")
-                    mBinding.tvAddressDetail.text=maddress
-
-                    intent.iprovince=province
-                    intent.icity=city
-                    intent.iarea=area
-                    intent.iaddress=address
-                    intent.iname=name
-                    intent.iphone=phone
-                    intent.iid=addressId?:-1
-                }
-                product?.run {
-                    mBinding.giftList.linear().setup {
-                        addType<Product01>(R.layout.item_uporder)
-                        addType<Gift>(R.layout.item_gift)
-                        val list= mutableListOf<Any>()
-                        list.add(product)
-                        gift?.forEach {_gift->
-                            list.add(_gift)
-                        }
-                        models=list
-                        mTitle=name?:""
-                    }
-//                    mBinding.tvOrdertitle.text=name?:""
-//                    mBinding.ivOrderpic.load(imgShow?:"")
-////                    mBinding.ivOrderpic.load(imgShow?:"")
-//                    mBinding.tvPrice.text="￥".plus(priceActual?:"")
-//                    mTitle=name?:""
-//
-//                    //赠品
-//                    gift?.run {
-//                        if (isNotEmpty()){
-//
-//                        }
-//                    }
-                }
-//                mBinding.tvTotalPrice.text=(priceActual?:0.00).toString()
-
-                val num=intent.inum
-                mBinding.tvTotalPrice.text=(priceActual?:0.00).toString()
-
-                val detailRequestBody=UpOrderDetailRequestBody(product_id=intent.iproductId.toString(), sku_id = intent.isku?:"",product_quantity=num.toString())
-                val payAmount=mBinding.tvTotalPrice.text.toString()//实付金额
-                val totalAmount=(priceShow?:0.00).times(num).toString()//总金额
-                body= UpOrderRequestBody(order_type = "0",total_amount=totalAmount,
-                    pay_amount=payAmount,freight_amount=freight.toString(), note = "",
-                    coupon_code = intent.icoupon?:"", coupon_amount = "0", detail = listOf(detailRequestBody), address_id = intent.iid.toString())//下单时携带的body
-
-            }
-
-        })
         //返回上一页
         mBinding.titleOrder.leftView.fastClick {
             finish()
@@ -300,7 +237,74 @@ class UpOrderActivity : BaseActivity(R.layout.activity_up_order) {
             .showPopupWindow()
     }
 
+    override fun onResume() {
+        super.onResume()
+        //订单确认
+        viewModel.confirmPage(initParams()).observe(this, Observer {
+            it?.run {
 
+                mBinding.orderPrice.text="￥".plus(priceShow)
+                mBinding.tvOrdernum.text="x".plus(intent.inum)
+                mBinding.tvOrderjianshu.text="共".plus(intent.inum).plus("件")
+                address?.run {
+                    mBinding.layoutAddress01.visibility= View.GONE
+                    mBinding.groupAddress.visibility=View.VISIBLE
+                    mBinding.layoutAddress02.visibility=View.VISIBLE
+                    mBinding.addressName.text=name?:""
+                    mBinding.addressPhone.text=phone?:""
+                    val maddress=(province?:"").plus(city?:"").plus(area?:"").plus(address?:"")
+                    mBinding.tvAddressDetail.text=maddress
+
+                    intent.iprovince=province
+                    intent.icity=city
+                    intent.iarea=area
+                    intent.iaddress=address
+                    intent.iname=name
+                    intent.iphone=phone
+                    intent.iid=addressId?:-1
+                }
+                product?.run {
+                    mBinding.giftList.linear().setup {
+                        addType<Product01>(R.layout.item_uporder)
+                        addType<Gift>(R.layout.item_gift)
+                        val list= mutableListOf<Any>()
+                        list.add(product)
+                        gift?.forEach {_gift->
+                            list.add(_gift)
+                        }
+                        models=list
+                        mTitle=name?:""
+                    }
+//                    mBinding.tvOrdertitle.text=name?:""
+//                    mBinding.ivOrderpic.load(imgShow?:"")
+////                    mBinding.ivOrderpic.load(imgShow?:"")
+//                    mBinding.tvPrice.text="￥".plus(priceActual?:"")
+//                    mTitle=name?:""
+//
+//                    //赠品
+//                    gift?.run {
+//                        if (isNotEmpty()){
+//
+//                        }
+//                    }
+                }
+//                mBinding.tvTotalPrice.text=(priceActual?:0.00).toString()
+
+                val num=intent.inum
+                mBinding.tvTotalPrice.text=(priceActual?:0.00).toString()
+
+                val detailRequestBody=UpOrderDetailRequestBody(product_id=intent.iproductId.toString(), sku_id = intent.isku?:"",product_quantity=num.toString())
+                val payAmount=mBinding.tvTotalPrice.text.toString()//实付金额
+                val totalAmount=(priceShow?:0.00).times(num).toString()//总金额
+                val note=mBinding.tvOrdernote.text.toString()
+                body= UpOrderRequestBody(order_type = "0",total_amount=totalAmount,
+                    pay_amount=payAmount,freight_amount=freight.toString(), note = note,
+                    coupon_code = intent.icoupon?:"", coupon_amount = "0", detail = listOf(detailRequestBody), address_id = intent.iid.toString())//下单时携带的body
+
+            }
+
+        })
+    }
 
     private fun initParams():HashMap<String,Any>{
         return ConfirmOrderRequestBody(intent.icode?:"",intent.isku?:"",
@@ -403,6 +407,9 @@ class UpOrderActivity : BaseActivity(R.layout.activity_up_order) {
     private fun showNote(){
         val view=layoutInflater.inflate(R.layout.layout_note,null)
         noteBinding= LayoutNoteBinding.bind(view)
+        if (!mBinding.tvOrdernote.text.equals("无")){
+            noteBinding.edtNote.setText(mBinding.tvOrdernote.text)
+        }
         noteBinding.btnNote.fastClick {
             mBinding.tvOrdernote.text=noteBinding.edtNote.text.toString()
             noteDialog.dismiss()

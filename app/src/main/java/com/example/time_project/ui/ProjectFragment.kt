@@ -28,14 +28,17 @@ import com.tencent.mmkv.MMKV
 
 class ProjectFragment : BaseFragment(R.layout.project_fragment) {
 
+    var total:Int=1
+
     companion object {
         fun newInstance() = ProjectFragment()
+
     }
 
     private val viewModel by viewModels<OwenViewModel>()
     private val mBinding by viewBinding(ProjectFragmentBinding::bind)
 
-    private var total=1
+
 
     private var showModel=0// 0 展示的是推荐 1 展示的是已购
 
@@ -93,6 +96,9 @@ class ProjectFragment : BaseFragment(R.layout.project_fragment) {
         }
 
         mBinding.statePurchased.onRefresh {
+            if (total==0){
+                total=1
+            }
             if (index<=total){
                 viewModel.alreadyBuy(index.toString()).observe(this@ProjectFragment, Observer {
                     it?.run {
