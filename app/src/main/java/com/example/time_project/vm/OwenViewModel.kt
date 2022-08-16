@@ -232,4 +232,17 @@ class OwenViewModel() : BaseViewModel() {
         return liveData
     }
 
+
+    /***
+     * 获取分享内容
+     */
+    fun getShare(id: String):MutableLiveData<BaseResponse<Share?>>{
+        val liveData=MutableLiveData<BaseResponse<Share?>>()
+        launchUI {
+            val result=owenReps.getShare(id)
+            liveData.value= result
+        }
+        return liveData
+    }
+
 }

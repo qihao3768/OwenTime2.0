@@ -1,11 +1,9 @@
 package com.example.time_project.ui
 
+import android.R.attr.thumb
 import android.content.Intent
 import android.util.Log
-import android.view.Gravity
-import android.view.ViewGroup
 import androidx.activity.viewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.drake.brv.item.ItemExpand
@@ -16,17 +14,13 @@ import com.example.time_project.base.BaseActivity
 import com.example.time_project.base.BasePopWindow
 import com.example.time_project.bean.mine.Dub
 import com.example.time_project.bean.mine.DubGroupModel
-import com.example.time_project.bean.mine.DubListModel
-import com.example.time_project.bean.other.WorksBean
 import com.example.time_project.databinding.ActivityWorksBinding
 import com.example.time_project.databinding.LayoutShareBinding
 import com.example.time_project.fastClick
-import com.example.time_project.start
 import com.example.time_project.toast
 import com.example.time_project.util.IntentExtra.Companion.courseId
 import com.example.time_project.util.IntentExtra.Companion.courseTime
 import com.example.time_project.util.IntentExtra.Companion.courseUrl
-import com.example.time_project.util.IntentExtra.Companion.iproductId
 import com.example.time_project.util.IntentExtra.Companion.position
 import com.example.time_project.util.IntentExtraString
 import com.example.time_project.vm.OwenViewModel
@@ -35,8 +29,8 @@ import com.umeng.socialize.ShareAction
 import com.umeng.socialize.UMShareListener
 import com.umeng.socialize.bean.SHARE_MEDIA
 import com.umeng.socialize.media.UMImage
-import razerdp.util.animation.AnimationHelper
-import razerdp.util.animation.TranslationConfig
+import com.umeng.socialize.media.UMWeb
+
 
 /***
  * 我的作品
@@ -51,6 +45,9 @@ class WorksActivity : BaseActivity(R.layout.activity_works) {
     private lateinit var shareBinding: LayoutShareBinding
 
     private lateinit var mShareAction: ShareAction//分享
+    private var title:String=""
+    private var subTitle:String=""
+    private var url:String=""
     override fun initData() {
         immersionBar {
             statusBarColor(R.color.white)
@@ -59,23 +56,33 @@ class WorksActivity : BaseActivity(R.layout.activity_works) {
             fitsSystemWindows(true)
         }
         getData()
+        getShare()
 
         mBinding.titleWorks.leftView.fastClick {
             finish()
         }
     }
 
+    private fun getShare() {
+        viewModel.getShare("1").observe(this@WorksActivity, Observer {
+            title=it.data?.title.toString()
+            subTitle=it.data?.description.toString()
+        })
+    }
+
     private fun getData(){
         mBinding.rvWorks.linear().setup {
             addType<DubGroupModel>(R.layout.item_dub_first)
             addType<Dub>(R.layout.layout_works)
+
             R.id.item.onFastClick {
                 if (getModel<ItemExpand>().itemExpand) {expandOrCollapse()
                 } else {expandOrCollapse()}
+
             }
 
             onClick(R.id.btn_play){
-                Log.e("TAG", "getData: ", )
+                Log.e("TAG", "getData: ")
                 val intent:Intent= Intent(this@WorksActivity,ExoplayerActivity::class.java)
                 intent.courseUrl = getModel<Dub>().url?: ""
                 intent.courseTime =0
@@ -86,12 +93,12 @@ class WorksActivity : BaseActivity(R.layout.activity_works) {
                // start(this@WorksActivity, ExoplayerActivity().javaClass,intent)
             }
             onFastClick(R.id.layout_sharewx){
-
+                url=getModel<Dub>().url?: ""
                 shareWX(SHARE_MEDIA.WEIXIN)
             }
 
             onFastClick(R.id.layout_sharequan){
-
+                url=getModel<Dub>().url?: ""
                 shareWX(SHARE_MEDIA.WEIXIN_CIRCLE)
             }
         }
@@ -141,10 +148,17 @@ class WorksActivity : BaseActivity(R.layout.activity_works) {
      * platform 平台 微信、朋友圈
      */
     private fun shareWX(platform: SHARE_MEDIA){
-        mShareAction = ShareAction(this)
+        val web: UMWeb = UMWeb(url)
+        web.title = "👉"+title //标题
         val umImage = UMImage(this, R.drawable.share_tiyan)
+        web.setThumb(umImage) //缩略图
+
+        web.description ="🏆"+subTitle //描述
+
+        mShareAction = ShareAction(this)
+        //val umImage = UMImage(this, R.drawable.share_tiyan)
         mShareAction.setPlatform(platform)
-            .withMedia(umImage)
+            .withMedia(web)
             .setCallback(object : UMShareListener {
                 override fun onStart(p0: SHARE_MEDIA) {
 

@@ -149,6 +149,11 @@ interface ApiService {
     @POST("api/dub/getDub")
     suspend fun getDub():BaseResponse<List<DubListModel>?>
 
+    //配音列表
+    @POST("api/dict/share")
+    @FormUrlEncoded
+    suspend fun getShare(@Field("id") id:String):BaseResponse<Share?>
+
     companion object {
 //        const val BASE_URL = "http://192.168.2.184:8080/"
         const val BASE_URL = "https://new.owentime.cn/"

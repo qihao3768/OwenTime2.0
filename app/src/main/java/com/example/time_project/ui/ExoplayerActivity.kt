@@ -52,6 +52,7 @@ import com.umeng.socialize.ShareAction
 import com.umeng.socialize.UMShareListener
 import com.umeng.socialize.bean.SHARE_MEDIA
 import com.umeng.socialize.media.UMImage
+import com.umeng.socialize.media.UMWeb
 import io.microshow.rxffmpeg.RxFFmpegInvoke
 import io.microshow.rxffmpeg.RxFFmpegSubscriber
 import kotlinx.coroutines.launch
@@ -68,6 +69,9 @@ import java.util.ArrayList
  * 视频播放
  */
 class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
+
+    private lateinit var subTitle: String
+    private lateinit var shareTitle: String
     private val mBinding by viewBinding(ActivityExoplayerBinding::bind)
 
     //    private var mUrl="https://owen-time-test.oss-cn-beijing.aliyuncs.com/courses/cou/1643348728_216a94a44ba39a712.mp4"
@@ -108,7 +112,7 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
     var productId: String = ""
     var courseDub: String = ""
     var mediaItemId: String = ""
-    val mmkv:MMKV= MMKV.defaultMMKV()
+    val mmkv: MMKV = MMKV.defaultMMKV()
 
     override fun initData() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
@@ -118,8 +122,7 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
             hideBar(BarHide.FLAG_HIDE_BAR)
             init()
         }
-
-
+        getShare()
         //        IdealRecorder.getInstance().init(this);
         idealRecorder = IdealRecorder.getInstance()
         idealRecorder.init(this)
@@ -139,13 +142,13 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
             val postion = exoPlayer.contentPosition / 1000
             storageRecord(postion.toString())
         }
-       /* view.findViewById<ImageView>(R.id.exo_play)
-            .setImageDrawable(resources.getDrawable(R.drawable.alipay_icon))*/
+        /* view.findViewById<ImageView>(R.id.exo_play)
+             .setImageDrawable(resources.getDrawable(R.drawable.alipay_icon))*/
         exobinding = LayoutCustomExo2Binding.bind(view)
-      /*  exobinding.exoPause.setOnClickListener {
-            val postion = exoPlayer.contentPosition / 1000
-            storageRecord(postion.toString())
-        }*/
+        /*  exobinding.exoPause.setOnClickListener {
+              val postion = exoPlayer.contentPosition / 1000
+              storageRecord(postion.toString())
+          }*/
         val include = layoutInflater.inflate(R.layout.include_exo3, null, true)
         //分享
         val share = include.findViewById<ImageView>(R.id.video_share)
@@ -168,7 +171,6 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
         save.fastClick {
             save()
         }
-        Log.e("TAG", "initData:oncreate " )
         if (intent.position == -1) {
             initUrlSource()
         } else {
@@ -211,17 +213,29 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
         }
 
     }
+
+
+    private fun getShare() {
+        viewModel.getShare("2").observe(this, Observer {
+            shareTitle = it.data?.title.toString()
+            subTitle = it.data?.description.toString()
+        })
+    }
+
+
     private fun initUrlSource() {
         //初始化播放器
         //         如果courseDub不为空，说明这节视频需要配音，后续走配音流程
         val uri: Uri
         if (!intent.courseDub.isNullOrBlank()) {
             uri = Uri.parse(intent.courseDub)
+            mmkv.encode("Shareurl",intent.courseDub.toString())
         } else {
             uri = Uri.parse(intent.courseUrl)
+            mmkv.encode("Shareurl",intent.courseUrl.toString())
         }
         val item = MediaItem.fromUri(uri)
-        mediaItemId="1"
+        mediaItemId = "1"
         exoPlayer.setMediaItem(item)
 
     }
@@ -239,9 +253,9 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
                                 val uri = Uri.parse(body.course[i].url)
                                 mediaItem.setUri(uri)
                                 if (i == intent.position) {
-                                    if (intent.courseDub.isNullOrBlank()){
+                                    if (intent.courseDub.isNullOrBlank()) {
                                         mediaItem.setMediaId("0")
-                                    }else{
+                                    } else {
                                         mediaItem.setMediaId("1")
                                     }
 
@@ -251,9 +265,10 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
                                 mmd.setTitle("${body.course[i].id}")
                                 mmd.setSubtitle("${body.course[i].productId}")
                                 mmd.setStation(body.course[i].dubCourse ?: "")
+                                mmd.setAlbumTitle(body.course[i].url?:"")
                                 mediaItem.setMediaMetadata(mmd.build())
                                 exoPlayer.addMediaItem(mediaItem.build())
-                                mmkv.encode("courseid",body.course[i].id.toString())
+                                mmkv.encode("courseid", body.course[i].id.toString())
                             }
                         }
                         401 -> {
@@ -313,7 +328,7 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
         shareBinding.shareClose.setOnClickListener {
 
             if (!productId.isNullOrBlank() && !courseId.isNullOrBlank()) {
-                if (productId!="null"&&courseId!="null"){
+                if (productId != "null" && courseId != "null") {
                     doPunch(productId, courseId)
                 }
             }
@@ -350,9 +365,14 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
      * platform 平台 微信、朋友圈
      */
     private fun shareWX(platform: SHARE_MEDIA) {
+        val web: UMWeb = UMWeb(mmkv.decodeString("Shareurl"))
+        web.title = "👉"+shareTitle //标题
         val umImage = UMImage(this, R.drawable.share_tiyan)
+        web.setThumb(umImage) //缩略图
+        web.description = "🏆"+subTitle //描述
+        //val umImage = UMImage(this, R.drawable.share_tiyan)
         mShareAction.setPlatform(platform)
-            .withMedia(umImage)
+            .withMedia(web)
             .setCallback(object : UMShareListener {
                 override fun onStart(p0: SHARE_MEDIA) {
 
@@ -440,10 +460,12 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
             courseId = mediaItem?.mediaMetadata?.title.toString()
             courseDub = mediaItem?.mediaMetadata?.station.toString()
             mediaItemId = mediaItem?.mediaId.toString()
-
+            if (!mediaItem?.mediaMetadata?.albumTitle.isNullOrBlank()){
+                mmkv.encode("Shareurl",mediaItem?.mediaMetadata?.albumTitle.toString())
+            }
             if (mediaItemId.equals("1")) {
                 exoPlayer.pause()
-                if (intent.courseDub.isNullOrBlank()){
+                if (intent.courseDub.isNullOrBlank()) {
                     share()
                 }
 

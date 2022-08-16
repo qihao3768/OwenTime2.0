@@ -196,4 +196,12 @@ class OwenRepo():BaseRepository(){
     suspend fun dublist():BaseResponse<List<DubListModel>?> =request{
         mService.getDub()
     }
+
+
+    /***
+     * 分享内容
+     */
+    suspend fun getShare(id: String):BaseResponse<Share?> =request{
+        mService.getShare(id)
+    }
 }
