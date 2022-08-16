@@ -600,6 +600,9 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
 
     private fun getPermission() {
         PermissionX.init(this).permissions(permissions)
+            .onExplainRequestReason { scope, deniedList ->
+                scope.showRequestReasonDialog(deniedList, "拒绝权限可能会导致该功能无法使用", "授权", "拒绝")
+            }
             .request { allGranted, grantedList, deniedList ->
                 if (allGranted) {
                     startRecord()
@@ -612,7 +615,7 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
     //开始录音
     private fun startRecord() {
         RecordUtil.record(statusListener, idealRecorder, recordConfig, this@ExoplayerActivity)
-        toast("开始配音...")
+        toast("准备配音...")
     }
 
     /***
@@ -757,7 +760,7 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
         exoPlayer.setMediaItem(item1)
         exoPlayer.repeatMode = Player.REPEAT_MODE_OFF
         exoPlayer.prepare()
-        exoPlayer.play()
+        exoPlayer.pause()
         exobinding.exoPlay.visibility = View.GONE
         exobinding.exoPause.visibility = View.GONE
         save.visibility = View.VISIBLE

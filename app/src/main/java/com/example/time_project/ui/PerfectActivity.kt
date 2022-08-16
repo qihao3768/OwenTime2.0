@@ -100,11 +100,14 @@ class PerfectActivity : BaseActivity(R.layout.activity_perfect) {
 
     private fun getPermission() {
         PermissionX.init(this).permissions(permissions)
+            .onForwardToSettings { scope, deniedList ->
+                scope.showForwardToSettingsDialog(deniedList, "您拒绝了该权限可能会对您的正常使用造成影响", "授权", "拒绝")
+            }
             .request { allGranted, grantedList, deniedList ->
                 if (allGranted) {
                     showDialog()
                 } else {
-                    toast("您拒绝了以下权限 $deniedList 可能会对您的正常使用造成影响")
+                    toast("您拒绝了该权限可能会对您的正常使用造成影响")
                 }
             }
     }
