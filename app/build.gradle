@@ -25,8 +25,8 @@ android {
         applicationId "com.example.time_project"
         minSdk 23
         targetSdk 31
-        versionCode 8
-        versionName "1.0.7"
+        versionCode 9
+        versionName "1.0.9"
         manifestPlaceholders=[qqappid:"100424468"]
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

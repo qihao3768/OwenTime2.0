@@ -178,9 +178,9 @@
                     android:layout_height="15dp"
                     android:background="@drawable/time_icon"
                     app:layout_constraintStart_toStartOf="@+id/tv_playing_title"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_playing_title"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_playing_title_sub"
                     app:layout_goneMarginStart="129dp"
-                    android:layout_marginTop="13dp"/>
+                    android:layout_marginTop="10dp"/>
                 <TextView
                     android:id="@+id/tv_playing_time"
                     android:layout_width="wrap_content"
@@ -217,9 +217,20 @@
                     android:textColor="#333333"
                     app:layout_constraintStart_toEndOf="@+id/iv_playing_course"
                     app:layout_constraintTop_toTopOf="@+id/iv_playing_course"
-                    android:layout_marginTop="7.5dp"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="15dp"
                     android:text="第二集  阅读分享"/>
+
+                <TextView
+                    android:id="@+id/tv_playing_title_sub"
+                    android:textSize="12dp"
+                    android:textColor="#333333"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintStart_toEndOf="@+id/iv_playing_course"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_playing_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
                 <com.hjq.shape.view.ShapeButton
                     android:id="@+id/continue_play"

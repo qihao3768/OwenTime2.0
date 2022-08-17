@@ -14,6 +14,7 @@ import com.example.time_project.base.BaseActivity
 import com.example.time_project.base.BasePopWindow
 import com.example.time_project.bean.mine.Dub
 import com.example.time_project.bean.mine.DubGroupModel
+import com.example.time_project.bean.mine.Product
 import com.example.time_project.databinding.ActivityWorksBinding
 import com.example.time_project.databinding.LayoutShareBinding
 import com.example.time_project.fastClick
@@ -74,6 +75,7 @@ class WorksActivity : BaseActivity(R.layout.activity_works) {
         mBinding.rvWorks.linear().setup {
             addType<DubGroupModel>(R.layout.item_dub_first)
             addType<Dub>(R.layout.layout_works)
+            //addType<Product>(R.layout.layout_works)
 
             R.id.item.onFastClick {
                 if (getModel<ItemExpand>().itemExpand) {expandOrCollapse()
@@ -110,6 +112,7 @@ class WorksActivity : BaseActivity(R.layout.activity_works) {
                             val list= mutableListOf<DubGroupModel>()
                             data?.forEach { _data->
                                 val model=DubGroupModel().apply {
+                                    topname=_data.product?.name
                                     name=_data.name
                                     image=_data.image
                                     time= _data.dub[0]?.createdAt

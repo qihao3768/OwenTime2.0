@@ -106,5 +106,12 @@ data class Studying(
     val time: Int? = 0,
     @SerializedName("url")
     val url: String? = "",
-
+    @SerializedName("product_name")
+    val product_name: String? = "",
+    @SerializedName("product_type")
+    val product_type: String? = "",
+    @SerializedName("sort")
+    val sort: Int? = 1,
+    @SerializedName("punch_status")
+    val punch_status: Int? = 1,
 )

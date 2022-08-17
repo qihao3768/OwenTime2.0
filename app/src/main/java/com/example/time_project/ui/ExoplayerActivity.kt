@@ -137,14 +137,14 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
         exoPlayer.videoScalingMode = C.VIDEO_SCALING_MODE_SCALE_TO_FIT
 
         //初始化播放器控件
-        val view = layoutInflater.inflate(R.layout.layout_custom_exo2, null, false)
+     /*   val view = layoutInflater.inflate(R.layout.layout_custom_exo2, null, false)
         view.findViewById<ImageView>(R.id.exo_pause).setOnClickListener {
             val postion = exoPlayer.contentPosition / 1000
             storageRecord(postion.toString())
-        }
+        }*/
         /* view.findViewById<ImageView>(R.id.exo_play)
              .setImageDrawable(resources.getDrawable(R.drawable.alipay_icon))*/
-        exobinding = LayoutCustomExo2Binding.bind(view)
+       // exobinding = LayoutCustomExo2Binding.bind(view)
         /*  exobinding.exoPause.setOnClickListener {
               val postion = exoPlayer.contentPosition / 1000
               storageRecord(postion.toString())

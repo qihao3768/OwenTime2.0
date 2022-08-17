@@ -32,6 +32,7 @@ import com.example.time_project.util.IntentExtra.Companion.iSex
 import com.example.time_project.util.IntentExtra.Companion.iSkip
 import com.example.time_project.util.IntentExtra.Companion.iUserName
 import com.example.time_project.util.IntentExtra.Companion.icode
+import com.example.time_project.util.IntentExtra.Companion.iproductId
 import com.example.time_project.util.IntentExtra.Companion.iurl
 import com.example.time_project.util.IntentExtra.Companion.position
 import com.example.time_project.vm.MineViewModel
@@ -294,7 +295,8 @@ class HomeFragment : BaseFragment(R.layout.home_fragment) {
 
         playing.run {
             mBinding.ivPlayingCourse.load(image ?: "")
-            mBinding.tvPlayingTitle.text = name ?: ""
+            mBinding.tvPlayingTitleSub.text=name?:""
+            mBinding.tvPlayingTitle.text = product_name ?: ""
             mBinding.tvPlayingTime.text = time?.let { transfom(it) }
         }
         mBinding.layoutPlaying.setOnClickListener {
@@ -304,6 +306,7 @@ class HomeFragment : BaseFragment(R.layout.home_fragment) {
             requireActivity().intent.courseTime = playing.time ?: 0
             requireActivity().intent.courseId = playing.coursesId.toString()
             requireActivity().intent.courseDub = playing.dubCourse ?: ""
+            requireActivity().intent.iproductId = playing.productId ?: 0
             requireActivity().intent.position = -1
             mmkv.encode("courseid",playing.coursesId.toString())
             start(requireActivity(), ExoplayerActivity().javaClass, requireActivity().intent)
