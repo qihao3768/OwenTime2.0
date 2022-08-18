@@ -52,10 +52,6 @@ class HomeFragment : BaseFragment(R.layout.home_fragment) {
 
     companion object {
         fun newInstance() = HomeFragment()
-
-//        var Intent.code by IntentExtraString("code")
-//
-//        var Intent.iurl by IntentExtraString("url")
     }
 
     private val viewModel by viewModels<OwenViewModel>()
@@ -65,7 +61,6 @@ class HomeFragment : BaseFragment(R.layout.home_fragment) {
 
     private lateinit var mmkv: MMKV
 
-    private var studying: Studying? = null//正在观看的视频
     private var mUserName: String? = ""//用户名
     private var mSex: Int = 0//性别
     private var mBirth: String? = ""//生日

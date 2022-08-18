@@ -150,11 +150,6 @@ class CourseDetailActivity : BaseActivity(R.layout.activity_course_detail) {
                         intent.position=modelPosition?:0
                         intent.shareImage=model.image?:""
                         start(this@CourseDetailActivity,ExoplayerActivity().javaClass,intent)
-//                        if (model.dubCourse.isNullOrEmpty()){
-//                            start(this@CourseDetailActivity,ExoplayerActivity().javaClass,intent)
-//                        }else{
-//                            start(this@CourseDetailActivity,ExoplayerActivity().javaClass,intent)
-//                        }
 
                     }
 

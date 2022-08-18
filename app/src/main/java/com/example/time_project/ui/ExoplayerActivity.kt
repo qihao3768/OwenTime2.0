@@ -71,13 +71,14 @@ import java.util.ArrayList
  */
 class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
 
+    private lateinit var dub_start: ImageView
     private lateinit var subTitle: String
     private lateinit var shareTitle: String
     private val mBinding by viewBinding(ActivityExoplayerBinding::bind)
 
     //    private var mUrl="https://owen-time-test.oss-cn-beijing.aliyuncs.com/courses/cou/1643348728_216a94a44ba39a712.mp4"
     private lateinit var exoPlayer: ExoPlayer
-    private var isLock = false //是否锁屏
+    private var isLock = true //是否锁屏
 
     private lateinit var shareDialog: BasePopWindow//分享面板
     private lateinit var shareBinding: LayoutShareBinding
@@ -161,6 +162,7 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
             stop()
             removeActivity()
         }
+         dub_start = include.findViewById<ImageView>(R.id.iv_dub_start)
 
         //保存配音
         save = include.findViewById<ShapeTextView>(R.id.tv_save)
@@ -172,6 +174,7 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
         save.fastClick {
             save()
         }
+
         if (intent.position == -1) {
             initUrlSource()
         } else {
@@ -193,6 +196,7 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
         registerVideoListener(playerListener)
         exoPlayer.seekTo(intent.courseTime.toLong())
         mBinding.exoPlayer.player = exoPlayer
+
         mBinding.ivUnlock.setOnClickListener {
             mBinding.ivUnlock.setBackgroundResource(if (isLock) R.drawable.icon_player_unlock else R.drawable.icon_player_lock)
             mBinding.exoPlayer.useController = isLock
@@ -203,6 +207,36 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
                 mBinding.exoPlayer.hideController()
             }
             isLock = !isLock
+        }
+
+        if (isLock) {
+            mBinding.exoPlayer.useController=false
+            mBinding.ivUnlock.setBackgroundResource(R.drawable.icon_player_lock)
+        }
+
+        if (!intent.courseDub.isNullOrBlank() || courseDub.isNotBlank()) {
+            if (exoPlayer.isPlaying){
+                dub_start.visibility=View.GONE
+            }else{
+                dub_start.visibility=View.VISIBLE
+            }
+        }
+        dub_start.setOnClickListener {
+
+            PermissionX.init(this).permissions(permissions)
+                .onExplainRequestReason { scope, deniedList ->
+                    scope.showRequestReasonDialog(deniedList, "拒绝权限可能会导致该功能无法使用", "授权", "拒绝")
+                }
+                .request { allGranted, grantedList, deniedList ->
+                    if (allGranted) {
+                        exoPlayer.play()
+                        it.visibility=View.GONE
+                        startRecord()
+                    } else {
+                        toast("您拒绝了相关权限可能会对您的正常使用造成影响")
+                    }
+                }
+
         }
 
         //初始化分享面板
@@ -448,9 +482,10 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
                 //进入到播放页面的时候先保存一次播放记录，目的是防止应用大退时无法保存
                 storageRecord("0")
                 //配音
-                if (!intent.courseDub.isNullOrBlank() || courseDub.isNotBlank()) {
+               /* if (!intent.courseDub.isNullOrBlank() || courseDub.isNotBlank()) {
                     getPermission()
-                }
+                }*/
+
             }
         }
 
@@ -463,10 +498,19 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
             if (!mediaItem?.mediaMetadata?.albumTitle.isNullOrBlank()){
                 mmkv.encode("Shareurl",mediaItem?.mediaMetadata?.albumTitle.toString())
             }
+
+
             if (mediaItemId.equals("1")) {
+                mBinding.exoPlayer.useController=false
                 exoPlayer.pause()
+                isLock=true
+                mBinding.ivUnlock.setBackgroundResource(R.drawable.icon_player_lock)
+
                 if (intent.courseDub.isNullOrBlank()) {
                     share()
+                }
+                if (!intent.courseDub.isNullOrBlank() || courseDub.isNotBlank()) {
+                    dub_start.visibility=View.VISIBLE
                 }
 
             }
@@ -618,29 +662,11 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
         }
     }
 
-    /***
-     * 获取录音权限
-     */
-    //    private PlayerView mVideoView;
-
-    private fun getPermission() {
-        PermissionX.init(this).permissions(permissions)
-            .onExplainRequestReason { scope, deniedList ->
-                scope.showRequestReasonDialog(deniedList, "拒绝权限可能会导致该功能无法使用", "授权", "拒绝")
-            }
-            .request { allGranted, grantedList, deniedList ->
-                if (allGranted) {
-                    startRecord()
-                } else {
-                    toast("您拒绝了相关权限可能会对您的正常使用造成影响")
-                }
-            }
-    }
 
     //开始录音
     private fun startRecord() {
         RecordUtil.record(statusListener, idealRecorder, recordConfig, this@ExoplayerActivity)
-        toast("准备配音...")
+       // toast("准备配音...")
     }
 
     /***
