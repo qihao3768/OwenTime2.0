@@ -1,5 +1,6 @@
 package com.example.time_project.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.Spannable
@@ -19,6 +20,7 @@ import com.example.time_project.*
 import com.example.time_project.base.BasePopWindow
 import com.example.time_project.databinding.ActivitySplashBinding
 import com.example.time_project.util.NoDoubleClickListener
+import com.example.time_project.web.WebActivity
 import com.gyf.immersionbar.ktx.immersionBar
 
 import com.hjq.shape.view.ShapeButton
@@ -121,7 +123,7 @@ class SplashActivity : AppCompatActivity() {
             override fun onClick(widget: View) {
                 val keys = arrayOf("title", "url")
                 val values = arrayOf("用户服务协议", server_url)
-//                gotoWeb(keys, values)
+                gotoWeb(server_url)
             }
 
             override fun updateDrawState(ds: TextPaint) {
@@ -148,7 +150,7 @@ class SplashActivity : AppCompatActivity() {
             override fun onClick(widget: View) {
                 val keys = arrayOf("title", "url")
                 val values = arrayOf("隐私保护政策", privacy_url)
-//                gotoWeb(keys, values)
+                gotoWeb(privacy_url)
             }
 
             override fun updateDrawState(ds: TextPaint) {
@@ -175,7 +177,7 @@ class SplashActivity : AppCompatActivity() {
             override fun onClick(widget: View) {
                 val keys = arrayOf("title", "url")
                 val values = arrayOf("儿童隐私政策", children_url)
-//                gotoWeb(keys, values)
+                gotoWeb(children_url)
             }
 
             override fun updateDrawState(ds: TextPaint) {
@@ -209,5 +211,11 @@ class SplashActivity : AppCompatActivity() {
     }
     fun gotoHome(){
         start(this,MainActivity().javaClass,true)
+    }
+
+    private fun gotoWeb(url:String) {
+       val intent:Intent= Intent(this,WebActivity::class.java)
+        intent.putExtra("url",url)
+        startActivity(intent)
     }
 }
