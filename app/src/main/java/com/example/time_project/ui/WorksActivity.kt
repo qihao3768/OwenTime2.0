@@ -21,9 +21,11 @@ import com.example.time_project.fastClick
 import com.example.time_project.toast
 import com.example.time_project.util.IntentExtra.Companion.courseId
 import com.example.time_project.util.IntentExtra.Companion.courseTime
+import com.example.time_project.util.IntentExtra.Companion.courseTitle
 import com.example.time_project.util.IntentExtra.Companion.courseUrl
 import com.example.time_project.util.IntentExtra.Companion.iproductId
 import com.example.time_project.util.IntentExtra.Companion.position
+import com.example.time_project.util.IntentExtra.Companion.shareImage
 import com.example.time_project.util.IntentExtraString
 import com.example.time_project.vm.OwenViewModel
 import com.gyf.immersionbar.ktx.immersionBar
@@ -90,6 +92,8 @@ class WorksActivity : BaseActivity(R.layout.activity_works) {
                 intent.courseTime =0
                 intent.courseId = getModel<Dub>().courseId.toString()
                 intent.position=-1
+                intent.courseTitle=getModel<Dub>().name.toString()
+                intent.shareImage=getModel<Dub>().image.toString()
                 startActivity(intent)
                 finish()
             }

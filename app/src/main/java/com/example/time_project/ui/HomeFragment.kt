@@ -25,6 +25,7 @@ import com.example.time_project.util.IntentExtra.Companion.code
 import com.example.time_project.util.IntentExtra.Companion.courseDub
 import com.example.time_project.util.IntentExtra.Companion.courseId
 import com.example.time_project.util.IntentExtra.Companion.courseTime
+import com.example.time_project.util.IntentExtra.Companion.courseTitle
 import com.example.time_project.util.IntentExtra.Companion.courseUrl
 import com.example.time_project.util.IntentExtra.Companion.iBirthday
 import com.example.time_project.util.IntentExtra.Companion.iHead
@@ -35,6 +36,7 @@ import com.example.time_project.util.IntentExtra.Companion.icode
 import com.example.time_project.util.IntentExtra.Companion.iproductId
 import com.example.time_project.util.IntentExtra.Companion.iurl
 import com.example.time_project.util.IntentExtra.Companion.position
+import com.example.time_project.util.IntentExtra.Companion.shareImage
 import com.example.time_project.vm.MineViewModel
 import com.example.time_project.vm.OwenViewModel
 import com.example.time_project.web.WebActivity
@@ -308,6 +310,8 @@ class HomeFragment : BaseFragment(R.layout.home_fragment) {
             requireActivity().intent.courseDub = playing.dubCourse ?: ""
             requireActivity().intent.iproductId = playing.productId ?: 0
             requireActivity().intent.position = -1
+            requireActivity().intent.courseTitle = playing.product_name?:""
+            requireActivity().intent.shareImage = playing.image?:""
             mmkv.encode("courseid",playing.coursesId.toString())
             start(requireActivity(), ExoplayerActivity().javaClass, requireActivity().intent)
         }

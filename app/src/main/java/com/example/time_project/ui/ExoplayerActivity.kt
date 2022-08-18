@@ -36,6 +36,7 @@ import com.example.time_project.util.IntentExtra.Companion.courseTitle
 import com.example.time_project.util.IntentExtra.Companion.courseUrl
 import com.example.time_project.util.IntentExtra.Companion.iproductId
 import com.example.time_project.util.IntentExtra.Companion.position
+import com.example.time_project.util.IntentExtra.Companion.shareImage
 import com.example.time_project.util.RecordUtil
 import com.example.time_project.util.TextViewLinesUtil
 import com.example.time_project.vm.OwenViewModel
@@ -217,8 +218,8 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
 
     private fun getShare() {
         viewModel.getShare("2").observe(this, Observer {
-            shareTitle = it.data?.title.toString()
             subTitle = it.data?.description.toString()
+            shareTitle= intent.courseTitle.toString()
         })
     }
 
@@ -367,7 +368,7 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
     private fun shareWX(platform: SHARE_MEDIA) {
         val web: UMWeb = UMWeb(mmkv.decodeString("Shareurl"))
         web.title = "👉"+shareTitle //标题
-        val umImage = UMImage(this, R.drawable.share_tiyan)
+        val umImage = UMImage(this,intent.shareImage)
         web.setThumb(umImage) //缩略图
         web.description = "🏆"+subTitle //描述
         //val umImage = UMImage(this, R.drawable.share_tiyan)
