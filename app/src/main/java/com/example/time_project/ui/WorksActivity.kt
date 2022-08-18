@@ -22,6 +22,7 @@ import com.example.time_project.toast
 import com.example.time_project.util.IntentExtra.Companion.courseId
 import com.example.time_project.util.IntentExtra.Companion.courseTime
 import com.example.time_project.util.IntentExtra.Companion.courseUrl
+import com.example.time_project.util.IntentExtra.Companion.iproductId
 import com.example.time_project.util.IntentExtra.Companion.position
 import com.example.time_project.util.IntentExtraString
 import com.example.time_project.vm.OwenViewModel
@@ -84,7 +85,6 @@ class WorksActivity : BaseActivity(R.layout.activity_works) {
             }
 
             onClick(R.id.btn_play){
-                Log.e("TAG", "getData: ")
                 val intent:Intent= Intent(this@WorksActivity,ExoplayerActivity::class.java)
                 intent.courseUrl = getModel<Dub>().url?: ""
                 intent.courseTime =0
@@ -92,7 +92,6 @@ class WorksActivity : BaseActivity(R.layout.activity_works) {
                 intent.position=-1
                 startActivity(intent)
                 finish()
-               // start(this@WorksActivity, ExoplayerActivity().javaClass,intent)
             }
             onFastClick(R.id.layout_sharewx){
                 url=getModel<Dub>().url?: ""
