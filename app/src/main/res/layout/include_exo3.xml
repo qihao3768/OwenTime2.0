@@ -70,12 +70,12 @@
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
         app:shape_radius="20dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="15dp"
         app:shape_solidColor="@color/FE9520"
         android:textSize="14dp"
         android:textColor="@color/white"
         app:layout_constraintEnd_toStartOf="@+id/video_share"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/video_share"
         android:visibility="gone"/>
 
     <com.hjq.shape.view.ShapeTextView

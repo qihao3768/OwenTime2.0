@@ -233,6 +233,7 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
                         it.visibility=View.GONE
                         startRecord()
                     } else {
+                        it.visibility=View.GONE
                         toast("您拒绝了相关权限可能会对您的正常使用造成影响")
                     }
                 }
@@ -466,10 +467,12 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
                     if (mediaItemId.equals("1")) {
                         //停止配音
                         if (!intent.courseDub.isNullOrBlank() || courseDub.isNotBlank()) {
-                            toast("停止配音，开始合成...")
+                           // toast("停止配音，开始合成...")
                             RecordUtil.stopRecord(this@ExoplayerActivity, idealRecorder)
+                        }else{
+                            share()
                         }
-                        share()
+
                     }
 
                 }
