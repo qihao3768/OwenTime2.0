@@ -371,7 +371,6 @@ class ExoplayerActivity : BaseActivity(R.layout.activity_exoplayer) {
         val umImage = UMImage(this,intent.shareImage)
         web.setThumb(umImage) //缩略图
         web.description = "🏆"+subTitle //描述
-        //val umImage = UMImage(this, R.drawable.share_tiyan)
         mShareAction.setPlatform(platform)
             .withMedia(web)
             .setCallback(object : UMShareListener {
