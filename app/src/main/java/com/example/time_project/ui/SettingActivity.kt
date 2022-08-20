@@ -56,10 +56,7 @@ class SettingActivity : BaseActivity(R.layout.activity_setting) {
             }
         })
         mBinding.layoutSetting01.setOnClickListener {
-            val intent =  Intent()
-            intent.setAction(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
-            intent.putExtra(EXTRA_APP_PACKAGE, getPackageName())
-            intent.putExtra(EXTRA_CHANNEL_ID, getApplicationInfo().uid)
+            val intent =Intent(this@SettingActivity,NoticeActivity().javaClass)
             startActivity(intent)
         }
         mBinding.cacheMb.text=DataCleanManager.getTotalCacheSize(this)
@@ -85,6 +82,7 @@ class SettingActivity : BaseActivity(R.layout.activity_setting) {
         mBinding.settingTitle.leftView.fastClick {
             finish()
         }
+
 
 
     }

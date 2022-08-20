@@ -30,4 +30,13 @@
         <item name="cornerSize">50%</item>
     </style>
 
+    <style name="scstyle" parent="Theme.AppCompat.DayNight">
+        <!--开启时的颜色-->
+        <item name="colorControlActivated">#FE9520</item>
+        <!--关闭时的颜色-->
+        <item name="colorSwitchThumbNormal">#383434</item>
+        <!--关闭时的轨迹颜色-->
+        <item name="android:colorForeground">#383434</item>
+    </style>
+
 </resources>
