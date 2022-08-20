@@ -13,6 +13,7 @@ import coil.load
 import com.drake.brv.utils.linear
 import com.drake.brv.utils.setup
 import com.example.time_project.R
+import com.example.time_project.adapter.BannerImageAdapter
 import com.example.time_project.adapter.NoticeAdapter
 import com.example.time_project.base.BaseFragment
 import com.example.time_project.bean.NoticeBean
@@ -43,7 +44,6 @@ import com.example.time_project.web.WebActivity
 import com.gyf.immersionbar.ktx.immersionBar
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.tencent.mmkv.MMKV
-import com.youth.banner.adapter.BannerImageAdapter
 import com.youth.banner.holder.BannerImageHolder
 import com.youth.banner.indicator.RectangleIndicator
 import com.youth.banner.listener.OnBannerListener
@@ -183,19 +183,12 @@ class HomeFragment : BaseFragment(R.layout.home_fragment) {
                 mBinding.homeBanner.addBannerLifecycleObserver(this@HomeFragment).setAdapter(
                     object : BannerImageAdapter<String>(path) {
                         override fun onBindView(
-                            holder: BannerImageHolder,
-                            data: String,
+                            holder: BannerImageHolder?,
+                            data: String?,
                             position: Int,
                             size: Int
                         ) {
-                            holder.imageView.load(data)
-                        }
-
-                        override fun onCreateHolder(
-                            parent: ViewGroup?,
-                            viewType: Int
-                        ): BannerImageHolder {
-                            return super.onCreateHolder(parent, viewType)
+                            holder?.imageView?.load(data)
                         }
                     })
                 mBinding.homeBanner.setOnBannerListener(OnBannerListener<String> { _, position ->
