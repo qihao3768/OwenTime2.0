@@ -66,6 +66,9 @@ class PerfectActivity : BaseActivity(R.layout.activity_perfect) {
         mBinding.titlePerfect.leftView.setOnClickListener {
             finish()
         }
+        mBinding.titlePerfect.rightView.fastClick {
+            start(this@PerfectActivity,MainActivity().javaClass,true)
+        }
         mBinding.ivHead.setOnClickListener {
             getPermission()
         }
