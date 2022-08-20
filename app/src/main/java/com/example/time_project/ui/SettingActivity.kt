@@ -78,6 +78,10 @@ class SettingActivity : BaseActivity(R.layout.activity_setting) {
             start(this@SettingActivity,WebActivity().javaClass,"url",AppConfig.CHILDREN_AGREEMENT_URL)
         }
 
+        mBinding.layoutSetting08.setOnClickListener {
+            start(this@SettingActivity,FeedBackActivity().javaClass,false)
+        }
+
         mBinding.settingTitle.leftView.fastClick {
             finish()
         }

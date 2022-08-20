@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/F5F5F5"
+    tools:context=".ui.FeedBackActivity">
+
+    <com.hjq.bar.TitleBar
+        android:id="@+id/feed_title"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:leftIconTint="@color/black"
+        app:title="用户反馈"
+        app:titleColor="@color/black"
+        app:titleStyle="bold" />
+
+    <com.hjq.shape.view.ShapeEditText
+        android:id="@+id/edt_feed"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/feed_title"
+        android:layout_margin="15dp"
+        app:shape_radius="15dp"
+        app:shape_solidColor="@color/white"
+        app:layout_constraintDimensionRatio="h,1:0.32"
+        android:layout_marginBottom="110dp"
+        android:gravity="start"
+        android:hint="请输入您想要反馈的意见："
+        android:textColorHint="@color/CCCCCC"
+        android:textSize="14dp"
+        android:textColor="@color/black"
+        android:padding="15dp"/>
+
+    <com.hjq.shape.view.ShapeButton
+        android:id="@+id/btn_feed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       app:shape_solidColor="@color/FE9520"
+        app:shape_radius="20dp"
+        android:layout_margin="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="留言反馈"
+        android:padding="10dp"
+        android:textSize="14dp"
+        android:textColor="@color/white"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

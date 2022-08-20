@@ -245,4 +245,17 @@ class OwenViewModel() : BaseViewModel() {
         return liveData
     }
 
+
+    /***
+     * 用户反馈
+     */
+    fun feedback(token: String,content:String):MutableLiveData<BaseResponse<Any?>>{
+        val liveData=MutableLiveData<BaseResponse<Any?>>()
+        launchUI {
+            val result=owenReps.feedback(token,content)
+            liveData.value= result
+        }
+        return liveData
+    }
+
 }

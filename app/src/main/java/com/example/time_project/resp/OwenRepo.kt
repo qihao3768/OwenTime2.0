@@ -204,4 +204,11 @@ class OwenRepo():BaseRepository(){
     suspend fun getShare(id: String):BaseResponse<Share?> =request{
         mService.getShare(id)
     }
+
+    /***
+     * 用户反馈
+     */
+    suspend fun feedback(token: String,content: String):BaseResponse<Any?> =request{
+        mService.feedback(token,content)
+    }
 }
