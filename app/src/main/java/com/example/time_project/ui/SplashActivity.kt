@@ -104,17 +104,17 @@ class SplashActivity : AppCompatActivity() {
         server_url = if (!TextUtils.isEmpty(AppConfig.SERVICE_AGREEMENT_URL)) {
             AppConfig.SERVICE_AGREEMENT_URL
         } else {
-            "https://www.owentime.cn/api/dict/getUserAgreement"
+            "https://new.owentime.cn/api/dict/getUserAgreement"
         }
         privacy_url = if (!TextUtils.isEmpty(AppConfig.PRIVACY_AGREEMENT_URL)) {
             AppConfig.PRIVACY_AGREEMENT_URL
         } else {
-            "https://www.owentime.cn/api/dict/getPrivacy"
+            "https://new.owentime.cn/api/dict/getPrivacy"
         }
         children_url = if (!TextUtils.isEmpty(AppConfig.CHILDREN_AGREEMENT_URL)) {
             AppConfig.CHILDREN_AGREEMENT_URL
         } else {
-            "https://www.owentime.cn/api/dict/getChildrenPrivacy"
+            "https://new.owentime.cn/api/dict/getChildrenPrivacy"
         }
         val beforeStr0 = "我们将依据"
         val style0 = SpannableStringBuilder()
