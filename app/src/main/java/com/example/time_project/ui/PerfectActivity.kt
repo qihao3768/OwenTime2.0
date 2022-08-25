@@ -177,7 +177,7 @@ class PerfectActivity : BaseActivity(R.layout.activity_perfect) {
             TimePickerPopup(this) //
                                     .setDefaultDate(date2)  //设置默认选中日期
                                         .setYearRange(2000,date2.get(Calendar.YEAR)) //设置年份范围
-//                                        .setDateRange(date, date2) //设置日期范围
+                                        .setDateRange(date, date2) //设置日期范围
                 .setTimePickerListener(object : TimePickerListener {
                     override fun onTimeChanged(date: Date?) {
                         //时间改变
@@ -236,6 +236,9 @@ class PerfectActivity : BaseActivity(R.layout.activity_perfect) {
 
     private fun Int.intToSex():String{
         return when(this){
+            -1->{
+                "男宝宝"
+            }
             1->{
                 "男宝宝"
             }else->{
