@@ -1,6 +1,7 @@
 package com.example.time_project.ui
 
 
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -18,6 +19,7 @@ import com.example.time_project.util.IntentExtra.Companion.iSex
 import com.example.time_project.util.IntentExtra.Companion.iSkip
 import com.example.time_project.util.IntentExtra.Companion.iUserName
 import com.example.time_project.vm.MineViewModel
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.tencent.mmkv.MMKV
 
@@ -56,9 +58,29 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
                return fragments[position]
             }
         }
+        mBinding.tablayout.addOnTabSelectedListener(object :TabLayout.OnTabSelectedListener{
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                val textView: TextView = tab?.customView!!.findViewById(R.id.tab_title)
+                textView.textSize=20f
+                textView.setTextColor(resources.getColor(R.color.white))
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+                val textView: TextView = tab?.customView!!.findViewById(R.id.tab_title)
+                textView.textSize=16f
+                textView.setTextColor(resources.getColor(R.color.white))
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+
+            }
+
+        })
 
         TabLayoutMediator(mBinding.tablayout,mBinding.viewpager2){tab, position ->
-            tab.text = titles[position]
+            tab.setCustomView(R.layout.item_tablayout)
+            val textView: TextView = tab.customView!!.findViewById(R.id.tab_title)
+            textView.text = titles[position]
         }.attach()
 
         mBinding.ivHomeHead.setOnClickListener {

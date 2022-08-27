@@ -44,9 +44,9 @@
             app:tabIndicatorColor="@color/white"
             app:tabIndicatorFullWidth="false"
             app:tabMode="scrollable"
-            app:tabSelectedTextColor="@color/white"
-            android:paddingBottom="2dp"
-            app:tabTextColor="@color/white" />
+            app:tabIndicator="@drawable/tab_indicator"
+            app:tabRippleColor="@color/transparent"
+            android:paddingBottom="2dp" />
 
 
         <com.hjq.shape.view.ShapeImageView
