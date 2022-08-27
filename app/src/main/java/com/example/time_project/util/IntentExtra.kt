@@ -1,7 +1,6 @@
 package com.example.time_project.util
 
 import android.content.Intent
-import com.example.time_project.ui.HomeFragment
 import kotlin.reflect.KProperty
 class IntentExtra {
     companion object {

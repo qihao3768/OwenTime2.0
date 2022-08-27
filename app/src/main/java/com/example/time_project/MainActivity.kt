@@ -1,7 +1,6 @@
 package com.example.time_project
 
 import android.content.pm.ActivityInfo
-import android.util.Log
 import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
