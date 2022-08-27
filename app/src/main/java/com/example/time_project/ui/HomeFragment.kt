@@ -97,6 +97,10 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
             }
             start(requireActivity(), target.javaClass, requireActivity().intent)
         }
+
+        mBinding.ivSearch.setOnClickListener {
+            start(requireActivity(),SearchActivity().javaClass,false)
+        }
     }
 
     override fun onResume() {
