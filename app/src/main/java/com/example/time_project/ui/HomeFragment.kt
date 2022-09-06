@@ -102,6 +102,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
         }
     }
 
+
     override fun onResume() {
         super.onResume()
         val token = mmkv.decodeString("token")
