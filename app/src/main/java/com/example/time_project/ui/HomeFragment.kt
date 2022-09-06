@@ -11,7 +11,9 @@ import androidx.viewpager2.widget.ViewPager2
 import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.load
 import com.example.time_project.R
+import com.example.time_project.TodoListener
 import com.example.time_project.base.BaseFragment
+import com.example.time_project.checkLogin
 import com.example.time_project.databinding.FragmentHomeBinding
 import com.example.time_project.start
 import com.example.time_project.util.IntentExtra.Companion.iBirthday
@@ -98,9 +100,12 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
             start(requireActivity(), target.javaClass, requireActivity().intent)
         }
 
-        mBinding.ivSearch.setOnClickListener {
-            start(requireActivity(),SearchActivity().javaClass,false)
-        }
+        mBinding.ivSearch.checkLogin(requireActivity(),object :TodoListener{
+            override fun todo() {
+                start(requireActivity(),SearchActivity().javaClass,false)
+            }
+
+        })
     }
 
 
@@ -109,10 +114,22 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
         val token = mmkv.decodeString("token")
         if (token.isNullOrBlank()) {
             mBinding.titlebar.visibility=View.GONE
+            mBinding.layoutSearch.visibility=View.VISIBLE
+            mBinding.viewpager2.setCurrentItem(0)
+            mBinding.viewpager2.isUserInputEnabled=false
         }else{
             mBinding.titlebar.visibility=View.VISIBLE
+            mBinding.layoutSearch.visibility=View.GONE
+            mBinding.viewpager2.isUserInputEnabled=true
             getUser(token)
         }
+
+        mBinding.layoutSearch.checkLogin(requireActivity(),object :TodoListener{
+            override fun todo() {
+                start(requireActivity(),SearchActivity().javaClass,false)
+            }
+
+        })
     }
 
     private fun getUser(mToken: String) {
