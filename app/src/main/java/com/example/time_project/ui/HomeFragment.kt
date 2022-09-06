@@ -1,6 +1,7 @@
 package com.example.time_project.ui
 
 
+import android.view.View
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -106,7 +107,10 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
     override fun onResume() {
         super.onResume()
         val token = mmkv.decodeString("token")
-        if (!token.isNullOrBlank()) {
+        if (token.isNullOrBlank()) {
+            mBinding.titlebar.visibility=View.GONE
+        }else{
+            mBinding.titlebar.visibility=View.VISIBLE
             getUser(token)
         }
     }
