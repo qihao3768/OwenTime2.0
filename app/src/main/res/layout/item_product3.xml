@@ -67,6 +67,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:gravity="center"
+        android:visibility="invisible"
         android:textColor="@color/FE9520"
         android:textSize="12dp"
         app:layout_constraintBottom_toBottomOf="@id/tv_product_price"
@@ -88,6 +89,7 @@
         android:layout_marginTop="10dp" />
     
     <com.hjq.shape.view.ShapeButton
+        android:id="@+id/btn_free_play"
         app:layout_constraintStart_toStartOf="@+id/tv_product_desc"
         app:layout_constraintBottom_toBottomOf="parent"
         android:text="免费播放"
@@ -116,6 +118,6 @@
         android:layout_marginTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="visible"/>
+        android:visibility="invisible"/>
 
 </com.hjq.shape.layout.ShapeConstraintLayout>
