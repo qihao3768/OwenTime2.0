@@ -72,7 +72,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
             }
 
             override fun onTabReselected(tab: TabLayout.Tab?) {
-
             }
 
         })
