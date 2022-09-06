@@ -196,7 +196,7 @@ class GameFragment : BaseFragment(R.layout.fragment_game) {
     }
 
     /***
-     * 首页推荐
+     * 首页
      */
     private fun initArticle(list: List<Product>) {
 
