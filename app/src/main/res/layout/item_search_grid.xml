@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.hjq.shape.layout.ShapeConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:shape_radius="15dp"
+    android:padding="8dp"
+    app:shape_solidColor="@color/F5F5F5">
+
+    <com.hjq.shape.view.ShapeImageView
+        android:id="@+id/iv_hot"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:src="@drawable/selector_map"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.hjq.shape.view.ShapeTextView
+        android:id="@+id/iv_hot_words"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/course_empty"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv_hot"
+        app:layout_constraintTop_toTopOf="parent" />
+</com.hjq.shape.layout.ShapeConstraintLayout>

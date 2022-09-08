@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <attr name="childHorizontalSpacing" format="dimension" />
+    <attr name="childVerticalSpacing" format="dimension" />
+    <attr name="maxNumber" format="integer" />
+    <declare-styleable name="FloatLayout">
+        <attr name="android:gravity" />
+        <attr name="childHorizontalSpacing" />
+        <attr name="childVerticalSpacing" />
+        <attr name="android:maxLines" />
+        <attr name="maxNumber" />
+    </declare-styleable>
+
+
     <!--自定义的展开收起textview扩展属性-->
     <declare-styleable name="ExpandTextView">
         <!--每行文本之间底部的间距-->
