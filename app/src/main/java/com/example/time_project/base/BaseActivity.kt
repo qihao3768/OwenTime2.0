@@ -25,6 +25,7 @@ abstract class BaseActivity(@LayoutRes private val layoutId:Int) : AppCompatActi
             }
         }
 
+
         setContentView(layoutId)
         initData()
 
